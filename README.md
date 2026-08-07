@@ -1,5 +1,15 @@
 # 全球地球化学元素分布图谱 Skill：演示包
 
+**TEAM 0066** · 在线演示：<https://asimfish.github.io/global-geochemical-atlas-demo/>
+
+## 文档与直达链接
+
+- [项目介绍 PDF](Global-Geochemical-Atlas-Introduction.pdf)：赛题方案、五项交付、Skill 设计、创新点与应用场景（6 页）。
+- [作品简介（文字版）](作品简介.md)：核心计划、创新点、应用场景。
+- [可交互元素分布地图（直达）](https://asimfish.github.io/global-geochemical-atlas-demo/interactive_map.html)：Skill 真实运行产物，单文件自包含。
+- [三维地球仪](https://asimfish.github.io/global-geochemical-atlas-demo/live/globe-3d.html) · [区域异常视图](https://asimfish.github.io/global-geochemical-atlas-demo/live/china-anomaly.html)
+- Skill 仓库：<https://github.com/asimfish/global-geochemical-atlas-skill>
+
 这是完整的可搬运演示包。它逐项对应赛题要求；演示重点是叩题拆解、五项交付逐项演示（每页配对应界面实况）、公共 Agent Skills 结构、确定性科研脚本、记录级证据链和可审计 iteration loop。
 
 本次黑客松最终提交物仍然只有一个完整、可复用的 Skill 文档；本目录中的地图、数据库界面与 PPTX 是 Skill 执行能力的演示证据，不改变提交格式。
