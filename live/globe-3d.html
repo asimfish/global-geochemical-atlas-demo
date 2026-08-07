@@ -65,15 +65,12 @@ const pt={x:0,y:0,z:0};
 function frame(t){
   if(!dragging)lon0+=vlon;
   ctx.clearRect(0,0,W,H);
-  // atmosphere
   let g=ctx.createRadialGradient(CX,CY,R*.92,CX,CY,R*1.16);
   g.addColorStop(0,'rgba(105,245,230,.14)');g.addColorStop(1,'rgba(105,245,230,0)');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R*1.16,0,7);ctx.fill();
-  // sphere
   g=ctx.createRadialGradient(CX-R*.35,CY-R*.4,R*.1,CX,CY,R);
   g.addColorStop(0,'#0d2f3a');g.addColorStop(.65,'#07202a');g.addColorStop(1,'#03141b');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R,0,7);ctx.fill();
-  // graticule
   ctx.strokeStyle='rgba(105,245,230,.10)';ctx.lineWidth=1;
   for(let la=-60;la<=60;la+=30){
     ctx.beginPath();let started=false;
@@ -89,15 +86,12 @@ function frame(t){
     }
     ctx.stroke();
   }
-  // land dots
   ctx.fillStyle='rgba(105,245,230,.30)';
   const s1=Math.max(1.4,R*.006);
   for(let i=0;i<LAND.length;i++){const p=LAND[i];if(proj(p[0],p[1],pt))ctx.fillRect(pt.x,pt.y,s1,s1);}
-  // sample sites
   ctx.fillStyle='rgba(105,245,230,.85)';
   const s2=Math.max(1.8,R*.0075);
   for(let i=0;i<SITES.length;i++){const p=SITES[i];if(proj(p[0],p[1],pt))ctx.fillRect(pt.x-s2/2,pt.y-s2/2,s2,s2);}
-  // anomalies with pulse
   const pulse=1+.35*Math.sin((t||0)/420);
   for(let i=0;i<ANOM.length;i++){
     const p=ANOM[i];
@@ -107,7 +101,6 @@ function frame(t){
     ctx.strokeStyle=p[2]?'rgba(255,92,120,.4)':'rgba(84,167,255,.4)';
     ctx.lineWidth=1;ctx.beginPath();ctx.arc(pt.x,pt.y,5.2*pulse,0,7);ctx.stroke();
   }
-  // rim
   ctx.strokeStyle='rgba(105,245,230,.5)';ctx.lineWidth=1.2;
   ctx.beginPath();ctx.arc(CX,CY,R,0,7);ctx.stroke();
 }
