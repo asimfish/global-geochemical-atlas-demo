@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>全球地球化学元素分布图谱 Skill · 设计与演示</title>
+  <style>
+    :root {
+      --bg: #03141b;
+      --panel: #0b2630;
+      --mint: #69f5e6;
+      --red: #ff5c78;
+      --gold: #f6c344;
+      --ink: #f3f8fa;
+      --muted: #95afb7;
+      --grid: #1a3b44;
+      --slide-ratio: 1.7777778;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      background: #010a0e;
+      color: var(--ink);
+      font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, a { font: inherit; }
+    button { color: inherit; }
+
+    .stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(100vw, calc(100vh * var(--slide-ratio)));
+      height: min(100vh, calc(100vw / var(--slide-ratio)));
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      background: var(--bg);
+      box-shadow: 0 0 100px rgba(0, 0, 0, .72);
+      isolation: isolate;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 3.4% 4%;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate3d(2.5%, 0, 0) scale(.995);
+      transition: opacity .42s ease, transform .58s var(--ease), visibility .42s;
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; visibility: visible; transform: none; z-index: 2; }
+    .slide.leaving { transform: translate3d(-2.5%, 0, 0) scale(.995); }
+
+    .bg-field {
+      position: absolute;
+      inset: 0;
+      z-index: -5;
+      background:
+        radial-gradient(circle at 52% 44%, rgba(11, 38, 48, .95), transparent 48%),
+        linear-gradient(135deg, #03141b, #061d25 55%, #03141b);
+    }
+    .grid-field {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      opacity: .38;
+      background-image:
+        linear-gradient(rgba(105, 245, 230, .09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(105, 245, 230, .09) 1px, transparent 1px);
+      background-size: 9.375% 16.666%;
+      mask-image: radial-gradient(circle at 58% 45%, black, transparent 85%);
+    }
+    .noise {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: .14;
+      background-image: radial-gradient(rgba(255,255,255,.18) .45px, transparent .6px);
+      background-size: 4px 4px;
+      mix-blend-mode: soft-light;
+    }
+
+    .eyebrow {
+      font: 700 clamp(11px, 1.25vw, 22px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
+      letter-spacing: .16em;
+      color: var(--mint);
+      text-transform: uppercase;
+    }
+    .title {
+      margin: 1.2% 0 0;
+      font-size: clamp(30px, 4.4vw, 80px);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      font-weight: 850;
+    }
+    .display {
+      font: 850 clamp(46px, 7.1vw, 130px)/.9 "DejaVu Sans Mono", ui-monospace, monospace;
+      letter-spacing: -.06em;
+    }
+    .mono { font-family: "DejaVu Sans Mono", ui-monospace, monospace; }
+    .mint { color: var(--mint); }
+    .red { color: var(--red); }
+    .gold { color: var(--gold); }
+    .muted { color: var(--muted); }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .7em;
+      min-height: 2.3em;
+      padding: .48em .9em;
+      border: 1px solid rgba(105, 245, 230, .45);
+      border-radius: 999px;
+      background: rgba(3, 20, 27, .86);
+      color: var(--ink);
+      font-size: clamp(11px, 1.15vw, 20px);
+      font-weight: 730;
+      backdrop-filter: blur(6px);
+    }
+    .chip::before {
+      content: "";
+      width: .55em;
+      height: .55em;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 14px var(--mint);
+    }
+    .chip.gold-chip { border-color: rgba(246, 195, 68, .55); }
+    .chip.gold-chip::before { background: var(--gold); box-shadow: 0 0 14px var(--gold); }
+    .chip.red-chip { border-color: rgba(255, 92, 120, .62); }
+    .chip.red-chip::before { background: var(--red); box-shadow: 0 0 14px var(--red); }
+
+    .footer-line {
+      position: absolute;
+      left: 4%;
+      right: 18%;
+      bottom: 3.2%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2em;
+      color: var(--muted);
+      font: 600 clamp(9px, .9vw, 16px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
+      z-index: 8;
+    }
+    .footer-line::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -1em;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(105,245,230,.6), transparent 78%);
+    }
+
+    /* Slide 1 */
+    .cover { padding: 3.8% 4.3%; }
+    .cover-halo {
+      position: absolute;
+      z-index: 0;
+      right: -3%;
+      top: 6%;
+      width: 60%;
+      height: 74%;
+      background: radial-gradient(closest-side, rgba(105,245,230,.16), transparent 72%);
+    }
+    .cover-copy { position: relative; z-index: 2; width: 46%; padding-top: .5%; }
+    .cover .eyebrow { margin-top: 4.5%; font-size: clamp(10px, 1.02vw, 19px); letter-spacing: .12em; white-space: nowrap; }
+    .cover .title { margin-top: 2.6%; font-size: clamp(36px, 4.4vw, 82px); }
+    .cover-lead {
+      margin-top: 4.4%;
+      font-size: clamp(19px, 2.75vw, 50px);
+      line-height: 1.28;
+      font-weight: 760;
+    }
+    .cover-sub {
+      margin-top: 2.8%;
+      max-width: 17em;
+      color: var(--muted);
+      font-size: clamp(14px, 1.42vw, 26px);
+      line-height: 1.55;
+    }
+    .cover-chips { position: absolute; z-index: 2; left: 4.3%; bottom: 10.8%; display: flex; gap: 1em; }
+    .cover-frame {
+      position: absolute;
+      z-index: 1;
+      right: 3.4%;
+      top: 15%;
+      width: 50%;
+      border: 1px solid rgba(105,245,230,.42);
+      border-radius: 1vw;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: 0 34px 90px rgba(0,0,0,.6), 0 0 60px rgba(105,245,230,.12);
+    }
+    .frame-bar {
+      display: flex;
+      align-items: center;
+      gap: .45em;
+      padding: .85em 1.15em;
+      background: rgba(3,20,27,.96);
+      border-bottom: 1px solid rgba(105,245,230,.2);
+    }
+    .frame-bar i { width: .62em; aspect-ratio: 1; border-radius: 50%; background: #ff5f57; }
+    .frame-bar i:nth-child(2) { background: #febc2e; }
+    .frame-bar i:nth-child(3) { background: #28c840; }
+    .frame-addr {
+      flex: 1;
+      margin-left: .9em;
+      padding: .34em .95em;
+      border: 1px solid rgba(105,245,230,.25);
+      border-radius: 999px;
+      color: var(--muted);
+      font: 650 clamp(9px, .85vw, 15px)/1.2 "DejaVu Sans Mono", monospace;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .frame-live {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .55em;
+      color: var(--mint);
+      font: 800 clamp(9px, .85vw, 15px)/1 "DejaVu Sans Mono", monospace;
+      letter-spacing: .1em;
+    }
+    .frame-live::before {
+      content: "";
+      width: .6em;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 12px var(--mint);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { opacity: .3; } }
+    .frame-view { position: relative; }
+    .frame-view img { display: block; width: 100%; }
+    .frame-view::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 1px;
+      background: var(--mint);
+      box-shadow: 0 0 10px var(--mint), 0 0 30px rgba(105,245,230,.65);
+      animation: scan 5.2s ease-in-out infinite alternate;
+    }
+    @keyframes scan { from { left: 8%; } to { left: 92%; } }
+    .frame-foot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+      padding: 2.2em 1.3em .95em;
+      background: linear-gradient(0deg, rgba(3,20,27,.92), transparent);
+      color: var(--ink);
+      font-size: clamp(10px, .95vw, 17px);
+      font-weight: 730;
+    }
+    .frame-foot .mono { color: var(--mint); font-size: .88em; letter-spacing: .08em; }
+
+    /* Slide 2 */
+    .request-token {
+      position: absolute;
+      left: 4%; right: 4%; top: 20%;
+      height: 8.4%;
+      display: flex; align-items: center;
+      padding: 0 2.2%;
+      border: 1px solid rgba(105,245,230,.6);
+      border-radius: .8vw;
+      background: rgba(3,20,27,.9);
+      font-size: clamp(12px, 1.35vw, 24px);
+      white-space: nowrap;
+      box-shadow: inset 0 0 30px rgba(105,245,230,.04);
+    }
+    .request-token::before { content: ""; width: .7em; height: .7em; margin-right: 1em; border-radius: 50%; background: var(--mint); box-shadow: 0 0 16px var(--mint); }
+    .request-token span:last-child { margin-left: auto; color: var(--muted); font-family: inherit; }
+    .engine-flow {
+      position: absolute;
+      left: 7%; right: 7%; top: 34%;
+      height: 28%;
+      display: grid;
+      grid-template-columns: 1fr .7fr 1fr .7fr 1fr .8fr .9fr;
+      align-items: center;
+    }
+    .engine-line { height: 2px; background: linear-gradient(90deg, var(--mint), var(--gold)); box-shadow: 0 0 14px rgba(105,245,230,.5); position: relative; }
+    .engine-line::after { content: ""; position: absolute; right: -1px; top: 50%; border: .45em solid transparent; border-left-color: var(--mint); transform: translate(70%, -50%); }
+    .engine-node {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.55;
+      border-radius: 50%;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      border: 1.5px solid var(--node, var(--mint));
+      background: radial-gradient(circle, rgba(11,38,48,.96), rgba(3,20,27,.92));
+      box-shadow: 0 0 28px color-mix(in srgb, var(--node, var(--mint)) 18%, transparent);
+    }
+    .engine-node b { color: var(--node, var(--mint)); font: 800 clamp(12px, 1.45vw, 26px)/1 "DejaVu Sans Mono", monospace; }
+    .engine-node strong { margin-top: .55em; font-size: clamp(14px, 1.7vw, 30px); }
+    .engine-node small { margin-top: .7em; color: var(--muted); font-size: clamp(9px, .95vw, 17px); }
+    .output-hub { --node: var(--mint); aspect-ratio: 1; }
+    .output-arc {
+      position: absolute;
+      left: 4%; right: 4%; bottom: 12%;
+      height: 22%;
+      border-top: 1px solid rgba(105,245,230,.22);
+      border-radius: 50% 50% 0 0;
+    }
+    .output-pill {
+      position: absolute;
+      width: 17%;
+      display: flex; align-items: center; gap: .75em;
+      color: var(--ink);
+      font-size: clamp(10px, 1.2vw, 21px);
+      font-weight: 760;
+    }
+    .output-pill i { display: grid; place-items: center; width: 2.3em; aspect-ratio: 1; border: 1px solid var(--c, var(--mint)); border-radius: 50%; color: var(--c, var(--mint)); font-style: normal; box-shadow: 0 0 18px color-mix(in srgb, var(--c, var(--mint)) 22%, transparent); }
+    .op1 { left: 2%; top: 36%; } .op2 { left: 22%; top: 14%; } .op3 { left: 42%; top: 2%; }
+    .op4 { left: 63%; top: 14%; --c: var(--red); } .op5 { left: 82%; top: 36%; }
+    .boundary-line { position: absolute; left: 7%; right: 7%; bottom: 8.5%; text-align: center; color: var(--ink); font-size: clamp(15px, 1.7vw, 30px); font-weight: 730; }
+
+    /* Live map slides */
+    .map-slide { padding: 0; background: var(--bg); }
+    .map-shell {
+      position: absolute;
+      inset: 0;
+      background: var(--fallback) center/100% 100% no-repeat;
+      overflow: hidden;
+    }
+    .map-shell iframe {
+      width: 100%; height: 100%; border: 0;
+      pointer-events: none; opacity: 0; background: transparent;
+      transition: opacity .25s ease;
+    }
+    .map-shell.interactive iframe { pointer-events: auto; opacity: 1; }
+    .map-shade {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(3,20,27,.99) 0%, rgba(3,20,27,.96) 13%, rgba(3,20,27,.62) 25%, transparent 42%), linear-gradient(0deg, rgba(3,20,27,.82), transparent 30%);
+    }
+    .map-title { position: absolute; z-index: 6; left: 3.6%; top: 3.2%; }
+    .map-title .title { margin-top: .45em; }
+    .map-actions { position: absolute; z-index: 10; right: 3.5%; top: 4%; display: flex; gap: .75em; }
+    .map-toggle, .open-map {
+      border: 1px solid rgba(105,245,230,.58);
+      background: rgba(3,20,27,.9);
+      padding: .72em 1em;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink);
+      font: 750 clamp(10px, 1vw, 18px)/1 "DejaVu Sans Mono", monospace;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .map-toggle:hover, .open-map:hover { border-color: var(--mint); box-shadow: 0 0 20px rgba(105,245,230,.25); transform: translateY(-1px); }
+    .map-shell.interactive + .map-shade { opacity: .42; }
+    .metric-rail {
+      position: absolute;
+      z-index: 6;
+      left: 3.2%;
+      bottom: 10.2%;
+      width: 37%;
+      padding: 2.1% 2.4%;
+      border: 1px solid rgba(105,245,230,.58);
+      border-radius: 1vw;
+      background: linear-gradient(135deg, rgba(3,20,27,.97), rgba(11,38,48,.84));
+      box-shadow: 0 18px 60px rgba(0,0,0,.35), inset 0 0 35px rgba(105,245,230,.035);
+      backdrop-filter: blur(8px);
+    }
+    .metric-label { color: var(--muted); font: 760 clamp(9px, 1vw, 18px)/1.2 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
+    .metric-rail .display { margin-top: .22em; color: var(--metric, var(--mint)); text-shadow: 0 0 24px color-mix(in srgb, var(--metric, var(--mint)) 40%, transparent); }
+    .metric-sub { margin-top: .6em; display: flex; flex-wrap: wrap; gap: .55em 1.2em; font-size: clamp(10px, 1.15vw, 21px); }
+    .metric-sub b { font-family: "DejaVu Sans Mono", monospace; color: var(--ink); }
+    .science-callout {
+      position: absolute;
+      z-index: 6;
+      right: 3.5%;
+      bottom: 10.2%;
+      width: 50%;
+      padding: 1.4% 1.8%;
+      border: 1px solid var(--callout, var(--gold));
+      border-radius: .8vw;
+      background: rgba(3,20,27,.92);
+      font-size: clamp(11px, 1.25vw, 22px);
+      line-height: 1.5;
+      box-shadow: 0 0 24px color-mix(in srgb, var(--callout, var(--gold)) 14%, transparent);
+    }
+    .science-callout b { display: block; color: var(--ink); }
+    .map-tabs { position: absolute; z-index: 6; right: 3.5%; top: 18%; display: flex; gap: 1.4em; font: 760 clamp(9px, 1vw, 18px)/1 "DejaVu Sans Mono", monospace; }
+    .map-tabs span { color: var(--muted); } .map-tabs .active-tab { color: var(--mint); }
+    .candidate-legend { position: absolute; z-index: 6; right: 3.5%; top: 37%; padding: 1em 1.2em; border: 1px solid var(--grid); border-radius: .7vw; background: rgba(3,20,27,.9); font-size: clamp(10px, 1.05vw, 19px); }
+    .candidate-legend div { display: flex; align-items: center; gap: .75em; margin: .45em 0; }
+    .candidate-legend i { width: .8em; aspect-ratio: 1; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
+
+    /* Task breakdown slide */
+    .brief-rows { position: absolute; left: 4%; right: 4%; top: 20.5%; display: grid; gap: 1.7%; }
+    .brief-row { display: grid; grid-template-columns: 11em 1fr; align-items: center; gap: 1.4em; min-height: 9.8vh; padding: .8em 1.5em; border: 1px solid color-mix(in srgb, var(--c, var(--mint)) 36%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
+    .brief-step b { display: block; color: var(--c, var(--mint)); font-size: clamp(16px,1.75vw,32px); font-weight: 820; line-height: 1.15; }
+    .brief-step small { display: block; margin-top: .45em; color: var(--muted); font: 700 clamp(8px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .brief-tags { display: flex; flex-wrap: wrap; gap: .5em .55em; }
+    .brief-tags span { padding: .42em .85em; border: 1px solid rgba(243,248,250,.22); border-radius: 999px; color: var(--ink); font-size: clamp(11px,1.12vw,21px); font-weight: 700; }
+    .brief-tags .hl { border-color: color-mix(in srgb, var(--c, var(--mint)) 65%, transparent); color: var(--c, var(--mint)); }
+    .brief-bridge { position: absolute; left: 15%; right: 15%; top: 54.5%; text-align: center; color: var(--mint); font: 750 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; }
+    .brief-bridge::before, .brief-bridge::after { content: ""; position: absolute; top: 50%; width: 28%; height: 1px; background: linear-gradient(90deg, transparent, rgba(105,245,230,.55)); }
+    .brief-bridge::before { left: 0; }
+    .brief-bridge::after { right: 0; transform: scaleX(-1); }
+    .brief-outputs { position: absolute; left: 4%; right: 4%; bottom: 10%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.4%; }
+    .brief-output { padding: .95em 1em .8em; border-top: 3px solid var(--c,var(--mint)); background: linear-gradient(180deg, rgba(11,38,48,.62), rgba(11,38,48,0)); }
+    .brief-output b { display: block; color: var(--c,var(--mint)); font: 800 clamp(9px,.92vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .brief-output span { display: block; margin-top: .55em; color: var(--ink); font-size: clamp(11px,1.08vw,20px); font-weight: 760; line-height: 1.3; }
+    .trace-chain.plain .trace-step::after { display: none; }
+
+    .repo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .6em;
+      margin-top: 3.2%;
+      padding: .55em 1em;
+      border: 1px solid rgba(105,245,230,.4);
+      border-radius: 999px;
+      color: var(--mint);
+      text-decoration: none;
+      font: 700 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono", monospace;
+      background: rgba(3,20,27,.85);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .repo-link:hover { border-color: var(--mint); box-shadow: 0 0 18px rgba(105,245,230,.25); }
+    .repo-link::before { content: "⌥"; font-weight: 900; }
+
+    .brand { display: flex; align-items: center; gap: 1em; }
+    .team-badge { margin-left: .4em; padding: .55em 1em; border: 1px solid rgba(246,195,68,.6); border-radius: 999px; color: var(--gold); font: 800 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .14em; background: rgba(3,20,27,.85); box-shadow: 0 0 16px rgba(246,195,68,.15); white-space: nowrap; }
+    .brand .logo { width: clamp(42px, 3.6vw, 66px); flex: none; filter: drop-shadow(0 0 14px rgba(105,245,230,.35)); }
+    .brand-name b { display: block; color: var(--ink); font: 800 clamp(13px,1.25vw,23px)/1.1 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
+    .brand-name small { display: block; margin-top: .4em; color: var(--muted); font: 700 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .16em; }
+
+    .source-grid { margin-top: .9em; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1%; }
+    .source-col { padding: .85em 1em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--sc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.88); }
+    .source-col b { display: block; color: var(--sc, var(--mint)); font: 800 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .1em; }
+    .source-col span { display: block; margin-top: .6em; color: var(--ink); font-size: clamp(9px,.95vw,17px); font-weight: 700; line-height: 1.35; }
+    .source-col span i { font-style: normal; color: var(--muted); font-weight: 650; }
+
+    .source-strip { position: absolute; left: 4%; right: 4%; top: 59.5%; }
+    .source-strip .strip-head { color: var(--muted); font: 750 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
+    .source-strip .strip-head b { color: var(--mint); }
+    .source-chips { margin-top: .8em; display: flex; flex-wrap: wrap; gap: .5em .55em; }
+    .source-chips span { padding: .42em .8em; border: 1px solid rgba(105,245,230,.26); border-radius: .5vw; background: rgba(3,20,27,.85); color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 700; }
+    .source-chips span b { color: var(--mint); font-family: "DejaVu Sans Mono",monospace; }
+
+    .pip { position: absolute; z-index: 7; display: block; text-decoration: none; }
+    .pip-globe { right: 3%; top: 22.5%; width: 22%; }
+    .pip-frame { position: relative; display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 1px solid rgba(105,245,230,.55); box-shadow: 0 14px 44px rgba(0,0,0,.5), 0 0 34px rgba(105,245,230,.16); background: #02090d; }
+    .pip-frame iframe { position: absolute; left: -12%; top: -12%; width: 124%; height: 124%; border: 0; pointer-events: none; }
+    .pip-cap { display: block; margin-top: .7em; text-align: center; color: var(--ink); font: 750 clamp(9px,.92vw,16px)/1.3 "DejaVu Sans Mono",monospace; text-shadow: 0 1px 6px rgba(1,10,14,.9); }
+    .pip-cap b { color: var(--mint); }
+    .pip-rect { right: 3.5%; top: 24%; width: 23%; }
+    .pip-rect .pip-frame { aspect-ratio: 16/9; border-radius: .7vw; }
+    .pip-rect .pip-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .conf-list { margin-top: 1em; display: grid; gap: .7em; }
+    .conf-item { display: grid; grid-template-columns: 9.5em 1fr auto; align-items: center; gap: .9em; font-size: clamp(10px,1vw,18px); }
+    .conf-item .conf-bar { height: .45vw; min-height: 4px; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .conf-item .conf-bar i { display: block; height: 100%; width: var(--v); background: var(--c, var(--mint)); border-radius: inherit; box-shadow: 0 0 12px var(--c, var(--mint)); }
+    .conf-item b { font-family: "DejaVu Sans Mono",monospace; color: var(--c, var(--mint)); }
+    .conf-item small { color: var(--muted); }
+
+    .stat-cloud { position: absolute; z-index: 6; right: 3.5%; top: 27%; width: 26%; display: grid; grid-template-columns: 1fr 1fr; gap: .7em; }
+    .stat-card { padding: .95em 1.05em; border: 1px solid rgba(105,245,230,.3); border-radius: .7vw; background: rgba(3,20,27,.92); }
+    .stat-card b { display: block; font: 850 clamp(16px,1.9vw,34px)/1 "DejaVu Sans Mono",monospace; color: var(--c, var(--mint)); }
+    .stat-card span { display: block; margin-top: .5em; color: var(--muted); font-size: clamp(9px,.9vw,16px); }
+
+    .schema-cloud { position: absolute; z-index: 6; right: 3.5%; top: 26%; width: 34%; display: grid; grid-template-columns: repeat(3,1fr); gap: .55em; }
+    .schema-cloud span { padding: .65em .5em; text-align: center; border: 1px solid rgba(105,245,230,.24); border-radius: .5vw; background: rgba(3,20,27,.9); color: var(--ink); font: 720 clamp(8px,.82vw,15px)/1.25 "DejaVu Sans Mono",monospace; }
+    .schema-cloud .head-chip { grid-column: 1 / -1; color: var(--mint); border-color: rgba(105,245,230,.5); font-size: clamp(9px,.9vw,16px); }
+
+    /* Skill core: state machine × loop ring */
+    .core-split { position: absolute; left: 4%; right: 4%; top: 20%; bottom: 16.5%; display: grid; grid-template-columns: 1.12fr .92fr; gap: 2.8%; }
+    .panel-label { color: var(--mint); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
+    .panel-label.gold { color: var(--gold); }
+    .stage-matrix { margin-top: 1em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
+    .stage-matrix .stage-node { min-height: 11vh; }
+    .stage-matrix .stage-node::after { display: none; }
+    .gate-line { margin-top: 1.1em; color: var(--ink); font-size: clamp(10px,1vw,18px); line-height: 2; }
+    .gate-line code { margin: 0 .25em; padding: .3em .65em; border: 1px solid rgba(246,195,68,.5); border-radius: .4vw; color: var(--gold); font: 750 .92em/1 "DejaVu Sans Mono",monospace; white-space: nowrap; }
+    .loop-ring { position: relative; width: min(97%, 28.5vw); aspect-ratio: 1; margin: .8em auto 0; }
+    .ring-track { position: absolute; inset: 12%; border: 2px dashed rgba(246,195,68,.55); border-radius: 50%; animation: ringspin 26s linear infinite; }
+    @keyframes ringspin { to { transform: rotate(360deg); } }
+    html.static .ring-track { animation: none; }
+    .ring-node { position: absolute; width: 38%; padding: .7em .55em; border: 1px solid var(--rc,var(--mint)); border-radius: .6vw; background: rgba(3,20,27,.96); text-align: center; box-shadow: 0 8px 26px rgba(0,0,0,.35); }
+    .ring-node b { display: block; color: var(--rc,var(--mint)); font: 800 clamp(10px,1vw,18px)/1 "DejaVu Sans Mono",monospace; }
+    .ring-node span { display: block; margin-top: .4em; color: var(--muted); font-size: clamp(8px,.82vw,15px); line-height: 1.35; }
+    .rn1 { left: 50%; top: -2%; transform: translateX(-50%); }
+    .rn2 { right: -4%; top: 50%; transform: translateY(-50%); --rc: var(--gold); }
+    .rn3 { left: 50%; bottom: -2%; transform: translateX(-50%); --rc: var(--red); }
+    .rn4 { left: -4%; top: 50%; transform: translateY(-50%); }
+    .ring-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); text-align: center; width: 44%; }
+    .ring-core b { display: block; color: var(--gold); font: 850 clamp(16px,1.85vw,34px)/1 "DejaVu Sans Mono",monospace; }
+    .ring-core span { display: block; margin-top: .55em; color: var(--muted); font-size: clamp(8px,.82vw,15px); line-height: 1.5; }
+    .ring-arrow { position: absolute; color: var(--gold); font-size: clamp(11px,1.1vw,20px); opacity: .85; }
+    .ra1 { right: 20%; top: 20%; transform: rotate(45deg); }
+    .ra2 { right: 20%; bottom: 20%; transform: rotate(135deg); }
+    .ra3 { left: 20%; bottom: 20%; transform: rotate(225deg); }
+    .ra4 { left: 20%; top: 20%; transform: rotate(315deg); }
+    .fail-line { position: absolute; left: 4%; right: 4%; bottom: 8.6%; display: flex; flex-wrap: wrap; gap: .5em; align-items: center; }
+    .fail-line .fl-label { color: var(--red); font: 800 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; margin-right: .4em; }
+    .fail-line code { padding: .38em .62em; border: 1px solid rgba(255,92,120,.35); border-radius: .4vw; color: #ffb9c6; background: rgba(255,92,120,.06); font: 720 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono",monospace; }
+
+    /* Backlog table */
+    .backlog-wrap { position: absolute; left: 4%; right: 4%; top: 29.5%; }
+    .backlog-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; flex-wrap: wrap; }
+    .backlog-head h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .backlog-head .bh-stats { color: var(--muted); font: 700 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; }
+    .backlog-head .bh-stats b { color: var(--ink); }
+    table.backlog { width: 100%; margin-top: .8em; border-collapse: collapse; font: 650 clamp(9px,.88vw,16px)/1.5 "DejaVu Sans Mono",monospace; }
+    table.backlog th { text-align: left; padding: .45em .8em; color: var(--muted); font-weight: 750; font-size: .82em; letter-spacing: .1em; border-bottom: 1px solid rgba(105,245,230,.3); }
+    table.backlog td { padding: .55em .8em; border-bottom: 1px solid rgba(105,245,230,.12); color: var(--ink); vertical-align: top; }
+    table.backlog td.st-a { color: var(--mint); }
+    table.backlog td.st-r { color: var(--gold); }
+    table.backlog td.st-s { color: var(--red); }
+    table.backlog td.dim { color: var(--muted); }
+
+    /* Run outputs column */
+    .run-outs { display: grid; gap: .7em; align-content: center; }
+    .out-card { border: 1px solid rgba(105,245,230,.35); border-radius: .6vw; overflow: hidden; background: var(--panel); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .out-card img { width: 100%; aspect-ratio: 16/8; object-fit: cover; object-position: top; display: block; }
+    .out-card span { display: block; padding: .45em .8em; color: var(--ink); font: 750 clamp(9px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; }
+    .out-badge { text-align: center; padding: .6em; border: 1px solid rgba(67,224,140,.55); border-radius: 999px; color: #43e08c; font: 800 clamp(10px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+
+    .core.core-brand { width: 21%; }
+    .core.core-brand::before { content: none; }
+    .core.core-brand .logo { width: 30%; justify-self: center; filter: drop-shadow(0 0 16px rgba(105,245,230,.4)); }
+    .core.core-brand b { margin-top: .8em; font: 850 clamp(10px,.92vw,17px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .core.core-brand small { margin-top: .7em; color: var(--muted); font: 700 clamp(7px,.66vw,12px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+
+    /* State machine slide */
+    .stage-flow { position: absolute; left: 4%; right: 4%; top: 21%; display: grid; grid-template-columns: repeat(9, 1fr); gap: .8%; }
+    .stage-node { position: relative; min-height: 17vh; padding: .9em .55em; border: 1px solid rgba(105,245,230,.35); border-radius: .7vw; background: linear-gradient(160deg, rgba(11,38,48,.95), rgba(3,20,27,.92)); text-align: center; display: grid; align-content: start; justify-items: center; gap: .5em; }
+    .stage-node b { color: var(--mint); font: 850 clamp(12px,1.3vw,24px)/1 "DejaVu Sans Mono",monospace; }
+    .stage-node strong { font-size: clamp(10px,1.02vw,19px); line-height: 1.25; }
+    .stage-node small { color: var(--muted); font: 650 clamp(7px,.72vw,13px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .stage-node::after { content: "→"; position: absolute; right: -1em; top: 42%; color: var(--mint); font-weight: 800; font-size: clamp(10px,1vw,18px); z-index: 2; }
+    .stage-node:last-child::after { display: none; }
+    .stage-node.gate { border-color: rgba(246,195,68,.55); }
+    .stage-node.gate b { color: var(--gold); }
+    .machine-panels { position: absolute; left: 4%; right: 4%; top: 47%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.5%; }
+    .gate-panel { padding: 1.2em 1.4em; border: 1px solid rgba(246,195,68,.4); border-radius: .9vw; background: rgba(3,20,27,.9); }
+    .gate-panel h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .gate-panel ul { margin: .9em 0 0; padding: 0; list-style: none; display: grid; gap: .65em; }
+    .gate-panel li { display: grid; grid-template-columns: auto 1fr; gap: .8em; align-items: baseline; font-size: clamp(10px,1.02vw,19px); color: var(--ink); }
+    .gate-panel li code { color: var(--gold); font: 750 clamp(9px,.9vw,16px)/1.3 "DejaVu Sans Mono",monospace; }
+    .fail-panel { padding: 1.2em 1.4em; border: 1px solid rgba(255,92,120,.42); border-radius: .9vw; background: rgba(3,20,27,.9); }
+    .fail-panel h3 { margin: 0; color: var(--red); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .fail-panel .fail-cloud { margin-top: .9em; display: flex; flex-wrap: wrap; gap: .5em; }
+    .fail-panel .fail-cloud code { padding: .45em .7em; border: 1px solid rgba(255,92,120,.35); border-radius: .45vw; color: #ffb9c6; font: 720 clamp(8px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; background: rgba(255,92,120,.06); }
+    .fail-panel p { margin: .9em 0 0; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.5; }
+
+    .artifact-strip { position: absolute; left: 4%; right: 4%; top: 21.5%; display: flex; flex-wrap: wrap; gap: .45em; align-items: center; }
+    .artifact-strip .strip-label { color: var(--gold); font: 800 clamp(9px,.92vw,16px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; margin-right: .5em; }
+    .artifact-strip code { padding: .4em .6em; border: 1px solid rgba(105,245,230,.24); border-radius: .4vw; background: rgba(3,20,27,.85); color: var(--ink); font: 700 clamp(8px,.78vw,14px)/1 "DejaVu Sans Mono",monospace; }
+    .artifact-strip code.gold { color: var(--gold); border-color: rgba(246,195,68,.4); }
+
+    /* Run trace slide */
+    .run-layout { position: absolute; left: 4%; right: 4%; top: 19%; bottom: 17.5%; display: grid; grid-template-columns: .74fr 1.62fr .55fr; gap: 1.8%; }
+    .run-stages { display: grid; gap: 1.6%; align-content: stretch; }
+    .run-step { display: grid; grid-template-columns: 2em 1fr; align-items: center; gap: .7em; padding: .22em .8em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--mint); border-radius: .45vw; background: rgba(3,20,27,.88); font-size: clamp(9px,.98vw,18px); font-weight: 740; }
+    .run-step i { display: grid; place-items: center; width: 1.9em; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--mint); color: var(--mint); font: 800 .78em/1 "DejaVu Sans Mono",monospace; font-style: normal; }
+    .run-step small { display: block; color: var(--muted); font: 650 clamp(7px,.72vw,13px)/1.3 "DejaVu Sans Mono",monospace; }
+    .run-term { border: 1px solid rgba(105,245,230,.4); border-radius: .9vw; background: #010d12; overflow: hidden; display: grid; grid-template-rows: auto 1fr; box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 0 40px rgba(105,245,230,.03); }
+    .term-bar { display: flex; align-items: center; gap: .45em; padding: .75em 1.1em; background: rgba(3,20,27,.98); border-bottom: 1px solid rgba(105,245,230,.2); }
+    .term-bar i { width: .6em; aspect-ratio: 1; border-radius: 50%; background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-left: .8em; color: var(--muted); font: 650 clamp(9px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; }
+    .term-body { padding: 1em 1.3em; font: 600 clamp(10px,1.02vw,19px)/1.75 "DejaVu Sans Mono",monospace; color: #cfe6e4; overflow: hidden; }
+    .run-line b { color: var(--mint); font-weight: 800; }
+    .run-line .ok { color: #43e08c; font-weight: 800; }
+    .run-line .num { color: var(--gold); font-weight: 800; }
+    .run-line.cmd { color: #eef7f6; }
+    .run-line.done { color: var(--mint); font-weight: 800; letter-spacing: .04em; }
+    .run-caret { display: inline-block; width: .55em; height: 1.05em; margin-left: .15em; vertical-align: -0.18em; background: var(--mint); animation: caret 1s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+    .run-progress { position: absolute; left: 4%; right: 4%; bottom: 13%; height: .5vw; min-height: 5px; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .run-progress i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--mint), var(--gold)); box-shadow: 0 0 18px rgba(105,245,230,.5); }
+    .active .run-progress i { animation: fillbar 6.6s cubic-bezier(.25,.6,.3,1) forwards; animation-delay: .3s; }
+    @keyframes fillbar { to { width: 100%; } }
+    .run-stats { position: absolute; left: 4%; right: 4%; bottom: 8%; display: flex; justify-content: space-between; gap: 1em; color: var(--ink); font: 750 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; }
+    .run-stats b { color: var(--mint); }
+    html.static .run-progress i { width: 100%; animation: none; }
+
+    /* Slide 5 */
+    .equations { position: absolute; left: 4%; right: 4%; top: 19%; height: 22%; }
+    .equation { display: flex; align-items: baseline; gap: .65em; font-size: clamp(20px, 3.1vw, 56px); font-weight: 780; white-space: nowrap; }
+    .equation + .equation { margin-top: 2.5%; margin-left: 11%; }
+    .equation .value { font-family: "DejaVu Sans Mono", monospace; color: var(--mint); font-weight: 850; }
+    .equation:nth-child(2) .value { color: var(--gold); }
+    .neq { color: var(--red); font-size: 1.35em; text-shadow: 0 0 22px rgba(255,92,120,.5); }
+    .forbidden { color: var(--red); }
+    .confidence-rail { position: absolute; left: 4%; right: 4%; top: 46%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.2%; }
+    .component { min-width: 0; }
+    .component-head { display: flex; justify-content: space-between; align-items: baseline; font-size: clamp(10px, 1.1vw, 20px); }
+    .component-head b { font-family: "DejaVu Sans Mono", monospace; color: var(--c, var(--mint)); }
+    .bar { height: .48vw; min-height: 4px; margin-top: .8em; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .bar i { display: block; height: 100%; width: var(--v); border-radius: inherit; background: var(--c, var(--mint)); box-shadow: 0 0 16px var(--c, var(--mint)); }
+    .component small { display: block; margin-top: .9em; color: var(--muted); font: 650 clamp(8px, .8vw, 14px)/1 "DejaVu Sans Mono", monospace; }
+    .guardrails { position: absolute; left: 4%; right: 4%; top: 65%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4%; }
+    .guardrail { border-top: 3px solid var(--c); padding-top: 1.2em; }
+    .guardrail h3 { margin: 0; font: 800 clamp(13px, 1.55vw, 28px)/1.2 "DejaVu Sans Mono", monospace; }
+    .guardrail p { margin: .7em 0 0; color: var(--muted); font-size: clamp(10px, 1.08vw, 19px); line-height: 1.55; }
+
+    /* Slide 6 */
+    .orbit-stage { position: absolute; inset: 17% 7% 11%; }
+    .orbit-ring { position: absolute; left: 50%; top: 51%; width: 84%; height: 76%; transform: translate(-50%, -50%); border: 1px solid rgba(105,245,230,.2); border-radius: 50%; }
+    .orbit-ring::before { content: ""; position: absolute; inset: 14%; border: 1px solid rgba(105,245,230,.11); border-radius: 50%; }
+    .core {
+      position: absolute; left: 50%; top: 48%; width: 18%; aspect-ratio: 1;
+      transform: translate(-50%, -50%); border: 2px solid var(--mint); border-radius: 50%;
+      display: grid; place-content: center; text-align: center;
+      background: radial-gradient(circle, rgba(11,38,48,.98), rgba(3,20,27,.98));
+      box-shadow: 0 0 54px rgba(105,245,230,.28), inset 0 0 28px rgba(105,245,230,.08);
+    }
+    .core::before { content: "◎"; color: var(--mint); font-size: clamp(28px, 4.2vw, 76px); line-height: .8; }
+    .core b { margin-top: .4em; font: 850 clamp(18px, 2.8vw, 50px)/1 "DejaVu Sans Mono", monospace; }
+    .core small { margin-top: .6em; color: var(--muted); font: 700 clamp(8px, .85vw, 15px)/1 monospace; }
+    .orbit-node { position: absolute; display: flex; align-items: center; gap: .9em; width: 25%; font-size: clamp(11px, 1.25vw, 22px); font-weight: 780; }
+    .orbit-node i { flex: none; display: grid; place-items: center; width: 3.3em; aspect-ratio: 1; border: 1.5px solid var(--c, var(--mint)); border-radius: 50%; color: var(--c, var(--mint)); font: 800 1.2em/1 "DejaVu Sans Mono", monospace; background: rgba(3,20,27,.95); box-shadow: 0 0 18px color-mix(in srgb, var(--c, var(--mint)) 22%, transparent); }
+    .n1 { left: 3%; top: 27%; } .n2 { right: 1%; top: 27%; } .n3 { right: 3%; bottom: 9%; --c: var(--gold); }
+    .n4 { left: 40%; top: 0; --c: var(--red); } .n5 { left: 5%; bottom: 9%; }
+    .proof-strip { position: absolute; left: 10%; right: 10%; bottom: 13.5%; text-align: center; color: var(--muted); font: 650 clamp(9px, 1vw, 18px)/1.3 "DejaVu Sans Mono", monospace; }
+    .closing { position: absolute; left: 0; right: 0; bottom: 6.8%; text-align: center; font: 850 clamp(20px, 2.8vw, 52px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .02em; }
+
+    /* Skill design, provenance, profile and iteration loop */
+    .compat-strip {
+      position: absolute; left: 4%; right: 4%; top: 19%; min-height: 8%;
+      display: grid; grid-template-columns: 1.15fr 1.35fr 1.2fr; align-items: stretch;
+      border: 1px solid rgba(105,245,230,.45); border-radius: .8vw;
+      background: rgba(3,20,27,.86); overflow: hidden;
+    }
+    .compat-item { padding: .8em 1.2em; border-right: 1px solid rgba(105,245,230,.18); }
+    .compat-item:last-child { border-right: 0; }
+    .compat-item b { display: block; color: var(--mint); font: 780 clamp(10px,1.05vw,19px)/1.2 "DejaVu Sans Mono",monospace; }
+    .compat-item span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,1.08vw,20px); }
+    .design-grid { position: absolute; left: 4%; right: 4%; top: 32%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.35%; }
+    .design-card {
+      position: relative;
+      min-height: 44vh; padding: 1.45em 1.5em; border: 1px solid var(--card,var(--mint)); border-radius: .9vw;
+      background: linear-gradient(150deg,rgba(11,38,48,.94),rgba(3,20,27,.9));
+      box-shadow: inset 0 0 26px color-mix(in srgb,var(--card,var(--mint)) 5%,transparent);
+    }
+    .design-card .layer { position: absolute; right: 1em; top: 1.1em; color: var(--card,var(--mint)); opacity: .6; font: 800 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .design-card code { display: block; padding-right: 4.6em; color: var(--card,var(--mint)); font: 800 clamp(13px,1.4vw,25px)/1.2 "DejaVu Sans Mono",monospace; }
+    .design-card h3 { margin: .7em 0 .5em; font-size: clamp(17px,1.85vw,34px); }
+    .design-card p { margin: 0; color: var(--muted); font-size: clamp(11px,1.18vw,22px); line-height: 1.6; }
+    .design-card strong { color: var(--ink); }
+    .design-foot { position: absolute; left: 4%; right: 4%; bottom: 8.2%; display: flex; justify-content: center; gap: 1.1em; flex-wrap: wrap; }
+    .design-foot span { padding: .5em .9em; border: 1px solid rgba(105,245,230,.25); border-radius: 999px; color: var(--muted); font: 700 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; }
+
+    .trace-rail, .profile-rail {
+      position: absolute; z-index: 6; left: 3.2%; bottom: 9.8%; width: 43%; padding: 1.8% 2.1%;
+      border: 1px solid rgba(105,245,230,.65); border-radius: 1vw;
+      background: linear-gradient(135deg,rgba(3,20,27,.98),rgba(11,38,48,.9));
+      box-shadow: 0 18px 60px rgba(0,0,0,.4); backdrop-filter: blur(8px);
+    }
+    .trace-head, .profile-head { color: var(--mint); font: 800 clamp(12px,1.25vw,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .trace-chain { margin-top: 1.1em; display: grid; grid-template-columns: repeat(3,1fr); gap: .75em; }
+    .trace-step { position: relative; min-height: 4.3em; padding: .75em .75em .65em; border: 1px solid rgba(105,245,230,.18); border-radius: .55vw; background: rgba(3,20,27,.62); }
+    .trace-step b { display: block; color: var(--ink); font: 760 clamp(9px,.95vw,17px)/1.2 "DejaVu Sans Mono",monospace; }
+    .trace-step span { display: block; margin-top: .4em; color: var(--muted); font-size: clamp(8px,.8vw,14px); line-height: 1.35; }
+    .trace-step::after { content: "→"; position: absolute; right: -.72em; top: 40%; color: var(--mint); font-weight: 800; }
+    .trace-step:nth-child(3)::after, .trace-step:last-child::after { display: none; }
+    .trace-note { margin-top: 1em; color: var(--muted); font-size: clamp(9px,.92vw,16px); }
+    .trace-note strong { color: var(--gold); }
+
+    .profile-rail { border-color: rgba(246,195,68,.7); }
+    .profile-head { color: var(--gold); }
+    .profile-fields { margin: 1em 0 0; display: grid; grid-template-columns: auto 1fr; gap: .55em 1em; font-size: clamp(9px,.95vw,17px); }
+    .profile-fields dt { color: var(--gold); font-family: "DejaVu Sans Mono",monospace; }
+    .profile-fields dd { margin: 0; color: var(--ink); }
+    .story-cloud { position: absolute; z-index: 6; right: 3.5%; top: 35%; width: 45%; display: grid; grid-template-columns: repeat(3,1fr); gap: .6em; }
+    .story-cloud span { padding: .72em .45em; text-align: center; border: 1px solid rgba(246,195,68,.28); border-radius: .55vw; background: rgba(3,20,27,.9); color: var(--ink); font: 720 clamp(9px,.92vw,16px)/1.2 "DejaVu Sans Mono",monospace; }
+
+    .loop-stage { position: absolute; left: 4%; right: 4%; top: 30%; height: 28%; display: grid; grid-template-columns: 1fr .26fr 1fr .26fr 1fr .26fr 1fr; align-items: center; }
+    .loop-node { min-height: 8.7em; display: grid; align-content: center; justify-items: center; text-align: center; padding: 1em; border: 1.5px solid var(--loop,var(--mint)); border-radius: 1vw; background: rgba(3,20,27,.9); }
+    .loop-node b { color: var(--loop,var(--mint)); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; }
+    .loop-node strong { margin-top: .55em; font-size: clamp(14px,1.45vw,26px); }
+    .loop-node small { margin-top: .65em; color: var(--muted); font-size: clamp(9px,.88vw,16px); line-height: 1.35; }
+    .loop-arrow { height: 2px; background: linear-gradient(90deg,var(--mint),var(--gold)); position: relative; }
+    .loop-arrow::after { content:""; position:absolute; right:-2px; top:50%; border:.45em solid transparent; border-left-color:var(--gold); transform:translate(80%,-50%); }
+    .loop-return { position: absolute; left: 12%; right: 12%; top: 57%; height: 7%; border: 1px solid rgba(105,245,230,.5); border-top: 0; border-radius: 0 0 50% 50%; }
+    .loop-return::after { content: "重新运行并比较 · 最多 2 轮"; position: absolute; left: 50%; bottom: -1.5em; transform: translateX(-50%); color: var(--mint); font: 700 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; background: var(--bg); padding: 0 .8em; white-space: nowrap; }
+    .loop-states { position: absolute; left: 4%; right: 4%; top: 72%; display: grid; grid-template-columns: repeat(3,1fr); gap: 3%; }
+    .loop-state { border-top: 3px solid var(--state,var(--mint)); padding-top: 1em; }
+    .loop-state code { color: var(--state,var(--mint)); font: 800 clamp(11px,1.12vw,20px)/1 "DejaVu Sans Mono",monospace; }
+    .loop-state p { margin: .65em 0 0; color: var(--muted); font-size: clamp(9px,.98vw,17px); line-height: 1.5; }
+
+    .outcome-grid { position: absolute; left: 4%; right: 4%; top: 21%; bottom: 17.5%; display: grid; grid-template-columns: 1fr 1fr; gap: 2%; }
+    .outcome-card { position: relative; overflow: hidden; border: 1px solid var(--edge,var(--mint)); border-radius: 1vw; background: var(--shot) center/cover no-repeat; box-shadow: 0 18px 60px rgba(0,0,0,.38); transition: transform .35s var(--ease), box-shadow .35s; }
+    .outcome-card:hover { transform: translateY(-6px); box-shadow: 0 28px 76px rgba(0,0,0,.52), 0 0 34px color-mix(in srgb, var(--edge,var(--mint)) 22%, transparent); }
+    .outcome-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(3,20,27,.96) 0%,rgba(3,20,27,.9) 9%,rgba(3,20,27,.32) 19%,rgba(3,20,27,.08) 28%,rgba(3,20,27,.96) 82%); }
+    .outcome-label { position: absolute; z-index: 2; left: 1.1em; top: 1em; padding: .48em .8em; border: 1px solid var(--edge,var(--mint)); border-radius: 999px; background: rgba(3,20,27,.9); color: var(--edge,var(--mint)); font: 800 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; }
+    .outcome-copy { position: absolute; z-index: 2; left: 1.4em; right: 1.4em; bottom: 1.25em; }
+    .outcome-copy h3 { margin: 0; font-size: clamp(20px,2.2vw,40px); line-height: 1.15; }
+    .outcome-copy p { margin: .5em 0 .75em; color: var(--muted); font-size: clamp(10px,1vw,18px); }
+    .outcome-features { display: flex; flex-wrap: wrap; gap: .45em; }
+    .outcome-features span { padding: .38em .65em; border: 1px solid rgba(105,245,230,.28); border-radius: 999px; background: rgba(3,20,27,.72); color: var(--ink); font-size: clamp(8px,.78vw,14px); }
+    .outcome-open { position: absolute; z-index: 3; right: 1em; top: 1em; color: var(--ink); text-decoration: none; font: 760 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; padding: .55em .7em; border-radius: 999px; background: rgba(3,20,27,.9); border: 1px solid rgba(255,255,255,.32); }
+    .outcome-dock { position: absolute; left: 6%; right: 6%; bottom: 7.6%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1%; }
+    .outcome-dock span { padding: .72em .5em; text-align: center; border-top: 2px solid var(--dock,var(--mint)); color: var(--ink); font-size: clamp(10px,1.05vw,19px); font-weight: 760; }
+
+    /* Controls */
+    .controls {
+      position: fixed;
+      z-index: 100;
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(14px, env(safe-area-inset-bottom));
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      padding: 7px;
+      border: 1px solid rgba(105,245,230,.24);
+      border-radius: 999px;
+      background: rgba(1,10,14,.78);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 34px rgba(0,0,0,.3);
+    }
+    .controls button, .controls a {
+      min-width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      font: 750 12px/1 "DejaVu Sans Mono", monospace;
+    }
+    .controls button:hover, .controls a:hover { color: var(--ink); background: rgba(105,245,230,.12); }
+    .timer { color: var(--mint) !important; min-width: 62px !important; }
+    .slide-count { color: var(--ink); padding: 0 5px; font: 750 12px/1 "DejaVu Sans Mono", monospace; }
+    .progress { position: fixed; z-index: 101; left: 0; bottom: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--mint), var(--gold), var(--red)); box-shadow: 0 0 16px var(--mint); transition: width .35s var(--ease); }
+    .notes-panel {
+      position: fixed;
+      z-index: 90;
+      left: 18px;
+      bottom: 18px;
+      width: min(620px, calc(100vw - 36px));
+      max-height: 38vh;
+      overflow: auto;
+      padding: 18px 20px;
+      border: 1px solid rgba(105,245,230,.3);
+      border-radius: 14px;
+      background: rgba(1,10,14,.94);
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      color: #d8e7e9;
+      font-size: 15px;
+      line-height: 1.65;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform .3s var(--ease), opacity .3s;
+    }
+    .notes-panel.open { transform: none; opacity: 1; }
+    .notes-panel strong { color: var(--mint); }
+    .notes-template { display: none; }
+
+    .active .reveal { opacity: 0; transform: translateY(20px); animation: reveal .7s var(--ease) forwards; animation-delay: var(--d, 0s); }
+    @keyframes reveal { to { opacity: 1; transform: none; } }
+
+    html.static .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+
+    @media (max-aspect-ratio: 4/3) {
+      .controls { transform: scale(.9); transform-origin: right bottom; }
+      .map-actions { top: 3%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage" aria-live="polite">
+    <div class="noise"></div>
+
+    <section class="slide cover active" data-title="全球地球化学元素分布图谱 Skill">
+      <div class="bg-field"></div><div class="grid-field"></div><div class="cover-halo"></div>
+      <div class="cover-copy">
+        <div class="brand reveal" style="--d:.06s">
+          <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><ellipse cx="32" cy="32" rx="10" ry="25" fill="none" stroke="rgba(105,245,230,.35)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="47.5" cy="16.5" r="7.6" fill="none" stroke="rgba(246,195,68,.4)" stroke-width="1.2"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="13.5" cy="38" r="6.7" fill="none" stroke="rgba(255,92,120,.4)" stroke-width="1.2"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/><circle cx="40" cy="49.5" r="6" fill="none" stroke="rgba(105,245,230,.45)" stroke-width="1.2"/></svg>
+          <span class="brand-name"><b>GLOBAL GEOCHEMICAL ATLAS</b><small>SKILL · global-geochemical-atlas</small></span>
+          <span class="team-badge">TEAM 0066 组</span>
+        </div>
+        <div class="eyebrow reveal" style="--d:.16s">AI4S FUTURE SCIENCESKILLS HACKATHON · 气候与地球科学赛道 · 赛题</div>
+        <h1 class="title reveal" style="--d:.28s">全球地球化学元素<br>分布图谱 Skill</h1>
+        <div class="cover-lead reveal" style="--d:.46s">不是一张地图<br><span class="mint">是一套可执行科研工作流</span></div>
+        <p class="cover-sub reveal" style="--d:.62s">Agent 把公开测定组织为可追溯、可验证、可迭代的研究产物。</p>
+        <a class="repo-link reveal" style="--d:.72s" href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">github.com/asimfish/global-geochemical-atlas-skill</a>
+      </div>
+      <div class="cover-frame reveal" style="--d:.5s">
+        <div class="frame-bar"><i></i><i></i><i></i><span class="frame-addr">live/global-overview.html · 自包含单文件 · 即点即用</span><span class="frame-live">LIVE</span></div>
+        <div class="frame-view">
+          <img src="assets/global-overview-1920x1080.png" alt="全球元素分布图谱界面实拍">
+          <div class="frame-foot"><span>界面实拍 · 评委可现场操作</span><span class="mono">MAP / DATABASE / EVIDENCE</span></div>
+        </div>
+      </div>
+      <div class="cover-chips reveal" style="--d:.8s"><span class="chip">记录级证据</span><span class="chip">确定性科学门禁</span><span class="chip gold-chip">跨平台复用</span></div>
+      <div class="footer-line"><span>最终提交：一个完整、可复用的 Skill 文档</span><span>MAP / DATABASE / EVIDENCE / ANOMALY</span></div>
+      <template class="notes-template">我们交付的不是一张预先做好的地图，而是一套可执行科研工作流。Agent 接到元素、区域、地质单元和样品类型请求后，能够采集公开测定、完成科学标准化、生成研究视图，并把每个关键结论绑定到记录级证据。地图只是入口；真正的产品是可追溯、可验证、可迭代、可跨 Agent 平台复用的 Skill。</template>
+    </section>
+
+    <section class="slide" data-title="赛题要求，逐条落地">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">01 · TASK BREAKDOWN / DATA SOURCES</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">赛题要求，逐条落地</h2>
+      <div class="brief-rows">
+        <div class="brief-row reveal" style="--d:.3s">
+          <div class="brief-step"><b>自动采集</b><small>ACQUIRE</small></div>
+          <div class="brief-tags"><span class="hl">岩石</span><span class="hl">土壤</span><span class="hl">沉积物</span><span class="hl">水体</span><span>元素含量</span><span>采样坐标</span><span>地质背景</span><span>分析方法</span><span>公开文献与开源数据平台</span></div>
+        </div>
+        <div class="brief-row reveal" style="--d:.42s;--c:var(--gold)">
+          <div class="brief-step"><b>科学处理</b><small>STANDARDIZE</small></div>
+          <div class="brief-tags"><span class="hl">单位统一</span><span class="hl">空间匹配</span><span class="hl">质量控制</span><span class="hl">来源追溯</span><span>原始值永不覆盖</span></div>
+        </div>
+        <div class="brief-row reveal" style="--d:.54s;--c:var(--red)">
+          <div class="brief-step"><b>研究输出</b><small>VISUALIZE</small></div>
+          <div class="brief-tags"><span>按元素 / 区域 / 地质单元 / 样品类型</span><span class="hl">全球与区域分布图</span><span class="hl">热力图</span><span class="hl">元素组合对比</span><span class="hl">异常富集 / 亏损识别</span></div>
+        </div>
+      </div>
+      <div class="brief-bridge reveal" style="--d:.62s">同一次 Skill 运行 · 同时产出五项交付</div>
+      <div class="source-strip reveal" style="--d:.72s">
+        <div class="strip-head">已接入 <b>15 个公开来源</b> · 覆盖六大洲与全球淡水 · 岩石 / 土壤 / 沉积物 / 水体</div>
+        <div class="source-grid">
+          <div class="source-col"><b>欧洲 · 7</b><span>FOREGS ×6 <i>六介质基线</i></span><span>GEMAS <i>农牧土壤</i></span></div>
+          <div class="source-col"><b>非洲 · 2</b><span>AfSIS <i>土壤化学</i></span><span>PANGAEA <i>北非土壤</i></span></div>
+          <div class="source-col"><b>亚洲 · 2</b><span>TPDC <i>中国山地土壤</i></span><span>GSJ <i>日本河流沉积物</i></span></div>
+          <div class="source-col"><b>大洋洲 · 南极 · 2</b><span>NGSA <i>澳大利亚地表</i></span><span>GEOROC <i>南极板内火山岩</i></span></div>
+          <div class="source-col" style="--sc:var(--gold)"><b>全球 · 岩石圈 · 2</b><span>GEMStat <i>全球淡水 · UNEP</i></span><span>GEOROC <i>太古宙克拉通</i></span></div>
+        </div>
+      </div>
+      <div class="brief-outputs">
+        <div class="brief-output reveal" style="--d:.78s"><b>交付 1</b><span>可交互元素分布地图</span></div>
+        <div class="brief-output reveal" style="--d:.84s;--c:var(--gold)"><b>交付 2</b><span>标准化地球化学数据库</span></div>
+        <div class="brief-output reveal" style="--d:.9s"><b>交付 3</b><span>数据来源与置信度说明</span></div>
+        <div class="brief-output reveal" style="--d:.96s;--c:var(--red)"><b>交付 4</b><span>异常区域识别结果</span></div>
+        <div class="brief-output reveal" style="--d:1.02s;--c:var(--gold)"><b>交付 5</b><span>可复用 Skill 文档</span></div>
+      </div>
+      <div class="footer-line"><span>任务描述逐句覆盖</span><span>接下来逐项演示</span></div>
+      <template class="notes-template">赛题要求三件事：第一，从公开文献和开源数据平台自动采集岩石、土壤、沉积物、水体四类介质的元素含量、采样坐标、地质背景和分析方法；第二，完成单位统一、空间匹配、质量控制和来源追溯；第三，按元素、区域、地质单元和样品类型生成全球或区域分布图、热力图与元素组合对比，并识别异常富集与亏损区域。我们已接入十五个公开来源，覆盖六大洲与全球淡水：欧洲 FOREGS 六介质与 GEMAS、非洲 AfSIS、联合国 GEMStat 全球淡水、GEOROC 的南极与太古宙克拉通岩石、日本 GSJ、澳大利亚 NGSA、北非 PANGAEA、中国 TPDC。同一次 Skill 运行同时产出五项交付，下面逐项演示。</template>
+    </section>
+
+    <section class="slide map-slide" data-title="交付 1 · 可交互元素分布地图">
+      <div class="map-shell" style="--fallback:url('assets/global-overview-1920x1080.png')"><iframe data-src="live/global-overview.html" title="全球地球化学交互地图"></iframe></div>
+      <div class="map-shade"></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">02 · DELIVERABLE 1 / INTERACTIVE ATLAS</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 1 · 可交互元素分布地图</h2></div>
+      <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/global-overview.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
+      <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">分布地图</span><span>数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
+      <a class="pip pip-globe reveal" style="--d:.5s" href="live/globe-3d.html" target="_blank" rel="noopener">
+        <span class="pip-frame"><iframe src="live/globe-3d.html?embed=1" title="三维地球仪" loading="lazy"></iframe></span>
+        <span class="pip-cap"><b>3D 地球仪</b> · 同一份数据 · 点击放大 ↗</span>
+      </a>
+      <div class="trace-rail reveal" style="--d:.46s">
+        <div class="trace-head">怎么用 · 三步上手</div>
+        <div class="trace-chain">
+          <div class="trace-step"><b>① 选条件</b><span>元素 / 区域 / 地质单元 / 样品类型</span></div>
+          <div class="trace-step"><b>② 看分布</b><span>热力 = 采样密度，标记 = 聚合点位</span></div>
+          <div class="trace-step"><b>③ 点记录</b><span>任意点位直达原始证据</span></div>
+        </div>
+        <div class="trace-note"><strong>同一页面内置五个研究视图：</strong>分布地图、数据库、组合对比、来源置信、异常识别一键切换。</div>
+      </div>
+      <div class="science-callout reveal" style="--d:.62s">
+        <b>在线采集成库；产物自包含单文件，二维图谱 + 三维地球仪即点即用。</b>
+        <span class="muted">无需服务器与外网，评审现场断网照样全功能交互；筛选状态可导出 profile 复现。</span>
+      </div>
+      <div class="footer-line"><span>按元素 / 区域 / 地质单元 / 样品类型生成研究视图</span><span>空白区域如实显示数据缺口</span></div>
+      <template class="notes-template">第一项交付：可交互元素分布地图。用法三步：先按元素、区域、地质单元、样品类型选条件；再看分布，热力表示采样密度，标记是聚合点位，空白区域如实显示数据缺口；最后点任意记录，直达原始证据。右侧是同一份数据的三维地球仪，可拖动旋转、自动巡航。数据在线采集成库，产物是自包含单文件——无需服务器与外网，评审现场断网也能全功能交互；筛选状态可导出 profile 复现。</template>
+    </section>
+
+    <section class="slide map-slide" data-title="交付 2 · 标准化地球化学数据库">
+      <div class="map-shell" style="--fallback:url('assets/database-view-1920x1080.png')"><iframe data-src="live/global-overview.html?tab=database" title="标准化地球化学数据库视图"></iframe></div>
+      <div class="map-shade"></div>
+      <div class="map-title"><div class="eyebrow gold reveal" style="--d:.08s">03 · DELIVERABLE 2 / STANDARDIZED DATABASE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 2 · 标准化地球化学数据库</h2></div>
+      <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/global-overview.html?tab=database" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
+      <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span class="active-tab">数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
+      <div class="schema-cloud reveal" style="--d:.5s">
+        <span class="head-chip">SCHEMA · 40+ 字段 · 一行 = 样品 × 分析物 × 测定</span>
+        <span>record_id</span><span>sample_id · igsn</span><span>element_or_analyte</span>
+        <span>medium · material</span><span>original_value · unit</span><span>value_qualifier</span>
+        <span>normalized_value</span><span>conversion_factor</span><span>censored · limit</span>
+        <span>lat · lon · WGS84</span><span>coordinate_uncertainty_m</span><span>geologic_unit · GLiM</span>
+      </div>
+      <div class="trace-rail reveal" style="--d:.46s">
+        <div class="trace-head">怎么用 · 一行一条测定</div>
+        <div class="trace-chain">
+          <div class="trace-step"><b>① 检索</b><span>record_id / 元素 / 介质 / 地质单元</span></div>
+          <div class="trace-step"><b>② 读行</b><span>标准值 mg/kg · WGS84 · 检出限 qualifier · 置信度</span></div>
+          <div class="trace-step"><b>③ 导出</b><span>完整 geochemistry.csv 与 QC 报告</span></div>
+        </div>
+        <div class="trace-note"><strong>原始值永不覆盖：</strong>original 与 normalized 双列并存，换算因子、公式与 QC 另列保存。</div>
+      </div>
+      <div class="science-callout reveal" style="--d:.62s;--callout:var(--gold)">
+        <b>长表结构对齐 ODM2 语义；单位统一 mg/kg、坐标统一 WGS84，删失值保留 qualifier、不插补为 0。</b>
+        <span class="muted">字段映射对照 EarthChem / USGS / IGSN，不脱离专业生态；下载的 CSV 就是交付物本体。</span>
+      </div>
+      <div class="footer-line"><span>单位统一 · 空间匹配 · 质量控制 · 来源追溯</span><span>页面预览 = 数据库真实切片</span></div>
+      <template class="notes-template">第二项交付：标准化数据库。这是一张四十多个字段的专业长表，一行就是一个样品的一项元素测定：record_id 全库唯一，样品可带 IGSN 国际标识；原始值和标准化值双列并存，换算因子与公式单独成列；删失值保留检出限 qualifier，不插补为零；坐标统一 WGS84 并带不确定度，地质单元来自 GLiM。用法三步：检索、读行、导出——下载的 geochemistry.csv 就是交付物本体。长表语义对齐 ODM2，字段映射对照 EarthChem、USGS 与 IGSN，不脱离专业生态。</template>
+    </section>
+
+    <section class="slide map-slide" data-title="交付 3 · 数据来源与置信度说明">
+      <div class="map-shell" style="--fallback:url('assets/source-view-1920x1080.png')"><iframe data-src="live/global-overview.html?tab=source" title="数据来源与置信度视图"></iframe></div>
+      <div class="map-shade"></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">04 · DELIVERABLE 3 / SOURCE &amp; CONFIDENCE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 3 · 数据来源与置信度说明</h2></div>
+      <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/global-overview.html?tab=source" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
+      <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span>数据库</span><span>组合对比</span><span class="active-tab">来源置信</span><span>异常识别</span></div>
+      <div class="stat-cloud">
+        <div class="stat-card reveal" style="--d:.5s"><b>0.874</b><span>全库综合置信度 overall</span></div>
+        <div class="stat-card reveal" style="--d:.58s"><b>35,874</b><span>高置信记录 · 80.6%</span></div>
+        <div class="stat-card reveal" style="--d:.66s;--c:var(--gold)"><b>8,573</b><span>中置信记录 · 19.2%</span></div>
+        <div class="stat-card reveal" style="--d:.74s;--c:var(--red)"><b>89</b><span>低置信记录 · 0.2%</span></div>
+      </div>
+      <div class="trace-rail reveal" style="--d:.46s">
+        <div class="trace-head">置信度怎么读 · 五维加权（真实运行值）</div>
+        <div class="conf-list">
+          <div class="conf-item"><span>来源可靠性 <small>30%</small></span><div class="conf-bar"><i style="--v:89.7%"></i></div><b>0.897</b></div>
+          <div class="conf-item"><span>字段完整性 <small>20%</small></span><div class="conf-bar"><i style="--v:95.6%"></i></div><b>0.956</b></div>
+          <div class="conf-item"><span>方法可比性 <small>20%</small></span><div class="conf-bar"><i style="--v:81.3%"></i></div><b>0.813</b></div>
+          <div class="conf-item" style="--c:var(--gold)"><span>空间精度 <small>15%</small></span><div class="conf-bar"><i style="--v:80.0%"></i></div><b>0.800</b></div>
+          <div class="conf-item" style="--c:var(--gold)"><span>QC 质量 <small>15%</small></span><div class="conf-bar"><i style="--v:87.6%"></i></div><b>0.876</b></div>
+        </div>
+        <div class="trace-note"><strong>证据链到底：</strong>原始值 → 来源 DOI / 表 / 行 → SHA-256 manifest。</div>
+      </div>
+      <div class="science-callout reveal" style="--d:.62s;--callout:var(--gold)">
+        <b>15 个来源全部附许可、覆盖与接口说明；每条记录都能追到原始源行。</b>
+        <span class="muted">如实标注：置信度衡量工作流可用性，不等于测量正确概率；删失观测不插补。</span>
+      </div>
+      <div class="footer-line"><span>来源追溯 · 许可合规 · 覆盖说明</span><span>每个关键结论绑定来源定位</span></div>
+      <template class="notes-template">第三项交付：数据来源与置信度说明。每条记录按五个维度加权评分，这是真实运行值：来源可靠性零点八九七、字段完整性零点九五六、方法可比性零点八一三、空间精度零点八、QC 质量零点八七六，综合零点八七四；全库八成高置信、不到千分之二低置信，分级全库可查。十五个来源全部附许可、覆盖与接口说明；任何一条记录都能沿证据链追到原始源行——原始值、来源 DOI 和表行位置，再到文件与运行的 SHA-256。我们如实标注：置信度衡量工作流可用性，不等于测量正确概率。</template>
+    </section>
+
+    <section class="slide map-slide" data-title="交付 4 · 异常区域识别结果">
+      <div class="map-shell" style="--fallback:url('assets/china-anomaly-1920x1080.png')"><iframe data-src="live/china-anomaly.html" title="区域异常交互地图"></iframe></div>
+      <div class="map-shade"></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">05 · DELIVERABLE 4 / ANOMALY DETECTION</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 4 · 异常区域识别结果</h2></div>
+      <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/china-anomaly.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
+      <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">分布地图</span><span>数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
+      <a class="pip pip-rect reveal" style="--d:.5s" href="live/china-anomaly.html?tab=anomaly" target="_blank" rel="noopener">
+        <span class="pip-frame"><img src="assets/anomaly-view-1920x1080.png" alt="异常候选列表与判据卡片"></span>
+        <span class="pip-cap"><b>候选列表 + 判据卡片</b> · 点击打开 ↗</span>
+      </a>
+      <div class="trace-rail reveal" style="--d:.46s">
+        <div class="trace-head">异常点怎么看 · 三层呈现</div>
+        <div class="trace-chain">
+          <div class="trace-step"><b>① 地图标记</b><span>红环 = 富集候选，蓝环 = 亏损候选</span></div>
+          <div class="trace-step"><b>② 候选列表</b><span>网格 / 方向 / 元素 / 最大 |z|，一键定位</span></div>
+          <div class="trace-step"><b>③ 判据卡片</b><span>解释每个候选“为什么被标记”</span></div>
+        </div>
+        <div class="trace-note"><strong>判定口径：</strong>robust z ≥ 3.5；背景组 = 同元素 + 同介质 + 同测量基准。</div>
+      </div>
+      <div class="science-callout reveal" style="--d:.62s;--callout:var(--red)">
+        <b>富集与亏损分开呈现，每个候选都带统计判据与复核入口。</b>
+        <span class="muted">如实标注：候选 ≠ 矿化定论，复核链路直达原始记录。</span>
+      </div>
+      <div class="footer-line"><span>识别异常富集与亏损区域 · 全球与区域视图均支持</span><span>演示：中国区域候选异常</span></div>
+      <template class="notes-template">第四项交付：异常区域识别结果，直接回答“图中的异常点如何体现”。主图就是可视化的异常区域：红环是富集候选、蓝环是亏损候选，环上数字是网格内候选数。右侧缩略图打开候选列表——网格范围、方向、元素和最大 z 值，一键回到地图定位；点开判据卡片，能看到候选为什么被标记，比如比背景中位数高多少倍。判定用 robust z 不小于 3.5，背景组限定同元素、同介质、同测量基准。我们如实标注：候选不等于矿化定论，复核链路直达原始记录。</template>
+    </section>
+
+    <section class="slide" data-title="交付 5 · 可复用 Skill 文档：四层设计">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">06 · DELIVERABLE 5 / REUSABLE SKILL</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">交付 5 · 可复用 Skill 文档：四层设计</h2>
+      <div class="compat-strip reveal" style="--d:.28s">
+        <div class="compat-item"><b>SKILL 格式</b><span>Agent Skills 公共子集，一份 Skill 多平台复用</span></div>
+        <div class="compat-item"><b>OPENCODE</b><span>隔离评测与 Skill 挂载，已实测验证</span></div>
+        <div class="compat-item"><b>CODEX · CLI · CI</b><span>普通文件 + 命令即可调用，零专有 API</span></div>
+      </div>
+      <div class="design-grid">
+        <article class="design-card reveal" style="--d:.4s"><span class="layer">L1 · 流程</span><code>SKILL.md</code><h3>状态机与决策门</h3><p><strong>9 个阶段</strong>按序执行；每步有明确输入、输出与失败状态，不允许跳步。</p></article>
+        <article class="design-card reveal" style="--d:.5s;--card:var(--gold)"><span class="layer">L2 · 知识</span><code>references/</code><h3>科学知识库</h3><p>数据格式、科学规则与来源准入独立成文，<strong>按需加载</strong>，不塞进提示词。</p></article>
+        <article class="design-card reveal" style="--d:.6s;--card:var(--red)"><span class="layer">L3 · 执行</span><code>scripts/</code><h3>确定性执行器</h3><p>单位、坐标、QC、异常与地图全由可测试脚本执行，<strong>核心零第三方依赖</strong>。</p></article>
+        <article class="design-card reveal" style="--d:.7s"><span class="layer">L4 · 证明</span><code>fixtures + tests</code><h3>可复现，可评测</h3><p>真实数据切片 + 哈希重放；有 / 无 Skill 对照评测，<strong>证明真实提升</strong>。</p></article>
+      </div>
+      <div class="design-foot reveal" style="--d:.86s"><span>EarthChem ECL</span><span>USGS AGDB2</span><span>ODM2</span><span>IGSN / DataCite</span><span>字段映射对照 · 非平台认证</span></div>
+      <template class="notes-template">第五项、也是比赛的最终交付物：可复用 Skill 文档。它的核心不是长提示词，而是四层结构。SKILL.md 只保留九阶段状态机、决策门和失败状态；references 维护 JSON Schema、科学规则、来源准入，以及 EarthChem ECL、USGS AGDB2、ODM2、IGSN/DataCite 的专业字段映射；scripts 把单位、坐标、QC、异常和地图变成确定性执行；fixtures 与评测则证明可复现和真实提升。格式采用 Agent Skills 公共子集，OpenCode 冻结环境评测已接入；Codex、命令行和 CI 通过普通文件与命令接口调用。</template>
+    </section>
+
+    <section class="slide" data-title="Skill 内核：状态机前向执行 × loop 反向修复">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">07 · SKILL INTERNALS / STATE MACHINE × ITERATION LOOP</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">Skill 内核：状态机前向执行，loop 反向修复</h2>
+      <div class="core-split">
+        <div class="core-left">
+          <div class="panel-label reveal" style="--d:.28s">九阶段执行状态机 · 严格顺序 · 不允许跳步</div>
+          <div class="stage-matrix">
+            <div class="stage-node reveal" style="--d:.34s"><b>01</b><strong>冻结请求</strong><small>freeze</small></div>
+            <div class="stage-node gate reveal" style="--d:.38s"><b>02</b><strong>路由与审计来源</strong><small>gate·准入</small></div>
+            <div class="stage-node reveal" style="--d:.42s"><b>03</b><strong>获取与逐记录证据</strong><small>acquire</small></div>
+            <div class="stage-node reveal" style="--d:.46s"><b>04</b><strong>确定性过滤</strong><small>filter</small></div>
+            <div class="stage-node gate reveal" style="--d:.5s"><b>05</b><strong>单位·删失·坐标 QC</strong><small>gate·QC</small></div>
+            <div class="stage-node reveal" style="--d:.54s"><b>06</b><strong>地质空间匹配</strong><small>GLiM</small></div>
+            <div class="stage-node reveal" style="--d:.58s"><b>07</b><strong>置信度与候选异常</strong><small>robust-z</small></div>
+            <div class="stage-node reveal" style="--d:.62s"><b>08</b><strong>生成十五项产物</strong><small>build</small></div>
+            <div class="stage-node gate reveal" style="--d:.66s"><b>09</b><strong>验证与边界报告</strong><small>gate·验证</small></div>
+          </div>
+          <div class="gate-line reveal" style="--d:.74s">决策门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>不满足就停，不硬算。</div>
+        </div>
+        <div class="core-right">
+          <div class="panel-label gold reveal" style="--d:.3s">核心机制 · 可审计 iteration loop：验证驱动、证据修复</div>
+          <div class="loop-ring reveal" style="--d:.42s">
+            <div class="ring-track"></div>
+            <span class="ring-arrow ra1">➤</span><span class="ring-arrow ra2">➤</span><span class="ring-arrow ra3">➤</span><span class="ring-arrow ra4">➤</span>
+            <div class="ring-node rn1"><b>VALIDATE</b><span>十五项产物逐文件验证</span></div>
+            <div class="ring-node rn2"><b>BACKLOG</b><span>问题登记 iteration_backlog</span></div>
+            <div class="ring-node rn3"><b>ROUTE</b><span>定向修复 · 补证据补规则</span></div>
+            <div class="ring-node rn4"><b>RERUN + DIFF</b><span>重跑并按 item_id 比较</span></div>
+            <div class="ring-core"><b>≤ 2 轮</b><span>问题不降即停<br>→ needs_human_review</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">8 个稳定失败状态 · 可编程处理</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
+      <div class="footer-line"><span>SKILL.md 状态机与 loop 原文 · 每步输入输出可验证</span><span>修复生成新运行 · 原始证据不可变</span></div>
+      <template class="notes-template">这是 Skill 的内核，也是它区别于“长提示词”的地方：前向是九阶段确定性状态机，严格按序、三道决策门不满足就停——来源准入不过整源拒绝，背景组不足二十不做异常判定，出图验证不过拒绝交付。反向是核心机制可审计 iteration loop：验证器逐文件检查十五项产物，问题显式登记进 iteration_backlog，按问题码定向路由修复——补来源证据或补确定性规则，然后重跑并按稳定 item_id 比较，最多两轮，问题不降即停并转人工复核。所有失败收敛到八个稳定状态码，Agent 和 CI 都能编程处理；修复生成新运行，原始证据永远不可变。</template>
+    </section>
+
+    <section class="slide" data-title="质量控制：问题显式登记，修复不改历史">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">08 · QUALITY CONTROL / REAL ITERATION BACKLOG</div>
+      <h2 class="title reveal" style="--d:.18s">质量控制：问题显式登记，修复不改历史</h2>
+      <div class="artifact-strip reveal" style="--d:.26s">
+        <span class="strip-label">15 项产物契约</span>
+        <code>geochemistry.csv</code><code>record_evidence.jsonl</code><code>source_manifest.json</code><code>confidence_report.json</code><code>qc_report.json</code><code>samples.geojson</code><code>interactive_map.html</code><code>anomalies.geojson</code><code>anomaly_report.json</code><code>anomaly_regions.geojson</code><code>spatial_anomaly_report.json</code><code>batch_acceptance.csv</code><code>batch_qc_report.json</code><code class="gold">iteration_backlog.csv</code><code class="gold">run_summary.json</code>
+      </div>
+      <div class="backlog-wrap reveal" style="--d:.4s">
+        <div class="backlog-head">
+          <h3>iteration_backlog.csv · 本次运行真实片段</h3>
+          <div class="bh-stats">共 <b>114,807</b> 项显式登记：自动处置 <b>89,207</b> · 人工复核 <b>25,352</b> · 科学限制 <b>248</b> —— 零静默删除</div>
+        </div>
+        <table class="backlog">
+          <tr><th>item_id</th><th>severity</th><th>status</th><th>issue_code</th><th>处置规则（原文摘录）</th></tr>
+          <tr><td class="dim">ITER-6c1ada8d2075cbc7</td><td>warning</td><td class="st-a">action_required</td><td>METHOD_SCOPE_MISSING</td><td>依据来源证据标注方法适用范围，不得把数据集级方法伪装为记录级</td></tr>
+          <tr><td class="dim">ITER-f3d908d9321dedea</td><td>error</td><td class="st-a">action_required</td><td>NORMALIZATION_FAILED</td><td>检查单位词表与换算公式；不能证明可换算时保留失败，不得猜值</td></tr>
+          <tr><td class="dim">ITER-67e45f9ebf0d20c3</td><td>info</td><td class="st-r">review_required</td><td>GEOLOGIC_CONTEXT_MISSING</td><td>允许时执行空间匹配并记录地图源与方法；否则保留缺失</td></tr>
+          <tr><td class="dim">ITER-4329e257ce6c07d3</td><td>error</td><td class="st-a">action_required</td><td>COORDINATE_UNUSABLE</td><td>从原始来源恢复坐标与 CRS；只有区域名称时保留缺失，不得填质心</td></tr>
+          <tr><td class="dim">ITER-d7c634bd789a56fe</td><td>info</td><td class="st-s">scientific_limit</td><td>CENSORED_OBSERVATION</td><td>删失观测保留 qualifier 与检出限，不等同于零，不计为失败</td></tr>
+        </table>
+      </div>
+      <div class="loop-states">
+        <article class="loop-state reveal" style="--d:.9s"><code>action_required · 89,207</code><p>可由来源证据、字段映射或确定性处理修复，按问题码自动路由。</p></article>
+        <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>review_required · 25,352</code><p>CRS、方法语义或映射需要专家判断；暂停自动修改，进入人工复核。</p></article>
+        <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>scientific_limit · 248</code><p>删失值或背景不足是真实科学限制，不计作失败，也不得猜值“修复”。</p></article>
+      </div>
+      <div class="footer-line"><span>标准数据与原始证据不可变 · 修复生成新运行，不覆盖历史</span><span>重复阻塞 → needs_human_review</span></div>
+      <template class="notes-template">质量控制的证据就在产物里：十五项契约文件之一的 iteration_backlog，本次运行显式登记了十一万四千八百零七项问题，零静默删除。屏幕上是真实片段：方法适用范围未声明、标准化失败、地质上下文缺失、坐标不可用、删失观测——每一项都有稳定 item_id、严重度、状态和处置规则。三类状态分流：八万九千多项可自动处置，两万五千多项进人工复核，二百四十八项是真实科学限制不计失败。修复生成新运行，原始证据和标准数据历史永远不可变。</template>
+    </section>
+
+    <section class="slide" data-title="最终效果：全球图谱与区域研究视图">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">09 · FINAL PRODUCT IN ACTION</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">最终效果：全球图谱与区域研究视图</h2>
+      <div class="outcome-grid">
+        <article class="outcome-card reveal" style="--d:.34s;--shot:url('assets/global-overview-1920x1080.png')">
+          <div class="outcome-label">GLOBAL ATLAS</div><a class="outcome-open" href="live/global-overview.html" target="_blank" rel="noopener">打开交互图谱 ↗</a>
+          <div class="outcome-copy"><h3>全球元素分布图谱</h3><p>从全球覆盖进入任意元素、区域、地质单元与样品类型。</p><div class="outcome-features"><span>元素 / 介质筛选</span><span>采样密度热力图</span><span>记录级证据</span></div></div>
+        </article>
+        <article class="outcome-card reveal" style="--d:.46s;--edge:var(--gold);--shot:url('assets/china-anomaly-1920x1080.png')">
+          <div class="outcome-label">REGIONAL RESEARCH</div><a class="outcome-open" href="live/china-anomaly.html" target="_blank" rel="noopener">打开区域视图 ↗</a>
+          <div class="outcome-copy"><h3>区域研究与异常筛查</h3><p>严格边界裁剪，组合分析与 high / low 候选保持科学边界。</p><div class="outcome-features"><span>区域图谱</span><span>元素组合</span><span>异常候选与复核入口</span></div></div>
+        </article>
+      </div>
+      <div class="outcome-dock reveal" style="--d:.62s"><span>可交互元素分布地图</span><span>标准化地球化学数据库</span><span style="--dock:var(--gold)">来源与置信度说明</span><span style="--dock:var(--red)">异常区域识别结果</span></div>
+      <div class="footer-line"><span>真实运行产物 · 评委可现场操作</span><span>同一 Skill · 同一数据库 · 同一证据链</span></div>
+      <template class="notes-template">这里是最终产品效果，而不是设计图。左侧是 Skill 生成的全球元素分布图谱，可以按元素、区域、地质单元和样品类型检索，热力图显示采样密度，点击记录可进入来源证据。右侧是同一 Skill 生成的区域研究视图，使用严格边界裁剪，支持元素组合和 high / low 异常候选复核。两个视图共享同一标准数据库、来源与置信度说明以及异常结果；评委可以直接打开自包含交互页面现场操作。</template>
+    </section>
+
+    <section class="slide" data-title="运行实况：Qwen3.8-Max 挂载 Skill 干活">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">10 · SKILL IN ACTION / QWEN3.8-MAX × OPENCODE</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">运行实况：Qwen3.8-Max 挂载 Skill 干活</h2>
+      <div class="run-layout">
+        <div class="run-stages">
+          <div class="run-step reveal" style="--d:.9s"><i>1</i><span>读 SKILL.md · 冻结请求<small>freeze request</small></span></div>
+          <div class="run-step reveal" style="--d:1.5s"><i>2</i><span>路由与审计来源<small>source_router · source_audit</small></span></div>
+          <div class="run-step reveal" style="--d:2.1s"><i>3</i><span>采集与逐记录证据<small>run_atlas_request</small></span></div>
+          <div class="run-step reveal" style="--d:2.7s"><i>4</i><span>汇总与确定性过滤<small>deterministic filter</small></span></div>
+          <div class="run-step reveal" style="--d:3.3s"><i>5</i><span>标准化 · 单位坐标 QC<small>standardize_geochemistry</small></span></div>
+          <div class="run-step reveal" style="--d:3.9s"><i>6</i><span>地质空间匹配<small>GLiM geo match</small></span></div>
+          <div class="run-step reveal" style="--d:4.5s"><i>7</i><span>置信度与候选异常<small>confidence · robust-z</small></span></div>
+          <div class="run-step reveal" style="--d:5.1s"><i>8</i><span>可视化与十五项产物<small>build_interactive_map</small></span></div>
+          <div class="run-step reveal" style="--d:5.7s"><i>9</i><span>验证 · loop 收敛<small>validate_outputs · backlog</small></span></div>
+        </div>
+        <div class="run-term reveal" style="--d:.2s">
+          <div class="term-bar"><i></i><i></i><i></i><span>opencode — qwen3.8-max · skill: global-geochemical-atlas</span></div>
+          <div class="term-body">
+            <div class="run-line cmd reveal" style="--d:.4s">$ opencode run -m qwen3.8-max "全球 Cr·Cu·Ni·Pb·Zn 元素图谱与异常筛查"<span class="run-caret"></span></div>
+            <div class="run-line reveal" style="--d:.9s">[agent] 发现并读取 <b>SKILL.md</b> → 进入九阶段状态机 · profile 冻结</div>
+            <div class="run-line reveal" style="--d:1.5s">[agent] <b>source_router.py</b> + <b>source_audit.py</b> → <span class="num">15/15</span> 来源过准入 <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:2.1s">[agent] <b>run_atlas_request.py</b> → <span class="num">44,536</span> 条测定 · 逐记录证据 <span class="num">100%</span> <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:2.7s">[agent] 确定性过滤 → <span class="num">44,510</span> 条进入范围 · 排除项留痕 <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:3.3s">[agent] <b>standardize_geochemistry.py</b> → <b>mg/kg</b> · <b>WGS84</b> · qualifier 保留 <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:3.9s">[agent] <b>GLiM</b> 地质单元匹配 · 1° 网格聚合 <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:4.5s">[agent] 置信度 overall <span class="num">0.874</span> · robust-z 候选 <span class="num">535</span> <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:5.1s">[agent] <b>build_interactive_map.py</b> + <b>render_visualization.py</b> → <span class="num">15/15</span> 产物 <span class="ok">✓</span></div>
+            <div class="run-line reveal" style="--d:5.7s">[agent] <b>validate_outputs.py</b> <span class="ok">PASS</span> · backlog 登记 <span class="num">114,807</span> 项 · 无阻塞 → 交付</div>
+            <div class="run-line done reveal" style="--d:6.3s">AGENT DONE · 模型只做编排与解读，科学计算全部由确定性脚本完成</div>
+          </div>
+        </div>
+        <div class="run-outs">
+          <div class="out-card reveal" style="--d:5.2s"><img src="assets/global-overview-1920x1080.png" alt="交互图谱"><span>✓ 交互图谱 + 3D</span></div>
+          <div class="out-card reveal" style="--d:5.6s"><img src="assets/database-view-1920x1080.png" alt="标准化数据库"><span>✓ 标准化数据库</span></div>
+          <div class="out-card reveal" style="--d:6s"><img src="assets/anomaly-view-1920x1080.png" alt="异常识别"><span>✓ 异常识别结果</span></div>
+          <div class="out-badge reveal" style="--d:6.5s">五项交付就绪</div>
+        </div>
+      </div>
+      <div class="run-progress"><i></i></div>
+      <div class="run-stats">
+        <span class="reveal" style="--d:6.5s">来源 <b>15/15</b></span>
+        <span class="reveal" style="--d:6.62s">可上图测定 <b>44,510</b></span>
+        <span class="reveal" style="--d:6.74s">综合置信度 <b>0.874</b></span>
+        <span class="reveal" style="--d:6.86s">候选异常 <b>535</b></span>
+        <span class="reveal" style="--d:6.98s">产物 <b>15/15 · PASS</b></span>
+      </div>
+      <div class="footer-line"><span>搜集 → 汇总 → 标准化 → 分析 → 可视化 → 验证，全程留痕</span><span>OpenCode 有 / 无 Skill 对照评测已实测 · 重新进入本页可重放</span></div>
+      <template class="notes-template">这是通用 Agent 用我们 Skill 干活的实况：Qwen3.8-Max 在 OpenCode 里挂载 global-geochemical-atlas，接到任务后自己读 SKILL.md、进入九阶段状态机——路由审计来源、采集带证据的测定、确定性过滤、标准化、地质匹配、置信度与异常、生成产物、验证收敛，右侧产出实时就绪：交互图谱、标准化数据库、异常识别，五项交付齐活。关键分工是：模型只做编排与解读，单位、坐标、QC、异常判定这些科学计算全部由确定性脚本完成，所以换任何兼容 Agent 结果一致。我们做过 OpenCode 有无 Skill 的对照评测，提升是实测的。</template>
+    </section>
+
+    <section class="slide" data-title="Global Geochemical Atlas，统一交付赛题五项输出">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">11 · REQUIRED OUTPUTS / FINAL DELIVERABLE</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(24px,3.15vw,58px)">Global Geochemical Atlas，统一交付赛题五项输出</h2>
+      <div class="orbit-stage"><div class="orbit-ring reveal" style="--d:.3s"></div><div class="core core-brand reveal" style="--d:.4s"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><ellipse cx="32" cy="32" rx="10" ry="25" fill="none" stroke="rgba(105,245,230,.35)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="47.5" cy="16.5" r="7.6" fill="none" stroke="rgba(246,195,68,.4)" stroke-width="1.2"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="13.5" cy="38" r="6.7" fill="none" stroke="rgba(255,92,120,.4)" stroke-width="1.2"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/><circle cx="40" cy="49.5" r="6" fill="none" stroke="rgba(105,245,230,.45)" stroke-width="1.2"/></svg><b>GLOBAL GEOCHEMICAL ATLAS</b><small>REUSABLE SKILL</small></div>
+        <div class="orbit-node n1 reveal" style="--d:.56s"><i>MAP</i><span>可交互元素<br>分布地图</span></div><div class="orbit-node n2 reveal" style="--d:.64s"><i>DB</i><span>标准化地球化学<br>数据库</span></div><div class="orbit-node n3 reveal" style="--d:.72s"><i>QC</i><span>数据来源与<br>置信度说明</span></div><div class="orbit-node n4 reveal" style="--d:.8s"><i>Δ</i><span>异常区域<br>识别结果</span></div><div class="orbit-node n5 reveal" style="--d:.88s"><i>SK</i><span>可复用<br>Skill 文档</span></div>
+      </div>
+      <div class="proof-strip reveal" style="--d:1.02s">记录级证据链 · 可复现 profile · 十五项产物验证 · 可审计 iteration loop · 跨平台公共接口</div>
+      <div class="closing reveal" style="--d:1.16s">最终交付物：一个完整、可复用的 Skill 文档</div>
+      <template class="notes-template">这个 Skill 叫 Global Geochemical Atlas。交互地图、标准化数据库、来源与置信度说明、异常区域识别结果，都不是孤立附件，而是它一次执行后产生、由十五项契约共同验证的研究产物。它们共享记录级证据链、可复现 profile、失败状态和迭代 loop。真正可复用的不是某次运行的四万条记录，而是任何兼容 Agent 都能按照相同科学契约，针对新的元素、区域、地质单元和样品类型重新执行。比赛最终提交物仍然只有一个：完整、可复用的 Skill 文档。</template>
+    </section>
+  </main>
+
+  <aside class="notes-panel" id="notes"><strong>讲稿</strong><div id="notesText"></div></aside>
+  <div class="controls" role="toolbar" aria-label="演示控制">
+    <a href="./" title="返回门户首页">⌂</a>
+    <button type="button" id="prev" title="上一页">←</button>
+    <span class="slide-count" id="slideCount">1 / 12</span>
+    <button type="button" id="next" title="下一页">→</button>
+    <button type="button" id="notesBtn" title="讲稿 N">N</button>
+    <button type="button" class="timer" id="timer" title="计时 T">03:00</button>
+    <button type="button" id="fullscreen" title="全屏 F">F</button>
+    <a href="Global-Geochemical-Atlas-Demo.pptx" download title="下载可编辑 PPTX">PPTX</a>
+  </div>
+  <div class="progress" id="progress"></div>
+
+  <script>
+    (() => {
+      if (new URLSearchParams(location.search).has('static')) document.documentElement.classList.add('static');
+      const slides = [...document.querySelectorAll('.slide')];
+      const count = document.getElementById('slideCount');
+      const progress = document.getElementById('progress');
+      const notes = document.getElementById('notes');
+      const notesText = document.getElementById('notesText');
+      const timer = document.getElementById('timer');
+      let index = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+      let seconds = 180;
+      let ticking = false;
+      let interval = null;
+
+      function render(nextIndex, direction = 1) {
+        nextIndex = Math.max(0, Math.min(slides.length - 1, nextIndex));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === nextIndex);
+          slide.classList.toggle('leaving', i === index && i !== nextIndex && direction > 0);
+          if (i !== nextIndex) {
+            const shell = slide.querySelector('.map-shell');
+            if (shell) shell.classList.remove('interactive');
+            const toggle = slide.querySelector('.map-toggle');
+            if (toggle) toggle.textContent = '启用交互';
+          }
+        });
+        index = nextIndex;
+        location.hash = String(index + 1);
+        count.textContent = `${index + 1} / ${slides.length}`;
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        document.title = `${index + 1}/${slides.length} · ${slides[index].dataset.title}`;
+        notesText.textContent = slides[index].querySelector('.notes-template')?.textContent.trim() || '';
+      }
+
+      function go(delta) { render(index + delta, delta); }
+      function paintTimer() {
+        const mm = String(Math.floor(Math.abs(seconds) / 60)).padStart(2, '0');
+        const ss = String(Math.abs(seconds) % 60).padStart(2, '0');
+        timer.textContent = `${seconds < 0 ? '+' : ''}${mm}:${ss}`;
+        timer.style.color = seconds <= 20 ? 'var(--red)' : 'var(--mint)';
+      }
+      function toggleTimer() {
+        ticking = !ticking;
+        clearInterval(interval);
+        if (ticking) interval = setInterval(() => { seconds -= 1; paintTimer(); }, 1000);
+      }
+      function resetTimer() { ticking = false; clearInterval(interval); seconds = 180; paintTimer(); }
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+      }
+
+      document.getElementById('prev').addEventListener('click', () => go(-1));
+      document.getElementById('next').addEventListener('click', () => go(1));
+      document.getElementById('notesBtn').addEventListener('click', () => notes.classList.toggle('open'));
+      document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+      timer.addEventListener('click', toggleTimer);
+
+      document.querySelectorAll('.map-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+          const shell = button.closest('.slide').querySelector('.map-shell');
+          const iframe = shell.querySelector('iframe');
+          if (iframe && !iframe.getAttribute('src') && iframe.dataset.src) iframe.setAttribute('src', iframe.dataset.src);
+          const on = shell.classList.toggle('interactive');
+          button.textContent = on ? '退出交互' : '启用交互';
+        });
+      });
+
+      addEventListener('hashchange', () => {
+        const value = (parseInt(location.hash.slice(1), 10) || 1) - 1;
+        if (value !== index) render(value, value > index ? 1 : -1);
+      });
+      addEventListener('keydown', event => {
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement || event.target instanceof HTMLTextAreaElement) return;
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); go(1); }
+        else if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); go(-1); }
+        else if (event.key === 'Home') render(0, -1);
+        else if (event.key === 'End') render(slides.length - 1, 1);
+        else if (event.key.toLowerCase() === 'n') notes.classList.toggle('open');
+        else if (event.key.toLowerCase() === 't') toggleTimer();
+        else if (event.key.toLowerCase() === 'r') resetTimer();
+        else if (event.key.toLowerCase() === 'f') toggleFullscreen();
+        else if (event.key === 'Escape') {
+          document.querySelectorAll('.map-shell.interactive').forEach(shell => shell.classList.remove('interactive'));
+          document.querySelectorAll('.map-toggle').forEach(button => button.textContent = '启用交互');
+        }
+      });
+
+      // 网页访客场景：压缩“运行实况”页的入场延时，避免长时间近空白
+      document.querySelectorAll('.slide[data-title^="运行实况"] .reveal').forEach(el => {
+        const d = parseFloat(el.style.getPropertyValue('--d')) || 0;
+        el.style.setProperty('--d', (d * 0.55).toFixed(2) + 's');
+      });
+
+      // 滚轮与触摸滑动翻页（交互地图激活时不拦截）
+      let wheelLock = 0;
+      addEventListener('wheel', event => {
+        if (document.querySelector('.map-shell.interactive')) return;
+        const now = Date.now();
+        if (now - wheelLock < 650 || Math.abs(event.deltaY) < 24) return;
+        wheelLock = now;
+        go(event.deltaY > 0 ? 1 : -1);
+      }, { passive: true });
+      let touchX = null;
+      addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, { passive: true });
+      addEventListener('touchend', event => {
+        if (touchX === null || document.querySelector('.map-shell.interactive')) { touchX = null; return; }
+        const dx = event.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 56) go(dx < 0 ? 1 : -1);
+        touchX = null;
+      }, { passive: true });
+
+      render(index);
+      paintTimer();
+    })();
+  </script>
+</body>
+</html>

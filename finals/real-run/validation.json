@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "metrics": {
+    "batch_count": 0,
+    "candidate_anomaly_region_count": 0,
+    "candidate_feature_count": 6,
+    "invalid_json_cells": 0,
+    "iteration_backlog_count": 3,
+    "passed_batch_count": 0,
+    "record_count": 996,
+    "record_evidence_count": 996,
+    "sample_feature_count": 996,
+    "source_locator_missing": 0
+  },
+  "status": "valid",
+  "warnings": []
+}
+

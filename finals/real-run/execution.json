@@ -1,0 +1,73 @@
+{
+  "acquisition_manifests": [
+    {
+      "path": "acquisition/request_manifest.json",
+      "role": "request_filtered_manifest",
+      "sha256": "80cc3bf848f6e9b9e004776a7670c97c3f73b53c511891f2da723b2194ac2f9b",
+      "source_id": null
+    },
+    {
+      "path": "acquisition/parent_manifest.json",
+      "role": "parent_source_manifest",
+      "sha256": "76cb4bc9587adae2faba199f5624d4399e63e835dbc254a5591e3785fafc0f6d",
+      "source_id": null
+    }
+  ],
+  "analysis_profile": "production",
+  "coverage_status": "unknown",
+  "execution_coverage_status": "partial",
+  "execution_version": "geochemical-request-execution-v4",
+  "geology_grid": {
+    "filename": "pangaea-788537.zip",
+    "sha256": "43b4ce3276b155d804db8ff9fb227d620b4c35015a4cf564eac4d06d2b69d88e"
+  },
+  "mode": "fixture:production-usgs",
+  "record_counts": {
+    "after_request_filters": 996,
+    "before_request_filters": 996
+  },
+  "request_coverage": {
+    "dimensions": {
+      "elements": {
+        "missing": [],
+        "observed": [
+          "As",
+          "Cu",
+          "Ni",
+          "Zn"
+        ],
+        "requested": [
+          "As",
+          "Cu",
+          "Ni",
+          "Zn"
+        ],
+        "status": "complete"
+      },
+      "media": {
+        "missing": [],
+        "observed": [
+          "soil"
+        ],
+        "requested": [
+          "soil"
+        ],
+        "status": "complete"
+      }
+    },
+    "status": "complete"
+  },
+  "route_resolution": "offline_fixture_hash_verified",
+  "route_status": "needs_human_review",
+  "source_outcomes": [],
+  "status": "partial_success",
+  "timing": {
+    "completed_within_internal_budget": true,
+    "deadline_policy": "single_monotonic_deadline_v1",
+    "elapsed_seconds": 0.714,
+    "internal_budget_seconds": 840.0,
+    "official_task_limit_seconds": 900.0,
+    "workflow_reserve_seconds": 180.0
+  },
+  "warnings": []
+}

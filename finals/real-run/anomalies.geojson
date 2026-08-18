@@ -1,0 +1,230 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -86.651,
+          32.9905
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "As",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-8fe1d74b53ce",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "aas",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 23.9,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-987a8438c0eb05819bdc9a9ecb16501f50f970a1af68231d000b15a9af9b1c4d",
+        "robust_z": 3.693957,
+        "sample_id": "C-328917",
+        "sample_type": "soil_a_horizon",
+        "sediment_environment": null,
+        "soil_horizon": "A",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_3b_Ahorizon_18Sept2013.txt#row=27",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -86.651,
+          32.9905
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "As",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-f2d6427e9d41",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "aas",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 29.6,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-7cf0be7347ed69160f2c4840459eb1194a897161de6dd752df9157876f9f9789",
+        "robust_z": 3.726709,
+        "sample_id": "C-329021",
+        "sample_type": "soil_c_horizon",
+        "sediment_environment": null,
+        "soil_horizon": "C",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_4b_Chorizon_18Sept2013.txt#row=27",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -87.4686,
+          32.392
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "As",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-620fc69d877a",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "aas",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 17.4,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-44393d5731adc0644ae287867a342ca98eaaba10e87d6fb3a1ad99e93e2fbeed",
+        "robust_z": 4.067283,
+        "sample_id": "C-328803",
+        "sample_type": "soil_topsoil",
+        "sediment_environment": null,
+        "soil_horizon": "top_0_5cm",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_2b_Top5_18Sept2013.txt#row=29",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -86.651,
+          32.9905
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "As",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-620fc69d877a",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "aas",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 22.4,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-46d5fb08d6ff0387fb7985ba3e6135bad403c2b1ebce669332ff8c7bc0214cb7",
+        "robust_z": 4.564069,
+        "sample_id": "C-329065",
+        "sample_type": "soil_topsoil",
+        "sediment_environment": null,
+        "soil_horizon": "top_0_5cm",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_2b_Top5_18Sept2013.txt#row=27",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -86.651,
+          32.9905
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "Cu",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-67edc70d7a44",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "near-total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "icp_oes",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 57.7,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-d95a2d5ac0c5142c3a0e1dbf0f6cd0f240c4e646acf441feb2e0689caa5fb303",
+        "robust_z": 3.553892,
+        "sample_id": "C-329021",
+        "sample_type": "soil_c_horizon",
+        "sediment_environment": null,
+        "soil_horizon": "C",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_4b_Chorizon_18Sept2013.txt#row=27",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -87.0744,
+          31.9654
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "direction": "high",
+        "element_or_analyte": "Ni",
+        "geologic_unit": null,
+        "geologic_unit_raw": null,
+        "grain_fraction": "<2 mm",
+        "group_id": "grp-52a9d5f3d1c8",
+        "interpretation_limit": "Candidate relative to the declared background group; no causal claim.",
+        "matched_geologic_unit": "GLiM:1:su",
+        "measurement_basis": "near-total concentration in <2 mm soil fraction",
+        "medium": "soil",
+        "method_family": "icp_oes",
+        "method_version": "d2-robust-mad-v2",
+        "normalized_unit": "mg/kg",
+        "normalized_value": 39.6,
+        "operational_confidence_band": "medium",
+        "record_id": "rec-d8a9fc318983d90bead7f98e7d8c2e9901e42c3500d69ada06d9fec5c61258a4",
+        "robust_z": 3.934157,
+        "sample_id": "C-328874",
+        "sample_type": "soil_topsoil",
+        "sediment_environment": null,
+        "soil_horizon": "top_0_5cm",
+        "source_id": "usgs-conus-soil",
+        "source_locator": "Appendix_2b_Top5_18Sept2013.txt#row=38",
+        "status": "candidate_anomaly",
+        "water_fraction": null
+      },
+      "type": "Feature"
+    }
+  ],
+  "interface_version": "d2-interface-v2",
+  "method_version": "d2-robust-mad-v2",
+  "name": "geochemical_candidate_anomalies",
+  "type": "FeatureCollection"
+}

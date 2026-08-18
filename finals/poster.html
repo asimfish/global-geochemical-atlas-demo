@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Global Geochemical Atlas · A1 Poster</title>
+  <style>
+    @page{size:841mm 594mm;margin:0}
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;background:#061a22;font-family:"Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;color:#f7fbfa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .poster{width:841mm;height:594mm;position:relative;overflow:hidden;padding:22mm 28mm 16mm;background:
+      radial-gradient(circle at 82% 2%,rgba(53,224,193,.18),transparent 27%),
+      radial-gradient(circle at 8% 92%,rgba(122,231,255,.09),transparent 24%),
+      linear-gradient(145deg,#04151c,#0a2a33 58%,#061a22)}
+    .poster::before{content:"";position:absolute;inset:0;opacity:.28;background-image:linear-gradient(rgba(122,231,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(122,231,255,.05) 1px,transparent 1px);background-size:14mm 14mm}
+    .poster>*{position:relative;z-index:1}
+    .top{display:grid;grid-template-columns:1fr auto;gap:20mm;align-items:start}
+    .kicker{font:800 4.2mm ui-monospace,monospace;letter-spacing:.15em;color:#35e0c1;text-transform:uppercase}
+    h1{font-size:19mm;line-height:1.02;letter-spacing:-.05em;margin:3.5mm 0 3mm;font-weight:900}
+    .gradient{background:linear-gradient(100deg,#fff 8%,#7ae7ff 52%,#35e0c1 94%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{font-size:5.6mm;color:#c3d7d9;line-height:1.4;max-width:560mm}
+    .team{padding:5mm 6mm;border:1px solid rgba(122,231,255,.25);border-radius:4mm;background:rgba(3,19,25,.62);text-align:right}
+    .team b{display:block;font:900 5mm ui-monospace,monospace;color:#fff}.team span{display:block;margin-top:2mm;font:700 3.2mm ui-monospace,monospace;color:#8fb0b5;letter-spacing:.1em}
+    .hero{margin-top:7mm;display:grid;grid-template-columns:repeat(6,1fr) 96mm;border:1px solid rgba(122,231,255,.24);border-radius:5mm;overflow:hidden;background:linear-gradient(90deg,rgba(53,224,193,.12),rgba(3,19,25,.55) 72%)}
+    .hero>div{padding:4.6mm 6mm;border-right:1px solid rgba(122,231,255,.13)}
+    .hero b{display:block;font:900 10mm/1 ui-monospace,monospace;color:#fff;letter-spacing:-.02em;white-space:nowrap}
+    .hero b.teal{color:#35e0c1}.hero b.gold{color:#f3c969}.hero b.cyan{color:#7ae7ff}
+    .hero span{display:block;margin-top:1.9mm;font-size:3.2mm;color:#9fbcc0;line-height:1.3}
+    .hero .tag{display:grid;place-items:center;background:rgba(53,224,193,.15);border-right:0;text-align:center;padding:3mm 4mm}
+    .hero .tag b{font:900 4.8mm ui-monospace,monospace;color:#35e0c1;white-space:normal;line-height:1.25}
+    .hero .tag span{color:#bfe6e0;font-weight:700}
+    .main{display:grid;grid-template-columns:190mm 1fr 190mm;gap:11mm;margin-top:9mm;height:394mm}
+    .col{display:grid;gap:8mm;align-content:stretch}
+    .card{border:1px solid rgba(122,231,255,.18);border-radius:6mm;background:linear-gradient(145deg,rgba(13,49,58,.87),rgba(4,23,30,.84));padding:7.5mm 8mm;box-shadow:0 8mm 24mm rgba(0,0,0,.22)}
+    .accent{--ac:#35e0c1;position:relative;overflow:hidden}
+    .accent::after{content:"";position:absolute;top:0;left:0;right:0;height:1.1mm;background:linear-gradient(90deg,var(--ac),transparent 78%)}
+    .ac-coral{--ac:#ff6f61}.ac-gold{--ac:#f3c969}.ac-cyan{--ac:#7ae7ff}
+    .accent .label{color:var(--ac)}
+    .label{font:900 3.5mm ui-monospace,monospace;letter-spacing:.13em;color:#35e0c1;margin-bottom:3.5mm}
+    h2{font-size:7.2mm;line-height:1.12;margin:0 0 3.5mm;letter-spacing:-.03em}
+    h3{font-size:5.2mm;line-height:1.2;margin:0}
+    p{margin:0;color:#b9ced1;font-size:3.9mm;line-height:1.5}
+    .problem{display:grid;gap:2.8mm}.problem div{display:grid;grid-template-columns:8mm 1fr;gap:3mm;align-items:start}.problem i{width:7mm;height:7mm;border-radius:50%;display:grid;place-items:center;background:rgba(255,111,97,.16);border:1px solid rgba(255,111,97,.4);color:#ff8a7f;font:900 3.4mm ui-monospace,monospace;font-style:normal}.problem b{display:block;color:#f4fbfa;font-size:4.2mm;margin-bottom:.8mm}.problem p{font-size:3.6mm;line-height:1.45}
+    .query{margin-top:4.5mm;padding:4.2mm 5mm;border-radius:4mm;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);font-size:4mm;color:#d9eaeb}.query code{display:block;margin-top:1.6mm;color:#35e0c1;font:900 4.8mm ui-monospace,monospace}
+    .vs{display:grid;gap:2.6mm;margin-top:4mm}
+    .vs>div{padding:3mm 3.6mm;border-radius:3mm;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+    .vs b{display:block;font-size:3.9mm;color:#fff;margin-bottom:1.3mm}
+    .vs .no,.vs .yes{display:block;font-size:3.35mm;line-height:1.42}
+    .vs .no{color:#ff9d94}.vs .no::before{content:"✗ ";font-weight:900}
+    .vs .yes{color:#6fe8d2}.vs .yes::before{content:"✓ ";font-weight:900}
+    .guard-list{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:4.5mm}.guard-list span{padding:3mm;border-radius:3mm;background:rgba(53,224,193,.075);border:1px solid rgba(53,224,193,.18);font-size:3.4mm;color:#cce3e4;line-height:1.35}.guard-list b{color:#fff}
+    .center{display:grid;grid-template-rows:184mm auto 1fr;gap:8mm}
+    .map{position:relative;overflow:hidden;padding:0}.map img{width:100%;height:calc(100% + 52mm);object-fit:cover;object-position:50% 100%;margin-top:-52mm;display:block}.map::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(2,13,18,.72),transparent 37%)}
+    .map-title{position:absolute;left:8mm;top:8mm;padding:4mm 5mm;border-left:1.4mm solid #35e0c1;background:rgba(3,18,24,.9);z-index:2}.map-title b{display:block;font-size:7mm}.map-title span{display:block;margin-top:1mm;color:#7ae7ff;font:800 3.3mm ui-monospace,monospace}
+    .map-foot{position:absolute;z-index:2;left:8mm;right:8mm;bottom:7mm;display:flex;gap:3mm;align-items:center}.map-foot span{padding:2.7mm 3.4mm;border-radius:999px;background:rgba(3,18,24,.9);border:1px solid rgba(122,231,255,.22);font-size:3.4mm;font-weight:800}.map-foot b{color:#35e0c1}
+    .skillflow{padding:6mm 7mm}
+    .sf-head{display:flex;justify-content:space-between;align-items:flex-start;gap:6mm}
+    .sf-head h2{margin:1mm 0 0;font-size:6.6mm}
+    .sf-badge{padding:2.6mm 3.4mm;border-radius:3mm;background:rgba(53,224,193,.13);border:1px solid rgba(53,224,193,.4);font:800 3.1mm ui-monospace,monospace;color:#35e0c1;white-space:nowrap;align-self:center}
+    .sf-row{display:grid;grid-template-columns:1fr 7mm 1.12fr 7mm 1.12fr 7mm 1.12fr 7mm 1.05fr;align-items:stretch;margin-top:4mm}
+    .sf-node{padding:3mm 3.2mm;border-radius:3mm;background:rgba(255,255,255,.05);border:1px solid rgba(122,231,255,.18);display:grid;gap:1.6mm;align-content:start}
+    .sf-node b{font:900 3.3mm ui-monospace,monospace;color:#7ae7ff}
+    .sf-node span{font-size:3.1mm;color:#c6dbdd;line-height:1.35}
+    .sf-gate{border-top:1px dashed rgba(243,201,105,.4);padding-top:1.6mm;font:700 2.9mm ui-monospace,monospace;color:#f3c969;line-height:1.3}
+    .sf-arr{display:grid;place-items:center;color:#35e0c1;font-weight:900;font-size:4mm}
+    .sf-loop{margin-top:3.4mm;display:grid;grid-template-columns:1.55fr 1fr;gap:4mm}
+    .sf-loop>div{padding:2.8mm 3.6mm;border-radius:3mm;font-size:3.3mm;line-height:1.4}
+    .sf-back{border:1px dashed rgba(122,231,255,.45);color:#a8d8e2;background:rgba(122,231,255,.05)}
+    .sf-back b{color:#7ae7ff}
+    .sf-exit{border:1px solid rgba(53,224,193,.4);color:#bfe9e0;background:rgba(53,224,193,.07)}
+    .sf-exit b{color:#35e0c1}
+    .sf-roles{margin-top:3.2mm;font-size:3.1mm!important;color:#8fb0b5!important;line-height:1.45!important}
+    .sf-roles b{color:#d9eaeb}
+    .runlog{padding:6mm 7mm;border-radius:6mm;background:#020b0f;border:1px solid rgba(53,224,193,.3);display:grid;grid-template-columns:1fr 96mm;gap:7mm;font-family:ui-monospace,"SFMono-Regular",monospace}
+    .runlog-left{display:grid;gap:2.6mm;align-content:center}
+    .runlog-head{display:flex;justify-content:space-between;align-items:center;font:800 3.3mm ui-monospace,monospace;color:#8dacb1;letter-spacing:.05em;border-bottom:1px solid rgba(122,231,255,.14);padding-bottom:2.4mm}
+    .runlog-head b{color:#35e0c1}
+    .runlog-cmd{font:700 3.4mm ui-monospace,monospace;color:#35e0c1}
+    .runlog-cmd i{font-style:normal;color:#7ae7ff}
+    .runlog-lines{display:grid;grid-template-columns:1fr;gap:2.4mm}
+    .runlog-lines span{font-size:3.4mm;color:#bad2d5;line-height:1.4}
+    .runlog-lines b{color:#7ae7ff;margin-right:2mm;font-weight:800}
+    .runlog-lines .ok b{color:#35e0c1}.runlog-lines .warn b{color:#f3c969}
+    .chart{display:grid;gap:2mm;align-content:center;padding-left:7mm;border-left:1px solid rgba(122,231,255,.14)}
+    .chart-title{font:800 3.2mm ui-monospace,monospace;color:#8dacb1;letter-spacing:.05em}
+    .bars{display:grid;grid-template-columns:repeat(9,1fr);gap:1.7mm;align-items:end;height:42mm;margin-top:5mm}
+    .bars i{position:relative;display:block;border-radius:1mm 1mm 0 0;background:linear-gradient(180deg,rgba(122,231,255,.8),rgba(122,231,255,.18));font-style:normal}
+    .bars i.g{background:linear-gradient(180deg,#f3c969,rgba(243,201,105,.2))}
+    .bars i.t{background:linear-gradient(180deg,#35e0c1,rgba(53,224,193,.22))}
+    .bars i b{position:absolute;top:-4.6mm;left:50%;transform:translateX(-50%);font:800 2.8mm ui-monospace,monospace;color:#bfe6e0;white-space:nowrap}
+    .xlab{display:grid;grid-template-columns:repeat(9,1fr);gap:1.7mm;text-align:center;font:700 2.8mm ui-monospace,monospace;color:#7fa3a8}
+    .chart-cap{font-size:3mm;color:#8fb0b5;line-height:1.45;font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+    .chart-cap b{color:#f3c969}
+    .sources{display:flex;flex-wrap:wrap;gap:2mm;margin-top:4mm}.sources span{padding:2mm 2.6mm;border-radius:999px;background:rgba(255,255,255,.06);font-size:3mm;color:#c8dadd}
+    .matrix{display:grid;grid-template-columns:26mm repeat(7,1fr);gap:1.6mm;margin-top:4.5mm;align-items:center}
+    .matrix .mh{font:800 3.5mm ui-monospace,monospace;color:#7ae7ff;text-align:center}
+    .matrix .ml{font-size:3.15mm;color:#c6dbdd;line-height:1.25}.matrix .ml b{color:#fff}.matrix .ml i{font-style:normal;color:#8fb0b5;font-size:2.8mm;display:block}
+    .matrix .on{height:7.4mm;border-radius:1.6mm;background:linear-gradient(135deg,rgba(53,224,193,.7),rgba(53,224,193,.28));border:1px solid rgba(53,224,193,.65)}
+    .matrix .off{height:7.4mm;border-radius:1.6mm;background:rgba(255,111,97,.07);border:1px dashed rgba(255,111,97,.55)}
+    .matrix-note{margin-top:3.6mm;font-size:3.15mm!important;line-height:1.5!important;color:#a9c3c6!important}.matrix-note b{color:#35e0c1}.matrix-note strong{color:#ff9d94;font-weight:800}
+    .case-chain{display:flex;flex-wrap:wrap;gap:2mm;margin-top:3.6mm}
+    .case-chain span{padding:2.4mm 3mm;border-radius:3mm;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);font:800 3.4mm ui-monospace,monospace;color:#e8f6f5}
+    .case-chain b{color:#f3c969}
+    .case-verdict{margin-top:3mm;padding:2.8mm 4mm;border-radius:3mm;background:rgba(255,111,97,.12);border:1px solid rgba(255,111,97,.32);font:900 3.7mm ui-monospace,monospace;color:#ffd5d1}
+    .case-note{margin-top:2.8mm;font-size:3mm!important;color:#8fa9ae!important;line-height:1.45!important}
+    .honesty{padding:6mm;border-radius:6mm;background:linear-gradient(135deg,rgba(255,111,97,.16),rgba(255,111,97,.05));border:1px solid rgba(255,111,97,.34)}.honesty code{font:900 3.7mm ui-monospace,monospace;color:#f3c969}.honesty h3{font-size:5.2mm;margin:2.6mm 0 2mm}.honesty p{font-size:3.4mm}.honesty strong{color:#ffd4cf}
+    .footer{height:62mm;margin-top:8mm;display:grid;grid-template-columns:1fr 120mm;gap:12mm;align-items:center;border-top:1px solid rgba(122,231,255,.18);padding-top:7mm}
+    .claim{display:grid;grid-template-columns:auto 1fr;gap:7mm;align-items:center}.orbit{width:24mm;height:24mm;border-radius:50%;border:1.2mm solid #35e0c1;position:relative;box-shadow:0 0 15mm rgba(53,224,193,.28)}.orbit::before,.orbit::after{content:"";position:absolute;border:.5mm solid #7ae7ff;border-radius:50%}.orbit::before{inset:4mm -3.5mm;transform:rotate(-18deg)}.orbit::after{inset:-3.5mm 7mm;transform:rotate(17deg)}.claim b{display:block;font-size:7.4mm;line-height:1.1}.claim p{font-size:3.7mm;margin-top:1.8mm}.fine{font-size:2.7mm!important;line-height:1.45!important;color:#78979d!important;margin-top:1.8mm!important}
+    .trace-line{margin-top:2.2mm!important;font:800 3.1mm ui-monospace,monospace;color:#9fdcd2!important;line-height:1.5!important}
+    .qrs{display:grid;grid-template-columns:1fr 1fr;gap:6mm}.qr{background:#f7fbf9;border-radius:5mm;padding:3.5mm;text-align:center;color:#0b2c35}.qr img{width:100%;aspect-ratio:1;object-fit:contain;display:block}.qr b{display:block;font-size:3.7mm;margin-top:1.8mm}.qr span{display:block;margin-top:.8mm;font:700 2.3mm ui-monospace,monospace;color:#58757a}
+    @media screen{body{display:grid;place-items:center;min-width:1200px;min-height:840px}.poster{transform-origin:center center}}
+  </style>
+</head>
+<body>
+  <article class="poster">
+    <header class="top">
+      <div><div class="kicker">AI4S FUTURE SCIENCESKILLS HACKATHON · FINAL</div><h1>Global Geochemical Atlas</h1><p class="subtitle">从一条研究请求，到一套<span class="gradient">可追溯、可验证、如实报告局限</span>的地球化学研究产品</p></div>
+      <div class="team"><b>TEAM 0066</b><span>AI × CLIMATE &amp; EARTH SCIENCES</span></div>
+    </header>
+
+    <section class="hero">
+      <div><b class="teal">191,715</b><span>条测定实际入库 · 全程可溯源</span></div>
+      <div><b>42,664</b><span>个采样点 · 全球范围</span></div>
+      <div><b class="cyan">29 / 63</b><span>候选来源准入审计 → 正式入库</span></div>
+      <div><b>7 元素</b><span>As · Cr · Cu · Hg · Ni · Pb · Zn × 4 类介质</span></div>
+      <div><b class="gold">3,351</b><span>异常筛查候选 · 同一判定链路</span></div>
+      <div><b class="teal">0 错误</b><span>15 项核心产物独立校验</span></div>
+      <div class="tag"><b>REAL RUN · 2026-08-15</b><span>全程自主 · 9 轮在线采集 · 零增量自主终止</span></div>
+    </section>
+
+    <section class="main">
+      <div class="col">
+        <section class="card accent">
+          <div class="label">01 · WHY</div><h2>数据很多，<br>可信工作流很少</h2>
+          <div class="problem">
+            <div><i>1</i><p><b>来源分散</b>数据散落在数据库、文献附表与 DOI 仓库中，字段规范互不一致。</p></div>
+            <div><i>2</i><p><b>测定值不可直接合并</b>介质、计量单位、报告基准、分析方法、检出限与坐标质量共同决定可比性。</p></div>
+            <div><i>3</i><p><b>图谱容易被过度解读</b>采样空洞、方法差异与背景样本不足，会制造貌似合理的结论。</p></div>
+          </div>
+          <div class="query">输入一个明确请求<code>元素 × 区域 × 介质</code></div>
+        </section>
+        <section class="card accent ac-coral">
+          <div class="label">02 · WHY IT IS DIFFERENT</div><h2>与「常规 AI 出图」<br>的四个不同</h2>
+          <div class="vs">
+            <div><b>数据获取</b><span class="no">常规：抓到什么用什么，来源不留痕</span><span class="yes">本系统：官方库与 DOI 数据集准入审计，许可、版本、SHA-256 全存档</span></div>
+            <div><b>数值计算</b><span class="no">常规：由语言模型直接「给数」</span><span class="yes">本系统：确定性脚本计算，相同输入逐字节一致，模型不碰数值</span></div>
+            <div><b>失败处理</b><span class="no">常规：静默跳过，或用近似值填补</span><span class="yes">本系统：fail-closed，238 项缺口逐项报告原因并进入修复队列</span></div>
+            <div><b>结论边界</b><span class="no">常规：直接下「污染 / 超标」结论</span><span class="yes">本系统：只报告筛查候选，成因结论保留给研究者</span></div>
+          </div>
+        </section>
+        <section class="card accent ac-gold">
+          <div class="label">03 · SCIENTIFIC GUARDRAILS</div><h2>四条硬约束，<br>由执行器强制生效</h2>
+          <div class="guard-list"><span><b>原始值不可变更</b><br>原始测定值、原单位与限定符永久保留，换算另记轨迹</span><span><b>删失值不替换</b><br>&lt;LOD / &lt;LOQ 如实保留，不以 0 或 LOD/2 代入</span><span><b>坐标系不假定</b><br>未声明不默认 WGS84，坐标转换全程留痕</span><span><b>背景不足不出统计</b><br>可比样本不足 20 即 fail-closed，如实报告缺口</span></div>
+        </section>
+      </div>
+
+      <div class="center">
+        <section class="map card">
+          <img src="assets/global-run-map-1920x1080.png" alt="2026-08-15 全球真实运行生成的交互图谱">
+          <div class="map-title"><b>真实运行产物 · 全球图谱</b><span>191,715 MEASUREMENTS · 2026-08-15 RUN</span></div>
+          <div class="map-foot"><span><b>①</b> 选元素 / 介质</span><span><b>②</b> 缩放到区域</span><span><b>③</b> 点记录追证据</span><span><b>空白</b> = 数据缺口</span></div>
+        </section>
+        <section class="skillflow card accent">
+          <div class="sf-head">
+            <div><div class="label">THE SKILL · SELF-CORRECTION RESEARCH LOOP</div><h2>核心设计：一个会自我纠错的研究循环</h2></div>
+            <div class="sf-badge">打包为 1 套可复用 Agent Skill · 更换 REQUEST.json 即可复跑</div>
+          </div>
+          <div class="sf-row">
+            <div class="sf-node"><b>输入 · 研究请求</b><span>REQUEST.json：元素 × 区域 × 介质＋约束与证据要求</span><div class="sf-gate">声明式契约，不是一句提示词</div></div>
+            <div class="sf-arr">▶</div>
+            <div class="sf-node"><b>D1 · 数据获取</b><span>在线检索官方数据库与带 DOI 的数据集</span><div class="sf-gate">准入门：许可 / 版本 / SHA-256 存档</div></div>
+            <div class="sf-arr">▶</div>
+            <div class="sf-node"><b>D2 · 标准化与质控</b><span>统一单位与坐标参考系，删失值如实保留</span><div class="sf-gate">硬约束门：四条 fail-closed 规则</div></div>
+            <div class="sf-arr">▶</div>
+            <div class="sf-node"><b>D3 · 产物生成</b><span>图谱、标准化数据库、证据与报告</span><div class="sf-gate">校验门：15 项产物独立校验</div></div>
+            <div class="sf-arr">▶</div>
+            <div class="sf-node"><b>充分性评估</b><span>覆盖矩阵与证据完备度，对照请求逐项判定</span><div class="sf-gate">达标 / 不足 → 两条出路</div></div>
+          </div>
+          <div class="sf-loop">
+            <div class="sf-back"><b>↺ 不足：</b>按缺口生成下一轮采集计划，回到 D1 —— 8 月 15 日全球运行自主走了 9 轮</div>
+            <div class="sf-exit"><b>✓ 零增量或达标：</b>自主终止，交付回执如实标注状态</div>
+          </div>
+          <p class="sf-roles">分层设计：<b>模型</b>只做编排与解释局限，<b>确定性脚本</b>负责全部数值计算（相同输入逐字节一致），<b>研究者</b>保留最终科学结论权。同一 Skill 已执行两类请求：Cr × 中国东部 × 土壤（回归验证）与全球 7 元素 × 4 介质（生产运行）。</p>
+        </section>
+        <section class="runlog">
+          <div class="runlog-left">
+            <div class="runlog-head"><span><b>真实运行日志</b> · 2026-08-15 —— 上方循环的一次全球尺度自主执行</span></div>
+            <div class="runlog-cmd">$ <i>python3 run_self_correction_loop.py</i> --request ./REQUEST.json --analysis-profile production</div>
+            <div class="runlog-lines">
+              <span class="ok"><b>[来源审计]</b>63 个候选来源完成准入审计，29 个成功入库</span>
+              <span class="warn"><b>[第1轮]</b>获取 72,346 条测定；2 个端点持续 HTTP 500，如实记为失败</span>
+              <span class="ok"><b>[第2–5轮]</b>增至 195,505 条；按空间覆盖缺口调度下一轮来源</span>
+              <span class="warn"><b>[第6轮]</b>新增测定为 0——满足零增量终止条件</span>
+              <span class="ok"><b>[覆盖评估]</b>21/28 元素×介质单元有观测；岩石介质 0 来源，列为发现缺口</span>
+              <span class="ok"><b>[产物校验]</b>15 项核心产物独立校验 0 错误，交付回执含逐文件 SHA-256</span>
+              <span class="ok"><b>[第9轮]</b>终止采集，发布 191,715 条测定</span>
+              <span class="warn"><b>[终态]</b>needs_human_review · 238 项缺口进入修复队列</span>
+            </div>
+          </div>
+          <div class="chart">
+            <div class="chart-title">各轮累计入库测定数</div>
+            <div class="bars">
+              <i style="height:16.3mm"><b>72k</b></i>
+              <i style="height:25.2mm"></i>
+              <i style="height:38.9mm"></i>
+              <i style="height:43.6mm"></i>
+              <i style="height:44mm"><b>195k</b></i>
+              <i class="g" style="height:44mm"></i>
+              <i style="height:43.6mm"></i>
+              <i style="height:43.1mm"></i>
+              <i class="t" style="height:43.1mm"><b>192k</b></i>
+            </div>
+            <div class="xlab"><span>R1</span><span>R2</span><span>R3</span><span>R4</span><span>R5</span><span>R6</span><span>R7</span><span>R8</span><span>R9</span></div>
+            <p class="chart-cap"><b>R6 零增量</b>触发自主终止条件；R9 发布 191,715 条——不以重复计数扩充数据量。</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="card accent ac-cyan">
+          <div class="label">04 · CONTRACTED OUTPUT</div><h2>不是一堆附件，<br>是 15 项核心产物契约</h2>
+          <p>每项产物在交付回执中登记 SHA-256，可独立复核；未达标项不静默降级，而是写入修复队列。</p>
+          <div class="sources"><span>交互图谱</span><span>标准化数据库</span><span>来源清单</span><span>记录级证据</span><span>置信度报告</span><span>异常筛查候选</span><span>质控报告</span><span>修复队列</span><span>交付回执</span><span>运行摘要</span></div>
+        </section>
+        <section class="card accent">
+          <div class="label">05 · COVERAGE MATRIX</div><h2>7 元素 × 4 介质<br>覆盖矩阵，缺口不掩盖</h2>
+          <div class="matrix">
+            <span></span><span class="mh">As</span><span class="mh">Cr</span><span class="mh">Cu</span><span class="mh">Hg</span><span class="mh">Ni</span><span class="mh">Pb</span><span class="mh">Zn</span>
+            <span class="ml"><b>土壤</b><i>12 条来源链</i></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span>
+            <span class="ml"><b>沉积物</b><i>10 条来源链</i></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span>
+            <span class="ml"><b>水体</b><i>4 条来源链</i></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span>
+            <span class="ml"><b>岩石</b><i>0 条来源链</i></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span>
+          </div>
+          <p class="matrix-note"><b>21 / 28</b> 请求单元有观测 · 5° 陆地网格覆盖率 <b>22.3%</b>（135/605）· <strong>岩石介质整行缺失</strong>——如实列为发现缺口，未以其他介质数据填补。</p>
+        </section>
+        <section class="card accent ac-gold">
+          <div class="label">06 · SCREENING CASE</div><h3>一条真实筛查候选的完整判定</h3>
+          <div class="case-chain"><span><b>23.9</b> mg/kg · As · 土壤</span><span>可比组中位数 <b>2.30</b></span><span><b>10.4×</b> 富集</span><span>稳健 Z <b>3.69</b> ≥ 3.5</span></div>
+          <div class="case-verdict">判定：高值筛查候选 · 不构成成因结论</div>
+          <p class="case-note">证据链：USGS DS 801（DOI 10.3133/ds801）· 源文件第 27 行 · HG-AAS 分析方法与可比组一致 · 综合置信度 0.79（标注缺坐标不确定度声明）</p>
+        </section>
+        <section class="honesty">
+          <code>needs_human_review</code><h3>如实报告局限，是产品能力</h3><p>零增量后自主终止；未达交付标准即如实标注，缺口逐项附原因。<strong>筛查候选不等于污染、矿化或成因结论。</strong></p>
+        </section>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="claim"><span class="orbit"></span><div><b>让每个地球化学点，可追溯 · 可验证 · 可重新计算</b><p>Agent 负责编排与解释；确定性脚本负责单位、坐标、质控、异常与验证；研究者保留最终科学判断。</p><p class="trace-line">记录级溯源：原始测定值 → 标准化轨迹 → 来源定位 → SHA-256 校验　·　置信度四维度：来源证据 / 分析就绪度 / 空间可用性 / 工作流完备性</p><p class="fine">范围说明：以上数字来自 2026-08-15 一次全球在线生产运行，均可在运行产物的结构化报告中逐条核对；22.3% 为 5° 陆地网格覆盖率，不构成全球统计代表性声明。外部数据的 DOI、许可、版本与 SHA-256 以产物 manifest 为准。</p></div></div>
+      <div class="qrs"><div class="qr"><img src="assets/demo-qr.png" alt="在线产品二维码"><b>体验在线产品</b><span>LIVE DEMO</span></div><div class="qr"><img src="assets/repo-qr.png" alt="Skill 仓库二维码"><b>检查代码与证据</b><span>GITHUB REPOSITORY</span></div></div>
+    </footer>
+  </article>
+</body>
+</html>

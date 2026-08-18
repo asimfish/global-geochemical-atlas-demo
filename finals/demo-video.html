@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Global Geochemical Atlas · 决赛 Demo</title>
+  <style>
+    :root{
+      --ink:#061a22;--ink2:#0b2c35;--paper:#f4f8f5;--white:#fff;
+      --teal:#35e0c1;--teal2:#16a99d;--cyan:#7ae7ff;--gold:#f3c969;
+      --coral:#ff6f61;--muted:#93abb1;--line:rgba(122,231,255,.22);
+      --shadow:0 24px 80px rgba(0,0,0,.34);
+    }
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#020c11;color:#fff;font-family:"Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif}
+    body::before{content:"";position:fixed;inset:0;background:
+      radial-gradient(circle at 80% 10%,rgba(53,224,193,.13),transparent 30%),
+      radial-gradient(circle at 12% 90%,rgba(122,231,255,.08),transparent 28%),
+      linear-gradient(135deg,#03131a,#071f27 55%,#04141a);pointer-events:none}
+    body::after{content:"";position:fixed;inset:0;opacity:.28;pointer-events:none;background-image:
+      linear-gradient(rgba(122,231,255,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(122,231,255,.045) 1px,transparent 1px);background-size:48px 48px}
+    .deck{position:relative;width:100%;height:100%;z-index:1}
+    .slide{position:absolute;inset:0;padding:clamp(42px,4.2vw,80px) clamp(56px,6vw,118px) clamp(58px,5vw,92px);display:grid;align-content:center;opacity:0;visibility:hidden;transform:translateY(18px) scale(.992);transition:opacity .48s ease,transform .48s ease,visibility .48s;overflow:hidden}
+    .slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+    .slide.leaving{opacity:0;transform:translateY(-18px) scale(.992)}
+    .eyebrow{font:700 clamp(12px,1vw,18px)/1.2 ui-monospace,"SFMono-Regular",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+    h1,h2,h3,p{margin:0}
+    h1{font-size:clamp(46px,5.25vw,101px);line-height:1.02;letter-spacing:-.055em;font-weight:900}
+    h2{font-size:clamp(38px,4vw,76px);line-height:1.06;letter-spacing:-.045em;font-weight:900}
+    h3{font-size:clamp(20px,1.45vw,30px);line-height:1.2}
+    .lede{font-size:clamp(18px,1.55vw,30px);line-height:1.56;color:#c7d9dc;max-width:900px}
+    .gradient{background:linear-gradient(100deg,#fff 15%,var(--cyan) 54%,var(--teal) 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .coral{color:var(--coral)}.gold{color:var(--gold)}.teal{color:var(--teal)}.muted{color:var(--muted)}
+    .rule{height:1px;background:linear-gradient(90deg,var(--teal),transparent);margin:20px 0 24px}
+    .reveal{opacity:0;transform:translateY(15px)}
+    .slide.active .reveal{animation:rise .62s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,0s)}
+    @keyframes rise{to{opacity:1;transform:none}}
+    .brand{position:absolute;top:28px;left:36px;display:flex;align-items:center;gap:12px;color:#d9eff0;font-weight:800;letter-spacing:.02em;z-index:20}
+    .brand-mark{width:29px;height:29px;border-radius:50%;border:2px solid var(--teal);position:relative;box-shadow:0 0 28px rgba(53,224,193,.45)}
+    .brand-mark::before,.brand-mark::after{content:"";position:absolute;border:1px solid var(--cyan);border-radius:50%}
+    .brand-mark::before{inset:5px -5px;transform:rotate(-18deg)}
+    .brand-mark::after{inset:-5px 7px;transform:rotate(16deg)}
+    .team{position:absolute;top:34px;right:38px;font:700 13px ui-monospace,monospace;color:#95b3b8;letter-spacing:.13em;z-index:20}
+    .chrome{position:absolute;left:36px;right:36px;bottom:22px;display:flex;align-items:center;gap:18px;z-index:30;color:#8ba6ac;font:700 13px ui-monospace,monospace}
+    .progress-track{height:3px;flex:1;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden}
+    .progress{height:100%;width:10%;background:linear-gradient(90deg,var(--teal),var(--cyan));transition:width .45s ease}
+    .clock{min-width:68px;color:var(--teal)}
+    .nav-hint{opacity:.75}.slide-count{min-width:54px;text-align:right;color:#d7e6e8}
+    .notes-panel{position:fixed;left:50%;bottom:54px;width:min(900px,76vw);transform:translate(-50%,20px);background:rgba(2,12,17,.94);border:1px solid rgba(122,231,255,.25);border-radius:14px;padding:18px 22px;z-index:60;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);font-size:15px;line-height:1.6;color:#d8e8ea}
+    .notes-panel.show{opacity:1;transform:translate(-50%,0)}
+    .notes-panel b{color:var(--teal)}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(122,231,255,.24);background:rgba(6,36,44,.74);border-radius:999px;padding:8px 13px;font:700 13px ui-monospace,monospace;color:#cce8eb}
+    .pill i{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 14px var(--teal)}
+    .panel{border:1px solid rgba(122,231,255,.2);background:linear-gradient(145deg,rgba(12,45,54,.86),rgba(4,24,31,.78));border-radius:22px;box-shadow:var(--shadow)}
+
+    /* 01 */
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(34px,4vw,80px);align-items:center}
+    .hero-copy .lede{margin-top:24px;max-width:760px}
+    .output-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+    .output-row span{padding:8px 12px;border-radius:8px;background:rgba(53,224,193,.09);border:1px solid rgba(53,224,193,.24);font-size:clamp(12px,.88vw,17px);font-weight:700;color:#c7eeea}
+    .hero-visual{height:min(68vh,730px);position:relative;border-radius:28px;overflow:hidden;border:1px solid rgba(122,231,255,.24);box-shadow:0 32px 100px rgba(0,0,0,.48)}
+    .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:52% 50%;filter:saturate(1.08) contrast(1.04)}
+    .hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,19,26,.24),transparent 55%),linear-gradient(0deg,rgba(2,12,17,.55),transparent 38%)}
+    .live-badge{position:absolute;z-index:2;left:18px;top:18px;background:rgba(2,18,24,.86);border:1px solid var(--teal);border-radius:999px;padding:8px 13px;font:800 12px ui-monospace,monospace;color:#dffff8;letter-spacing:.08em}
+    .live-badge::before{content:"";display:inline-block;width:7px;height:7px;background:var(--teal);border-radius:50%;margin-right:8px;box-shadow:0 0 13px var(--teal)}
+    .hero-callout{position:absolute;z-index:2;right:18px;bottom:18px;width:min(340px,70%);padding:15px 16px;background:rgba(4,24,31,.9);border-left:3px solid var(--coral);font-size:15px;line-height:1.45;color:#dce9eb}
+
+    /* 02 */
+    .query{margin-top:28px;padding:18px 22px;display:flex;align-items:center;gap:14px;border-radius:15px;background:rgba(255,255,255,.07);border:1px solid rgba(122,231,255,.2);font-size:clamp(17px,1.25vw,25px)}
+    .query code{color:var(--teal);font-weight:800}.query .arr{margin-left:auto;color:var(--cyan)}
+    .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+    .stage{padding:25px 24px;min-height:210px;position:relative;overflow:hidden}
+    .stage::after{content:attr(data-n);position:absolute;right:-5px;bottom:-40px;font:900 150px/1 ui-monospace,monospace;color:rgba(122,231,255,.055)}
+    .stage .stage-k{font:800 13px ui-monospace,monospace;color:var(--teal);letter-spacing:.12em}.stage h3{margin:13px 0 14px}.stage p{color:#a9c1c5;line-height:1.5;font-size:clamp(14px,1vw,18px)}
+    .stats-line{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .mini-stat{padding:14px 16px;border-radius:13px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .mini-stat b{display:block;font:900 clamp(24px,2vw,38px) ui-monospace,monospace;color:var(--gold)}.mini-stat span{font-size:13px;color:#a7c0c4}
+
+    /* 03 · real execution */
+    .run-grid{display:grid;grid-template-columns:1.38fr .62fr;gap:18px;margin-top:22px;height:min(60vh,620px)}
+    .terminal{overflow:hidden;border-radius:20px;background:#020b0f;border:1px solid rgba(53,224,193,.28);box-shadow:var(--shadow);font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;display:flex;flex-direction:column}
+    .terminal-head{flex:0 0 42px;display:flex;align-items:center;gap:7px;padding:0 15px;background:#092027;border-bottom:1px solid rgba(122,231,255,.14);font-size:11px;color:#8dacb1;letter-spacing:.08em}.terminal-head i{width:9px;height:9px;border-radius:50%;background:#ff6f61}.terminal-head i:nth-child(2){background:#f3c969}.terminal-head i:nth-child(3){background:#35e0c1}.terminal-head span{margin-left:7px}.terminal-head em{margin-left:auto;font-style:normal;font-weight:800;color:var(--teal);letter-spacing:.06em}
+    .terminal-body{flex:1;overflow-y:auto;scrollbar-width:none;padding:16px 19px;font-size:clamp(11px,.86vw,15.5px);line-height:1.5;color:#bad2d5}.terminal-body::-webkit-scrollbar{display:none}.terminal-body code{display:block;color:#ecfafa;white-space:pre-wrap}.terminal-body .prompt{color:var(--teal)}.log-list{margin-top:12px;display:grid;gap:6px}
+    .log-line{display:grid;grid-template-columns:72px 108px 1fr;gap:10px;animation:logIn .28s ease-out}.log-line i{font-style:normal;color:#5f7d84}.log-line b{color:var(--cyan)}.log-line.ok b{color:var(--teal)}.log-line.warn b{color:var(--gold)}.log-line.fail b{color:var(--coral)}
+    .log-sep{padding:4px 0 2px;color:#7e9ba0;letter-spacing:.05em;font-weight:800;animation:logIn .28s ease-out}
+    .log-caret{width:9px;height:15px;background:var(--teal);animation:blink 1s steps(1) infinite}
+    @keyframes logIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    @keyframes blink{50%{opacity:0}}
+    .run-side{display:grid;grid-template-rows:auto repeat(3,1fr) auto;gap:10px}.commit-badge{padding:11px 13px;border-radius:12px;background:rgba(53,224,193,.1);border:1px solid rgba(53,224,193,.28);font:900 12px ui-monospace,monospace;color:var(--teal);letter-spacing:.05em}.run-stat{padding:15px 17px;display:grid;align-content:center}.run-stat b{font:900 clamp(26px,2.3vw,44px)/1 ui-monospace,monospace;color:#fff}.run-stat span{margin-top:8px;color:#a9c1c5;font-size:13px;line-height:1.35}.run-stat.result b{font-size:clamp(19px,1.55vw,30px);color:var(--gold)}.run-caveat{padding:12px 14px;border-radius:12px;background:rgba(255,111,97,.1);border:1px solid rgba(255,111,97,.28);font-size:11px;line-height:1.45;color:#dfc9c7}
+
+    /* 03 */
+    .product-wrap{position:absolute;inset:80px 64px 66px;border-radius:24px;overflow:hidden;border:1px solid rgba(122,231,255,.28);background:#09222b;box-shadow:var(--shadow)}
+    .product-shot,.product-live{width:100%;height:100%;border:0;display:block}
+    .product-shot{object-fit:cover;object-position:50% 47%}
+    .product-live{display:none;background:#fff}
+    .product-wrap.live .product-shot{display:none}.product-wrap.live .product-live{display:block}
+    .product-title{position:absolute;left:88px;top:97px;z-index:4;padding:15px 19px;background:rgba(3,18,24,.9);border-left:4px solid var(--teal);box-shadow:var(--shadow)}
+    .product-title h2{font-size:clamp(28px,2.6vw,50px)}
+    .product-title p{font:700 13px ui-monospace,monospace;color:var(--teal);margin-top:7px}
+    .interaction-bar{position:absolute;z-index:5;left:50%;bottom:76px;transform:translateX(-50%);display:flex;gap:8px;padding:8px;background:rgba(2,16,22,.92);border:1px solid rgba(122,231,255,.25);border-radius:999px;box-shadow:var(--shadow)}
+    .interaction-bar span{padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.06);font-size:13px;font-weight:800}.interaction-bar b{color:var(--teal)}
+    .view-tabs{position:absolute;z-index:6;right:88px;top:97px;display:flex;gap:7px;padding:7px;background:rgba(3,18,24,.92);border:1px solid rgba(122,231,255,.28);border-radius:999px;box-shadow:var(--shadow)}
+    .view-tabs button{appearance:none;border:0;cursor:pointer;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.06);color:#cfe4e7;font:800 13px/1 "Noto Sans SC",sans-serif;letter-spacing:.02em;transition:.2s}
+    .view-tabs button:hover{background:rgba(53,224,193,.18);color:#fff}
+    .view-tabs button.active{background:var(--teal);color:#04252c}
+
+    /* 04 */
+    .evidence-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:26px;height:min(58vh,600px)}
+    .evidence-img{position:relative;overflow:hidden}
+    .evidence-img img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;filter:saturate(.9) contrast(1.02)}
+    .evidence-img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(2,14,20,.82),transparent 42%)}
+    .evidence-label{position:absolute;left:18px;bottom:16px;right:18px;z-index:2}.evidence-label b{font-size:21px}.evidence-label p{margin-top:6px;color:#b5cccf;font-size:14px}
+    .trace-card{position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);z-index:5;width:min(560px,38vw);padding:17px 20px;background:rgba(3,19,25,.96);border:1px solid rgba(53,224,193,.36);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+    .trace-card .trace-title{font:900 14px ui-monospace,monospace;color:var(--teal);margin-bottom:11px}
+    .trace-path{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;align-items:center}.trace-path span{min-height:54px;display:grid;place-items:center;text-align:center;padding:8px;border-radius:9px;background:rgba(255,255,255,.06);font-size:12px;font-weight:800;color:#d8e8ea}.trace-path i{display:none}.trace-card small{display:block;margin-top:10px;color:#8eaab0;font-size:11px}
+
+    /* 05 */
+    .anomaly-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;margin-top:22px;align-items:stretch;height:min(58vh,610px)}
+    .anomaly-map{overflow:hidden;position:relative}.anomaly-map img{width:100%;height:100%;object-fit:cover;object-position:50% 52%}
+    .screening{position:absolute;left:17px;top:17px;padding:8px 12px;border-radius:999px;background:rgba(42,10,12,.88);border:1px solid var(--coral);font:900 12px ui-monospace,monospace;letter-spacing:.08em;color:#ffd8d3}
+    .method-stack{display:grid;gap:12px}
+    .method-card{padding:19px 20px;border-radius:17px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1)}
+    .method-card b{display:block;font:900 15px ui-monospace,monospace;color:var(--gold);margin-bottom:7px}.method-card p{color:#bdd0d3;font-size:14px;line-height:1.48}
+    .boundary{padding:20px;border-radius:17px;background:linear-gradient(135deg,rgba(255,111,97,.18),rgba(255,111,97,.06));border:1px solid rgba(255,111,97,.36)}
+    .boundary strong{font-size:19px;color:#ffd7d2}.boundary p{margin-top:8px;font-size:14px;line-height:1.5;color:#e8c8c5}
+
+    /* 06 · interpreted real candidate */
+    .case-grid{display:grid;grid-template-columns:.78fr 1.12fr 1.1fr;gap:16px;margin-top:24px}
+    .case-card{padding:22px 21px;min-height:330px}.case-label{font:900 12px ui-monospace,monospace;color:var(--teal);letter-spacing:.1em}.case-card h3{font-size:24px;margin:14px 0 18px}.case-value{font:900 clamp(42px,4vw,76px)/1 ui-monospace,monospace;color:#fff}.case-value small{font-size:18px;color:#bdd0d3}.case-meta{margin-top:15px;color:#a9c1c5;font-size:13px;line-height:1.55}.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}.compare-row div{padding:13px;border-radius:12px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08)}.compare-row b{display:block;font:900 24px ui-monospace,monospace;color:var(--gold)}.compare-row span{font-size:11px;color:#a9c1c5}.threshold{margin-top:12px;padding:13px;border-radius:12px;background:rgba(255,111,97,.1);border:1px solid rgba(255,111,97,.3);font:800 13px ui-monospace,monospace;color:#ffd5d1}.evidence-list{display:grid;gap:10px;margin-top:9px}.evidence-list div{padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.09)}.evidence-list b{display:block;color:#e9f8f7;font-size:13px}.evidence-list span{display:block;margin-top:4px;color:#96b0b4;font-size:11px;line-height:1.35;word-break:break-word}.case-boundary{margin-top:14px;padding:14px 18px;border-radius:14px;background:linear-gradient(90deg,rgba(255,111,97,.18),rgba(255,111,97,.05));border:1px solid rgba(255,111,97,.34);display:flex;gap:16px;align-items:center}.case-boundary b{white-space:nowrap;color:#ffd5d0;font-size:17px}.case-boundary span{color:#d8c4c2;font-size:13px;line-height:1.45}
+
+    /* 06 */
+    .guard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+    .guard{padding:23px 20px;min-height:240px;position:relative;overflow:hidden}
+    .guard .ico{width:47px;height:47px;display:grid;place-items:center;border-radius:14px;background:rgba(53,224,193,.12);border:1px solid rgba(53,224,193,.27);font:900 20px ui-monospace,monospace;color:var(--teal)}
+    .guard h3{margin:18px 0 12px;font-size:21px}.guard p{font-size:15px;line-height:1.55;color:#a9c1c5}.guard strong{color:#e7f8f6}
+    .fail-strip{margin-top:16px;display:flex;align-items:center;gap:20px;padding:15px 20px;border-radius:14px;background:rgba(255,111,97,.1);border:1px solid rgba(255,111,97,.27)}
+    .fail-strip b{font:900 15px ui-monospace,monospace;color:var(--coral);letter-spacing:.08em}.fail-strip span{font-size:15px;color:#dfc9c7}
+
+    /* 07 */
+    .proof-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;margin-top:28px;align-items:center}
+    .proof-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .proof-metric{padding:22px 22px;border-radius:19px;background:rgba(255,255,255,.055);border:1px solid rgba(122,231,255,.15);min-height:145px}
+    .proof-metric b{font:900 clamp(34px,3.1vw,60px)/1 ui-monospace,monospace;color:var(--teal)}.proof-metric span{display:block;margin-top:13px;color:#bad0d3;font-size:15px;line-height:1.38}.proof-metric.warn b{color:var(--gold)}.proof-metric.zero b{color:#fff}
+    .honesty{padding:27px 28px;border-radius:22px;background:linear-gradient(145deg,rgba(14,57,65,.88),rgba(5,26,33,.88));border:1px solid rgba(53,224,193,.3)}
+    .honesty code{display:inline-block;padding:9px 12px;border-radius:8px;background:#071b21;color:var(--gold);font:900 17px ui-monospace,monospace}.honesty h3{font-size:30px;margin:20px 0 14px}.honesty p{font-size:17px;line-height:1.6;color:#bad0d3}.scope-note{margin-top:15px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:13px!important;color:#8fa9ae!important}
+
+    /* 08 */
+    .reuse-flow{display:grid;grid-template-columns:.8fr 1.05fr .95fr 1.2fr;align-items:center;gap:20px;margin-top:42px}
+    .reuse-node{min-height:230px;padding:22px 20px;display:grid;align-content:center;text-align:center;position:relative}
+    .reuse-node::after{content:"→";position:absolute;right:-34px;top:45%;font:900 28px ui-monospace,monospace;color:var(--teal)}
+    .reuse-node:last-child::after{display:none}.reuse-node .node-label{font:900 13px ui-monospace,monospace;color:var(--teal);letter-spacing:.1em;margin-bottom:13px}.reuse-node h3{font-size:24px}.reuse-node p{margin-top:12px;color:#a8c0c4;font-size:14px;line-height:1.5}
+    .agents{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:15px}.agents span{padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.07);font-size:11px;color:#d5e6e7}
+    .consumer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.consumer-grid span{padding:10px 6px;border-radius:9px;background:rgba(53,224,193,.08);color:#c8e8e4;font-size:12px;font-weight:800}
+    .division{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.division span{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.11);font-size:14px;color:#b9cdd0}.division b{color:var(--gold)}
+
+    /* 09 */
+    .close-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+    .close-copy h2{font-size:clamp(45px,5.2vw,98px)}.close-copy .lede{margin-top:26px;font-size:clamp(18px,1.55vw,29px)}
+    .proof-strip{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}.proof-strip span{padding:8px 11px;border-radius:8px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);font-size:13px;color:#b9ced1}
+    .qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .qr{padding:18px;background:#f7fbf9;border-radius:22px;color:#0b2c35;text-align:center;box-shadow:var(--shadow)}
+    .qr img{width:100%;aspect-ratio:1;object-fit:contain;display:block}.qr b{display:block;font-size:18px;margin-top:10px}.qr span{display:block;font:700 10px ui-monospace,monospace;color:#557177;margin-top:5px;word-break:break-all}
+    .final-tag{margin-top:28px;font:800 14px ui-monospace,monospace;color:var(--teal);letter-spacing:.12em}
+
+    @media(max-aspect-ratio:1.4/1){.hero-grid,.close-grid{grid-template-columns:1fr}.hero-visual{height:38vh}.guard-grid{grid-template-columns:1fr 1fr}.reuse-flow{grid-template-columns:1fr 1fr}.reuse-node::after{display:none}}
+  </style>
+</head>
+<body>
+  <div class="brand"><span class="brand-mark"></span><span>GLOBAL GEOCHEMICAL ATLAS</span></div>
+  <div class="team">TEAM 0066 · AI4S FINAL</div>
+  <main class="deck" id="deck">
+    <section class="slide active" data-title="让 Agent 自主完成全球地球化学数据整编">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow reveal" style="--d:.05s">01 · GLOBAL GEOCHEMICAL ATLAS</div>
+          <h1 class="reveal" style="--d:.12s">让 Agent 自主完成<br><span class="gradient">全球地球化学数据整编</span></h1>
+          <p class="lede reveal" style="--d:.25s">提交一条研究请求，它自主完成数据获取、标准化质控、制图与溯源存档；无法满足的部分，如实报告为缺口。<br><b class="teal">前半段介绍系统设计；后半段是一次真实的全球尺度运行记录。</b></p>
+          <div class="output-row reveal" style="--d:.38s"><span>交互图谱</span><span>标准化数据库</span><span>来源与置信度</span><span>异常筛查候选</span><span>可复用 Skill</span></div>
+        </div>
+        <div class="hero-visual reveal" style="--d:.2s">
+          <img src="assets/global-overview-1920x1080.png" alt="全球地球化学图谱真实运行界面">
+          <div class="live-badge">REAL PRODUCT VIEW</div>
+          <div class="hero-callout"><b class="teal">元素 × 区域 × 介质</b><br>一次请求，进入同一数据库、同一证据链、同一科学边界。</div>
+        </div>
+      </div>
+      <template class="notes">全球地球化学数据分散在数十个数据库和文献附表中，人工整编往往以月计。我们构建了一个可复用的 Agent Skill：提交研究请求后，它自主完成数据获取、标准化质控、制图与溯源存档，无法满足的部分如实报告为缺口。前半段介绍系统设计，后半段是一次真实的全球尺度运行记录。</template>
+    </section>
+
+    <section class="slide" data-title="计划：三阶段工作流">
+      <div class="eyebrow reveal" style="--d:.05s">PART 1 · 计划与设计 · 02 · THREE-STAGE PLAN</div>
+      <h2 class="reveal" style="--d:.12s">计划：从请求到成果的<span class="gradient">三阶段工作流</span></h2>
+      <div class="query reveal" style="--d:.22s"><span>研究请求</span><code>Cr（铬）· 中国东部 · 土壤</code><span class="arr">→ 全流程自主执行</span></div>
+      <div class="flow">
+        <article class="stage panel reveal" data-n="1" style="--d:.3s"><span class="stage-k">D1 · 数据获取</span><h3>来源准入与证据固定</h3><p>优先采用官方数据库与带 DOI 的公开数据集；许可、版本与文件哈希全部存档，来源可逐项核查。</p></article>
+        <article class="stage panel reveal" data-n="2" style="--d:.4s"><span class="stage-k">D2 · 标准化与质控</span><h3>按地球化学规范处理</h3><p>统一计量单位与坐标参考系，执行质量控制；原始测定值全程保留，不被覆盖。</p></article>
+        <article class="stage panel reveal" data-n="3" style="--d:.5s"><span class="stage-k">D3 · 成果生成</span><h3>产物可核查、可复用</h3><p>图谱、标准化数据库与证据报告同步生成；仅质控达标的数据进入成果。</p></article>
+      </div>
+      <div class="stats-line">
+        <div class="mini-stat reveal" style="--d:.58s"><b>63</b><span>个已登记的候选数据源</span></div>
+        <div class="mini-stat reveal" style="--d:.64s"><b>4</b><span>类采样介质：岩石 · 土壤 · 沉积物 · 水</span></div>
+        <div class="mini-stat reveal" style="--d:.7s"><b>15</b><span>项核心产物</span></div>
+        <div class="mini-stat reveal" style="--d:.76s"><b>1</b><span>套可复用的 Agent Skill</span></div>
+      </div>
+      <template class="notes">工作流分三个阶段：D1 数据获取，完成来源准入，许可、版本与文件哈希全部存档；D2 标准化与质控，统一计量单位与坐标参考系，原始测定值全程保留；D3 成果生成，图谱、标准化数据库与证据报告同步产出，仅质控达标的数据进入成果。来源目录已登记 63 个候选，核心产物固定为 15 项。</template>
+    </section>
+
+    <section class="slide" data-title="设计：模型编排，确定性计算">
+      <div class="eyebrow reveal" style="--d:.05s">PART 1 · 计划与设计 · 03 · SYSTEM DESIGN</div>
+      <h2 class="reveal" style="--d:.12s">设计：模型负责编排，<span class="gradient">计算交给确定性脚本</span></h2>
+      <div class="reuse-flow">
+        <article class="reuse-node panel reveal" style="--d:.24s"><div class="node-label">输入</div><h3>研究请求</h3><p>元素 · 区域 · 介质<br>约束与证据要求</p></article>
+        <article class="reuse-node panel reveal" style="--d:.32s"><div class="node-label">编排层 · 模型</div><h3>理解与调度</h3><div class="agents"><span>OpenCode</span><span>Codex</span><span>命令行 / CI</span><span>任意 Agent</span></div></article>
+        <article class="reuse-node panel reveal" style="--d:.4s"><div class="node-label">计算层 · 脚本</div><h3>确定性计算</h3><p>相同输入<br>产出逐字节一致的结果</p></article>
+        <article class="reuse-node panel reveal" style="--d:.48s"><div class="node-label">输出</div><h3>15 项核心产物</h3><div class="consumer-grid"><span>图谱</span><span>数据库</span><span>科研报告</span><span>后续分析</span></div></article>
+      </div>
+      <div class="division reveal" style="--d:.62s"><span><b>职责分离：</b>模型不参与数值计算；单位换算、坐标转换、质控与异常判定全部由确定性脚本执行，结果可逐字节复现</span></div>
+      <template class="notes">关键设计是职责分离：大模型可能出错，因此只负责理解请求与调度流程；单位换算、坐标转换、质量控制、异常判定等全部科学计算由确定性脚本执行，相同输入产出逐字节一致的结果。同一 Skill 接入任意 Agent 环境，计算结果完全一致。</template>
+    </section>
+
+    <section class="slide" data-title="设计：四条硬约束">
+      <div class="eyebrow reveal" style="--d:.05s">PART 1 · 计划与设计 · 04 · SCIENTIFIC GUARDRAILS</div>
+      <h2 class="reveal" style="--d:.12s">设计：四条<span class="gradient">硬约束</span>，由执行器强制生效</h2>
+      <div class="guard-grid">
+        <article class="guard panel reveal" style="--d:.24s"><span class="ico">RAW</span><h3>原始值不可变更</h3><p>原始测定值、原单位与限定符<strong>永久保留</strong>；单位换算另行记录换算轨迹。</p></article>
+        <article class="guard panel reveal" style="--d:.32s"><span class="ico">&lt;DL</span><h3>删失值不替换</h3><p>低于检出限（&lt;LOD / &lt;LOQ）的删失值如实保留；<strong>不以 0 或 LOD/2 代入</strong>。</p></article>
+        <article class="guard panel reveal" style="--d:.4s"><span class="ico">CRS</span><h3>坐标系不假定</h3><p>坐标参考系未声明时<strong>不默认为 WGS84</strong>；所有坐标转换全程留痕。</p></article>
+        <article class="guard panel reveal" style="--d:.48s"><span class="ico">n≥20</span><h3>背景样本不足不出统计</h3><p>可比样本量不足 20 时返回<strong>“背景不足”</strong>，不降低阈值强行计算。</p></article>
+      </div>
+      <div class="fail-strip reveal" style="--d:.6s"><b>FAIL-CLOSED</b><span>无法满足科学条件时，明确报告缺口与原因——不产出貌似完整的结果</span></div>
+      <template class="notes">第四层设计是四条硬约束，由确定性执行器强制生效：原始测定值不可变更；低于检出限的删失值不以零或半检出限代入；坐标参考系未声明时不默认 WGS84；可比样本不足二十时不产出背景统计。总原则是 fail-closed：无法满足科学条件就明确报告缺口与原因，不产出貌似完整的结果。设计部分到此，下面看一次真实运行。</template>
+    </section>
+
+    <section class="slide" data-title="真实运行：一次全球尺度自主采集">
+      <div class="eyebrow reveal" style="--d:.05s">PART 2 · 真实运行记录 · 05 · AGENT EXECUTION LOG</div>
+      <h2 class="reveal" style="--d:.12s">8 月 15 日，一次<span class="gradient">全球尺度的自主采集运行</span></h2>
+      <div class="run-grid">
+        <div class="terminal reveal" style="--d:.22s">
+          <div class="terminal-head"><i></i><i></i><i></i><span>真实运行日志回放 · 2026-08-15 · 实际总时长 33 分 02 秒 · 约 78 倍速回放</span><em id="runElapsed">T+00:00</em></div>
+          <div class="terminal-body" id="runBody">
+            <code><span class="prompt">$</span> python3 run_atlas_request.py --request REQUEST.json \
+  --analysis-profile production --acquisition-mode online \
+  --online-source auto --per-analyte-observations 512 \
+  --source-timeout-seconds 600 --coordinate-mode auto</code>
+            <div class="log-list" id="runLog"></div>
+          </div>
+        </div>
+        <div class="run-side">
+          <div class="commit-badge reveal" style="--d:.25s">在线生产运行 · 全程自主 · 9 轮 · 33 分钟</div>
+          <div class="run-stat panel reveal result" style="--d:.32s"><b>自主终止</b><span>零增量后停止采集，不以重复记录扩充数据量</span></div>
+          <div class="run-stat panel reveal" style="--d:.4s"><b>191,715</b><span>条测定 · 来自 29 个正式入库的公开来源</span></div>
+          <div class="run-stat panel reveal" style="--d:.48s"><b>238</b><span>项缺口进入修复队列，逐项标注原因</span></div>
+          <div class="run-caveat reveal" style="--d:.56s">俄罗斯、南美与岩石介质覆盖不足，如实保留为缺口，未以其他区域的数据量掩盖。</div>
+        </div>
+      </div>
+      <template class="notes">这是 8 月 15 日真实运行的日志回放：实际跑了 33 分钟、9 轮，这里以约 78 倍速重放，每一行的轮次、计数、用时都取自 loop_report.json。看几个关键点：63 个候选来源完成准入审计后 29 个入库；两个 GEOROC 端点持续 HTTP 500，被如实记为失败；采集目标从每元素 512 条观测逐轮翻倍到 5 万上限；第 6 轮起增量为零，连续两轮问题签名相同后触发停机，发布 191,715 条测定；终态 needs_human_review，238 项缺口进入修复队列。按 L 可重放。如实报告未完成项，正是设计目标之一。</template>
+    </section>
+
+    <section class="slide" data-title="运行产物：全球交互图谱">
+      <div class="product-wrap" id="productWrap">
+        <img class="product-shot" src="assets/global-run-map-1920x1080.png" alt="本次全球真实运行生成的交互图谱截图">
+        <iframe class="product-live" data-src="real-run/interactive_map.html" title="确定性回归运行生成的自包含交互图谱"></iframe>
+      </div>
+      <div class="product-title reveal" style="--d:.1s"><h2>运行产物：<span class="gradient">191,715 条测定构成的全球图谱</span></h2><p>PART 2 · 实际使用 · 点击右上标签现场进入真实产物 · 全部离线可用</p></div>
+      <div class="view-tabs reveal" style="--d:.3s">
+        <button class="vt" data-live="real-run/interactive_map.html">运行产物 · 回归切片</button>
+        <button class="vt" data-live="../live/globe-3d.html">3D 地球</button>
+        <button class="vt" data-live="../live/global-overview.html">全球总览</button>
+        <button class="vt" data-live="../live/china-anomaly.html">中国区异常</button>
+        <button class="vt active" data-live="">截图</button>
+      </div>
+      <div class="interaction-bar reveal" style="--d:.5s"><span><b>191,715</b> 条测定</span><span><b>42,664</b> 个采样点</span><span><b>7</b> 种元素</span><span><b>3,351</b> 个异常筛查候选</span></div>
+      <template class="notes">这是刚才那次运行的直接产物：一张全球交互图谱，191,715 条测定、42,664 个采样点、3,351 个异常筛查候选，自包含单文件、离线可用。主画面截图即该 74MB 运行产物实拍（原件在决赛材料包，线上未内置）。右上标签均为真实产物，可现场点开：回归运行产物切片、3D 地球、全球总览、中国区异常透视。</template>
+    </section>
+
+    <section class="slide" data-title="实际使用：记录级溯源">
+      <div class="eyebrow reveal" style="--d:.05s">PART 2 · 实际使用 · 07 · RECORD-LEVEL PROVENANCE</div>
+      <h2 class="reveal" style="--d:.12s">实际使用：每条测定都<span class="gradient">支持记录级溯源</span></h2>
+      <div class="evidence-grid">
+        <div class="evidence-img panel reveal" style="--d:.24s"><img src="assets/database-view-1920x1080.png" alt="标准化数据库界面"><div class="evidence-label"><b>标准化记录</b><p>原始值 · 标准化值 · 计量单位 · 分析方法 · 质控标记</p></div></div>
+        <div class="evidence-img panel reveal" style="--d:.32s"><img src="assets/source-view-1920x1080.png" alt="来源与置信度界面"><div class="evidence-label"><b>来源与许可</b><p>文献 DOI · 源文件行号 · 数据许可 · SHA-256 校验值</p></div></div>
+      </div>
+      <div class="trace-card reveal" style="--d:.52s"><div class="trace-title">四级溯源链</div><div class="trace-path"><span>原始<br>测定值</span><span>标准化<br>轨迹</span><span>来源<br>定位</span><span>哈希<br>校验</span></div><small>置信度按四个维度分别报告：来源证据 · 分析就绪度 · 空间可用性 · 工作流完备性</small></div>
+      <template class="notes">图谱上的点不是结论，而是证据入口。点开任意记录：左侧是标准化记录，从原始测定值到标准化值、分析方法与质控标记；右侧是来源信息——文献 DOI、源文件行号、数据许可与 SHA-256 校验值。四级溯源链使任何记录都可被独立复核。</template>
+    </section>
+
+    <section class="slide" data-title="异常筛查：一条真实候选的判定">
+      <div class="eyebrow reveal" style="--d:.05s">PART 2 · 实际使用 · 08 · INTERPRET ONE REAL CANDIDATE</div>
+      <h2 class="reveal" style="--d:.12s">异常筛查：一条真实候选的<span class="coral">完整判定过程</span></h2>
+      <div class="reveal" style="--d:.18s;margin-top:14px"><span class="pill"><i></i>真实样例 · 全球运行产出的 3,351 个筛查候选均经由同一判定链路</span></div>
+      <div class="case-grid">
+        <article class="case-card panel reveal" style="--d:.24s">
+          <div class="case-label">输入 · 测定值</div><h3>土壤样品的砷（As）含量</h3>
+          <div class="case-value">23.9 <small>mg/kg</small></div>
+          <p class="case-meta">美国阿拉巴马州 · A 层土壤样品<br>样品编号 C-328917</p>
+        </article>
+        <article class="case-card panel reveal" style="--d:.34s">
+          <div class="case-label">判定 · 背景比较</div><h3>仅在可比分组内比较</h3>
+          <div class="compare-row"><div><b>45</b><span>条可比记录：同介质 · 同方法 · 同地质单元</span></div><div><b>2.30</b><span>可比组中位数（mg/kg）</span></div></div>
+          <div class="compare-row"><div><b>10.4 倍</b><span>相对可比组中位数的富集程度</span></div><div><b>z = 3.69</b><span>稳健 Z 分数，超过 3.5 筛查阈值</span></div></div>
+          <div class="threshold">判定结果：高值筛查候选</div>
+        </article>
+        <article class="case-card panel reveal" style="--d:.44s">
+          <div class="case-label">输出 · 证据链</div><h3>判定依据全部可回溯</h3>
+          <div class="evidence-list">
+            <div><b>分析方法</b><span>氢化物发生-原子吸收光谱（HG-AAS），与比较组一致</span></div>
+            <div><b>数据来源</b><span>USGS DS 801（DOI 10.3133/ds801）· 源文件第 27 行</span></div>
+            <div><b>综合置信度 0.79</b><span>同时标注：该记录缺少坐标不确定度声明</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="case-boundary reveal" style="--d:.58s"><b>系统仅报告：高值筛查候选</b><span>污染、矿化或成因判断需结合采样设计与独立验证，由研究者做出——筛查不构成结论。</span></div>
+      <template class="notes">看一条真实候选的判定过程。输入是一份土壤样品的砷测定值 23.9 毫克每千克。系统仅在可比分组内比较：同介质、同分析方法、同地质单元的 45 条记录，可比组中位数 2.30，该样品为其 10.4 倍，稳健 Z 分数 3.69，超过 3.5 的筛查阈值。输出的证据链包含分析方法、数据来源与综合置信度，并标注该记录缺少坐标不确定度声明。系统仅报告"高值筛查候选"；污染或矿化判断由研究者结合独立验证做出。</template>
+    </section>
+
+    <section class="slide" data-title="运行验收：成果与局限一并报告">
+      <div class="eyebrow reveal" style="--d:.05s">PART 2 · 运行验收 · 09 · REPRODUCIBLE PROOF</div>
+      <h2 class="reveal" style="--d:.12s">运行验收：成果与局限，<span class="gradient">一并如实报告</span></h2>
+      <div class="proof-grid">
+        <div class="proof-metrics">
+          <div class="proof-metric reveal" style="--d:.24s"><b>191,715</b><span>条测定实际入库——9 轮在线采集，无重复计数</span></div>
+          <div class="proof-metric warn reveal" style="--d:.32s"><b>0</b><span>条岩石介质测定——上游来源持续不可用，如实标注为空白</span></div>
+          <div class="proof-metric warn reveal" style="--d:.4s"><b>22.3%</b><span>5° 陆地网格覆盖率（135/605）——距全球代表性尚有差距，未作夸大</span></div>
+          <div class="proof-metric warn reveal" style="--d:.48s"><b>238</b><span>项缺口进入修复队列——俄罗斯、南美等区域逐项标注原因</span></div>
+          <div class="proof-metric zero reveal" style="--d:.56s;grid-column:1/-1"><b>0 错误</b><span>15 项核心产物全部通过独立校验；跨环境重跑，结果逐字节一致</span></div>
+        </div>
+        <div class="honesty reveal" style="--d:.38s"><code>delivery_ready: false</code><h3>如实报告局限，是科研可信的前提</h3><p>零增量后自主终止；交付回执明确标注"未达交付标准"，每项缺口附原因与修复建议——这比一张貌似完整的图谱更可信。</p><p class="scope-note">以上数字均可在运行产物的结构化报告中逐条核对。</p></div>
+      </div>
+      <template class="notes">运行验收。成果：191,715 条测定实际入库，9 轮在线采集，无重复计数。局限，系统自己报告了：岩石介质为零，因上游来源持续不可用；5 度陆地网格覆盖率 22.3%，距全球代表性尚有差距，未作夸大；238 项缺口进入修复队列并逐项标注原因。15 项核心产物全部通过独立校验，跨环境重跑结果逐字节一致。如实报告局限，是这套系统作为科研基础设施最重要的能力。</template>
+    </section>
+
+    <section class="slide" data-title="让地球化学数据成为可计算基础设施">
+      <div class="close-grid">
+        <div class="close-copy">
+          <div class="eyebrow reveal" style="--d:.05s">10 · THE NEXT LAYER FOR EARTH SCIENCE</div>
+          <h2 class="reveal" style="--d:.12s">让每个点<br><span class="gradient">可追溯 · 可验证<br>可重新计算</span></h2>
+          <p class="lede reveal" style="--d:.25s">Global Geochemical Atlas：把分散的公开地球化学数据，整编为 Agent 可执行、研究者可复核的科研基础设施。</p>
+          <div class="proof-strip reveal" style="--d:.36s"><span>191,715 条测定</span><span>29 个正式来源</span><span>记录级溯源</span><span>逐字节可复现</span><span>如实报告局限</span></div>
+          <div class="final-tag reveal" style="--d:.48s">TEAM 0066 · AI4S FUTURE SCIENCESKILLS HACKATHON</div>
+        </div>
+        <div class="qr-grid reveal" style="--d:.25s">
+          <div class="qr"><img src="assets/demo-qr.png" alt="在线 Demo 二维码"><b>体验在线产品</b><span>asimfish.github.io/global-geochemical-atlas-demo</span></div>
+          <div class="qr"><img src="assets/repo-qr.png" alt="Skill 仓库二维码"><b>检查代码与证据</b><span>github.com/asimfish/global-geochemical-atlas-skill</span></div>
+        </div>
+      </div>
+      <template class="notes">让每一条地球化学测定可追溯、可验证、可重新计算。扫描二维码体验产品、检查代码与证据。谢谢。</template>
+    </section>
+  </main>
+
+  <div class="chrome"><span class="clock" id="clock">00:00</span><div class="progress-track"><div class="progress" id="progress"></div></div><span class="nav-hint">← → · R 计时 · N 备注 · I 交互 · L 重放日志 · F 全屏</span><span class="slide-count" id="count">1 / 10</span></div>
+  <aside class="notes-panel" id="notes"><b>演讲备注</b><div id="notesText"></div></aside>
+
+  <script>
+    const slides=[...document.querySelectorAll('.slide')];
+    const progress=document.getElementById('progress');
+    const count=document.getElementById('count');
+    const clock=document.getElementById('clock');
+    const notes=document.getElementById('notes');
+    const notesText=document.getElementById('notesText');
+    const marks=[0,12,27,43,60,96,120,136,156,170,180];
+    let index=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1),10)||1)-1));
+    let timer=null,startAt=0,notesOpen=false;
+    function render(next,direction=1){
+      next=Math.max(0,Math.min(slides.length-1,next));
+      slides.forEach((s,i)=>{s.classList.toggle('active',i===next);s.classList.toggle('leaving',i===index&&i!==next&&direction>0)});
+      index=next;location.hash=String(index+1);count.textContent=`${index+1} / ${slides.length}`;progress.style.width=`${(index+1)/slides.length*100}%`;
+      notesText.textContent=slides[index].querySelector('.notes')?.content.textContent.trim()||'';
+      document.title=`${index+1}/${slides.length} · ${slides[index].dataset.title}`;
+      if(index===4)startRunLog();else stopRunLog();
+    }
+    // ===== 第 5 幕：真实运行日志回放（数据取自 real-run-global/loop_report.json）=====
+    const RUN_SECONDS=1982; // 9 轮 duration_seconds 之和 = 33 分 02 秒
+    const RUN_LOG=[
+      [0.5,'info','T+00:00','[controller]','REQUEST.json 哈希冻结 · sha256 58cf6ed3…7992 · profile=production · 上限 24 轮'],
+      [1.1,'ok','T+00:02','[audit]','63 个候选来源完成准入审计 → 31 个进入路由'],
+      [1.7,'info','T+00:03','[route]','调度 31 个来源并行获取 · source-timeout 600s'],
+      [2.2,'sep','','','—— ROUND 1 · 采集目标 512 观测/元素 ——'],
+      [2.5,'ok','T+00:06','[fetch]','gemas-europe → 200 · 6,656 条 · CC-BY-4.0'],
+      [2.64,'ok','T+00:09','[fetch]','usgs-conus-soil → 200 · 6,144 条 · USGS-Public-Domain'],
+      [2.78,'ok','T+00:13','[fetch]','foregs-stream-sediment → 200 · 5,928 条 · FOREGS-Research-Attributio'],
+      [2.92,'ok','T+00:17','[fetch]','foregs-topsoil → 200 · 5,798 条 · FOREGS-Research-Attributio'],
+      [3.06,'ok','T+00:20','[fetch]','foregs-subsoil → 200 · 5,447 条 · FOREGS-Research-Attributio'],
+      [3.2,'ok','T+00:24','[fetch]','foregs-floodplain-sediment → 200 · 4,862 条 · FOREGS-Research-Attributio'],
+      [3.34,'ok','T+00:28','[fetch]','figshare-yangtze-basin-soil-heavy-metals → 200 · 3,584 条 · CC-BY-4.0'],
+      [3.48,'ok','T+00:32','[fetch]','gemstat-open-archive → 200 · 3,584 条 · CC-BY-4.0'],
+      [3.62,'ok','T+00:35','[fetch]','japan-gsj-geochemical-map → 200 · 3,584 条 · GSJ-Government-Standard-Te'],
+      [3.76,'ok','T+00:39','[fetch]','japan-gsj-marine-sediment → 200 · 3,584 条 · GSJ-Government-Standard-Te'],
+      [3.9,'ok','T+00:43','[fetch]','afsis-phase-i-wet-chemistry → 200 · 3,072 条 · CC-BY-4.0'],
+      [4.04,'ok','T+00:46','[fetch]','foregs-stream-water → 200 · 3,072 条 · FOREGS-Research-Attributio'],
+      [4.18,'ok','T+00:50','[fetch]','tpdc-china-mountain-soil → 200 · 2,560 条 · CC-BY-4.0'],
+      [4.32,'ok','T+00:54','[fetch]','australia-ngsa → 200 · 2,048 条 · CC-BY-3.0-AU'],
+      [4.46,'ok','T+00:58','[fetch]','norway-marchem → 200 · 2,048 条 · CC-BY-4.0'],
+      [4.6,'ok','T+01:01','[fetch]','pangaea-barents-c-horizon-soil → 200 · 2,048 条 · CC-BY-3.0'],
+      [4.74,'ok','T+01:05','[fetch]','foregs-humus → 200 · 1,835 条 · FOREGS-Research-Attributio'],
+      [4.88,'ok','T+01:09','[fetch]','pangaea-brasol-ne-brazil-soil → 200 · 1,614 条 · CC-BY-4.0'],
+      [5.02,'ok','T+01:12','[fetch]','geotraces-idp2025 → 200 · 1,536 条 · CC-BY-4.0'],
+      [5.16,'ok','T+01:16','[fetch]','pangaea-amazonas-soil → 200 · 1,169 条 · CC-BY-4.0'],
+      [5.3,'ok','T+01:20','[fetch]','zenodo-yangtze-yellow-river-sediment → 200 · 558 条 · CC-BY-4.0'],
+      [5.44,'ok','T+01:24','[fetch]','eidc-ningbo-soil → 200 · 480 条 · OGL-UK-3.0'],
+      [5.58,'ok','T+01:27','[fetch]','pangaea-east-china-sea-clay → 200 · 392 条 · CC-BY-3.0'],
+      [5.72,'ok','T+01:31','[fetch]','pangaea-south-china-sea-sediment → 200 · 220 条 · CC-BY-3.0'],
+      [5.86,'ok','T+01:35','[fetch]','pangaea-north-africa-soil → 200 · 172 条 · CC-BY-4.0'],
+      [6.0,'ok','T+01:38','[fetch]','pangaea-arabian-sea-sediment → 200 · 162 条 · CC-BY-4.0'],
+      [6.14,'ok','T+01:42','[fetch]','pangaea-batagay-soil → 200 · 93 条 · CC-BY-4.0'],
+      [6.28,'ok','T+01:46','[fetch]','australia-ngsa-mercury → 200 · 48 条 · CC-BY-4.0'],
+      [6.42,'ok','T+01:50','[fetch]','us-wqp-sacramento-river-arsenic → 200 · 48 条 · USGS-Public-Domain'],
+      [6.76,'fail','T+02:00','[fail]','georoc-archaean → HTTP 500 · 重试后失败关闭'],
+      [6.96,'fail','T+02:01','[fail]','georoc-antarctica-intraplate → HTTP 500 · 失败关闭'],
+      [7.36,'info','T+02:02','[ingest]','29/31 来源返回数据 · 合计 72,346 条测定'],
+      [7.76,'info','T+02:03','[normalize]','单位/坐标标准化 · NORMALIZATION_FAILED = 130（保留原值，不强行换算）'],
+      [8.16,'warn','T+02:04','[qc]','ANALYTICAL_METHOD_MISSING = 11,864 · COORDINATE_UNUSABLE = 13,916'],
+      [8.56,'info','T+02:04','[background]','可比背景组 773 · 样本不足组 977（n<20 不出统计）'],
+      [8.96,'info','T+02:05','[screen]','异常筛查候选 1,441'],
+      [9.36,'ok','T+02:05','[round-1]','72,346 条测定 · 用时 125s · execution = partial_success'],
+      [9.76,'info','T+02:05','[gate]','run_exit = pass · output_validation = valid · issue_harvest = info'],
+      [10.16,'warn','T+02:06','[gate]','data_sufficiency = insufficient · 7 个充分性维度未达标 → 继续扩采'],
+      [10.81,'sep','','','—— ROUND 2 · 目标翻倍 → 1,024 ——'],
+      [11.16,'info','T+02:06','[route]','29 个来源重新调度 · GEOROC ×2 跨轮重试'],
+      [11.58,'fail','T+04:40','[fail]','georoc ×2 → HTTP 500 · 持续失败'],
+      [12.0,'ok','T+04:48','[round-2]','111,771 条（+39,425）· 背景组 842 · 候选 2,159 · 用时 163s'],
+      [12.42,'warn','T+04:48','[qc]','METHOD_MISSING = 22,592 · COORDINATE_UNUSABLE = 26,173'],
+      [12.84,'warn','T+04:49','[gate]','data_sufficiency = insufficient → 继续'],
+      [13.51,'sep','','','—— ROUND 3 · → 2,048 ——'],
+      [13.86,'info','T+04:49','[route]','依空间覆盖缺口重排来源优先级'],
+      [14.28,'ok','T+08:31','[round-3]','172,995 条（+61,224）· 背景组 907 · 候选 3,293 · 用时 223s'],
+      [14.7,'warn','T+08:31','[qc]','METHOD_MISSING = 38,059 · COORDINATE_UNUSABLE = 40,293'],
+      [15.37,'sep','','','—— ROUND 4 · → 4,096 ——'],
+      [15.72,'ok','T+12:35','[round-4]','193,655 条（+20,660）· 背景组 952 · 候选 3,663 · 用时 244s'],
+      [16.14,'warn','T+12:35','[qc]','METHOD_MISSING = 61,656 · COORDINATE_UNUSABLE = 54,629'],
+      [16.56,'warn','T+12:36','[gate]','data_sufficiency = insufficient → 继续'],
+      [17.23,'sep','','','—— ROUND 5 · → 8,192 ——'],
+      [17.58,'ok','T+16:43','[round-5]','195,505 条（+1,850）· 主要来源已达容量上限 · 用时 248s'],
+      [18.0,'info','T+16:43','[note]','不以重复记录扩充数据量 · 增速显著放缓'],
+      [18.42,'warn','T+16:44','[gate]','data_sufficiency = insufficient → 继续'],
+      [19.09,'sep','','','—— ROUND 6 · → 16,384 ——'],
+      [19.44,'warn','T+20:51','[round-6]','195,505 条 · 增量 = 0 · 问题签名不变（1/2）· 用时 248s'],
+      [19.86,'warn','T+20:52','[gate]','no-progress 证据开始累积'],
+      [20.53,'sep','','','—— ROUND 7 · → 32,768 ——'],
+      [20.88,'ok','T+24:55','[round-7]','193,764 条 · 背景组 962 · 候选 3,383 · 用时 244s'],
+      [21.3,'warn','T+24:56','[gate]','data_sufficiency = insufficient → 继续'],
+      [21.97,'sep','','','—— ROUND 8 · → 50,000（上限）——'],
+      [22.32,'warn','T+28:58','[round-8]','191,715 条 · 增量 = 0 · 问题签名不变（2/2）· 用时 243s'],
+      [22.74,'warn','T+28:59','[gate]','连续两轮问题签名相同 → 满足停机条件'],
+      [23.41,'sep','','','—— ROUND 9 · 终检与发布 ——'],
+      [23.76,'ok','T+33:02','[round-9]','终检通过 · 用时 244s'],
+      [24.18,'warn','T+33:02','[stop]','stop_reason = no_progress · published_round = 9'],
+      [24.6,'ok','T+33:02','[publish]','191,715 条测定 · 42,244 个独立样品 · 3,351 个筛查候选'],
+      [25.02,'warn','T+33:03','[verdict]','needs_human_review · 238 项缺口 → d1_repair_queue.json'],
+      [25.44,'info','T+33:03','[receipt]','delivery_ready = false · 全部产物 SHA-256 落盘'],
+    ];
+    const LOG_SPAN=25.44;
+    let logTimers=[],logTicker=null;
+    function stopRunLog(){logTimers.forEach(clearTimeout);logTimers=[];if(logTicker){clearInterval(logTicker);logTicker=null}}
+    function startRunLog(){
+      stopRunLog();
+      const list=document.getElementById('runLog'),body=document.getElementById('runBody'),el=document.getElementById('runElapsed');
+      if(!list)return;
+      list.innerHTML='';el.textContent='T+00:00';
+      const t0=performance.now();
+      logTicker=setInterval(()=>{
+        const real=Math.min(RUN_SECONDS,(performance.now()-t0)/1000/LOG_SPAN*RUN_SECONDS);
+        el.textContent=`T+${String(Math.floor(real/60)).padStart(2,'0')}:${String(Math.floor(real%60)).padStart(2,'0')}`;
+        if(real>=RUN_SECONDS&&!logTimers.length){clearInterval(logTicker);logTicker=null}
+      },120);
+      const caret=document.createElement('div');caret.className='log-caret';list.appendChild(caret);
+      RUN_LOG.forEach(([t,cls,stamp,tag,text])=>{
+        logTimers.push(setTimeout(()=>{
+          const row=document.createElement('div');
+          if(cls==='sep'){row.className='log-sep';row.textContent=text}
+          else{row.className=`log-line ${cls}`;row.innerHTML=`<i>${stamp}</i><b>${tag}</b><span>${text}</span>`}
+          list.insertBefore(row,caret);
+          body.scrollTop=body.scrollHeight;
+        },t*1000));
+      });
+      logTimers.push(setTimeout(()=>{logTimers=[]},LOG_SPAN*1000+400));
+    }
+    // ===== 第 6 幕：真实产物视图切换 =====
+    const vtabs=[...document.querySelectorAll('.vt')];
+    function setLiveView(btn){
+      const wrap=document.getElementById('productWrap'),frame=wrap.querySelector('iframe');
+      vtabs.forEach(b=>b.classList.toggle('active',b===btn));
+      const src=btn.dataset.live;
+      if(!src){wrap.classList.remove('live');return}
+      if(frame.getAttribute('src')!==src)frame.src=src;
+      wrap.classList.add('live');
+    }
+    vtabs.forEach(b=>b.addEventListener('click',()=>setLiveView(b)));
+    function toggleLive(){
+      if(index!==5)return;
+      const wrap=document.getElementById('productWrap');
+      setLiveView(wrap.classList.contains('live')?vtabs[vtabs.length-1]:vtabs[0]);
+    }
+    function stopAuto(){if(timer){clearInterval(timer);timer=null}clock.textContent='00:00'}
+    function startAuto(){stopAuto();render(0,-1);startAt=performance.now();timer=setInterval(()=>{
+      const elapsed=(performance.now()-startAt)/1000;
+      const m=Math.floor(elapsed/60),s=Math.floor(elapsed%60);clock.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      let target=marks.findLastIndex(v=>v<=elapsed);target=Math.min(target,slides.length-1);if(target!==index)render(target,1);
+      if(elapsed>=marks[marks.length-1]){clearInterval(timer);timer=null;clock.textContent='03:00'}
+    },100)}
+    addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();render(index+1,1)}
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();render(index-1,-1)}
+      else if(e.key.toLowerCase()==='r')startAuto();
+      else if(e.key.toLowerCase()==='n'){notesOpen=!notesOpen;notes.classList.toggle('show',notesOpen)}
+      else if(e.key.toLowerCase()==='i')toggleLive();
+      else if(e.key.toLowerCase()==='l'){if(index===4)startRunLog()}
+      else if(e.key.toLowerCase()==='f')document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+      else if(e.key==='Home')render(0,-1);else if(e.key==='End')render(slides.length-1,1);else if(e.key==='Escape')stopAuto();
+    });
+    addEventListener('hashchange',()=>{const n=(parseInt(location.hash.slice(1),10)||1)-1;if(n!==index)render(n,n>index?1:-1)});
+    render(index);
+  </script>
+</body>
+</html>

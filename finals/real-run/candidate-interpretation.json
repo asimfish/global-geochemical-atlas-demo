@@ -1,0 +1,59 @@
+{
+  "candidate": {
+    "record_id": "rec-987a8438c0eb05819bdc9a9ecb16501f50f970a1af68231d000b15a9af9b1c4d",
+    "sample_id": "C-328917",
+    "element": "As",
+    "medium": "soil",
+    "soil_horizon": "A",
+    "grain_fraction": "<2 mm",
+    "normalized_value": 23.9,
+    "normalized_unit": "mg/kg",
+    "longitude": -86.651,
+    "latitude": 32.9905,
+    "matched_geologic_unit": "GLiM:1:su",
+    "direction": "high",
+    "robust_z": 3.693957,
+    "screening_threshold": 3.5,
+    "operational_confidence": 0.79,
+    "operational_confidence_band": "medium",
+    "confidence_cap_reason": "missing_coordinate_uncertainty"
+  },
+  "comparable_background_group": {
+    "group_id": "grp-8fe1d74b53ce",
+    "independent_record_count": 45,
+    "records_used": 44,
+    "censored_records_excluded": 1,
+    "log10_median": 0.361727836018,
+    "median_mg_per_kg": 2.3000000000021563,
+    "candidate_to_median_ratio": 10.391304347816344,
+    "log10_mad": 0.185636576962,
+    "status": "analyzed"
+  },
+  "measurement_evidence": {
+    "analytical_method": "hydride-generation atomic absorption spectrometry (HG-AAS)",
+    "method_family": "aas",
+    "digestion_or_extraction": "sodium peroxide and sodium hydroxide fusion",
+    "measurement_basis": "total concentration in <2 mm soil fraction",
+    "source_id": "usgs-conus-soil",
+    "source_locator": "Appendix_3b_Ahorizon_18Sept2013.txt#row=27",
+    "source_row": 27,
+    "dataset_doi": "10.3133/ds801",
+    "license": "LicenseRef-USGS-Public-Domain",
+    "source_file_sha256": "462821c1164b5b4c27905a3ea62a22fa3f6172da09125d8f80ec5b2f6a69a202"
+  },
+  "provenance": {
+    "observed_fields": [
+      "candidate record and coordinates",
+      "normalized value and unit",
+      "background group counts and log statistics",
+      "robust z-score",
+      "source row, DOI, license and file hash",
+      "operational confidence and QC cap"
+    ],
+    "computed_for_presentation": [
+      "median_mg_per_kg = 10 ^ log10_median",
+      "candidate_to_median_ratio = normalized_value / median_mg_per_kg"
+    ]
+  },
+  "interpretation_limit": "Screening candidate relative to the declared comparable background group only. It does not establish pollution, mineralization, provenance, or cause. The deterministic fixture is not representative and is not for scientific interpretation."
+}

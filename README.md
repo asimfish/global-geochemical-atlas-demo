@@ -2,6 +2,13 @@
 
 **TEAM 0066** · 在线演示：<https://asimfish.github.io/global-geochemical-atlas-demo/>
 
+## 站点结构（2026-08-18 改版）
+
+- `index.html`：门户首页（hero + 五项交付 + 两次真实运行证据 + 演示视频 + 材料下载），可滚动、自解释、响应式。
+- `slides.html`：原 12 页评审幻灯片（支持滚轮 / 方向键 / 触摸翻页）。
+- `finals/`：决赛材料（10 幕录屏版演示 `demo-video.html`、静音预览视频、Final Pitch PDF/PPTX、Poster、回归运行产物 `real-run/`）。74 MB 全球运行产物原件仅在决赛材料包中，未内置线上。
+- 改版前的旧版首页存档在分支 `backup-20260818-pre-redesign`。
+
 ## 文档与直达链接
 
 - [项目介绍 PDF](Global-Geochemical-Atlas-Introduction.pdf)：赛题方案、五项交付、Skill 设计、创新点与应用场景（6 页）。
