@@ -1145,15 +1145,15 @@
       <div class="backlog-wrap reveal" style="--d:.3s">
         <div class="backlog-head">
           <h3>discovery_mode · 31 个自动候选 → 五篇论文（全部实测数字）</h3>
-          <div class="bh-stats">成稿 <b>2</b> · 试点出数 <b>3</b> · 选题全部由确定性生成器自动提出 —— 零人工点题</div>
+          <div class="bh-stats">成稿 <b>5</b> 篇 · 合计 <b>37</b> 页 · a–g 审计全过 · 选题全部由确定性生成器自动提出 —— 零人工点题</div>
         </div>
         <table class="backlog">
           <tr><th>论文</th><th>核心实测数字（冻结快照 + 种子脚本可复算）</th><th>状态</th><th>目标期刊</th></tr>
           <tr><td class="dim">P1 · 欧洲 Hg/Pb 遗留富集筛查</td><td>Hg 表土/底土 1.364（n=392 对）· Pb 1.239 · 腐殖质 Hg 5.26× · Ni/Cr 对照 ≈1 · LUCAS 外部一致</td><td class="st-a">成稿 10 页 · a–g 审计全过</td><td>STOTEN / Appl. Geochem.</td></tr>
           <tr><td class="dim">P2 · 遗留指纹的半球不对称性</td><td>同一设计跑第二大洲：澳洲 Pb 0.982（n=1,064）vs 欧洲 1.239 —— 欧洲式富集不存在；As 亏损 0.886</td><td class="st-a">成稿 7 页 · 当日跨洲复制</td><td>Environ. Pollution</td></tr>
-          <tr><td class="dim">P3 · 同样品跨方法偏移与传输模型</td><td>GEMAS 同样品 XRF/ICP-MS（n=2,224/元素）：Cr 2.94× · Cu 0.86 方向反转 · 斜率≠1＝浓度依赖</td><td class="st-r">试点完成 · 扩展摘要</td><td>ES&amp;T / Geostandards GGR</td></tr>
-          <tr><td class="dim">P4 · 全球砷风险图独立校验点集</td><td>GEMAS×FOREGS 共址 26 单元：ρ=0.681 · 中位比 0.982＝独立调查同址一致到 2% · 分歧单元进再采样队列</td><td class="st-r">试点完成 · 扩展摘要</td><td>Environ. Int. / Water Res.</td></tr>
-          <tr><td class="dim">P5 · GEOTRACES 剖面提取与审计</td><td>营养盐型剖面零调参复现：Zn 深/表 5.57×（p&lt;10⁻²⁸²）· 34 方法族 · 多族可池化＝0（诚实声明）</td><td class="st-r">试点完成 · 扩展摘要</td><td>Marine Chem. / ESSD</td></tr>
+          <tr><td class="dim">P3 · 同样品跨方法偏移与传输模型</td><td>GEMAS 同样品 XRF/ICP-MS（n=2,224/元素）：Cr 2.94× · Cu 0.86 方向反转 · 幂律 OOS 验证 Pb 误差 18.2%→11.0% · FOREGS 独立复现</td><td class="st-a">成稿 7 页 · OOS 验证</td><td>ES&amp;T / Geostandards GGR</td></tr>
+          <tr><td class="dim">P4 · 全球砷风险图独立校验点集</td><td>GEMAS×FOREGS 共址 26 单元：ρ=0.681 · 中位比 0.982＝同址一致到 2% · 73% 在 2 倍带内 · 7 个分歧单元进再采样队列</td><td class="st-a">成稿 6 页 · 全 26 单元表</td><td>Environ. Int. / Water Res.</td></tr>
+          <tr><td class="dim">P5 · GEOTRACES 剖面提取与审计</td><td>营养盐型剖面零调参复现：Zn 深/表 5.57× · 盆地结构全对（太平洋 24.5× &gt; 大西洋 13× · 北冰洋反转）· 33 可解析方法族最大仅 10.5% · 可池化＝0</td><td class="st-a">成稿 7 页 · 盆地复现</td><td>Marine Chem. / ESSD</td></tr>
         </table>
       </div>
       <div class="loop-states">
@@ -1161,8 +1161,8 @@
         <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>前沿对标 · 四步法</code><p>每篇锚定 1–2 篇顶刊/政策明文写出的 open problem（UNEP OESG、EU SML、Podgorski &amp; Berg 2020 Science），数值逐条对比。</p></article>
         <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>缺口 → 新采集</code><p>澳洲 Hg 仅 17 对、Cr/Ni 无配对——缺口不是失败，输出为机器可操作的 sampling_priority，回灌下一轮采集。</p></article>
       </div>
-      <div class="footer-line"><span>论文 PDF 与扩展摘要：门户「科学发现」章节可直接打开</span><span>全部结论为筛查级 · P1 过审计 · P2 待人工复核</span></div>
-      <template class="notes-template">五项交付之上，我们证明这套数据真的能长出科学。skill 的 discovery_mode 从同一冻结快照自动提出三十一个候选选题，我们沿着它走完了五篇论文：P1 欧洲汞铅遗留富集，十页成稿，七项质量审计全过；P2 把同一套统计设计当天跑到第二大洲，发现欧洲式铅表层富集在澳大利亚不存在——半球不对称性，一千多对样本；P3 到 P5 试点全部出数：同样品跨方法偏移两点九倍且浓度依赖、独立调查同址砷一致到百分之二、海洋营养盐剖面零调参自动复现。每篇都锚定顶刊或政策文件明文写出的开放问题，缺口本身输出为下一轮采集优先级——数据到选题到统计到论文到新采集，闭环跑通。</template>
+      <div class="footer-line"><span>五篇论文 PDF：门户「科学发现」章节可直接打开</span><span>全部结论为筛查级 · 五篇均过 a–g 审计 · 投稿前待领域专家复核</span></div>
+        <template class="notes-template">五项交付之上，我们证明这套数据真的能长出科学。skill 的 discovery_mode 从同一冻结快照自动提出三十一个候选选题，我们沿着它走完了五篇论文，现在五篇全部成稿、合计三十七页、七项质量审计全过：P1 欧洲汞铅遗留富集十页；P2 同一套统计当天跑到第二大洲，欧洲式铅富集在澳大利亚不存在；P3 同样品跨方法偏移接近三倍且浓度依赖，幂律传输模型经 out-of-sample 验证；P4 两个独立调查同址砷一致到百分之二，七个分歧单元自动进再采样队列；P5 海洋营养盐剖面零调参复现，连太平洋大于大西洋、北冰洋表层反转这些盆地结构都全对。每篇都锚定顶刊或政策文件明文写出的开放问题，缺口本身输出为下一轮采集优先级——数据到选题到统计到论文到新采集，闭环跑通。</template>
     </section>
 
     <section class="slide" data-title="同类数据库对比：此前不存在的一层">
