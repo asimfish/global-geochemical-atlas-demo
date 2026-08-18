@@ -1,6 +1,6 @@
 # Global Geochemical Atlas · 决赛材料包
 
-**TEAM 0066** · AI4S Future ScienceSkills Hackathon 决赛
+**决赛08_词元代理人队**（原 TEAM 0066） · AI4S Future ScienceSkills Hackathon 决赛
 
 本目录把第一轮 Skill、在线交互图谱和项目说明重组为一套统一的决赛叙事：
 

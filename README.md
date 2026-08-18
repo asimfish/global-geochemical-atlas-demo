@@ -1,6 +1,6 @@
 # 全球地球化学元素分布图谱 Skill：演示包
 
-**TEAM 0066** · 在线演示：<https://asimfish.github.io/global-geochemical-atlas-demo/>
+**决赛08_词元代理人队**（原 TEAM 0066） · 在线演示：<https://asimfish.github.io/global-geochemical-atlas-demo/>
 
 ## 站点结构（2026-08-18 改版）
 
