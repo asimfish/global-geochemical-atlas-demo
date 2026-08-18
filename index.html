@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill · 决赛08_词元代理人队</title>
-<meta name="description" content="让 Agent 自主完成全球地球化学数据整编：一条研究请求，生成可追溯、可验证、会诚实失败的研究产品。AI4S Future ScienceSkills Hackathon · 决赛08_词元代理人队。">
+<meta name="description" content="让 Agent 自主完成全球地球化学数据整编：一条研究请求，产出可追溯、可验证、如实报告缺口的研究产物。AI4S Future ScienceSkills Hackathon · 决赛08_词元代理人队。">
 <style>
   :root {
     --bg: #03141b;
@@ -22,6 +22,7 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  section, .stats { scroll-margin-top: 64px; }
   body {
     background:
       radial-gradient(1100px 520px at 82% -6%, rgba(105,245,230,.09), transparent 60%),
@@ -118,6 +119,20 @@
   .stats-caveat { margin-top: 18px; color: var(--muted); font-size: 12.5px; border-left: 2px solid var(--gold); padding-left: 12px; }
   .stats-caveat b { color: var(--gold); }
 
+  /* ===== challenge ===== */
+  .req-rows { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+  .req-row { display: grid; grid-template-columns: 200px 1fr; gap: 12px 28px; align-items: center; border: 1px solid rgba(105,245,230,.2); border-radius: 12px; background: var(--panel); padding: 20px 24px; transition: border-color .25s, transform .25s; }
+  .req-row:hover { border-color: rgba(105,245,230,.5); transform: translateX(4px); }
+  .req-head { display: flex; align-items: center; gap: 14px; }
+  .req-no { flex: none; font: 800 13px/1 var(--mono); color: var(--c, var(--mint)); border: 1px solid var(--c, var(--mint)); border-radius: 8px; padding: 9px 10px; }
+  .req-name b { display: block; font-size: 16.5px; }
+  .req-name small { font: 700 10px/1.7 var(--mono); letter-spacing: .16em; color: var(--muted); }
+  .req-row p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .req-row p b { color: var(--ink); font-weight: 700; }
+  @media (max-width: 720px) { .req-row { grid-template-columns: 1fr; padding: 18px 20px; } }
+  .req-bridge { margin-top: 24px; color: var(--muted); font-size: 13.5px; border-left: 2px solid var(--mint); padding-left: 12px; }
+  .req-bridge a { font-weight: 700; }
+
   /* ===== deliverable cards ===== */
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 36px; }
   @media (max-width: 960px) { .cards { grid-template-columns: repeat(2, 1fr); } }
@@ -210,6 +225,7 @@
     </a>
     <span class="team-badge">决赛08 · 词元代理人队</span>
     <nav class="top-nav">
+      <a href="#challenge">赛题</a>
       <a href="#deliverables">五项交付</a>
       <a href="#runs">真实运行</a>
       <a href="#video">演示视频</a>
@@ -230,7 +246,7 @@
         <span class="chip">记录级证据链</span>
         <span class="chip">确定性科学门禁</span>
         <span class="chip">可复现 profile</span>
-        <span class="chip hot">会诚实失败</span>
+        <span class="chip hot">如实报告缺口</span>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="interactive_map.html">进入交互图谱 →</a>
@@ -266,12 +282,37 @@
   </div>
 </div>
 
+<section id="challenge" style="padding-bottom:16px">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">The Challenge · 赛题</div>
+      <h2 class="section-title">赛题要求什么</h2>
+      <p class="section-sub">气候与地球科学赛道赛题「全球地球化学元素分布图谱」：从公开数据出发，走完采集、处理、成图的完整链路，并识别异常区域。</p>
+    </div>
+    <div class="req-rows">
+      <div class="req-row fx">
+        <div class="req-head"><span class="req-no">01</span><span class="req-name"><b>自动采集</b><small>ACQUIRE</small></span></div>
+        <p>从公开文献与开源数据平台获取<b>岩石、土壤、沉积物、水体</b>四类介质的元素含量、采样坐标、地质背景与分析方法信息。</p>
+      </div>
+      <div class="req-row fx" style="--c:var(--gold)">
+        <div class="req-head"><span class="req-no">02</span><span class="req-name"><b>科学处理</b><small>STANDARDIZE</small></span></div>
+        <p>完成<b>单位统一、空间匹配、质量控制、来源追溯</b>。本项目在此基础上额外坚持一条：原始测定值永不覆盖，转换值另列保存。</p>
+      </div>
+      <div class="req-row fx" style="--c:var(--red)">
+        <div class="req-head"><span class="req-no">03</span><span class="req-name"><b>研究输出</b><small>VISUALIZE</small></span></div>
+        <p>按<b>元素 / 区域 / 地质单元 / 样品类型</b>生成全球或区域分布图、热力图与元素组合对比，并识别<b>异常富集与亏损</b>区域。</p>
+      </div>
+    </div>
+    <p class="req-bridge fx">赛题最终要求五项交付物。本项目不逐项拼装，而是由同一次 Skill 运行一次产出全部五项 → <a href="#deliverables">看五项交付</a></p>
+  </div>
+</section>
+
 <section id="deliverables">
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow">Five Deliverables · One Run</div>
       <h2 class="section-title">同一次 Skill 运行，同时产出<span class="gradient">赛题五项交付</span></h2>
-      <p class="section-sub">五项交付不是孤立附件：共享同一标准数据库、同一证据链、同一科学边界，评委可逐项现场操作。</p>
+      <p class="section-sub">五项交付出自同一次运行，共享同一标准数据库、同一证据链、同一科学边界，每一项都可以现场打开操作。</p>
     </div>
     <div class="cards">
       <a class="card fx" href="live/global-overview.html" target="_blank" rel="noopener">
@@ -294,7 +335,7 @@
         <div class="thumb"><span class="tag" style="--c:var(--gold)">交付 3</span><img src="assets/source-view-1920x1080.png" alt="数据来源与置信度说明" loading="lazy"></div>
         <div class="body">
           <h3>数据来源与置信度说明</h3>
-          <p>每条记录带 0–1 可用性评分（五维加权），来源附许可、覆盖与接口说明；证据链到底：DOI → 表 / 行 → SHA-256。</p>
+          <p>每条记录带 0–1 可用性评分（五维加权），来源附许可、覆盖与接口说明；证据可下钻至 DOI → 表 / 行 → SHA-256。</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">进入图谱 · 来源置信标签 ↗</span></div>
         </div>
       </a>
@@ -310,7 +351,7 @@
         <div class="thumb"><span class="tag">附加</span><img src="assets/anomaly-view-1920x1080.png" alt="三维地球视图" loading="lazy"></div>
         <div class="body">
           <h3>3D 地球与异常透视</h3>
-          <p>同一数据在三维地球上的采样覆盖与异常分布总览，适合快速把握全球格局。</p>
+          <p>同一份数据在三维地球上的总览视图，一屏看清全球采样覆盖与异常分布格局。</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">打开 3D 地球 ↗</span></div>
         </div>
       </a>
@@ -325,7 +366,7 @@
         </div>
         <div class="body">
           <h3>可复用 Skill 文档</h3>
-          <p>四层设计：SKILL.md 状态机 + 科学知识库 + 确定性执行器 + 可复现测试。任何兼容 Agent 挂载即用，模型不参与数值计算。</p>
+          <p>四层设计：SKILL.md 状态机 + 科学知识库 + 确定性执行器 + 可复现测试。兼容平台的 Agent 挂载即用；数值计算全部由脚本完成，模型不经手。</p>
           <div class="links">
             <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">Skill 仓库 ↗</a>
             <a class="minor" href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/SKILL.md" target="_blank" rel="noopener">直达 SKILL.md ↗</a>
@@ -341,7 +382,7 @@
     <div class="fx">
       <div class="eyebrow" style="color:var(--gold)">Evidence · Two Real Runs</div>
       <h2 class="section-title">两次真实运行，<span class="gradient">两种证明</span></h2>
-      <p class="section-sub">一次证明它能在真实互联网上自主干活，一次证明它的科学计算字节级可复现。两套数字口径独立，互不混用。</p>
+      <p class="section-sub">RUN A 验证它能在真实网络环境自主完成采集与整编，RUN B 验证科学计算跨环境逐字节可复现。两次运行数字口径独立，页面内不混用。</p>
     </div>
     <div class="run-grid">
       <div class="run-card fx">
@@ -380,8 +421,8 @@
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow">Watch · 3 Minutes</div>
-      <h2 class="section-title">3 分钟看懂：<span class="gradient">前半计划与设计，后半真实运行</span></h2>
-      <p class="section-sub">00:00–01:00 讲清方案与系统设计；01:00–03:00 是 Agent 真实运行记录（真实命令、逐行日志、耗时）与产物实际使用。</p>
+      <h2 class="section-title">3 分钟演示视频：<span class="gradient">前半讲方案，后半真实运行</span></h2>
+      <p class="section-sub">00:00–01:00 介绍方案与系统设计；01:00–03:00 为 Agent 真实运行录屏——真实命令、逐行日志、真实耗时，以及产物的实际操作。</p>
     </div>
     <div class="media-grid">
       <div class="fx">
@@ -391,7 +432,7 @@
             您的浏览器不支持视频播放，可直接下载观看。
           </video>
         </div>
-        <p class="video-note">当前为 180 秒静音视觉预览（画面节奏定稿版）；正式有声版按 <a href="finals/speaker-script.md">逐幕讲稿</a> 录制后替换。</p>
+        <p class="video-note">当前为 180 秒静音预览；正式有声版按 <a href="finals/speaker-script.md">逐幕讲稿</a> 录制后替换。</p>
       </div>
       <div class="present-list fx">
         <a class="present-item" href="finals/demo-video.html">
@@ -419,13 +460,13 @@
     </div>
     <div class="mat-grid">
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 决赛主讲</span><b>Final Pitch（14 页）</b><span>11 页主讲 + 3 页备份，含演讲者备注</span></a>
-      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pptx"><span class="kind">PPTX · 可编辑</span><b>Final Pitch 源文件</b><span>与 PDF 同内容，可直接改</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pptx"><span class="kind">PPTX · 可编辑</span><b>Final Pitch 源文件</b><span>与 PDF 同内容，可自行调整</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Poster.pdf" style="--c:var(--gold)"><span class="kind">PDF · A1 横版</span><b>决赛 Poster 打印版</b><span>含快速预览 PNG（见仓库 finals/）</span></a>
-      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p</span><b>演示视频（静音预览）</b><span>180 秒定稿节奏，可替换旁白</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p</span><b>演示视频（静音预览）</b><span>180 秒，正式版补录旁白后替换</span></a>
       <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 页</span><b>项目介绍文档</b><span>方案、交付、创新点与应用场景</span></a>
-      <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>从研究者痛点讲起的完整故事</span></a>
+      <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>项目背景、方案与交付的完整文字介绍</span></a>
       <a class="mat fx" href="finals/speaker-script.md"><span class="kind">MARKDOWN</span><b>视频逐幕讲稿</b><span>逐幕时间、口播与录屏动作</span></a>
-      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 初赛版</span><b>初赛演示 PPTX</b><span>历史版本存档</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页</span><b>队伍演示 PPT</b><span>Skill 架构、证据链与五项交付讲解</span></a>
     </div>
   </div>
 </section>
