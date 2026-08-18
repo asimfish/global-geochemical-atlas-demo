@@ -1138,9 +1138,63 @@
       <template class="notes-template">这是通用 Agent 用我们 Skill 干活的实况：Qwen3.8-Max 在 OpenCode 里挂载 global-geochemical-atlas，接到任务后自己读 SKILL.md、进入九阶段状态机——路由审计来源、采集带证据的测定、确定性过滤、标准化、地质匹配、置信度与异常、生成产物、验证收敛，右侧产出实时就绪：交互图谱、标准化数据库、异常识别，五项交付齐活。关键分工是：模型只做编排与解读，单位、坐标、QC、异常判定这些科学计算全部由确定性脚本完成，所以换任何兼容 Agent 结果一致。我们做过 OpenCode 有无 Skill 的对照评测，提升是实测的。</template>
     </section>
 
+    <section class="slide" data-title="科学发现层：同一份数据长出五篇论文">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">11 · BEYOND DELIVERABLES / DATA → PAPERS</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">科学发现层：同一份数据长出五篇论文</h2>
+      <div class="backlog-wrap reveal" style="--d:.3s">
+        <div class="backlog-head">
+          <h3>discovery_mode · 31 个自动候选 → 五篇论文（全部实测数字）</h3>
+          <div class="bh-stats">成稿 <b>2</b> · 试点出数 <b>3</b> · 选题全部由确定性生成器自动提出 —— 零人工点题</div>
+        </div>
+        <table class="backlog">
+          <tr><th>论文</th><th>核心实测数字（冻结快照 + 种子脚本可复算）</th><th>状态</th><th>目标期刊</th></tr>
+          <tr><td class="dim">P1 · 欧洲 Hg/Pb 遗留富集筛查</td><td>Hg 表土/底土 1.364（n=392 对）· Pb 1.239 · 腐殖质 Hg 5.26× · Ni/Cr 对照 ≈1 · LUCAS 外部一致</td><td class="st-a">成稿 10 页 · a–g 审计全过</td><td>STOTEN / Appl. Geochem.</td></tr>
+          <tr><td class="dim">P2 · 遗留指纹的半球不对称性</td><td>同一设计跑第二大洲：澳洲 Pb 0.982（n=1,064）vs 欧洲 1.239 —— 欧洲式富集不存在；As 亏损 0.886</td><td class="st-a">成稿 7 页 · 当日跨洲复制</td><td>Environ. Pollution</td></tr>
+          <tr><td class="dim">P3 · 同样品跨方法偏移与传输模型</td><td>GEMAS 同样品 XRF/ICP-MS（n=2,224/元素）：Cr 2.94× · Cu 0.86 方向反转 · 斜率≠1＝浓度依赖</td><td class="st-r">试点完成 · 扩展摘要</td><td>ES&amp;T / Geostandards GGR</td></tr>
+          <tr><td class="dim">P4 · 全球砷风险图独立校验点集</td><td>GEMAS×FOREGS 共址 26 单元：ρ=0.681 · 中位比 0.982＝独立调查同址一致到 2% · 分歧单元进再采样队列</td><td class="st-r">试点完成 · 扩展摘要</td><td>Environ. Int. / Water Res.</td></tr>
+          <tr><td class="dim">P5 · GEOTRACES 剖面提取与审计</td><td>营养盐型剖面零调参复现：Zn 深/表 5.57×（p&lt;10⁻²⁸²）· 34 方法族 · 多族可池化＝0（诚实声明）</td><td class="st-r">试点完成 · 扩展摘要</td><td>Marine Chem. / ESSD</td></tr>
+        </table>
+      </div>
+      <div class="loop-states">
+        <article class="loop-state reveal" style="--d:.9s"><code>闭环 · 数据 → 论文</code><p>候选生成 → 试点 → 文献核实 → 深化 → 成稿 → a–g 质量审计门 → 期刊对标：七步全部实装进 SKILL.md discovery_mode。</p></article>
+        <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>前沿对标 · 四步法</code><p>每篇锚定 1–2 篇顶刊/政策明文写出的 open problem（UNEP OESG、EU SML、Podgorski &amp; Berg 2020 Science），数值逐条对比。</p></article>
+        <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>缺口 → 新采集</code><p>澳洲 Hg 仅 17 对、Cr/Ni 无配对——缺口不是失败，输出为机器可操作的 sampling_priority，回灌下一轮采集。</p></article>
+      </div>
+      <div class="footer-line"><span>论文 PDF 与扩展摘要：门户「科学发现」章节可直接打开</span><span>全部结论为筛查级 · P1 过审计 · P2 待人工复核</span></div>
+      <template class="notes-template">五项交付之上，我们证明这套数据真的能长出科学。skill 的 discovery_mode 从同一冻结快照自动提出三十一个候选选题，我们沿着它走完了五篇论文：P1 欧洲汞铅遗留富集，十页成稿，七项质量审计全过；P2 把同一套统计设计当天跑到第二大洲，发现欧洲式铅表层富集在澳大利亚不存在——半球不对称性，一千多对样本；P3 到 P5 试点全部出数：同样品跨方法偏移两点九倍且浓度依赖、独立调查同址砷一致到百分之二、海洋营养盐剖面零调参自动复现。每篇都锚定顶刊或政策文件明文写出的开放问题，缺口本身输出为下一轮采集优先级——数据到选题到统计到论文到新采集，闭环跑通。</template>
+    </section>
+
+    <section class="slide" data-title="同类数据库对比：此前不存在的一层">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">12 · POSITIONING / DATABASE LANDSCAPE</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">同类数据库对比：此前不存在的一层</h2>
+      <div class="backlog-wrap reveal" style="--d:.3s">
+        <div class="backlog-head">
+          <h3>诚实前提：不与机构级规模竞争，补的是「统一层」空位</h3>
+          <div class="bh-stats">同类库要么<b>大而不统一</b>（文献/档案汇编），要么<b>统一而窄</b>（单介质或单大洲）</div>
+        </div>
+        <table class="backlog">
+          <tr><th>维度</th><th>GGA 冻结快照（本项目）</th><th>EarthChem / GEOROC · USGS NGDB</th><th>GEOTRACES · 单一调查</th></tr>
+          <tr><td class="dim">规模与定位</td><td class="st-a">191,715 条 / 29 源 / 四介质 —— 协调层＋发现引擎</td><td>GEOROC 4,270 万值（火成岩汇编）· NGDB 152 万样品（美国档案）</td><td>仅海水 · 单大洲单次</td></tr>
+          <tr><td class="dim">跨源统一</td><td class="st-a">mg/kg + WGS84 + lineage 逐条 · 129 字段同一 schema</td><td>按发表值汇编 · NGDB 自述 108 方法 25 实验室无统一层</td><td>航次内统一 · 调查间互不可比</td></tr>
+          <tr><td class="dim">记录级溯源</td><td class="st-a">100% 行级 SHA-256 + 许可证 + source_row</td><td>文献级 / 数据集级</td><td>航次级 / 数据集级</td></tr>
+          <tr><td class="dim">置信度与 QC</td><td class="st-a">100% 四维置信度 + qc_flags · 删失 1,537 条显式保留</td><td>无置信度层</td><td>值级 flag（仅海水）</td></tr>
+          <tr><td class="dim">护栏与发现</td><td class="st-a">337 单谱系队列 · 「0 多源可池化」声明 · 31 候选 → 5 论文</td><td>池化风险用户自负 · 无发现层</td><td>crossover QC · 无发现层</td></tr>
+        </table>
+      </div>
+      <div class="loop-states">
+        <article class="loop-state reveal" style="--d:.9s"><code>更全面 · 四介质两半球</code><p>同一 schema 覆盖土壤、沉积物、淡水与海水；五篇论文横跨欧洲、澳洲与全球大洋。</p></article>
+        <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>更可靠 · 缺失也可审计</code><p>100% 许可证 / SHA-256 / 置信度 / QC；36.3% 缺方法记录逐条记 missing_reason——「缺什么」本身也是数据。</p></article>
+        <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>更统一 · 一晚两大洲</code><p>P1→P2 同一脚本框架跑欧洲与澳洲；已知科学全部自动复现后才输出新问题。</p></article>
+      </div>
+      <div class="footer-line"><span>对比数字均来自公开页面（georoc.eu · USGS Portal · EGU26-18653）与快照列级统计</span><span>出处与完整矩阵：research/database-comparison.md</span></div>
+      <template class="notes-template">最后回答一个定位问题：这个东西和 EarthChem、GEOROC、USGS 数据库有什么区别？诚实地说，论绝对规模我们不竞争——GEOROC 四千多万值、NGDB 一百五十万样品，都是几十年机构积累。但它们要么大而不统一：文献和档案汇编，一百零八种方法二十五个实验室并存，池化风险用户自负；要么统一而窄：GEOTRACES 只有海水，各大洲调查互不可比。跨源、跨介质、记录级可审计的统一层此前不存在，这正是我们补上的空位：百分之百行级哈希、许可证、四维置信度，连缺失都逐条记账；三百三十七个单谱系队列加上「零多源可池化」的诚实声明。更关键的是这层直接长出科学——同一套设计一个晚上跑通两个大洲。</template>
+    </section>
+
     <section class="slide" data-title="Global Geochemical Atlas，统一交付赛题五项输出">
       <div class="bg-field"></div><div class="grid-field"></div>
-      <div class="eyebrow reveal" style="--d:.08s">11 · REQUIRED OUTPUTS / FINAL DELIVERABLE</div>
+      <div class="eyebrow reveal" style="--d:.08s">13 · REQUIRED OUTPUTS / FINAL DELIVERABLE</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(24px,3.15vw,58px)">Global Geochemical Atlas，统一交付赛题五项输出</h2>
       <div class="orbit-stage"><div class="orbit-ring reveal" style="--d:.3s"></div><div class="core core-brand reveal" style="--d:.4s"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><ellipse cx="32" cy="32" rx="10" ry="25" fill="none" stroke="rgba(105,245,230,.35)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="47.5" cy="16.5" r="7.6" fill="none" stroke="rgba(246,195,68,.4)" stroke-width="1.2"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="13.5" cy="38" r="6.7" fill="none" stroke="rgba(255,92,120,.4)" stroke-width="1.2"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/><circle cx="40" cy="49.5" r="6" fill="none" stroke="rgba(105,245,230,.45)" stroke-width="1.2"/></svg><b>GLOBAL GEOCHEMICAL ATLAS</b><small>REUSABLE SKILL</small></div>
         <div class="orbit-node n1 reveal" style="--d:.56s"><i>MAP</i><span>可交互元素<br>分布地图</span></div><div class="orbit-node n2 reveal" style="--d:.64s"><i>DB</i><span>标准化地球化学<br>数据库</span></div><div class="orbit-node n3 reveal" style="--d:.72s"><i>QC</i><span>数据来源与<br>置信度说明</span></div><div class="orbit-node n4 reveal" style="--d:.8s"><i>Δ</i><span>异常区域<br>识别结果</span></div><div class="orbit-node n5 reveal" style="--d:.88s"><i>SK</i><span>可复用<br>Skill 文档</span></div>
@@ -1155,7 +1209,7 @@
   <div class="controls" role="toolbar" aria-label="演示控制">
     <a href="./" title="返回门户首页">⌂</a>
     <button type="button" id="prev" title="上一页">←</button>
-    <span class="slide-count" id="slideCount">1 / 12</span>
+    <span class="slide-count" id="slideCount">1 / 14</span>
     <button type="button" id="next" title="下一页">→</button>
     <button type="button" id="notesBtn" title="讲稿 N">N</button>
     <button type="button" class="timer" id="timer" title="计时 T">03:00</button>
