@@ -61,15 +61,22 @@
   nav.top-nav a.gh:hover { border-color: var(--mint); box-shadow: 0 0 18px rgba(105,245,230,.2); }
   @media (max-width: 860px) { nav.top-nav a:not(.gh) { display: none; } }
   @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    .topbar .wrap { gap: 8px; flex-wrap: wrap; }
+    .brand { gap: 7px; }
+    .brand svg { width: 24px; height: 24px; }
     .brand small { display: none; }
-    .brand b { font-size: 10.5px; letter-spacing: .08em; white-space: nowrap; }
-    .team-badge { font-size: 10px; padding: 3px 8px; }
+    .brand b { font-size: 10px; letter-spacing: .06em; white-space: nowrap; }
+    .team-badge { font-size: 10px; padding: 3px 7px; }
+    nav.top-nav { gap: 10px; }
+    nav.top-nav a.gh { padding: 4px 9px; font-size: 12px; }
   }
 
   /* ===== hero ===== */
   .hero { padding: 84px 0 64px; }
   .hero .wrap { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 48px; align-items: center; }
-  @media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; } }
+  @media (max-width: 960px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
+  body { overflow-x: hidden; }
   .hero h1 { font-size: clamp(30px, 4.6vw, 54px); font-weight: 850; line-height: 1.22; letter-spacing: .01em; margin-top: 14px; }
   .hero .sub { margin-top: 18px; color: var(--muted); font-size: clamp(15px, 1.3vw, 17px); max-width: 520px; }
   .hero .sub b { color: var(--ink); font-weight: 700; }
@@ -89,7 +96,7 @@
   .browser-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(3,20,27,.92); border-bottom: 1px solid rgba(105,245,230,.16); }
   .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #2d4a52; }
   .browser-bar i:nth-child(1) { background: #ff5f57; } .browser-bar i:nth-child(2) { background: #febc2e; } .browser-bar i:nth-child(3) { background: #28c840; }
-  .browser-bar span { margin-left: 8px; font: 600 11px/1 var(--mono); color: var(--muted); letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .browser-bar span { margin-left: 8px; font: 600 11px/1 var(--mono); color: var(--muted); letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
   .browser-bar em { margin-left: auto; font: 700 10px/1 var(--mono); color: var(--mint); font-style: normal; letter-spacing: .12em; }
   .browser-card .shot { position: relative; }
   .browser-card .shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 62%, rgba(3,20,27,.55)); }
