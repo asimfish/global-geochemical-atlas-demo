@@ -212,10 +212,10 @@
   .pc-find { margin-top: 12px; font-size: 13px; line-height: 1.7; color: var(--muted); }
   .pc-find b { color: var(--ink); }
   .pc-find em { color: var(--mint); font-style: normal; font-family: var(--mono); font-weight: 700; }
-  .pc-figs { display: grid; grid-template-columns: minmax(0,58fr) minmax(0,42fr); gap: 12px; margin-top: 14px; align-items: start; }
-  .pc-figs figure { border: 1px solid rgba(105,245,230,.25); border-radius: 10px; overflow: hidden; background: #fff; margin: 0; }
-  .pc-figs img { width: 100%; display: block; }
-  .pc-figs figcaption { padding: 8px 12px; background: var(--panel); color: var(--muted); font-size: 11.5px; line-height: 1.5; border-top: 1px solid rgba(105,245,230,.16); }
+  .pc-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; align-items: stretch; }
+  .pc-figs figure { border: 1px solid rgba(105,245,230,.25); border-radius: 10px; overflow: hidden; background: #fff; margin: 0; display: flex; flex-direction: column; }
+  .pc-figs img { width: 100%; display: block; height: 272px; object-fit: contain; background: #fff; padding: 6px; box-sizing: border-box; }
+  .pc-figs figcaption { margin-top: auto; padding: 8px 12px; background: var(--panel); color: var(--muted); font-size: 11.5px; line-height: 1.5; border-top: 1px solid rgba(105,245,230,.16); }
   .pc-figs figcaption b { color: var(--c, var(--mint)); font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; margin-right: 6px; }
   @media (max-width: 760px) { .pc-figs { grid-template-columns: 1fr; } .pc-side { align-items: flex-start; text-align: left; } }
   /* database intro cards */
@@ -582,7 +582,7 @@
         </div>
         <p class="pc-find"><b>发现：</b>GEMAS 与 FOREGS 的 26 个共址 0.1° 单元：中位比 <em>0.982</em>——独立调查同址一致到 2%；73% 的单元落在 2 倍带内；7 个分歧单元自动生成再采样队列（队头布列塔尼差 3.5 倍）。尺度扫描证明 0.1° 恰是秩相关峰值，网格不是随意选的。而这样的共址验证全球只在欧洲存在——「验证沙漠」本身输出为采集议程。</p>
         <div class="pc-figs">
-          <figure style="align-self:center"><img src="assets/research/p4-methods.png" alt="P4 方法图" loading="lazy"><figcaption><b>方法</b>两个独立调查 → 共址单元配对 → 三件机器可读产品</figcaption></figure>
+          <figure><img src="assets/research/p4-methods.png" alt="P4 方法图" loading="lazy"><figcaption><b>方法</b>两个独立调查 → 共址单元配对 → 三件机器可读产品</figcaption></figure>
           <figure><img src="assets/research/p4-validation-cells.png" alt="P4 结果图" loading="lazy"><figcaption><b>结果</b>26 个共址单元逐格对照：灰线＝2 倍带内一致，红/蓝线＝进再采样队列</figcaption></figure>
         </div>
       </article>
