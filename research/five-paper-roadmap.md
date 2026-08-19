@@ -1,12 +1,16 @@
-# GGA 数据驱动的五篇论文路线图（决赛版，2026-08-19 二轮加深：P2-P5 各补两图）
+# GGA 数据驱动的五篇论文路线图（决赛版，2026-08-20 三轮打磨：方法图 + 语料库措辞审计）
 
 数据基座：冻结快照 `retest-acquisition-coverage-v12-6c221cf`（191,715 条 / 29 源 / 7 元素 / 四介质），
 选题来源：`build_discovery_candidates.py` 自动产出的 31 个候选（`research-products/world-20260815/discovery_candidates.md`）。
-五篇状态：**全部成稿（合计 42 页、20 图 9 表），全部通过 a–g 七项质量审计**（数据合理性 / 叙述一致 /
+五篇状态：**全部成稿（合计 46 页、24 图 9 表），全部通过 a–g 七项质量审计与语料库措辞审计**（数据合理性 / 叙述一致 /
 排版 / 数据完整 / 术语规范 / 图表规范 / 表格规范）；投稿前仍需领域专家人工复核。
 二轮加深（`p2345_addfigs.py`，seed 20260819，对已发表数字全部断言核对）：P2 补原始配对散点 +
 ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS 验证图；P4 补 26 单元哑铃图 +
 聚合尺度扫描（新结果小节）；P5 补站位/盆地规则地图 + 瓶级 Zn-Ni / Cu-Ni 协变图（新结果小节）。
+三轮打磨（2026-08-20）：P2-P5 各补化学期刊式三面板方法设计图（fig_pN_design，入稿为 Figure 1）；
+建 GGA 语言语料库（corpus/gga-language-library.md，31 条术语记录 + 标题/摘要协议 + 审计清单，随 skill assets 分发）；
+据语料库对五篇执行 36 处措辞打磨（P1 标题 Comparability-aware → Method-stratified、P2 标题 is absent → is not detected、
+清除 honest/shipped/first-class/mint 等软件语域词），五篇重编译全部零 overfull、零未定义引用。
 
 ## 前沿对比方法论（每篇统一执行的四步）
 
@@ -18,7 +22,7 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
    机器可操作的采集优先级（sampling_priority.geojson）。
 4. **时效窗口**：对准政策时间表（Minamata COP 效果评估、EU SML 实施细则）。
 
-## P1 — 欧洲土壤剖面 Hg/Pb 遗留富集的可比性感知筛查 【成稿 10 页；a–g 审计通过】
+## P1 — 欧洲土壤剖面 Hg/Pb 遗留富集的方法分层筛查 【成稿 10 页；a–g 审计通过】
 
 - 核心数字：Hg T/S 1.364 (CI 1.303-1.444, n=392)；Pb 1.239；humus Hg 5.256x；
   Ni/Cr 对照约 1；Cr 方法伪影 3x；LUCAS 外部一致（43.9 vs 38.3 ug/kg）。
@@ -27,7 +31,7 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
 - 交付：`paper/main.pdf`（10 页 + 4 图 1 表 + 17 引文；Figure 1 化学顶刊式三面板 v4）。
 - 目标期刊：Science of the Total Environment / Applied Geochemistry；会议：Goldschmidt、EGU。
 
-## P2 — 遗留金属指纹的半球不对称性 【成稿 8 页；a–g 审计通过；dc-001~004】
+## P2 — 遗留金属指纹的半球不对称性 【成稿 9 页；a–g 审计通过；dc-001~004】
 
 - 核心数字（NGSA 流域出口沉积物 TOS 0-10 cm / BOS ~60-80 cm，ICP-MS，0.01 度配对）：
   Pb 0.982 (CI 0.973-0.993, n=1,064) —— 欧洲式 Pb 表层富集不存在；
@@ -36,10 +40,10 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
   敏感性：0.1 度取整下 Pb 0.982 不变（n=1,049）。
   分布级证据（二轮新增）：1:1 线上方占比 EU Pb 80.7% / Hg 73.2% vs AU Pb 44.6% / As 29.2%；
   KS 检验全元素拒绝同分布（Pb D=0.453 最强，Zn D=0.095 最弱 —— 类对照元素几乎重合，自证设计不造假）。
-- 交付：`paper2/main.pdf`（8 页、4 图 1 表：原始配对散点四面板 + ECDF 四面板 + forest 图 + 澳洲 Pb 比值地图；8 条核实引文）。
+- 交付：`paper2/main.pdf`（9 页、5 图 1 表：方法设计图 + 原始配对散点四面板 + ECDF 四面板 + forest 图 + 澳洲 Pb 比值地图；8 条核实引文）。
 - 目标期刊：Environmental Pollution / Applied Geochemistry。
 
-## P3 — 同样品跨方法偏移的量化与传输模型 【成稿 8 页；a–g 审计通过；dc-012~016】
+## P3 — 同样品跨方法偏移的量化与传输模型 【成稿 9 页；a–g 审计通过；dc-012~016】
 
 - 核心数字（同样品配对，GEMAS XRF/ICP-MS n=2,224/元素，seed 20260819）：
   Cr 2.942（CI 2.893-2.993）、Zn 1.342、Pb 1.288、Ni 1.269、As 1.228、Cu 0.864（方向反转）；
@@ -48,12 +52,12 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
   FOREGS 独立复现：Cr 2.537（表土）/ 2.500（底土），Zn 1.091/1.075。
   逐样本不确定度（二轮新增，Bland-Altman 非参 95% LOA）：Cr 1.49-6.86（2.5 分位仍高于 1 半倍），
   Zn 1.06-2.22（最紧），Cu 0.37-1.70（跨 1）—— 任何传输模型的诚实误差棒。
-- 交付：`paper3/main.pdf`（8 页、4 图 3 表：六面板散点 + forest + Bland-Altman 六面板 + OOS 验证图；
+- 交付：`paper3/main.pdf`（9 页、5 图 3 表：方法设计图 + 六面板散点 + forest + Bland-Altman 六面板 + OOS 验证图；
   最小方法元数据标准五条；Bland & Altman 1986、ISO 11466 等 7 引文）。
 - 前沿锚点：OESG "cannot be compared across surveys"；EU SML 跨境可比性条款。
 - 目标期刊：Environmental Science & Technology / Geostandards and Geoanalytical Research。
 
-## P4 — 全球砷筛查的独立交叉验证点集 【成稿 8 页；a–g 审计通过】
+## P4 — 全球砷筛查的独立交叉验证点集 【成稿 9 页；a–g 审计通过】
 
 - 核心数字：GEMAS x FOREGS 共址 0.1 度单元 26 个，Spearman rho=0.681（p=1.3e-4），
   中位比 0.982 —— 独立调查同址一致到 2%；19/26（73%）在 2 倍带内；
@@ -65,12 +69,12 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
   尺度扫描（二轮新增，0.05-1 度五档全量重算）：中位比 0.931-1.030 跨尺度稳定（无系统偏倚），
   秩相关恰在本文选用的 0.1 度达到峰值（粗化混入异质地形 rho 降至 0.39-0.47）——
   0.1 度不是任意选择，原 Q3 由此变为已回答的结果。
-- 交付：`paper4/main.pdf`（8 页、4 图 3 表：共址散点 + 26 单元哑铃图 + 尺度扫描三面板 +
+- 交付：`paper4/main.pdf`（9 页、5 图 3 表：方法设计图 + 共址散点 + 26 单元哑铃图 + 尺度扫描三面板 +
   全球覆盖地图；全 26 单元表 + 尺度扫描表 + 分源面板表）。
 - 前沿锚点：Podgorski & Berg (2020, Science) 明说缺独立校验数据。
 - 目标期刊：Environment International / Water Research / Applied Geochemistry。
 
-## P5 — GEOTRACES 海水微量金属剖面自动提取与可比性审计 【成稿 7 页；a–g 审计通过；dc-009~011】
+## P5 — GEOTRACES 海水微量金属剖面自动提取与可比性审计 【成稿 9 页；a–g 审计通过；dc-009~011】
 
 - 核心数字（18,563 条 = Zn 6,275 / Ni 6,275 / Cu 6,013，深度与坐标覆盖 100%）：
   营养盐型剖面零调参自动复现 —— Zn 深/表 5.57x（0.958 -> 5.334 nmol/kg，p<1e-282）、
@@ -82,7 +86,7 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
   瓶级协变（二轮新增，同位置同深度联结）：Zn-Ni n=4,965，rho 深水 0.899 > 表层 0.778
   （共同再矿化控制，教科书式深水耦合）；Cu-Ni 深水不收紧（0.736 vs 0.758）——
   恰是 Cu「混合型」清除行为的已知特征；两者均零调参恢复 = 验收测试升级到元素间结构。
-- 交付：`paper5/main.pdf`（8 页、4 图 1 表：站位/盆地规则地图 + 三面板剖面图（全球+五盆地）+
+- 交付：`paper5/main.pdf`（9 页、5 图 1 表：方法设计图 + 站位/盆地规则地图 + 三面板剖面图（全球+五盆地）+
   协变双面板 + 审计图；盆地矩阵表；Bruland 1980 等 5 引文）。
 - 目标期刊：Marine Chemistry / Earth System Science Data（数据论文轨）。
 
@@ -94,7 +98,7 @@ ECDF/KS 分布检验；P3 补 Bland-Altman（非参 95% LOA）+ 传输模型 OOS
 
 ## PPT 讲法
 
-五篇全部成稿（合计 42 页、a–g 审计全过、20 图 9 表全部出版级）：
+五篇全部成稿（合计 46 页、a–g 审计全过、24 图 9 表全部出版级，含每篇方法设计图与语料库措辞审计）：
 P1 现场翻 PDF；P2 当日第二大洲复制（n>1000，分布级 KS 证据）；P3 传输模型经 OOS 验证且理论自洽
 （含 Bland-Altman 诚实误差棒）；P4 独立调查同址一致到 2% + 尺度扫描自证 + 验证沙漠地图；
 P5 零调参复现教科书海洋学（盆地结构、深水 Zn-Ni 耦合、Cu 混合型特征全对）。
