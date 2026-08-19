@@ -195,6 +195,55 @@
   .fig-card img { width: 100%; }
   .fig-card figcaption { padding: 10px 14px; background: var(--panel); color: var(--muted); font-size: 12px; line-height: 1.55; border-top: 1px solid rgba(105,245,230,.16); }
   .fig-card figcaption b { color: var(--ink); }
+  /* five-paper cards */
+  .pcards { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+  .pcard { border: 1px solid rgba(105,245,230,.2); border-radius: 14px; background: var(--panel); padding: 18px 20px 20px; transition: border-color .25s; }
+  .pcard:hover { border-color: rgba(105,245,230,.5); }
+  .pc-head { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+  .pc-head i { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--c, var(--mint)); border-radius: 10px; color: var(--c, var(--mint)); font: 800 13px/1 var(--mono); font-style: normal; }
+  .pc-title { flex: 1 1 320px; min-width: 0; }
+  .pc-title b { display: block; font-size: 16px; color: var(--ink); line-height: 1.4; }
+  .pc-q { display: block; margin-top: 5px; font-size: 12.8px; line-height: 1.6; color: var(--muted); }
+  .pc-q b { display: inline; font-size: inherit; color: var(--c, var(--mint)); font-family: var(--mono); font-size: 11px; letter-spacing: .05em; margin-right: 4px; }
+  .pc-side { flex: none; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; }
+  .pc-side .p-status { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--c, var(--mint)); color: var(--c, var(--mint)); font: 750 10.5px/1.3 var(--mono); }
+  .pc-side .venue { color: var(--muted); font-size: 11px; font-family: var(--mono); }
+  .pc-side a { font-weight: 700; font-size: 12.5px; }
+  .pc-find { margin-top: 12px; font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .pc-find b { color: var(--ink); }
+  .pc-find em { color: var(--mint); font-style: normal; font-family: var(--mono); font-weight: 700; }
+  .pc-figs { display: grid; grid-template-columns: minmax(0,58fr) minmax(0,42fr); gap: 12px; margin-top: 14px; align-items: start; }
+  .pc-figs figure { border: 1px solid rgba(105,245,230,.25); border-radius: 10px; overflow: hidden; background: #fff; margin: 0; }
+  .pc-figs img { width: 100%; display: block; }
+  .pc-figs figcaption { padding: 8px 12px; background: var(--panel); color: var(--muted); font-size: 11.5px; line-height: 1.5; border-top: 1px solid rgba(105,245,230,.16); }
+  .pc-figs figcaption b { color: var(--c, var(--mint)); font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; margin-right: 6px; }
+  @media (max-width: 760px) { .pc-figs { grid-template-columns: 1fr; } .pc-side { align-items: flex-start; text-align: left; } }
+  /* database intro cards */
+  .db-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+  @media (max-width: 960px) { .db-cards { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .db-cards { grid-template-columns: 1fr; } }
+  .db-card { border: 1px solid rgba(105,245,230,.18); border-radius: 12px; background: var(--panel); padding: 14px 16px; display: flex; flex-direction: column; gap: 7px; }
+  .db-card.us-card { border-color: rgba(105,245,230,.55); background: rgba(105,245,230,.06); }
+  .db-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .db-head b { color: var(--ink); font-size: 13.5px; }
+  .db-tag { padding: 2px 8px; border-radius: 999px; border: 1px solid var(--c, var(--gold)); color: var(--c, var(--gold)); font: 750 10px/1.3 var(--mono); }
+  .db-card p { color: var(--muted); font-size: 12.3px; line-height: 1.65; flex: 1; margin: 0; }
+  .db-card p b { color: var(--ink); font-family: var(--mono); }
+  .db-card .db-links { font-size: 11.5px; font-weight: 700; font-family: var(--mono); line-height: 1.7; }
+  /* question-by-question comparison */
+  .q-rows { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .q-row { display: grid; grid-template-columns: minmax(0,26fr) minmax(0,37fr) minmax(0,37fr); border: 1px solid rgba(105,245,230,.18); border-radius: 12px; overflow: hidden; background: var(--panel); }
+  .q-row .q { padding: 13px 16px; }
+  .q-row .q b { display: block; color: var(--ink); font-size: 13px; line-height: 1.5; }
+  .q-row .q span { display: block; margin-top: 4px; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+  .q-row .them, .q-row .us2 { padding: 13px 16px; font-size: 12.3px; line-height: 1.65; }
+  .q-row .them { color: var(--muted); border-left: 1px solid rgba(105,245,230,.12); }
+  .q-row .us2 { color: var(--ink); border-left: 1px solid rgba(105,245,230,.12); background: rgba(105,245,230,.05); }
+  .q-row .them::before, .q-row .us2::before { display: block; font: 750 10px/1.3 var(--mono); letter-spacing: .06em; margin-bottom: 5px; }
+  .q-row .them::before { content: "同类库"; color: var(--gold); }
+  .q-row .us2::before { content: "GGA 本项目"; color: var(--mint); }
+  .q-row .us2 b { color: var(--mint); font-family: var(--mono); }
+  @media (max-width: 860px) { .q-row { grid-template-columns: 1fr; } .q-row .them, .q-row .us2 { border-left: none; border-top: 1px solid rgba(105,245,230,.12); } }
   .cmp-block { margin-top: 44px; }
   .cmp-scroll { overflow-x: auto; margin-top: 18px; border: 1px solid rgba(105,245,230,.2); border-radius: 12px; }
   table.cmp { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 12.8px; line-height: 1.55; }
@@ -458,94 +507,170 @@
     <div class="fx">
       <div class="eyebrow" style="color:#9af7b0">Beyond Deliverables · Data → Papers</div>
       <h2 class="section-title">这套数据能长出科学：<span class="gradient">五篇论文管线</span></h2>
-      <p class="section-sub">五项交付之上，skill 的 discovery_mode 从同一冻结快照自动提出选题（31 个确定性候选）、跑统计试点、写成论文。<b>五篇现已全部成稿（合计 46 页、24 图 9 表，每篇含期刊式方法设计图，全部通过 a–g 七项质量审计与 36 处语料库措辞打磨）</b>——每个数字都可从快照与种子脚本逐字节复算。</p>
+      <p class="section-sub">skill 的 discovery_mode 从同一冻结快照自动提出选题、跑统计试点、写成论文。五篇全部成稿（合计 46 页 · 24 图 9 表），每篇回答一个领域内明文悬置的问题；每个数字都可由快照与种子脚本复算。下面每篇展示方法图与主结果图各一张。</p>
     </div>
-    <div class="research-grid">
-      <div class="paper-list fx">
-        <div class="paper-item">
+    <div class="pcards fx">
+      <article class="pcard">
+        <div class="pc-head">
           <i>P1</i>
-          <div class="p-body">
-            <b>欧洲土壤剖面 Hg/Pb 遗留富集的方法分层筛查</b>
-            <span class="p-num">Hg 表土/底土 <em>1.364</em>（CI 1.303–1.444, n=392 对）· Pb <em>1.239</em> · 腐殖质 Hg <em>5.26×</em> · Ni/Cr 地质对照 ≈1 · LUCAS 外部一致（43.9 vs 38.3 µg/kg）</span>
-            <div class="p-meta">
-              <span class="p-status">成稿 10 页 · a–g 审计全过</span>
-              <span class="venue">STOTEN / Applied Geochemistry</span>
-              <a href="research/P1-comparability-aware-screening-europe.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
-            </div>
+          <div class="pc-title">
+            <b>欧洲土壤剖面的汞铅遗留富集：方法分层筛查</b>
+            <span class="pc-q"><b>科学问题</b>一个世纪的大气 Hg/Pb 沉降在今天的欧洲土壤里留下多强的垂直信号？不同分析方法混在一起算，会不会伪造这个信号？</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status">10 页 · 4 图 1 表</span>
+            <span class="venue">STOTEN / Applied Geochemistry</span>
+            <a href="research/P1-comparability-aware-screening-europe.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
           </div>
         </div>
-        <div class="paper-item" style="--c:#9af7b0">
+        <p class="pc-find"><b>发现：</b>表土/底土浓度比 Hg <em>1.36</em>、Pb <em>1.24</em> 显著富集，而地质对照元素 Ni、Cr 恰好 ≈1——信号来自大气沉降而非母岩；腐殖质层 Hg <em>5.3×</em> 指向植被介导的沉降通路。同一元素跨方法测定可差 3 倍，因此全部统计先按方法族分层。独立的 LUCAS 调查给出一致的欧洲表土 Hg 中位数（43.9 vs 38.3 µg/kg）。</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p1-methods-figure.png" alt="P1 方法图" loading="lazy"><figcaption><b>方法</b>大气沉降假设 → 站点配对设计 → 方法分层统计（三面板）</figcaption></figure>
+          <figure><img src="assets/research/p1-forest.png" alt="P1 结果图" loading="lazy"><figcaption><b>结果</b>表/深比值森林图：Hg、Pb 富集（红），Ni/Cr 对照 ≈1；美国 A/C 层独立复现</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:#9af7b0">
+        <div class="pc-head">
           <i>P2</i>
-          <div class="p-body">
-            <b>遗留金属指纹的半球不对称性：欧洲存在，澳大利亚不存在</b>
-            <span class="p-num">同一统计设计跑第二大洲：澳洲 NGSA 沉积物顶/底 Pb <em>0.982</em>（n=1,064 对）vs 欧洲 <em>1.239</em> · As 表层亏损 <em>0.886</em> · KS 分布检验全元素拒绝同分布（Pb D=0.45 最强，Zn 类对照几乎重合）· Hg 仅 17 对＝缺口输出</span>
-            <div class="p-meta">
-              <span class="p-status" style="--c:#9af7b0">成稿 9 页 · 当日跨洲复制</span>
-              <span class="venue">Environmental Pollution</span>
-              <a href="research/P2-hemispheric-contrast-australia.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
-            </div>
+          <div class="pc-title">
+            <b>表层遗留富集不是全球默认：来自澳大利亚的检验</b>
+            <span class="pc-q"><b>科学问题</b>欧洲的表层 Pb 富集是全球土壤的普遍状态，还是北半球工业活动的区域签名？南半球缺一个同口径的回答。</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:#9af7b0">9 页 · 5 图 1 表</span>
+            <span class="venue">Environmental Pollution</span>
+            <a href="research/P2-hemispheric-contrast-australia.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
           </div>
         </div>
-        <div class="paper-item" style="--c:var(--gold)">
+        <p class="pc-find"><b>发现：</b>把 P1 的配对设计原样搬到澳大利亚 NGSA 的 1,064 个站点：Pb 表/深比 <em>0.982</em>——欧洲式富集不存在；As 反而表层亏损（<em>0.886</em>）；类对照元素 Zn 在两大洲都 ≈1，说明设计本身不制造假信号。遗留金属指纹是北半球工业签名，这为 Minamata 公约效果评估提供了缺失的南半球基线。</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p2-methods.png" alt="P2 方法图" loading="lazy"><figcaption><b>方法</b>两种介质、一个配对问题：欧洲土壤剖面 vs 澳洲集水区沉积物，同一设计</figcaption></figure>
+          <figure><img src="assets/research/p2-hemispheric-forest.png" alt="P2 结果图" loading="lazy"><figcaption><b>结果</b>半球对比森林图：欧洲（红）表层富集，澳洲（蓝）在 1 附近或以下</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
           <i>P3</i>
-          <div class="p-body">
-            <b>同样品跨方法偏移的量化与传输模型</b>
-            <span class="p-num">GEMAS 同样品 XRF/ICP-MS（n=<em>2,224</em>/元素）：Cr <em>2.94×</em> · Zn 1.34 · Pb 1.29 · Cu 0.86 方向反转 · 幂律传输模型 out-of-sample 验证：Pb 预测误差 18.2%→<em>11.0%</em> · Bland–Altman 95% LOA 逐样本误差棒 · FOREGS 独立复现 Cr 2.54/2.50</span>
-            <div class="p-meta">
-              <span class="p-status" style="--c:var(--gold)">成稿 9 页 · OOS 验证 + 元数据标准</span>
-              <span class="venue">ES&amp;T / Geostandards GGR</span>
-              <a href="research/P3-method-transfer-models.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
-            </div>
+          <div class="pc-title">
+            <b>同一份土样，两种方法差三倍：跨方法偏移的量化与换算</b>
+            <span class="pc-q"><b>科学问题</b>XRF 测全量、酸溶 ICP-MS 测可提取量——同一样品两个数字最多差多少？能否建立可验证的换算模型，让跨方法数据可以合并？</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 页 · 5 图 3 表</span>
+            <span class="venue">ES&amp;T / Geostandards GGR</span>
+            <a href="research/P3-method-transfer-models.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
           </div>
         </div>
-        <div class="paper-item" style="--c:var(--gold)">
+        <p class="pc-find"><b>发现：</b>GEMAS 的 2,224 对同样品双测定给出逐元素答案：Cr 差 <em>2.94×</em>、Cu 方向反转（<em>0.86</em>），且偏移随浓度变化。log-log 幂律换算模型经 80/20 留出验证：Pb 预测误差从 18.2% 降到 <em>11.0%</em>；FOREGS 独立调查复现同一偏移（Cr 2.54）。附最小方法元数据标准五条——记录方法，跨源数据才有救。</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p3-methods.png" alt="P3 方法图" loading="lazy"><figcaption><b>方法</b>一份样品两条分析路线 → 同样品配对 → 换算模型与留出验证门</figcaption></figure>
+          <figure><img src="assets/research/p3-forest.png" alt="P3 结果图" loading="lazy"><figcaption><b>结果</b>六元素方法比值：Cr 近 3 倍（FOREGS 金色复现），Cu 方向反转（红）</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
           <i>P4</i>
-          <div class="p-body">
-            <b>全球砷风险图的独立交叉验证点集</b>
-            <span class="p-num">GEMAS×FOREGS 共址 26 单元：Spearman ρ=<em>0.681</em> · 中位比 <em>0.982</em>＝独立调查同址一致到 2% · <em>73%</em> 在 2 倍带内 · 7 个分歧单元自动进再采样队列（布列塔尼 208.5 vs 59.6 领头）· 尺度扫描 0.05°–1°：0.1° 恰为秩相关峰值＝网格选择自证 · 全球共址验证仅存在于欧洲＝验证沙漠地图</span>
-            <div class="p-meta">
-              <span class="p-status" style="--c:var(--gold)">成稿 9 页 · 26 单元 + 尺度扫描</span>
-              <span class="venue">Environment International / Water Research</span>
-              <a href="research/P4-arsenic-validation.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
-            </div>
+          <div class="pc-title">
+            <b>两个独立调查在同一地点读数一致吗：全球砷图的地面验证</b>
+            <span class="pc-q"><b>科学问题</b>全球地下水砷风险地图（Science 2020）明说缺独立地面校验数据。两个互不知情的大洲级调查，在同一格网单元里给出的砷读数差多少？</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 页 · 5 图 3 表</span>
+            <span class="venue">Environment International / Water Research</span>
+            <a href="research/P4-arsenic-validation.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
           </div>
         </div>
-        <div class="paper-item" style="--c:var(--gold)">
+        <p class="pc-find"><b>发现：</b>GEMAS 与 FOREGS 的 26 个共址 0.1° 单元：中位比 <em>0.982</em>——独立调查同址一致到 2%；73% 的单元落在 2 倍带内；7 个分歧单元自动生成再采样队列（队头布列塔尼差 3.5 倍）。尺度扫描证明 0.1° 恰是秩相关峰值，网格不是随意选的。而这样的共址验证全球只在欧洲存在——「验证沙漠」本身输出为采集议程。</p>
+        <div class="pc-figs">
+          <figure style="align-self:center"><img src="assets/research/p4-methods.png" alt="P4 方法图" loading="lazy"><figcaption><b>方法</b>两个独立调查 → 共址单元配对 → 三件机器可读产品</figcaption></figure>
+          <figure><img src="assets/research/p4-validation-cells.png" alt="P4 结果图" loading="lazy"><figcaption><b>结果</b>26 个共址单元逐格对照：灰线＝2 倍带内一致，红/蓝线＝进再采样队列</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
           <i>P5</i>
-          <div class="p-body">
-            <b>GEOTRACES 海水剖面自动提取与可比性审计</b>
-            <span class="p-num">营养盐型剖面零调参自动复现：Zn 深/表 <em>5.57×</em>（p&lt;10⁻²⁸²）· 盆地结构全对：太平洋 <em>24.5×</em> &gt; 大西洋 13×（水团年龄）· 南大洋 2.2×（上升流）· 北冰洋 Cu 反转 0.55（河流输入）· 瓶级协变：深水 Zn–Ni ρ <em>0.90</em>（教科书耦合）· 审计：33 可解析方法族、最大仅 <em>10.5%</em>、37.7% 缺方法＝可池化 <em>0</em></span>
-            <div class="p-meta">
-              <span class="p-status" style="--c:var(--gold)">成稿 9 页 · 盆地 + 瓶级协变</span>
-              <span class="venue">Marine Chemistry / ESSD</span>
-              <a href="research/P5-geotraces-audit.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
-            </div>
+          <div class="pc-title">
+            <b>零调参能否恢复已知海洋学：GEOTRACES 剖面提取与方法审计</b>
+            <span class="pc-q"><b>科学问题</b>一个不含任何海洋学假设的通用统计层，能否从 18,563 条异构海水记录中自动恢复教科书结构？异构到什么程度数据就不能再合并？</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 页 · 5 图 1 表</span>
+            <span class="venue">Marine Chemistry / ESSD</span>
+            <a href="research/P5-geotraces-audit.pdf" target="_blank" rel="noopener">读 PDF ↗</a>
           </div>
         </div>
-      </div>
-      <div class="fig-stack fx">
-        <figure class="fig-card">
-          <img src="assets/research/p1-methods-figure.png" alt="P1 论文方法图：三面板科学示意图" loading="lazy">
-          <figcaption><b>P1 · Figure 1（化学期刊式三面板）</b>：(a) 大气沉降与配对采样设计 (b) 协调化数据基座 (c) 站点配对统计与结果预览——论文里的每个数字都从左边这套基础设施长出来。</figcaption>
-        </figure>
-        <figure class="fig-card">
-          <img src="assets/research/p2-hemispheric-forest.png" alt="P2 论文主图：欧洲 vs 澳洲配对比值 forest 图" loading="lazy">
-          <figcaption><b>P2 · 半球对比主图</b>：红＝欧洲表土/底土，蓝＝澳洲沉积物顶/底。欧洲式 Pb 表层富集在澳大利亚不存在（0.982 vs 1.239）——遗留指纹是北半球工业签名，不是全球默认。</figcaption>
-        </figure>
-        <figure class="fig-card">
-          <img src="assets/research/p4-validation-cells.png" alt="P4 论文主图：26 个共址验证单元哑铃图" loading="lazy">
-          <figcaption><b>P4 · 26 个共址单元逐格对照</b>：实心＝GEMAS，空心金＝FOREGS，按比值排序。灰连线＝2 倍带内一致；红/蓝连线＝7 个分歧单元自动进再采样队列——独立调查同址一致到 2%，分歧本身也是产品。</figcaption>
-        </figure>
-        <figure class="fig-card">
-          <img src="assets/research/p5-nutrient-profiles.png" alt="P5 论文主图：GEOTRACES Zn/Cu/Ni 深度剖面（全球+五大洋盆）" loading="lazy">
-          <figcaption><b>P5 · 营养盐型剖面主图</b>：黑＝全球中位数（IQR 带），彩线＝五大洋盆。零海洋学调参的通用统计自动复现教科书结构：表层耗竭、深层富集、太平洋&gt;大西洋、北冰洋表层反转。</figcaption>
-        </figure>
-      </div>
+        <p class="pc-find"><b>发现：</b>营养盐型剖面全部零调参复现：Zn 深/表 <em>5.57×</em>，盆地排序太平洋 <em>24.5×</em> &gt; 大西洋 13×（水团年龄），北冰洋表层反转（河流输入），深水 Zn–Ni 相关 <em>ρ=0.90</em>（再矿化耦合）。同时审计给出硬结论：33 个可解析方法族最大仅覆盖 <em>10.5%</em>、37.7% 记录缺方法元数据——可直接池化的多源组合为 0，缺失清单输出为数据管理方的修复队列。</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p5-methods.png" alt="P5 方法图" loading="lazy"><figcaption><b>方法</b>海洋断面采样 → 通用筛查层（与土壤论文同一套统计）→ 两件产品</figcaption></figure>
+          <figure><img src="assets/research/p5-nutrient-profiles.png" alt="P5 结果图" loading="lazy"><figcaption><b>结果</b>Zn/Cu/Ni 深度剖面：黑＝全球中位数，彩线＝五大洋盆，教科书结构自动浮现</figcaption></figure>
+        </div>
+      </article>
     </div>
 
     <div class="cmp-block fx">
       <h2 class="section-title" style="font-size:clamp(20px,2.6vw,30px)">同类数据库对比：<span class="gradient">此前不存在的一层</span></h2>
-      <p class="section-sub">诚实前提：论绝对规模不与几十年机构积累竞争。同类库要么大而不统一（文献/档案汇编），要么统一而窄（单介质或单大洲）——跨源、跨介质、记录级可审计的统一层，是 GGA 补上的空位。外部数字全部核验自官方页面（访问日期 2026-08-20），我方数字来自冻结快照列级统计。</p>
+      <p class="section-sub">先说清楚同类库是谁、各自强在哪（数字全部核验自官方页面，访问日期 2026-08-20）——它们要么大而不统一（按发表原样汇编），要么统一而窄（单介质或单大洲）。GGA 不与任何一家比规模，补的是它们之间缺的「统一层」。</p>
+      <div class="db-cards">
+        <div class="db-card">
+          <div class="db-head"><b>GEOROC / DIGIS</b><span class="db-tag">文献汇编 · 岩石</span></div>
+          <p>哥廷根科学院 DIGIS 计划维护的全球火成岩/变质岩文献汇编：<b>4,270 万</b>值 / 70.7 万样品 / 23,520 篇文献。强在体量与文献覆盖；数字按发表原样收录，单位与方法不做跨源统一。</p>
+          <span class="db-links"><a href="https://georoc.eu/" target="_blank" rel="noopener">georoc.eu ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>EarthChem · PetDB · SESAR</b><span class="db-tag">数据联邦 · 固体地球</span></div>
+          <p>美国 NSF 支持、哥伦比亚大学 LDEO 运营的固体地球数据联邦：约 <b>5,000 万</b>值 / &gt;100 万样品；SESAR 为 &gt;500 万实体样品发全球唯一 IGSN 编号。强在样品注册与长期存档；联邦各库保持原发表口径。</p>
+          <span class="db-links"><a href="https://www.earthchem.org/" target="_blank" rel="noopener">earthchem.org ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>USGS NGDB</b><span class="db-tag">国家档案 · 美国</span></div>
+          <p>美国地质调查局 1962 年以来的全国地球化学档案：<b>152.4 万</b>样品 / &gt;5,900 万测定。强在美国境内采样密度与年代跨度；<b>108</b> 种分析方法、25 个实验室并存，只记方法名，没有统一可比层。</p>
+          <span class="db-links"><a href="https://mrdata.usgs.gov/" target="_blank" rel="noopener">mrdata.usgs.gov ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>GEOTRACES IDP2025</b><span class="db-tag">科学计划 · 仅海水</span></div>
+          <p>国际海洋微量元素与同位素计划的中间数据产品：<b>123</b> 航次 / 4,097 站 / 220 万值，值级质量 flag，航次交叉互校。是「统一做得好」的标杆——但只覆盖海水单一介质，方法信息在航次级。</p>
+          <span class="db-links"><a href="https://www.geotraces.org/idp2025/" target="_blank" rel="noopener">geotraces.org/idp2025 ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>大洲级调查 ×6</b><span class="db-tag">单大洲 · 单次</span></div>
+          <p>GEMAS（欧洲农牧土 4,329 样）、FOREGS（欧洲多介质约 900 站）、NGSA（澳洲沉积 1,315 站）、LUCAS（欧盟表土约 1.9 万点）、AfSIS（非洲 18,257 样）、CGB（中国 6,617 样）。各自调查内高度统一（单方法体系 + 调查级 QC）；但单大洲单次，彼此之间不可直接比。</p>
+          <span class="db-links"><a href="https://www.bgs.ac.uk/geology-projects/applied-geochemistry/international-geochemistry/gemas/" target="_blank" rel="noopener">GEMAS ↗</a> · <a href="http://weppi.gtk.fi/publ/foregsatlas/" target="_blank" rel="noopener">FOREGS ↗</a> · <a href="https://www.ga.gov.au/about/projects/resources/national-geochemical-survey/atlas" target="_blank" rel="noopener">NGSA ↗</a> · <a href="https://esdac.jrc.ec.europa.eu/projects/lucas" target="_blank" rel="noopener">LUCAS ↗</a> · <a href="https://registry.opendata.aws/afsis/" target="_blank" rel="noopener">AfSIS ↗</a></span>
+        </div>
+        <div class="db-card us-card">
+          <div class="db-head"><b>GGA（本项目）</b><span class="db-tag" style="--c:var(--mint)">统一层 · 四介质两半球</span></div>
+          <p>不与以上任何一家比规模。把 <b>29</b> 个源、四种介质（土壤/沉积物/淡水/海水）的 <b>191,715</b> 条记录拉到同一张 129 字段、可审计的表上——上面五篇论文全部直接长在这张表上，这正是 OneGeochemistry 国际倡议指出「碎片化在数千个库中、几乎不可复用」的那个缺口。</p>
+          <span class="db-links"><a href="research/database-comparison.md">完整对比与全部出处 ↗</a></span>
+        </div>
+      </div>
+      <p class="section-sub" style="margin-top:26px">统一层有什么用？拿研究者真实会遇到的五个问题逐一对比：</p>
+      <div class="q-rows">
+        <div class="q-row">
+          <div class="q"><b>Q1 拿到数据能直接算吗？</b><span>单位、坐标、字段格式是否需要自己清洗对齐</span></div>
+          <div class="them">汇编库按发表原样收录：单位、检出限口径、坐标基准逐源不同，分析前通常要数周的逐源清洗（OneGeochemistry：「几乎不可复用」）</div>
+          <div class="us2">全部记录已统一为 <b>mg/kg + WGS84</b>、同一张 <b>129</b> 字段表，四介质直接联查——P2 用同一脚本当日跑完第二大洲</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q2 不同方法的数字能混吗？</b><span>XRF 测全量、酸溶 ICP 测部分提取，直接混用会引入系统偏差</span></div>
+          <div class="them">NGDB 108 种方法并存只记方法名；文献汇编常连方法都缺——直接混用同一元素可差 3 倍而毫无提示</div>
+          <div class="us2">逐条<b>方法族</b>标注，缺失的 36.3% 也逐条记 missing_reason；P3 给出经留出验证的换算模型（Cr 2.94× 实测）</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q3 数字可信、可追溯吗？</b><span>发现可疑值时能否回放到原始来源逐条核对</span></div>
+          <div class="them">引用到文献或数据集级：单条记录从下载到入库改没改过、改了什么，外部无法审计</div>
+          <div class="us2">行级 <b>SHA-256</b> 哈希链 <b>100%</b> 覆盖：任何一条可回放到原始下载件；删失值显式保留 1,537 条、不猜数</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q4 能合规复用与再发布吗？</b><span>混合多来源做衍生产品时，每条数据的许可边界在哪</span></div>
+          <div class="them">许可证标在数据集级甚至页面级：混库衍生产品的再分发边界说不清</div>
+          <div class="us2">记录级许可证字段 <b>100%</b> 覆盖：按行筛出任意许可组合的可再分发子集</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q5 哪里没数据、下一步测哪？</b><span>数据缺口对采样规划者是否可操作</span></div>
+          <div class="them">缺口不作为产品输出——用户自己撞到没有数据的区域才知道</div>
+          <div class="us2">缺口显式输出为机器可读<b>采集优先级队列</b>（geojson）：P2 的 Hg 缺口、P4 的验证沙漠都直接变成下一轮采样点</div>
+        </div>
+      </div>
+      <p class="section-sub" style="margin-top:26px">完整能力矩阵（每个数字带官方出处）：</p>
       <div class="cmp-scroll">
         <table class="cmp" style="min-width:1100px">
           <tr><th>系统</th><th>规模</th><th>介质</th><th>统一单位·schema</th><th>记录级许可证</th><th>溯源哈希</th><th>方法元数据</th><th>置信度·QC</th><th>交叉验证</th><th>缺口队列</th></tr>
@@ -561,11 +686,6 @@
         </table>
       </div>
       <p class="section-sub" style="margin-top:10px;font-size:12.5px">脚注 <sup>1–5</sup> 与全部数字出处（来源 URL + 访问日期 2026-08-20 + 原文口径）见 <a href="research/database-comparison.md">research/database-comparison.md</a>；GGA 行数字来自冻结快照 <code>retest-acquisition-coverage-v12-6c221cf</code> 列级统计。</p>
-      <div class="cmp-verdict">
-        <div class="verdict"><code>更全面 · 四介质两半球</code><p>同一 schema 覆盖土壤、沉积物、淡水与海水；五篇论文横跨欧洲、澳洲与全球大洋——同类产品均为单介质或单大洲。</p></div>
-        <div class="verdict" style="--c:var(--gold)"><code>更可靠 · 连缺失都可审计</code><p>100% 许可证 / SHA-256 / 置信度 / QC 覆盖；36.3% 缺方法的记录逐条记 missing_reason；删失保留不猜值——「缺什么」本身也是数据。</p></div>
-        <div class="verdict" style="--c:var(--red)"><code>更统一 · 一晚跑通两大洲</code><p>P1→P2 用同一脚本框架、同一配对统计跑欧洲与澳洲，边际成本一个晚上；已知科学（欧洲 Hg/Pb 富集、GEOTRACES 营养盐剖面、跨调查 As 一致性）全部自动复现后才输出新问题。</p></div>
-      </div>
       <p class="honesty" style="margin-top:22px"><b>科学边界：</b>五篇论文全部为筛查级结论（screening-level）：富集 ≠ 污染定论，剖面形态 ≠ 机制证明；五篇均已通过 a–g 七项质量审计（数据合理性 / 叙述一致 / 排版 / 数据完整 / 术语规范 / 图表规范 / 表格规范），正式投稿前仍需领域专家人工复核；全部数字可由冻结快照 + 种子脚本确定性重放。完整路线图见 <a href="research/five-paper-roadmap.md">five-paper-roadmap.md</a>，对比出处见 <a href="research/database-comparison.md">database-comparison.md</a>。</p>
     </div>
   </div>
