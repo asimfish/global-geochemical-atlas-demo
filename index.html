@@ -83,6 +83,9 @@
   @media (max-width: 960px) { .hero h1, .hero h1 .h1-sub { white-space: normal; } }
   .hero .sub { margin-top: 18px; color: var(--muted); font-size: clamp(15px, 1.3vw, 17px); max-width: 520px; }
   .hero .sub b { color: var(--ink); font-weight: 700; }
+  .pain-list { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .pain-list li { display: flex; gap: 9px; align-items: baseline; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+  .pain-list li i { flex: none; font: 700 10.5px/1.7 var(--mono); color: var(--mint); font-style: normal; letter-spacing: .04em; border: 1px solid rgba(105,245,230,.3); border-radius: 6px; padding: 0 7px; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
   .chip { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: 650 12px/1.4 var(--mono); }
   .chip.hot { border-color: rgba(246,195,68,.55); color: var(--gold); }
@@ -239,6 +242,17 @@
   .db-card p b { color: var(--ink); font-family: var(--mono); }
   .db-card .db-links { font-size: 11.5px; font-weight: 700; font-family: var(--mono); line-height: 1.7; }
   /* question-by-question comparison */
+  .glance-wrap { margin-top: 30px; overflow-x: auto; border: 1px solid rgba(105,245,230,.25); border-radius: 14px; background: var(--panel); }
+  table.glance { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 760px; }
+  table.glance th, table.glance td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(105,245,230,.1); vertical-align: top; }
+  table.glance thead th { font: 750 11.5px/1.5 var(--mono); letter-spacing: .08em; color: var(--muted); background: rgba(3,20,27,.7); white-space: nowrap; }
+  table.glance thead th:last-child, table.glance td:last-child { background: rgba(105,245,230,.055); }
+  table.glance tbody tr:last-child td { border-bottom: none; }
+  table.glance td.dim2 { color: var(--muted); }
+  table.glance b.cap { color: var(--ink); font-weight: 700; }
+  .mk { display: inline-block; font: 800 13px/1 var(--mono); margin-right: 7px; }
+  .mk.yes { color: var(--mint); } .mk.part { color: var(--gold); } .mk.no { color: rgba(154,178,186,.55); }
+  .glance-note { margin-top: 10px; color: var(--muted); font-size: 12.5px; }
   .q-rows { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
   .q-row { display: grid; grid-template-columns: minmax(0,26fr) minmax(0,37fr) minmax(0,37fr); border: 1px solid rgba(105,245,230,.18); border-radius: 12px; overflow: hidden; background: var(--panel); }
   .q-row .q { padding: 13px 16px; }
@@ -334,11 +348,19 @@
     <div class="fx">
       <div class="eyebrow">AI4S Future ScienceSkills Hackathon · 气候与地球科学赛道</div>
       <h1>全球地球化学元素分布图谱<span class="h1-sub gradient">面向 AI Agent 的可复用科研 Skill</span></h1>
-      <p class="sub">把重复的数据整编交给 AI 是必然趋势，但科研容不得幻觉——单位算错、坐标颠倒，模型照样能拼出一张以假乱真的精美地图。这个 Skill 让 Agent 全自动接管采集、质控、制图与存档，同时确保<b>每一个数字都可追溯、可复核</b>；无法满足的部分，如实报告为缺口。它不只是一张地图，更是一座向所有研究者开放、可持续扩展的自动化数据基建。</p>
+      <p class="sub">「全球土壤里的铅是怎么分布的？」——听上去像一个检索问题。但真要做研究，它马上变成一连串更难的问题：</p>
+      <ul class="pain-list">
+        <li><i>地球化学家</i>不同调查、不同分析方法测出的数字，能直接放进同一张图吗？</li>
+        <li><i>环境研究者</i>看到的高值是真实富集，还是方法偏移和背景波动？</li>
+        <li><i>数据管理者</i>每个数字能回溯到原始下载件吗？许可允许再发布吗？</li>
+        <li><i>评审人</i>换台机器重跑一遍，这张图还能一字不差地复现吗？</li>
+      </ul>
+      <p class="sub" style="margin-top:14px">这个 Skill 让 Agent 一次接管全链路：采集、标准化、质控、异常筛查、分布与时序演化制图、溯源存档。<b>每一个数字都可追溯、可复核</b>；无法满足的部分，如实报告为缺口。</p>
       <div class="chip-row">
         <span class="chip">多源数据标准化</span>
         <span class="chip">确定性质量控制</span>
         <span class="chip">记录级来源追溯</span>
+        <span class="chip">时序分布演化图谱</span>
         <span class="chip hot">缺口如实报告</span>
       </div>
       <div class="cta-row">
@@ -350,7 +372,7 @@
     <a class="browser-card fx" href="interactive_map.html" aria-label="打开交互图谱">
       <div class="browser-bar"><i></i><i></i><i></i><span>interactive_map.html · 自包含单文件 · 即点即用</span><em>● LIVE</em></div>
       <div class="shot">
-        <img src="finals/assets/hero-map-1440x1120.png" alt="线上交互图谱界面截图：全球采样点密度图与异常候选气泡" loading="eager">
+        <img src="finals/assets/hero-map-1240x1280.png" alt="线上交互图谱界面截图：全球采样点密度图与异常候选气泡" loading="eager">
         <div class="shot-caption"><b>真实运行产物界面实拍</b><span>MAP / DATABASE / EVIDENCE</span></div>
       </div>
     </a>
@@ -528,8 +550,8 @@
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow" style="color:#9af7b0">Beyond Deliverables · Data → Papers</div>
-      <h2 class="section-title">从数据到论文：<span class="gradient">内置的科研全流程管线</span></h2>
-      <p class="section-sub">除了数据整编，Skill 还把科研的后半程接了起来：discovery_mode 从同一份冻结数据快照出发，自动提出候选选题、完成统计检验、撰写并排版论文初稿。作为对这条管线的验证，五篇论文已全部成稿（合计 46 页、24 图 9 表），每篇回答一个文献中明确提出但尚未解决的问题——例如欧洲式的表层铅富集在澳大利亚并不存在、同一份土样换一种方法测可差三倍。文中每个数字都能用数据快照和固定随机种子的脚本重新算出；以下每篇各展示一张方法图与一张主结果图。</p>
+      <h2 class="section-title">从图谱、发现到论文：<span class="gradient">一条完整的科研流程</span></h2>
+      <p class="section-sub">一张分布图回答的是「哪里有什么、有多少」，而研究真正要回答的是「为什么、意味着什么」。这个 Skill 把两段接成一条流程：图谱交付后，discovery_mode 从同一份冻结数据快照出发，识别数据里可检验的信号，把它们变成候选科学问题，再自动走完统计检验、撰写与排版——从元素图谱，到发现数据特点，再到一项完整的科研工作，全程不用换工具。下面五篇成稿论文（合计 46 页、24 图 9 表）是这条流程真实跑通的记录：每篇回答一个文献中明确提出但尚未解决的问题，每个数字都能用快照与固定种子脚本复算。每篇各展示一张方法图与一张主结果图。</p>
     </div>
     <div class="pcards fx">
       <article class="pcard">
@@ -664,6 +686,23 @@
           <span class="db-links"><a href="research/database-comparison.md">完整对比与全部出处 ↗</a></span>
         </div>
       </div>
+      <div class="glance-wrap fx">
+        <table class="glance">
+          <thead>
+            <tr><th>能力</th><th>大型汇编库<br>EarthChem · GEOROC · NGDB</th><th>专题调查库<br>GEMAS · FOREGS · GEOTRACES 等</th><th>GGA（本项目）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b class="cap">开箱即用的统一单位与坐标</b></td><td class="dim2"><span class="mk no">—</span>按发表原样收录</td><td class="dim2"><span class="mk part">◐</span>库内统一，库间口径不同</td><td><span class="mk yes">✓</span>全库 mg/kg + WGS84</td></tr>
+            <tr><td><b class="cap">跨介质一表联查</b></td><td class="dim2"><span class="mk part">◐</span>介质分库</td><td class="dim2"><span class="mk no">—</span>多为单介质 / 单大洲</td><td><span class="mk yes">✓</span>土壤 · 沉积物 · 水 · 岩石同表</td></tr>
+            <tr><td><b class="cap">方法元数据与跨方法换算</b></td><td class="dim2"><span class="mk no">—</span>只记方法名</td><td class="dim2"><span class="mk part">◐</span>单一方法体系内一致</td><td><span class="mk yes">✓</span>方法族标注 + 留出验证换算模型</td></tr>
+            <tr><td><b class="cap">记录级来源追溯</b></td><td class="dim2"><span class="mk no">—</span>到文献 / 数据集级</td><td class="dim2"><span class="mk no">—</span>到调查级</td><td><span class="mk yes">✓</span>100% 行级 SHA-256 哈希链</td></tr>
+            <tr><td><b class="cap">记录级许可标注</b></td><td class="dim2"><span class="mk no">—</span>数据集级或页面级</td><td class="dim2"><span class="mk no">—</span>数据集级</td><td><span class="mk yes">✓</span>100% 覆盖，可按行筛选再分发</td></tr>
+            <tr><td><b class="cap">记录级置信度评分</b></td><td class="dim2"><span class="mk no">—</span></td><td class="dim2"><span class="mk part">◐</span>值级 QC 标记（如 GEOTRACES）</td><td><span class="mk yes">✓</span>四维评分随记录进入分析</td></tr>
+            <tr><td><b class="cap">缺口作为产品输出</b></td><td class="dim2"><span class="mk no">—</span></td><td class="dim2"><span class="mk no">—</span></td><td><span class="mk yes">✓</span>机器可读采集优先级队列</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="glance-note">✓ 具备 · ◐ 部分具备 · — 不提供。此表为定位对照而非优劣评判：汇编库强在体量与存档，调查库强在库内一致性；GGA 补的是它们之间缺失的统一层。逐项出处见下方能力矩阵与 <a href="research/database-comparison.md">database-comparison.md</a>。</p>
       <p class="section-sub" style="margin-top:26px">统一层有什么用？拿研究者真实会遇到的六个问题逐一对比：</p>
       <div class="q-rows">
         <div class="q-row">
