@@ -117,7 +117,9 @@
   .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; margin-top: 20px; }
   @media (max-width: 960px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 560px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-  .stat b { display: block; font: 800 clamp(22px, 2.6vw, 34px)/1.1 var(--mono); color: var(--mint); }
+  .stat { border-left: 2px solid rgba(105,245,230,.2); padding-left: 14px; }
+  .stat.warn { border-left-color: rgba(246,195,68,.4); }
+  .stat b { display: block; font: 800 clamp(22px, 2.6vw, 34px)/1.1 var(--mono); color: var(--mint); font-variant-numeric: tabular-nums; }
   .stat.warn b { color: var(--gold); }
   .stat span { display: block; margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
   .stats-caveat { margin-top: 18px; color: var(--muted); font-size: 12.5px; border-left: 2px solid var(--gold); padding-left: 12px; }
@@ -348,7 +350,7 @@
     <a class="browser-card fx" href="interactive_map.html" aria-label="打开交互图谱">
       <div class="browser-bar"><i></i><i></i><i></i><span>interactive_map.html · 自包含单文件 · 即点即用</span><em>● LIVE</em></div>
       <div class="shot">
-        <img src="finals/assets/global-run-map-1920x1080.png" alt="2026-08-15 全球真实运行生成的交互图谱截图" loading="eager">
+        <img src="finals/assets/hero-map-1440x1120.png" alt="线上交互图谱界面截图：全球采样点密度图与异常候选气泡" loading="eager">
         <div class="shot-caption"><b>真实运行产物界面实拍</b><span>MAP / DATABASE / EVIDENCE</span></div>
       </div>
     </a>
@@ -358,18 +360,18 @@
 <div class="stats">
   <div class="wrap fx">
     <div class="stats-head">
-      <span class="eyebrow">Real Autonomous Run</span>
-      <span class="date">2026-08-15 · 全球在线生产运行 · 全程自主 · 33 分钟</span>
+      <span class="eyebrow">Latest Production Run</span>
+      <span class="date">2026-08-19 · 全球在线生产运行 · 全程自主</span>
     </div>
     <div class="stats-grid">
-      <div class="stat"><b>191,715</b><span>条测定正式入库<br>无重复计数</span></div>
-      <div class="stat"><b>42,244</b><span>个独立样品<br>覆盖岩石 / 土壤 / 沉积物 / 水体</span></div>
-      <div class="stat"><b>29</b><span>个正式入库公开来源<br>63 候选 → 审计准入</span></div>
-      <div class="stat"><b>9 轮</b><span>自主采集迭代<br>零增量后自主终止</span></div>
-      <div class="stat"><b>3,351</b><span>个异常筛查候选<br>robust-z 门禁判定</span></div>
-      <div class="stat warn"><b>238</b><span>项缺口进修复队列<br>逐项标注原因</span></div>
+      <div class="stat"><b data-n="199730">199,730</b><span>条测定正式入库<br>无重复计数</span></div>
+      <div class="stat"><b data-n="45753">45,753</b><span>个独立物理样品<br>岩石 / 土壤 / 沉积物 / 水体</span></div>
+      <div class="stat"><b data-n="35">35</b><span>个正式入库公开来源<br>另有 31 个候选审计后拦下</span></div>
+      <div class="stat"><b data-n="100" data-suffix="%">100%</b><span>记录级来源定位<br>199,730 条全部可回溯到原始来源</span></div>
+      <div class="stat"><b data-n="3721">3,721</b><span>个异常筛查候选<br>robust-z 门禁 · 19 个候选区域</span></div>
+      <div class="stat warn"><b data-n="393">393</b><span>条未过标准化门禁<br>如实保留，不静默丢弃</span></div>
     </div>
-    <p class="stats-caveat"><b>如实报告：</b>终态为 needs_human_review 检查点（delivery_ready=false），俄罗斯、南美与岩石介质覆盖不足如实保留为缺口；该广度不代表全球统计分布。以上数字均可在运行产物的结构化报告中逐条核对。</p>
+    <p class="stats-caveat"><b>如实报告：</b>以上数字取自 2026-08-19 最新全球生产运行产物内嵌的结构化报告，可逐条核对；俄罗斯、南美等区域覆盖仍不足，如实保留为缺口，该广度不代表全球统计分布。下方「真实运行」章节中的 RUN A 为 2026-08-15 运行的独立口径，不与本轮混算。</p>
   </div>
 </div>
 
@@ -802,6 +804,28 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: .12 });
     document.querySelectorAll('.fx').forEach(el => io.observe(el));
+
+    // count-up for stats band
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const cio = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          cio.unobserve(entry.target);
+          const el = entry.target;
+          const target = +el.dataset.n;
+          const suffix = el.dataset.suffix || '';
+          const t0 = performance.now(), dur = 1500;
+          const tick = now => {
+            const p = Math.min(1, (now - t0) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      }, { threshold: .5 });
+      document.querySelectorAll('.stat b[data-n]').forEach(el => cio.observe(el));
+    }
   }
 </script>
 </body>
