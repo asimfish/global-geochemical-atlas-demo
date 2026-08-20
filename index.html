@@ -75,7 +75,7 @@
 
   /* ===== hero ===== */
   .hero { padding: 84px 0 64px; }
-  .hero .wrap { display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr); gap: 56px; align-items: center; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr); gap: 56px; align-items: stretch; }
   @media (max-width: 960px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
   body { overflow-x: hidden; }
   .hero h1 { font-size: clamp(25px, 3.1vw, 43px); font-weight: 850; line-height: 1.2; letter-spacing: .01em; margin-top: 14px; white-space: nowrap; }
@@ -94,7 +94,9 @@
   .btn.ghost:hover { border-color: var(--mint); transform: translateY(-2px); }
   .hero-note { margin-top: 14px; color: var(--muted); font-size: 12.5px; }
 
-  .browser-card { border: 1px solid rgba(105,245,230,.3); border-radius: 14px; overflow: hidden; background: var(--panel); box-shadow: 0 30px 90px rgba(0,0,0,.5), 0 0 40px rgba(105,245,230,.06); transition: transform .35s var(--ease), box-shadow .35s; }
+  .browser-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.3); border-radius: 14px; overflow: hidden; background: var(--panel); box-shadow: 0 30px 90px rgba(0,0,0,.5), 0 0 40px rgba(105,245,230,.06); transition: transform .35s var(--ease), box-shadow .35s; }
+  .hero .browser-card .shot { flex: 1; min-height: 0; }
+  .hero .browser-card .shot img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .browser-card:hover { transform: translateY(-6px); box-shadow: 0 42px 110px rgba(0,0,0,.6), 0 0 56px rgba(105,245,230,.12); }
   .browser-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(3,20,27,.92); border-bottom: 1px solid rgba(105,245,230,.16); }
   .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #2d4a52; }
@@ -332,9 +334,9 @@
       <h1>全球地球化学元素分布图谱<span class="h1-sub gradient">面向 AI Agent 的可复用科研 Skill</span></h1>
       <p class="sub">把重复的数据整编交给 AI 是必然趋势，但科研容不得幻觉——单位算错、坐标颠倒，模型照样能拼出一张以假乱真的精美地图。这个 Skill 让 Agent 全自动接管采集、质控、制图与存档，同时确保<b>每一个数字都可追溯、可复核</b>；无法满足的部分，如实报告为缺口。它不只是一张地图，更是一座向所有研究者开放、可持续扩展的自动化数据基建。</p>
       <div class="chip-row">
-        <span class="chip">记录级可追溯</span>
-        <span class="chip">跨环境可复现</span>
-        <span class="chip">四维置信度</span>
+        <span class="chip">多源数据标准化</span>
+        <span class="chip">确定性质量控制</span>
+        <span class="chip">记录级来源追溯</span>
         <span class="chip hot">缺口如实报告</span>
       </div>
       <div class="cta-row">
@@ -469,8 +471,8 @@
 <section class="evidence" id="runs">
   <div class="wrap">
     <div class="fx">
-      <div class="eyebrow" style="color:var(--gold)">Evidence · Three Real Runs</div>
-      <h2 class="section-title">三次真实运行，<span class="gradient">三重独立验证</span></h2>
+      <div class="eyebrow" style="color:var(--gold)">Evidence · Real Runs</div>
+      <h2 class="section-title">三次真实运行，<span class="gradient">每一次都可复现、可核查</span></h2>
       <p class="section-sub">33 分钟的全球在线运行，检验 Agent 在真实网络条件下自主采集、整编并报告缺口的能力；全新克隆环境中的确定性回归，检验核心产物能否跨环境逐字节复现；对抗审计演练则反向检验审计层本身——向产物影子副本植入 10 类人造缺陷，看它能否全部抓住。三组结果按各自运行口径独立呈现，不作混合统计。</p>
     </div>
     <div class="run-grid">
@@ -524,8 +526,8 @@
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow" style="color:#9af7b0">Beyond Deliverables · Data → Papers</div>
-      <h2 class="section-title">这套数据能长出科学：<span class="gradient">五篇论文管线</span></h2>
-      <p class="section-sub">数据整编完成后，Skill 的科学发现模式（discovery_mode）从同一份冻结数据快照出发，自动提出候选选题、完成统计检验并撰写论文初稿。五篇论文已全部成稿，合计 46 页、24 图 9 表；每篇回答一个文献中明确提出但尚未解决的问题，文中每个数字都能用数据快照和固定随机种子的脚本重新算出。以下每篇各展示一张方法图与一张主结果图。</p>
+      <h2 class="section-title">从数据到论文：<span class="gradient">内置的科研全流程管线</span></h2>
+      <p class="section-sub">除了数据整编，Skill 还把科研的后半程接了起来：discovery_mode 从同一份冻结数据快照出发，自动提出候选选题、完成统计检验、撰写并排版论文初稿。作为对这条管线的验证，五篇论文已全部成稿（合计 46 页、24 图 9 表），每篇回答一个文献中明确提出但尚未解决的问题——例如欧洲式的表层铅富集在澳大利亚并不存在、同一份土样换一种方法测可差三倍。文中每个数字都能用数据快照和固定随机种子的脚本重新算出；以下每篇各展示一张方法图与一张主结果图。</p>
     </div>
     <div class="pcards fx">
       <article class="pcard">
@@ -626,7 +628,7 @@
     </div>
 
     <div class="cmp-block fx">
-      <h2 class="section-title" style="font-size:clamp(20px,2.6vw,30px)">同类数据库对比：<span class="gradient">此前不存在的一层</span></h2>
+      <h2 class="section-title" style="font-size:clamp(20px,2.6vw,30px)">相比同类数据库，<span class="gradient">我们的优势在哪里</span></h2>
       <p class="section-sub">同类数据库的定位并不相同（以下数字均核验自官方页面，访问日期 2026-08-20）：大型汇编库胜在覆盖广，但多保留发表时的原始格式；专题库标准化较好，范围通常限于单一介质或单一大洲。GGA 不比较收录规模，重点是建立这些资源之间缺少的统一数据层。</p>
       <div class="db-cards">
         <div class="db-card">
