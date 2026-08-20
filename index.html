@@ -85,7 +85,7 @@
   .hero .sub b { color: var(--ink); font-weight: 700; }
   .pain-list { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
   .pain-list li { display: flex; gap: 9px; align-items: baseline; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
-  .pain-list li i { flex: none; font: 700 10.5px/1.7 var(--mono); color: var(--mint); font-style: normal; letter-spacing: .04em; border: 1px solid rgba(105,245,230,.3); border-radius: 6px; padding: 0 7px; }
+  .pain-list .role { flex: none; font: 700 10.5px/1.7 var(--mono); color: var(--mint); letter-spacing: .04em; border: 1px solid rgba(105,245,230,.3); border-radius: 6px; padding: 0 7px; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
   .chip { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: 650 12px/1.4 var(--mono); }
   .chip.hot { border-color: rgba(246,195,68,.55); color: var(--gold); }
@@ -99,7 +99,7 @@
 
   .browser-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.3); border-radius: 14px; overflow: hidden; background: var(--panel); box-shadow: 0 30px 90px rgba(0,0,0,.5), 0 0 40px rgba(105,245,230,.06); transition: transform .35s var(--ease), box-shadow .35s; }
   .hero .browser-card .shot { flex: 1; min-height: 0; }
-  .hero .browser-card .shot img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .hero .browser-card .shot img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; background: #061b22; }
   .browser-card:hover { transform: translateY(-6px); box-shadow: 0 42px 110px rgba(0,0,0,.6), 0 0 56px rgba(105,245,230,.12); }
   .browser-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(3,20,27,.92); border-bottom: 1px solid rgba(105,245,230,.16); }
   .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #2d4a52; }
@@ -348,14 +348,14 @@
     <div class="fx">
       <div class="eyebrow">AI4S Future ScienceSkills Hackathon · 气候与地球科学赛道</div>
       <h1>全球地球化学元素分布图谱<span class="h1-sub gradient">面向 AI Agent 的可复用科研 Skill</span></h1>
-      <p class="sub">「全球土壤里的铅是怎么分布的？」在搜索框里，这只是一句查询；在课题组里，它是四个人的四个难题：</p>
+      <p class="sub">一张元素分布图只能告诉我们哪里高、哪里低；真正困难的是解释这些高值。像西南高砷土壤这样的场景，通用阈值可能把自然高背景误当成污染——没有分析方法、地质背景与时间变化的共同证据，一张漂亮地图反而可能放大误判。</p>
       <ul class="pain-list">
-        <li><i>地球化学家</i>不同调查、不同分析方法测出的数字，能直接放进同一张图吗？</li>
-        <li><i>环境研究者</i>看到的高值是真实富集，还是方法偏移和背景波动？</li>
-        <li><i>数据管理者</i>每个数字能回溯到原始下载件吗？许可允许再发布吗？</li>
-        <li><i>评审人</i>换台机器重跑一遍，这张图还能一字不差地复现吗？</li>
+        <li><span class="role">分析化学</span>不同实验室、单位和测定方法的数据，究竟能不能比较？</li>
+        <li><span class="role">地球化学</span>高值来自母岩与成土过程，还是超出区域背景的异常富集？</li>
+        <li><span class="role">环境科学</span>它是长期存在的自然高背景，还是工业排放留下的人为信号？</li>
+        <li><span class="role">地球系统</span>它何时出现、怎样演化，又是否随土地利用和污染治理发生变化？</li>
       </ul>
-      <p class="sub" style="margin-top:14px">GGA 的回答方式，是把整条链路交给 Agent：采集、标准化、质控、异常筛查、分布与时序演化制图、溯源存档。<b>每一个数字都可追溯、可复核</b>；做不到的部分，如实报告为缺口。</p>
+      <p class="sub" style="margin-top:14px">GGA 按赛题要求自动采集元素含量、采样坐标、地质背景和分析方法，完成单位统一、空间匹配、质量控制与来源追溯；再把方法分层、地质背景、剖面对照和时序演化纳入同一条证据链，为判断“超标还是高背景”“母质还是排放”提供可检验的证据，而不是替研究者直接下成因结论。<b>证据足够才提出候选解释，证据不足就如实报告缺口。</b></p>
       <div class="chip-row">
         <span class="chip">多源数据标准化</span>
         <span class="chip">确定性质量控制</span>
@@ -372,7 +372,7 @@
     <a class="browser-card fx" href="interactive_map.html" aria-label="打开交互图谱">
       <div class="browser-bar"><i></i><i></i><i></i><span>interactive_map.html · 自包含单文件 · 即点即用</span><em>● LIVE</em></div>
       <div class="shot">
-        <img src="finals/assets/hero-map-1240x1280.png" alt="线上交互图谱界面截图：全球采样点密度图与异常候选气泡" loading="eager">
+        <img src="finals/assets/hero-map-1240x1400.png" alt="线上交互图谱界面截图：全球采样点密度图与异常候选气泡" loading="eager">
         <div class="shot-caption"><b>真实运行产物界面实拍</b><span>MAP / DATABASE / EVIDENCE</span></div>
       </div>
     </a>
