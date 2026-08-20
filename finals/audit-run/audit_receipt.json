@@ -1,0 +1,75 @@
+{
+  "receipt_schema": "urn:global-geochemical-atlas:audit-receipt:v1",
+  "audit_version": "adversarial-audit-v1",
+  "mode": "scripted",
+  "output_dir": "/private/tmp/gga_ap_run3",
+  "calibration": {
+    "seed": 20260817,
+    "planted": 10,
+    "caught": 10,
+    "missed": [],
+    "recall": 1.0,
+    "admissible": true,
+    "shadow_dir": "/private/tmp/gga_ap_run3_audit/canary_shadow",
+    "truth_file": "/private/tmp/gga_ap_run3_audit/referee_canary_truth.json"
+  },
+  "checks": [
+    {
+      "check_id": "contract_files",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "evidence_join",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "hash_chain",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "unit_rederive",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "censored_guard",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "coordinate_consistency",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "locator_bounds",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "anomaly_recompute",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "url_domains",
+      "status": "pass",
+      "finding_count": 0
+    },
+    {
+      "check_id": "map_embed",
+      "status": "pass",
+      "finding_count": 0
+    }
+  ],
+  "finding_count": 0,
+  "error_count": 0,
+  "warning_count": 0,
+  "scope_notes": [],
+  "findings": [],
+  "verdict": "pass",
+  "principle": "the executor can drive repairs but can never acquit itself"
+}

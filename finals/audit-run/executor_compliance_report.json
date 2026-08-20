@@ -1,0 +1,210 @@
+{
+  "autopilot_version": "atlas-autopilot-v1",
+  "state": "DONE",
+  "request": "/private/tmp/gga_ap_run3_autopilot/REQUEST.json",
+  "output_dir": "/private/tmp/gga_ap_run3",
+  "deadline_seconds": 900.0,
+  "loop": {
+    "authorized": false,
+    "invoked": false,
+    "budget_seconds": null
+  },
+  "steps": [
+    {
+      "step": "fixture_demo_run",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/run_atlas_request.py",
+        "--request",
+        "/private/tmp/gga_ap_run3_autopilot/REQUEST.json",
+        "--demo",
+        "china",
+        "--analysis-profile",
+        "production",
+        "--generated-at",
+        "2026-08-17T00:00:00Z",
+        "--output-dir",
+        "/private/tmp/gga_ap_run3"
+      ],
+      "required": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 6.684
+    },
+    {
+      "step": "validate_outputs",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/validate_outputs.py",
+        "--output-dir",
+        "/private/tmp/gga_ap_run3"
+      ],
+      "required": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.282
+    },
+    {
+      "step": "render_gate",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/validate_visualization.py",
+        "--html",
+        "/private/tmp/gga_ap_run3/interactive_map.html"
+      ],
+      "required": false,
+      "exit_code": 3,
+      "timed_out": false,
+      "elapsed_seconds": 0.082
+    },
+    {
+      "step": "adversarial_audit",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/adversarial_audit.py",
+        "--output-dir",
+        "/private/tmp/gga_ap_run3",
+        "--audit-dir",
+        "/private/tmp/gga_ap_run3_audit",
+        "--seed",
+        "20260817"
+      ],
+      "required": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.513
+    },
+    {
+      "step": "claim_ledger",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/claim_ledger.py",
+        "--run-dir",
+        "/private/tmp/gga_ap_run3",
+        "--ledger",
+        "/private/tmp/gga_ap_run3_audit/claim_ledger.json"
+      ],
+      "required": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.101
+    },
+    {
+      "step": "memory_update",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/liyufeng/code/gga-v12/skills/global-geochemical-atlas/scripts/acquisition_memory.py",
+        "update",
+        "--memory-file",
+        "/private/tmp/gga_memory.json",
+        "--run-dir",
+        "/private/tmp/gga_ap_run3"
+      ],
+      "required": false,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.048
+    }
+  ],
+  "violations": [],
+  "audit": {
+    "verdict": "pass",
+    "error_count": 0,
+    "warning_count": 0,
+    "scope_notes": [],
+    "calibration_recall": 1.0
+  },
+  "memory": null,
+  "final_answer_facts": {
+    "status": "partial_success",
+    "metrics": {
+      "batch_qc_failed_or_incomplete_count": 0,
+      "candidate_anomaly_count": 16,
+      "candidate_anomaly_region_count": 0,
+      "censored_record_count": 0,
+      "iteration_action_required_count": 1422,
+      "iteration_review_required_count": 1422,
+      "record_count": 1422,
+      "standardized_record_count": 1422,
+      "valid_coordinate_count": 0
+    },
+    "coverage": {
+      "bbox": null,
+      "coordinate_rate": 0.0,
+      "coverage_claim": "Observed sample locations only; blank regions are not inferred as absence.",
+      "elements": [
+        "Cu",
+        "Pb",
+        "Zn"
+      ],
+      "interpolation": false,
+      "media": [
+        "soil"
+      ],
+      "standardization_rate": 1.0
+    },
+    "limitations": [
+      "This is a deterministic real-source fixture for pipeline demonstration, not a representative scientific sample and not for scientific interpretation.",
+      "Candidate anomalies are screening results relative to declared background groups, not causal conclusions.",
+      "Map density uses observed points only; no interpolation is performed across unsampled areas.",
+      "1422 mapped record(s) use source-reported coordinates with an unverified datum (reported coordinate mode); positions are indicative for browsing, not verified WGS84.",
+      "GLiM 0.5 degree dominant surface lithology is coarse screening context, not site-scale geology.",
+      "Partial-success reasons: one_or_more_records_not_map_eligible, spatial_candidate_region_background_insufficient."
+    ],
+    "overall_workflow_confidence": {
+      "band_counts": {
+        "high": 0,
+        "low": 1422,
+        "medium": 0
+      },
+      "interpretation": "This aggregate summarizes end-to-end usability and review priority. It is not source quality, measurement truth probability, positional accuracy, or statistical confidence.",
+      "label": "overall workflow usability and review confidence",
+      "not_a_probability": true,
+      "record_count": 1422,
+      "score_mean": 0.59
+    },
+    "overall_dimension_band_counts": {
+      "analytical_readiness": {
+        "high": 1422,
+        "low": 0,
+        "medium": 0
+      },
+      "source_evidence": {
+        "high": 1422,
+        "low": 0,
+        "medium": 0
+      },
+      "spatial_usability": {
+        "high": 0,
+        "low": 1422,
+        "medium": 0
+      },
+      "workflow_usability": {
+        "high": 0,
+        "low": 1422,
+        "medium": 0
+      }
+    },
+    "source_portfolio": {},
+    "claims": {
+      "ledger": "/private/tmp/gga_ap_run3_audit/claim_ledger.json",
+      "summary": {
+        "pass": 6,
+        "warn_scope": 2,
+        "fail_unsupported": 0
+      },
+      "scoped_claims": [
+        {
+          "claim_id": "confidence",
+          "scope": "workflow-usability signal, not a probability and not a single quality label for the dataset"
+        },
+        {
+          "claim_id": "anomaly_candidates",
+          "scope": "statistical candidates under the documented robust-z screen, not confirmed geochemical anomalies"
+        }
+      ]
+    },
+    "instruction": "copy these numbers verbatim into the final reply; do not restate from memory. Scoped claims may only be quoted together with their scope sentence. Before sending, cross-check the draft with claim_ledger.py --check-answer."
+  },
+  "next_command": null
+}

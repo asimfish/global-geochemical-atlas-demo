@@ -75,10 +75,12 @@
 
   /* ===== hero ===== */
   .hero { padding: 84px 0 64px; }
-  .hero .wrap { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 48px; align-items: center; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr); gap: 56px; align-items: center; }
   @media (max-width: 960px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
   body { overflow-x: hidden; }
-  .hero h1 { font-size: clamp(30px, 4.6vw, 54px); font-weight: 850; line-height: 1.22; letter-spacing: .01em; margin-top: 14px; }
+  .hero h1 { font-size: clamp(25px, 3.1vw, 43px); font-weight: 850; line-height: 1.2; letter-spacing: .01em; margin-top: 14px; white-space: nowrap; }
+  .hero h1 .h1-sub { display: block; margin-top: 12px; font-size: clamp(16px, 1.75vw, 25px); font-weight: 780; letter-spacing: .03em; white-space: nowrap; }
+  @media (max-width: 960px) { .hero h1, .hero h1 .h1-sub { white-space: normal; } }
   .hero .sub { margin-top: 18px; color: var(--muted); font-size: clamp(15px, 1.3vw, 17px); max-width: 520px; }
   .hero .sub b { color: var(--ink); font-weight: 700; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
@@ -159,13 +161,15 @@
 
   /* ===== evidence (two runs) ===== */
   .evidence { background: rgba(6,32,43,.45); border-top: 1px solid rgba(105,245,230,.12); border-bottom: 1px solid rgba(105,245,230,.12); }
-  .run-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 36px; }
-  @media (max-width: 860px) { .run-grid { grid-template-columns: 1fr; } }
-  .run-card { border: 1px solid rgba(105,245,230,.22); border-radius: 14px; background: var(--panel); padding: 26px 28px; }
+  .run-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  @media (max-width: 1100px) { .run-grid { grid-template-columns: 1fr; } }
+  .run-card { border: 1px solid rgba(105,245,230,.22); border-radius: 14px; background: var(--panel); padding: 24px 24px; }
+  .run-card.red { border-color: rgba(255,92,120,.42); }
+  .run-card.red .kicker { color: var(--red); }
   .run-card.gold { border-color: rgba(246,195,68,.4); }
   .run-card .kicker { font: 800 11px/1.4 var(--mono); letter-spacing: .18em; color: var(--mint); }
   .run-card.gold .kicker { color: var(--gold); }
-  .run-card h3 { margin-top: 8px; font-size: 20px; font-weight: 800; }
+  .run-card h3 { margin-top: 8px; font-size: 18px; font-weight: 800; }
   .run-card ul { margin: 14px 0 0; padding: 0; list-style: none; }
   .run-card li { position: relative; padding-left: 18px; margin-top: 9px; color: var(--muted); font-size: 14px; }
   .run-card li::before { content: "▸"; position: absolute; left: 0; color: var(--mint); }
@@ -325,7 +329,7 @@
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow">AI4S Future ScienceSkills Hackathon · 气候与地球科学赛道</div>
-      <h1>全球地球化学元素分布图谱<br><span class="gradient">面向 AI Agent 的可复用科研 Skill</span></h1>
+      <h1>全球地球化学元素分布图谱<span class="h1-sub gradient">面向 AI Agent 的可复用科研 Skill</span></h1>
       <p class="sub">把重复的数据整编交给 AI 是必然趋势，但科研容不得幻觉——单位算错、坐标颠倒，模型照样能拼出一张以假乱真的精美地图。这个 Skill 让 Agent 全自动接管采集、质控、制图与存档，同时确保<b>每一个数字都可追溯、可复核</b>；无法满足的部分，如实报告为缺口。它不只是一张地图，更是一座向所有研究者开放、可持续扩展的自动化数据基建。</p>
       <div class="chip-row">
         <span class="chip">记录级可追溯</span>
@@ -465,9 +469,9 @@
 <section class="evidence" id="runs">
   <div class="wrap">
     <div class="fx">
-      <div class="eyebrow" style="color:var(--gold)">Evidence · Two Real Runs</div>
-      <h2 class="section-title">两次真实运行，<span class="gradient">两项独立验证</span></h2>
-      <p class="section-sub">33 分钟的全球在线运行，检验 Agent 在真实网络条件下自主采集、整编并报告缺口的能力；全新克隆环境中的确定性回归，检验核心产物能否跨环境逐字节复现。两组结果按各自运行口径独立呈现，不作混合统计。</p>
+      <div class="eyebrow" style="color:var(--gold)">Evidence · Three Real Runs</div>
+      <h2 class="section-title">三次真实运行，<span class="gradient">三重独立验证</span></h2>
+      <p class="section-sub">33 分钟的全球在线运行，检验 Agent 在真实网络条件下自主采集、整编并报告缺口的能力；全新克隆环境中的确定性回归，检验核心产物能否跨环境逐字节复现；对抗审计演练则反向检验审计层本身——向产物影子副本植入 10 类人造缺陷，看它能否全部抓住。三组结果按各自运行口径独立呈现，不作混合统计。</p>
     </div>
     <div class="run-grid">
       <div class="run-card fx">
@@ -495,6 +499,20 @@
         <div class="links">
           <a href="finals/real-run/interactive_map.html" target="_blank" rel="noopener">打开回归运行产物图谱 ↗</a>
           <a href="finals/real-run/run_summary.json" target="_blank" rel="noopener">run_summary.json ↗</a>
+        </div>
+      </div>
+      <div class="run-card red fx">
+        <div class="kicker">RUN C · 对抗审计演练 · 2026-08-20</div>
+        <h3>红队植入 10 类缺陷全部捕获：审计层自身先被校准</h3>
+        <ul>
+          <li>全链无人工介入：请求冻结 → 管线运行 → 产物校验 → 对抗审计 → 声明台账（固定夹具数据 1,422 条，专用于检验审计层）</li>
+          <li>影子副本植入 <b>10</b> 类缺陷（数值篡改、单位翻转、伪造来源、哈希损坏等），审计器 <b>10/10</b> 全部捕获</li>
+          <li>真实产物 <b>10</b> 项独立复核全部通过（哈希链、单位重算、异常重算等），<b>0</b> 错误 / <b>0</b> 警告</li>
+          <li>声明台账把植入的幻觉数字「25000」判为 answer_unbound——没有证据绑定的数字不许出稿；执行者可驱动修复，但不能为自己开脱</li>
+        </ul>
+        <div class="links">
+          <a href="finals/audit-run/audit_receipt.json" target="_blank" rel="noopener">audit_receipt.json ↗</a>
+          <a href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json ↗</a>
         </div>
       </div>
     </div>
@@ -719,7 +737,7 @@
         </a>
         <a class="present-item" href="slides.html" style="--c:#9af7b0">
           <i>14页</i>
-          <span><b>评审幻灯片（Final Pitch）</b><span>决赛主讲即用此 HTML 幻灯片：赛题落地、五项交付、Skill 内核、科学发现层与数据库对比。支持滚轮 / 方向键翻页。</span></span>
+          <span><b>主讲幻灯片</b><span>决赛主讲即用此 HTML 幻灯片：赛题落地、五项交付、Skill 内核、科学发现层与数据库对比。支持滚轮 / 方向键翻页。</span></span>
         </a>
         <a class="present-item" href="finals/poster.html" style="--c:var(--gold)">
           <i>A1</i>
@@ -734,17 +752,17 @@
   <div class="wrap">
     <div class="fx">
       <div class="eyebrow">Downloads</div>
-      <h2 class="section-title">评审材料下载</h2>
-      <p class="section-sub">一套主讲（Final Pitch，现场用 HTML 幻灯片，另附 PDF 版）、一张海报、一个视频、两份文字介绍、一份技术附件。</p>
+      <h2 class="section-title">材料下载</h2>
+      <p class="section-sub">一套主讲幻灯片（决赛现场用 HTML 版，另附 PDF 版）、一张海报、一个视频、两份文字介绍、一份技术附件。</p>
     </div>
     <div class="mat-grid">
-      <a class="mat fx" href="slides.html"><span class="kind">HTML · 决赛主讲</span><b>Final Pitch（HTML 幻灯片）</b><span>决赛现场即用此 HTML 幻灯片主讲（比赛支持 HTML），滚轮 / 方向键翻页</span></a>
-      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 14 页</span><b>Final Pitch PDF 版</b><span>PDF 版主讲材料：11 页主讲 + 3 页备份，含演讲者备注</span></a>
+      <a class="mat fx" href="slides.html"><span class="kind">HTML · 决赛主讲</span><b>主讲幻灯片（HTML）</b><span>决赛现场即用此 HTML 幻灯片主讲，滚轮 / 方向键翻页</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 14 页</span><b>主讲幻灯片 PDF 版</b><span>主讲内容的 PDF 版：11 页主讲 + 3 页备份，含演讲者备注</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Poster.pdf" style="--c:var(--gold)"><span class="kind">PDF · A1 横版</span><b>决赛 Poster</b><span>上方网页版海报的 PDF 版本</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p · 180 秒</span><b>演示视频</b><span>前半方案讲解，后半 Agent 真实运行录屏</span></a>
       <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 页</span><b>项目介绍文档</b><span>方案、交付、创新点与应用场景</span></a>
       <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>项目背景、方案与交付的完整文字介绍</span></a>
-      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页 · 技术附件</span><b>Skill 架构讲解 PPT</b><span>面向技术评审的架构、证据链与五项交付详解，独立于 Final Pitch</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页 · 技术附件</span><b>Skill 架构讲解 PPT</b><span>面向技术评审的架构、证据链与五项交付详解，独立于主讲幻灯片</span></a>
     </div>
   </div>
 </section>

@@ -1,0 +1,189 @@
+{
+  "ledger_schema": "claim-ledger.schema.json",
+  "ledger_version": "atlas-claim-ledger-v1",
+  "run_dir": "/private/tmp/gga_ap_run3",
+  "claims": [
+    {
+      "claim_id": "records",
+      "statement": "standardized measurement records shipped in geochemistry.csv",
+      "value": 1422,
+      "evidence": {
+        "file": "run_summary.json",
+        "pointer": "/metrics/standardized_record_count",
+        "sha256": "e32b1a9ee58f367eac117f1e2fd6c123f59592563044cd486039126fde748eda"
+      },
+      "recompute": {
+        "method": "row count of geochemistry.csv",
+        "value": 1422,
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": []
+    },
+    {
+      "claim_id": "elements",
+      "statement": "covered elements listed in run_summary coverage",
+      "value": [
+        "Cu",
+        "Pb",
+        "Zn"
+      ],
+      "evidence": {
+        "file": "run_summary.json",
+        "pointer": "/coverage/elements",
+        "sha256": "e32b1a9ee58f367eac117f1e2fd6c123f59592563044cd486039126fde748eda"
+      },
+      "recompute": {
+        "method": "distinct element_or_analyte values in geochemistry.csv",
+        "value": [
+          "Cu",
+          "Pb",
+          "Zn"
+        ],
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": []
+    },
+    {
+      "claim_id": "media",
+      "statement": "covered media listed in run_summary coverage",
+      "value": [
+        "soil"
+      ],
+      "evidence": {
+        "file": "run_summary.json",
+        "pointer": "/coverage/media",
+        "sha256": "e32b1a9ee58f367eac117f1e2fd6c123f59592563044cd486039126fde748eda"
+      },
+      "recompute": {
+        "method": "distinct medium values in geochemistry.csv",
+        "value": [
+          "soil"
+        ],
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": []
+    },
+    {
+      "claim_id": "coordinate_rate",
+      "statement": "fraction of records with usable coordinates",
+      "value": 0.0,
+      "evidence": {
+        "file": "run_summary.json",
+        "pointer": "/coverage/coordinate_rate",
+        "sha256": "e32b1a9ee58f367eac117f1e2fd6c123f59592563044cd486039126fde748eda"
+      },
+      "recompute": {
+        "method": "non-empty latitude and longitude fraction in geochemistry.csv",
+        "value": 0.0,
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": []
+    },
+    {
+      "claim_id": "confidence",
+      "statement": "overall workflow confidence from sources_and_confidence.json",
+      "value": {
+        "band_counts": {
+          "high": 0,
+          "low": 1422,
+          "medium": 0
+        },
+        "interpretation": "This aggregate summarizes end-to-end usability and review priority. It is not source quality, measurement truth probability, positional accuracy, or statistical confidence.",
+        "label": "overall workflow usability and review confidence",
+        "not_a_probability": true,
+        "record_count": 1422,
+        "score_mean": 0.59
+      },
+      "evidence": {
+        "file": "sources_and_confidence.json",
+        "pointer": "/overall_workflow_confidence",
+        "sha256": "636b904e3cbacc017e37318ff408bab434ff03b1ffa000de36e47877a26353d8"
+      },
+      "recompute": null,
+      "integrity": "warn_scope",
+      "scope": "workflow-usability signal, not a probability and not a single quality label for the dataset",
+      "scope_keywords": [
+        "not a probability",
+        "usability",
+        "非概率",
+        "不是概率",
+        "可用性"
+      ]
+    },
+    {
+      "claim_id": "anomaly_candidates",
+      "statement": "candidate anomalies flagged by the robust-z screen",
+      "value": 16,
+      "evidence": {
+        "file": "anomaly_report.json",
+        "pointer": "/candidate_count",
+        "sha256": "0c9650fd72389252e9e602a2a9393e5d29134afc4a340fcbcc1eb9d6830bb479"
+      },
+      "recompute": {
+        "method": "candidate_count in anomaly_report.json",
+        "value": 16,
+        "match": true
+      },
+      "integrity": "warn_scope",
+      "scope": "statistical candidates under the documented robust-z screen, not confirmed geochemical anomalies",
+      "scope_keywords": [
+        "candidate",
+        "候选"
+      ]
+    },
+    {
+      "claim_id": "censored_records",
+      "statement": "records carrying a detection-limit censoring flag",
+      "value": 0,
+      "evidence": {
+        "file": "run_summary.json",
+        "pointer": "/metrics/censored_record_count",
+        "sha256": "e32b1a9ee58f367eac117f1e2fd6c123f59592563044cd486039126fde748eda"
+      },
+      "recompute": {
+        "method": "censored == true rows in geochemistry.csv",
+        "value": 0,
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": [
+        "detection limit",
+        "censored",
+        "检出限"
+      ]
+    },
+    {
+      "claim_id": "sources",
+      "statement": "adopted sources listed in source_manifest.json",
+      "value": 1,
+      "evidence": {
+        "file": "source_manifest.json",
+        "pointer": "/source_count",
+        "sha256": "a42b02c3cb38dc9de0d950da3b8ac94bad7b989a1a92d3e5595ae0d8bac887c3"
+      },
+      "recompute": {
+        "method": "length of sources array",
+        "value": 1,
+        "match": true
+      },
+      "integrity": "pass",
+      "scope": null,
+      "scope_keywords": []
+    }
+  ],
+  "summary": {
+    "pass": 6,
+    "warn_scope": 2,
+    "fail_unsupported": 0
+  },
+  "principle": "every reportable number must trace to evidence; a scoped claim narrows, it must not silently widen"
+}

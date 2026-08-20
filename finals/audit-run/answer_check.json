@@ -1,0 +1,18 @@
+{
+  "check_version": "atlas-claim-ledger-v1",
+  "licensed_value_count": 15,
+  "matched_token_count": 1,
+  "phantom_numbers": [
+    {
+      "token": "25000",
+      "context": "本次运行共获取 25000 条高质量记录，识别出 16 个异常。"
+    }
+  ],
+  "scope_violations": [
+    {
+      "claim_id": "anomaly_candidates",
+      "required_scope": "statistical candidates under the documented robust-z screen, not confirmed geochemical anomalies"
+    }
+  ],
+  "verdict": "answer_unbound"
+}

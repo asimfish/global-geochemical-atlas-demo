@@ -1,0 +1,55 @@
+{
+  "seed": 20260817,
+  "planted": [
+    {
+      "defect_class": "value_tamper",
+      "record_id": "rec-a8db27ffd27d51f2878558f29fe780928270d996fe46884694e075165bd1d5b3",
+      "file": "geochemistry.csv"
+    },
+    {
+      "defect_class": "unit_flip",
+      "record_id": "rec-c7324382743032b73f0134cd3a387e2d8c5c640f93ef9ffeaf540415c211bd4c",
+      "file": "geochemistry.csv"
+    },
+    {
+      "defect_class": "censored_impute",
+      "record_id": "rec-68177105bbe968fdfc6b5d1a65b97293d2b07d482e00d44df3c04586b0809533",
+      "file": "geochemistry.csv"
+    },
+    {
+      "defect_class": "fabricated_source",
+      "record_id": "rec-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffcafe",
+      "file": "record_evidence.jsonl"
+    },
+    {
+      "defect_class": "evidence_orphan",
+      "record_id": "rec-876ca2188d2266558fe4560f02140ab0f59d6d0cac1429aace3fb0c5939e2075",
+      "file": "record_evidence.jsonl"
+    },
+    {
+      "defect_class": "hash_corrupt",
+      "record_id": "rec-dfddd2152e6dd4ac76c51c94baf9f74cf7391cefdb5ececdd57816aaa2693201",
+      "file": "record_evidence.jsonl"
+    },
+    {
+      "defect_class": "locator_bounds",
+      "record_id": "rec-b88f50e2d397739cd8309ed888b70a17bce132ba5f04878023d3bd4eb499e7fc",
+      "file": "record_evidence.jsonl"
+    },
+    {
+      "defect_class": "url_swap",
+      "record_id": "rec-c0178e23ec06cdf8df82d989d530e7d90bef568d477c3b3200737cca7cd99edb",
+      "file": "record_evidence.jsonl"
+    },
+    {
+      "defect_class": "coordinate_swap",
+      "record_id": "rec-7767169a96081887e12d037cf90513257ddf0d2085c50a777090460b8385ebb4",
+      "file": "samples.geojson"
+    },
+    {
+      "defect_class": "anomaly_ztamper",
+      "record_id": "rec-5154a670a8a0e88e32fafa5ff746cb355b15f1dd35b57019d66bdb8674d465be",
+      "file": "anomalies.geojson"
+    }
+  ]
+}
