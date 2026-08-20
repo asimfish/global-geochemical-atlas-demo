@@ -32,6 +32,7 @@
     font-family: var(--sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   a { color: var(--mint); text-decoration: none; }
   img { display: block; max-width: 100%; }
@@ -39,7 +40,7 @@
   .eyebrow { font: 700 12px/1.4 var(--mono); letter-spacing: .22em; color: var(--mint); text-transform: uppercase; }
   .gradient { background: linear-gradient(92deg, var(--mint), #9af7b0); -webkit-background-clip: text; background-clip: text; color: transparent; }
   h2.section-title { font-size: clamp(24px, 3.4vw, 40px); font-weight: 800; letter-spacing: .01em; margin-top: 10px; }
-  .section-sub { color: var(--muted); margin-top: 8px; max-width: 720px; }
+  .section-sub { color: var(--muted); margin-top: 8px; max-width: 1040px; line-height: 1.75; }
   section { padding: 72px 0; }
 
   /* ===== topbar ===== */
@@ -77,7 +78,6 @@
   .hero { padding: 84px 0 64px; }
   .hero .wrap { display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr); gap: 56px; align-items: stretch; }
   @media (max-width: 960px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
-  body { overflow-x: hidden; }
   .hero h1 { font-size: clamp(25px, 3.1vw, 43px); font-weight: 850; line-height: 1.2; letter-spacing: .01em; margin-top: 14px; white-space: nowrap; }
   .hero h1 .h1-sub { display: block; margin-top: 12px; font-size: clamp(16px, 1.75vw, 25px); font-weight: 780; letter-spacing: .03em; white-space: nowrap; }
   @media (max-width: 960px) { .hero h1, .hero h1 .h1-sub { white-space: normal; } }
@@ -215,7 +215,7 @@
   .pc-title { flex: 1 1 320px; min-width: 0; }
   .pc-title b { display: block; font-size: 16px; color: var(--ink); line-height: 1.4; }
   .pc-q { display: block; margin-top: 5px; font-size: 12.8px; line-height: 1.6; color: var(--muted); }
-  .pc-q b { display: inline; font-size: inherit; color: var(--c, var(--mint)); font-family: var(--mono); font-size: 11px; letter-spacing: .05em; margin-right: 4px; }
+  .pc-q b { display: inline; color: var(--c, var(--mint)); font-family: var(--mono); font-size: 11px; letter-spacing: .05em; margin-right: 4px; }
   .pc-side { flex: none; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; }
   .pc-side .p-status { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--c, var(--mint)); color: var(--c, var(--mint)); font: 750 10.5px/1.3 var(--mono); }
   .pc-side .venue { color: var(--muted); font-size: 11px; font-family: var(--mono); }
@@ -332,7 +332,7 @@
     <span class="team-badge">决赛08 · 词元代理人队</span>
     <nav class="top-nav">
       <a href="#challenge">赛题</a>
-      <a href="#deliverables">五项交付</a>
+      <a href="#deliverables">运行产物</a>
       <a href="#runs">真实运行</a>
       <a href="#research">科学发现</a>
       <a href="#video">演示视频</a>
@@ -355,12 +355,12 @@
         <li><span class="role">环境科学</span>它是长期存在的自然高背景，还是工业排放留下的人为信号？</li>
         <li><span class="role">地球系统</span>它何时出现、怎样演化，又是否随土地利用和污染治理发生变化？</li>
       </ul>
-      <p class="sub" style="margin-top:14px">GGA 按赛题要求自动采集元素含量、采样坐标、地质背景和分析方法，完成单位统一、空间匹配、质量控制与来源追溯；再把方法分层、地质背景、剖面对照和时序演化纳入同一条证据链，为判断“超标还是高背景”“母质还是排放”提供可检验的证据，而不是替研究者直接下成因结论。<b>证据足够才提出候选解释，证据不足就如实报告缺口。</b></p>
+      <p class="sub" style="margin-top:14px">GGA 先把多源数据变成可比较、可追溯的统一底座；当记录具备可靠采样时间时，再联合方法分层、地质背景、剖面对照与多期观测，生成时序元素演化图谱，把稳定的地质高背景和随工业活动变化的人为富集信号分开检验。值得继续追问的信号可直接进入 <a href="#research">discovery_mode</a>，完成选题、统计、文献核验、写作与排版——形成从图谱、发现到论文的完整科研流程。<b>证据不足就如实报告缺口。</b></p>
       <div class="chip-row">
         <span class="chip">多源数据标准化</span>
         <span class="chip">确定性质量控制</span>
         <span class="chip">记录级来源追溯</span>
-        <span class="chip">时序分布演化图谱</span>
+        <span class="chip">时序元素演化图谱</span>
         <span class="chip hot">缺口如实报告</span>
       </div>
       <div class="cta-row">
@@ -402,7 +402,7 @@
     <div class="fx">
       <div class="eyebrow">The Challenge · 赛题</div>
       <h2 class="section-title">赛题要求什么</h2>
-      <p class="section-sub">气候与地球科学赛道赛题「全球地球化学元素分布图谱」：从公开数据出发，走完采集、处理、成图的完整链路，并识别异常区域。</p>
+      <p class="section-sub">气候与地球科学赛道赛题「全球地球化学元素分布图谱」：从公开数据出发，走完采集、处理、成图与异常识别的完整链路，并将流程沉淀为可复用 Skill 文档。</p>
     </div>
     <div class="req-rows">
       <div class="req-row fx">
@@ -417,37 +417,41 @@
         <div class="req-head"><span class="req-no">03</span><span class="req-name"><b>研究输出</b><small>VISUALIZE</small></span></div>
         <p>按<b>元素 / 区域 / 地质单元 / 样品类型</b>生成全球或区域分布图、热力图与元素组合对比，并识别<b>异常富集与亏损</b>区域。</p>
       </div>
+      <div class="req-row fx" style="--c:#9af7b0">
+        <div class="req-head"><span class="req-no">04</span><span class="req-name"><b>可复用 Skill</b><small>DOCUMENT</small></span></div>
+        <p>最终提交一份<b>完整、可复用的 Skill 文档</b>，明确输入约定、执行流程、科学门禁、产物结构与复现方法，使其他 Agent 能重复生成上述结果。</p>
+      </div>
     </div>
-    <p class="req-bridge fx">赛题最终要求五项交付物。本项目不逐项拼装，而是由同一次 Skill 运行一次产出全部五项 → <a href="#deliverables">看五项交付</a></p>
+    <p class="req-bridge fx">页面将两层结果分开呈现：一次运行生成四类科研结果；可复用 Skill 文档负责定义并复现这条流程，也是最终提交物 → <a href="#deliverables">查看 Skill 运行产物</a></p>
   </div>
 </section>
 
 <section id="deliverables">
   <div class="wrap">
     <div class="fx">
-      <div class="eyebrow">Five Deliverables · One Run</div>
-      <h2 class="section-title">同一次 Skill 运行，同时产出<span class="gradient">赛题五项交付</span></h2>
-      <p class="section-sub">五项交付出自同一次运行，共享同一标准数据库、同一证据链、同一科学边界，每一项都可以现场打开操作。</p>
+      <div class="eyebrow">Skill Outputs · Runtime + Reusable Asset</div>
+      <h2 class="section-title">Skill 运行产物与<span class="gradient">可复用文档</span></h2>
+      <p class="section-sub">一次运行生成交互地图、标准化数据库、来源与置信度说明和异常识别结果；可复用 Skill 文档定义工作流、科学门禁与产物契约，既驱动运行，也是最终提交物。四类运行结果共享同一数据底座、证据链与科学边界，均可现场打开核验。</p>
     </div>
     <div class="cards">
       <a class="card fx" href="live/global-overview.html" target="_blank" rel="noopener">
-        <div class="thumb"><span class="tag">交付 1</span><img src="assets/global-overview-1920x1080.png" alt="可交互元素分布地图" loading="lazy"></div>
+        <div class="thumb"><span class="tag">运行产物 1</span><img src="assets/global-overview-1920x1080.png" alt="可交互元素分布地图" loading="lazy"></div>
         <div class="body">
           <h3>可交互元素分布地图</h3>
-          <p>按元素、区域、地质单元、样品类型进入任意视图；热力图显示采样密度，任意点位直达原始证据。</p>
+          <p>按元素、区域、地质单元、样品类型进入任意视图；对具备可靠时间字段的来源可生成时序演化视图，任意点位直达原始证据。</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">打开全球总览 ↗</span></div>
         </div>
       </a>
       <a class="card fx" href="live/global-overview.html" target="_blank" rel="noopener" style="--c:#9af7b0">
-        <div class="thumb"><span class="tag" style="--c:#9af7b0">交付 2</span><img src="assets/database-view-1920x1080.png" alt="标准化地球化学数据库" loading="lazy"></div>
+        <div class="thumb"><span class="tag" style="--c:#9af7b0">运行产物 2</span><img src="assets/database-view-1920x1080.png" alt="标准化地球化学数据库" loading="lazy"></div>
         <div class="body">
           <h3>标准化地球化学数据库</h3>
-          <p>长表结构对齐 ODM2 语义：单位统一 mg/kg、坐标统一 WGS84，原始值永不覆盖，下载的 CSV 就是交付物本体。</p>
+          <p>长表结构对齐 ODM2 语义：单位统一 mg/kg、坐标统一 WGS84，原始值永不覆盖，下载的 CSV 即为标准化数据库本体。</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">进入图谱 · 数据库标签 ↗</span></div>
         </div>
       </a>
       <a class="card fx" href="live/global-overview.html" target="_blank" rel="noopener" style="--c:var(--gold)">
-        <div class="thumb"><span class="tag" style="--c:var(--gold)">交付 3</span><img src="assets/source-view-1920x1080.png" alt="数据来源与置信度说明" loading="lazy"></div>
+        <div class="thumb"><span class="tag" style="--c:var(--gold)">运行产物 3</span><img src="assets/source-view-1920x1080.png" alt="数据来源与置信度说明" loading="lazy"></div>
         <div class="body">
           <h3>数据来源与置信度说明</h3>
           <p>每条记录带 0–1 可用性评分（五维加权），来源附许可、覆盖与接口说明；证据可下钻至 DOI → 表 / 行 → SHA-256。</p>
@@ -455,7 +459,7 @@
         </div>
       </a>
       <a class="card fx" href="live/china-anomaly.html" target="_blank" rel="noopener" style="--c:var(--red)">
-        <div class="thumb"><span class="tag" style="--c:var(--red)">交付 4</span><img src="assets/china-anomaly-1920x1080.png" alt="异常区域识别结果" loading="lazy"></div>
+        <div class="thumb"><span class="tag" style="--c:var(--red)">运行产物 4</span><img src="assets/china-anomaly-1920x1080.png" alt="异常区域识别结果" loading="lazy"></div>
         <div class="body">
           <h3>异常区域识别结果</h3>
           <p>富集与亏损分开呈现，每个候选带统计判据与复核入口；候选 ≠ 矿化定论，复核链路直达原始记录。</p>
@@ -472,7 +476,7 @@
       </a>
       <div class="card skill-card fx">
         <div class="thumb">
-          <span class="tag">交付 5</span>
+          <span class="tag">Skill 文档</span>
           <div class="term-mini">
             <div class="cmd">$ opencode run "全球 Cr·Cu·Ni·Pb·Zn 图谱与异常筛查"</div>
             <div>[agent] 读取 <b>SKILL.md</b> → 九阶段状态机</div>
@@ -495,9 +499,9 @@
 <section class="evidence" id="runs">
   <div class="wrap">
     <div class="fx">
-      <div class="eyebrow" style="color:var(--gold)">Evidence · Real Runs</div>
-      <h2 class="section-title">三次真实运行，<span class="gradient">每一次都可复现、可核查</span></h2>
-      <p class="section-sub">33 分钟的全球在线运行，检验 Agent 在真实网络条件下自主采集、整编并报告缺口的能力；全新克隆环境中的确定性回归，检验核心产物能否跨环境逐字节复现；对抗审计演练则反向检验审计层本身——向产物影子副本植入 10 类人造缺陷，看它能否全部抓住。三组结果按各自运行口径独立呈现，不作混合统计。</p>
+      <div class="eyebrow" style="color:var(--gold)">Reproducibility · Real-Run Evidence</div>
+      <h2 class="section-title">真实运行验证：<span class="gradient">在线采集、确定性回归与对抗审计</span></h2>
+      <p class="section-sub">三类验证覆盖不同风险面：在线生产运行检验真实网络条件下的自主采集、失败处置与缺口报告；全新克隆环境中的确定性回归检验核心产物能否跨环境逐字节复现；对抗审计则向产物影子副本植入 10 类人造缺陷，校准审计器的检出能力。三组结果使用各自独立口径，不作混合统计。</p>
     </div>
     <div class="run-grid">
       <div class="run-card fx">
@@ -549,9 +553,9 @@
 <section id="research">
   <div class="wrap">
     <div class="fx">
-      <div class="eyebrow" style="color:#9af7b0">Beyond Deliverables · Data → Papers</div>
+      <div class="eyebrow" style="color:#9af7b0">Beyond Atlas · Data → Papers</div>
       <h2 class="section-title">从图谱、发现到论文：<span class="gradient">一条完整的科研流程</span></h2>
-      <p class="section-sub">一张分布图回答的是「哪里有什么、有多少」，而研究真正要回答的是「为什么、意味着什么」。这个 Skill 把两段接成一条流程：图谱交付后，discovery_mode 从同一份冻结数据快照出发，识别数据里可检验的信号，把它们变成候选科学问题，再自动走完统计检验、撰写与排版——从元素图谱，到发现数据特点，再到一项完整的科研工作，全程不用换工具。这条流程已经完整跑通五次，交出五个真实的科学发现：一个世纪的大气汞铅沉降在欧洲土壤中留下了可检出的垂向指纹；这种富集在澳大利亚并不存在——它是北半球工业活动的区域签名，不是全球常态；同一份土样换一种方法测可差三倍，且偏移可以建模换算；两个互不知情的大洲级调查在同一地点的砷读数一致到 2%，为全球砷风险地图补上第一批独立地面校验；不含任何海洋学先验的统计层零调参恢复出教科书级的海洋剖面结构。每个数字都能用冻结快照与固定种子脚本复算，以下每篇各展示一张方法图与一张主结果图。</p>
+      <p class="section-sub">一张分布图回答的是「哪里有什么、有多少」，而研究真正要回答的是「为什么、意味着什么」。这个 Skill 把两段接成一条流程：图谱生成后，discovery_mode 从同一份冻结数据快照出发，识别数据里可检验的信号，把它们变成候选科学问题，再自动走完统计检验、撰写与排版——从元素图谱，到发现数据特点，再到一项完整的科研工作，全程不用换工具。这条流程已经完整跑通五次，交出五个真实的科学发现：一个世纪的大气汞铅沉降在欧洲土壤中留下了可检出的垂向指纹；这种富集在澳大利亚并不存在——它是北半球工业活动的区域签名，不是全球常态；同一份土样换一种方法测可差三倍，且偏移可以建模换算；两个互不知情的大洲级调查在同一地点的砷读数一致到 2%，为全球砷风险地图补上第一批独立地面校验；不含任何海洋学先验的统计层零调参恢复出教科书级的海洋剖面结构。每个数字都能用冻结快照与固定种子脚本复算，以下每篇各展示一张方法图与一张主结果图。</p>
     </div>
     <div class="pcards fx">
       <article class="pcard">
@@ -702,7 +706,7 @@
           </tbody>
         </table>
       </div>
-      <p class="glance-note">✓ 具备 · ◐ 部分具备 · — 不提供。此表为定位对照而非优劣评判：汇编库强在体量与存档，调查库强在库内一致性；GGA 补的是它们之间缺失的统一层。逐项出处见下方能力矩阵与 <a href="research/database-comparison.md">database-comparison.md</a>。</p>
+      <p class="glance-note">✓ 具备 · ◐ 部分具备 · — 不提供。此表为定位对照而非优劣评判：汇编库强在体量与存档，调查库强在库内一致性；GGA 补的是它们之间缺失的统一层。对比区统一采用论文冻结快照（191,715 条 / 29 源）；最新 2026-08-19 生产运行已达 199,730 条 / 35 源，两套口径独立、不混算。逐项出处见下方能力矩阵与 <a href="research/database-comparison.md">database-comparison.md</a>。</p>
       <p class="section-sub" style="margin-top:26px">统一层有什么用？拿研究者真实会遇到的六个问题逐一对比：</p>
       <div class="q-rows">
         <div class="q-row">
@@ -780,7 +784,7 @@
         </a>
         <a class="present-item" href="slides.html" style="--c:#9af7b0">
           <i>14页</i>
-          <span><b>主讲幻灯片</b><span>决赛主讲即用此 HTML 幻灯片：赛题落地、五项交付、Skill 内核、科学发现层与数据库对比。支持滚轮 / 方向键翻页。</span></span>
+          <span><b>主讲幻灯片</b><span>决赛主讲即用此 HTML 幻灯片：赛题落地、运行产物、Skill 内核、科学发现层与数据库对比。支持滚轮 / 方向键翻页。</span></span>
         </a>
         <a class="present-item" href="finals/poster.html" style="--c:var(--gold)">
           <i>A1</i>
@@ -803,9 +807,9 @@
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 14 页</span><b>主讲幻灯片 PDF 版</b><span>主讲内容的 PDF 版：11 页主讲 + 3 页备份，含演讲者备注</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Poster.pdf" style="--c:var(--gold)"><span class="kind">PDF · A1 横版</span><b>决赛 Poster</b><span>上方网页版海报的 PDF 版本</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p · 180 秒</span><b>演示视频</b><span>前半方案讲解，后半 Agent 真实运行录屏</span></a>
-      <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 页</span><b>项目介绍文档</b><span>方案、交付、创新点与应用场景</span></a>
-      <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>项目背景、方案与交付的完整文字介绍</span></a>
-      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页 · 技术附件</span><b>Skill 架构讲解 PPT</b><span>面向技术评审的架构、证据链与五项交付详解，独立于主讲幻灯片</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 页</span><b>项目介绍文档</b><span>方案、产物、创新点与应用场景</span></a>
+      <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>项目背景、方案与运行产物的完整文字介绍</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页 · 技术附件</span><b>Skill 架构讲解 PPT</b><span>面向技术评审的架构、证据链、四类运行结果与可复用文档详解，独立于主讲幻灯片</span></a>
     </div>
   </div>
 </section>
