@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Global Geochemical Atlas · 宣传封面</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background:
+      radial-gradient(1400px 900px at 78% 30%, #dceef2 0%, rgba(220,238,242,0) 55%),
+      radial-gradient(1100px 700px at 12% 88%, #e8f2ec 0%, rgba(232,242,236,0) 60%),
+      linear-gradient(165deg, #fdfefe 0%, #f2f7f8 48%, #e9f1f3 100%);
+    color: #0b1c26;
+  }
+  .contours { position: absolute; inset: 0; opacity: .5; }
+  .hero { position: absolute; left: 72px; top: 64px; z-index: 5; }
+  .hero .en { font-weight: 900; font-size: 84px; line-height: 1.02; letter-spacing: -2px; color: #08131b; }
+  .hero .cn { margin-top: 10px; font-weight: 900; font-size: 104px; line-height: 1.08; letter-spacing: 2px; color: #08131b; }
+  .banner { position: absolute; left: 72px; top: 468px; z-index: 5; display: inline-block; padding: 18px 44px 22px; background: #0a141c; border-radius: 18px; box-shadow: 0 18px 44px rgba(8,19,27,.28); }
+  .banner b { font-size: 42px; font-weight: 900; letter-spacing: 3px; background: linear-gradient(92deg, #fff 15%, #9fe8dc 55%, #ffd888 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .subline { position: absolute; left: 76px; top: 578px; z-index: 5; max-width: 950px; font-size: 25px; font-weight: 700; color: #33505e; letter-spacing: 1px; }
+  .subline b { color: #0a7f6e; }
+  .badges { position: absolute; right: 64px; top: 58px; z-index: 6; display: grid; gap: 18px; }
+  .badge { display: grid; grid-template-columns: 74px 1fr; align-items: center; gap: 16px; width: 348px; padding: 16px 22px; border-radius: 22px; color: #fff; box-shadow: 0 14px 34px rgba(8,19,27,.22); }
+  .badge .ic { width: 74px; height: 74px; border-radius: 18px; background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; font-size: 40px; }
+  .badge b { display: block; font-size: 34px; font-weight: 900; letter-spacing: 2px; }
+  .badge span { display: block; margin-top: 4px; font-size: 20px; font-weight: 600; opacity: .92; }
+  .b1 { background: linear-gradient(135deg, #2563eb, #4f46e5); }
+  .b2 { background: linear-gradient(135deg, #0d9488, #059669); }
+  .b3 { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+  .laptop { position: absolute; right: 44px; top: 296px; z-index: 4; width: 800px; }
+  .lap-screen { position: relative; border: 14px solid #10202c; border-bottom-width: 18px; border-radius: 26px 26px 0 0; background: #10202c; box-shadow: 0 40px 90px rgba(8,19,27,.38); overflow: hidden; }
+  .lap-bar { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; background: #16283a; }
+  .lap-bar i { width: 11px; height: 11px; border-radius: 50%; }
+  .lap-bar i:nth-child(1) { background: #ff5f57; } .lap-bar i:nth-child(2) { background: #febc2e; } .lap-bar i:nth-child(3) { background: #28c840; }
+  .lap-bar span { margin-left: 8px; color: #9db8c6; font-size: 15px; font-weight: 600; font-family: ui-monospace, monospace; }
+  .lap-screen img { display: block; width: 100%; }
+  .lap-base { margin: 0 -34px; height: 22px; background: linear-gradient(180deg, #22303c, #0d1822); border-radius: 0 0 30px 30px; }
+  .lap-base::after { content: ""; display: block; width: 150px; height: 7px; margin: 0 auto; background: #37485a; border-radius: 0 0 10px 10px; }
+  .pipeline { position: absolute; left: 72px; width: 968px; bottom: 158px; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 22px 26px; background: rgba(255,255,255,.88); border: 1px solid rgba(11,28,38,.1); border-radius: 24px; box-shadow: 0 14px 40px rgba(8,19,27,.12); backdrop-filter: blur(4px); }
+  .step { text-align: center; }
+  .step .ic { width: 54px; height: 54px; margin: 0 auto; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 27px; color: #fff; }
+  .step b { display: block; margin-top: 9px; font-size: 21px; font-weight: 900; color: #0b1c26; letter-spacing: 1px; }
+  .step span { display: block; margin-top: 4px; font-size: 12.5px; font-weight: 650; color: #5a7382; font-family: ui-monospace, monospace; }
+  .arrow { font-size: 24px; color: #94aab6; font-weight: 900; padding: 0 2px; transform: translateY(-14px); }
+  .s1 .ic { background: linear-gradient(135deg,#0ea5e9,#2563eb); } .s2 .ic { background: linear-gradient(135deg,#0d9488,#0f766e); }
+  .s3 .ic { background: linear-gradient(135deg,#f59e0b,#d97706); } .s4 .ic { background: linear-gradient(135deg,#ef4444,#dc2626); }
+  .s5 .ic { background: linear-gradient(135deg,#8b5cf6,#6d28d9); } .s6 .ic { background: linear-gradient(135deg,#059669,#16a34a); }
+  .formula { position: absolute; left: 0; right: 0; bottom: 66px; z-index: 6; text-align: center; font-size: 34px; font-weight: 900; color: #0b1c26; letter-spacing: 2px; }
+  .formula .plus { color: #94aab6; padding: 0 14px; }
+  .formula .eq { color: #0a7f6e; padding: 0 14px; }
+  .formula .hl { color: #0a7f6e; }
+  .footnote { position: absolute; left: 72px; bottom: 22px; z-index: 5; font-size: 19px; font-weight: 650; color: #6b8391; letter-spacing: 1px; }
+  .footnote-r { position: absolute; right: 72px; bottom: 22px; z-index: 5; font-size: 19px; font-weight: 700; color: #6b8391; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+  <svg class="contours" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+    <g fill="none" stroke="#b9d4d0" stroke-width="1.4" opacity=".55">
+      <path d="M-40 210 C 260 120, 520 300, 860 200 S 1500 90, 1960 220"/>
+      <path d="M-40 280 C 280 190, 540 370, 880 270 S 1520 160, 1960 290"/>
+      <path d="M-40 780 C 300 700, 620 900, 980 800 S 1560 690, 1960 820"/>
+      <path d="M-40 860 C 320 780, 640 980, 1000 880 S 1580 770, 1960 900"/>
+      <path d="M-40 940 C 340 860, 660 1050, 1020 950 S 1600 850, 1960 970"/>
+    </g>
+    <g fill="none" stroke="#cadfdb" stroke-width="1" opacity=".45">
+      <path d="M-40 350 C 300 260, 560 440, 900 340 S 1540 230, 1960 360"/>
+      <path d="M-40 700 C 280 620, 600 820, 960 720 S 1540 610, 1960 740"/>
+    </g>
+  </svg>
+
+  <div class="hero">
+    <div class="en">Global Geochemical Atlas</div>
+    <div class="cn">全球地球化学元素<br>分布图谱科研 Skill</div>
+  </div>
+
+  <div class="banner"><b>AI Agent 全自动科研：从公开数据到成稿论文</b></div>
+  <div class="subline">36 个公开来源 · <b>199,723</b> 条标准化测定 · 世界 / 中国 / 欧洲图谱已交付 · <b>5</b> 篇论文成稿</div>
+
+  <div class="badges">
+    <div class="badge b1"><span class="ic">🌍</span><div><b>全域覆盖</b><span>岩石 · 土壤 · 沉积物 · 水体</span></div></div>
+    <div class="badge b2"><span class="ic">🔗</span><div><b>证据可回溯</b><span>记录级来源 · SHA-256 哈希链</span></div></div>
+    <div class="badge b3"><span class="ic">⚖️</span><div><b>确定性质控</b><span>模型提案 · 代码裁决</span></div></div>
+  </div>
+
+  <div class="laptop">
+    <div class="lap-screen">
+      <div class="lap-bar"><i></i><i></i><i></i><span>live/world-atlas.html · 自包含单文件 · 断网可用</span></div>
+      <img src="assets/world-atlas-map-1920x1080.png" alt="全球元素分布图谱界面">
+    </div>
+    <div class="lap-base"></div>
+  </div>
+
+  <div class="pipeline">
+    <div class="step s1"><span class="ic">📡</span><b>多源采集</b><span>36 SOURCES</span></div>
+    <span class="arrow">›</span>
+    <div class="step s2"><span class="ic">🧪</span><b>标准化</b><span>mg/kg · WGS84</span></div>
+    <span class="arrow">›</span>
+    <div class="step s3"><span class="ic">🔁</span><b>质控修复</b><span>ITERATION LOOP</span></div>
+    <span class="arrow">›</span>
+    <div class="step s4"><span class="ic">📍</span><b>异常识别</b><span>ROBUST-Z · FDR</span></div>
+    <span class="arrow">›</span>
+    <div class="step s5"><span class="ic">⏳</span><b>时序归因</b><span>GEOGENIC / INPUT</span></div>
+    <span class="arrow">›</span>
+    <div class="step s6"><span class="ic">📄</span><b>成稿论文</b><span>5 PAPERS · 46 PAGES</span></div>
+  </div>
+
+  <div class="formula">多源标准化 <span class="plus">+</span> 确定性门禁 <span class="plus">+</span> 修复 Loop <span class="eq">=</span> <span class="hl">可信的全球元素图谱与论文</span></div>
+
+  <div class="footnote">AI4S FUTURE SCIENCESKILLS HACKATHON · 气候与地球科学赛道 · 词元代理人队</div>
+  <div class="footnote-r">github.com/asimfish/global-geochemical-atlas-skill</div>
+</body>
+</html>

@@ -1587,6 +1587,28 @@ $("modeCompare").addEventListener("click", () => setMode("compare"));
 $("modeProvenance").addEventListener("click", () => setMode("provenance"));
 $("modeReplay").addEventListener("click", () => setMode("replay"));
 $("modeStation").addEventListener("click", () => setMode("station"));
+/* 幻灯片嵌入：?autoplay=1 时进入采样史回放、满世界视野并循环播放时间轴 */
+if (new URLSearchParams(location.search).get("autoplay") === "1") {
+  const fitWorldView = () => {
+    /* baseScale 是 cover 口径，画布偏高时经度被裁；这里改为 contain：整个世界都进画面 */
+    const fit = (W / 360) / Math.max(W / 360, H / 168);
+    state.view = { lon: 10, lat: 12, zoom: Math.max(0.85, Math.min(1, fit)) };
+    clampView(); scheduleDraw();
+  };
+  let autoKicked = false;
+  const autoKick = () => {
+    try {
+      if (!autoKicked) { setMode("replay"); fitWorldView(); autoKicked = true; }
+      if (!state.playing) $("playBtn").click();
+    } catch (e) {}
+  };
+  setTimeout(autoKick, 900);
+  setTimeout(() => { if (!state.playing) autoKick(); }, 2400);
+  /* 播完自动从头再来（评委手动暂停时不打扰） */
+  setInterval(() => {
+    if (autoKicked && !state.playing && state.win[1] >= T_HI - 0.05) autoKick();
+  }, 3000);
+}
 
 function selectElement(val) {
   state.element = val;
