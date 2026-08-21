@@ -487,8 +487,10 @@
     .stat-card span { display: block; margin-top: .5em; color: var(--muted); font-size: clamp(9px,.9vw,16px); }
 
     .schema-cloud { position: absolute; z-index: 6; right: 3.5%; top: 26%; width: 34%; display: grid; grid-template-columns: repeat(3,1fr); gap: .55em; }
-    .schema-cloud span { padding: .65em .5em; text-align: center; border: 1px solid rgba(105,245,230,.24); border-radius: .5vw; background: rgba(3,20,27,.9); color: var(--ink); font: 720 clamp(8px,.82vw,15px)/1.25 "DejaVu Sans Mono",monospace; }
-    .schema-cloud .head-chip { grid-column: 1 / -1; color: var(--mint); border-color: rgba(105,245,230,.5); font-size: clamp(9px,.9vw,16px); }
+    .schema-cloud span { display: flex; min-height: 3.35em; padding: .52em .45em; align-items: center; justify-content: center; flex-direction: column; gap: .2em; text-align: center; border: 1px solid rgba(105,245,230,.24); border-radius: .5vw; background: rgba(3,20,27,.9); color: var(--ink); }
+    .schema-cloud span b { display: block; font: 800 clamp(9px,.86vw,16px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud span small { display: block; color: rgba(235,246,247,.7); font: 500 clamp(7px,.62vw,12px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud .head-chip { grid-column: 1 / -1; min-height: auto; padding: .72em .6em; color: var(--mint); border-color: rgba(105,245,230,.5); font: 800 clamp(9px,.9vw,16px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
 
     /* Skill core: state machine × loop ring */
     .core-split { position: absolute; left: 4%; right: 4%; top: 20%; bottom: 16.5%; display: grid; grid-template-columns: 1.12fr .92fr; gap: 2.8%; }
@@ -794,9 +796,9 @@
     .paper-card img.pc-result { border-bottom: 1px solid rgba(105,245,230,.16); }
     .paper-card .pc-imgs { position: relative; }
     .paper-card .pc-imgs::after { content: "方法 ↑ · 实测 ↓"; position: absolute; right: .55em; top: .5em; padding: .28em .6em; border-radius: 999px; background: rgba(3,20,27,.82); color: var(--mint); font: 750 clamp(7px,.68vw,12px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
-    .paper-card .pc-body { padding: .75em .95em .8em; display: flex; flex-direction: column; gap: .45em; min-height: 0; overflow: hidden; flex: 1; justify-content: center; }
-    .paper-card .pc-body b { color: var(--mint); font: 800 clamp(9px,.9vw,16px)/1.3 "DejaVu Sans Mono",monospace; }
-    .paper-card .pc-body p { margin: 0; color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 730; line-height: 1.4; }
+    .paper-card .pc-body { padding: .75em .95em .8em; display: flex; flex-direction: column; gap: .45em; min-height: 0; overflow: hidden; flex: 1; justify-content: flex-start; }
+    .paper-card .pc-body b { color: var(--mint); min-height: 2.6em; font: 800 clamp(9px,.9vw,16px)/1.3 "DejaVu Sans Mono",monospace; }
+    .paper-card .pc-body p { margin: 0; min-height: 2.8em; color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 730; line-height: 1.4; }
     .paper-card .pc-body small { color: var(--muted); font-size: clamp(8px,.8vw,14px); line-height: 1.5; }
     .paper-strip { position: absolute; left: 4%; right: 4%; bottom: 9.6%; display: flex; justify-content: center; gap: 1.1em; flex-wrap: wrap; color: var(--ink); font: 750 clamp(10px,1.02vw,18px)/1 "DejaVu Sans Mono",monospace; }
     .paper-strip b { color: var(--gold); }
@@ -808,6 +810,9 @@
     .deliv-item i { display: grid; place-items: center; width: 2em; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--dc, var(--mint)); color: var(--dc, var(--mint)); font: 800 .78em/1 "DejaVu Sans Mono",monospace; font-style: normal; }
     .deliv-item small { display: block; color: var(--muted); font-weight: 650; font-size: .76em; margin-top: .2em; }
     .qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em 1.4em; }
+    .qr-grid.six { gap: .7em 1.3em; }
+    .qr-grid.six .qr-card img { max-width: 7.6vw; padding: 3.5%; }
+    .qr-grid.six .qr-card b { margin-top: .35em; font-size: clamp(9px,.88vw,15px); }
     .qr-card { text-align: center; }
     .qr-card img { width: 100%; max-width: 10.5vw; display: block; margin: 0 auto; background: #fff; padding: 4.5%; border-radius: .6vw; border: 1px solid rgba(105,245,230,.35); }
     .qr-card b { display: block; margin-top: .5em; color: var(--ink); font: 750 clamp(10px,.98vw,17px)/1.2 "DejaVu Sans Mono",monospace; }
@@ -818,15 +823,36 @@
     /* Innovation outputs on brief slide */
     .brief-outputs.seven { grid-template-columns: repeat(7, 1fr); }
 
+    /* 目录页 */
+    .toc-mark { position: absolute; right: 2.5%; bottom: 5%; z-index: 0; color: rgba(105,245,230,.06); font-weight: 900; font-size: clamp(150px,17vw,330px); line-height: 1; letter-spacing: .04em; pointer-events: none; user-select: none; }
+    .toc-rail { position: absolute; left: 5.5%; top: 23%; bottom: 10%; width: 37%; display: flex; flex-direction: column; justify-content: space-between; }
+    .toc-rail::before { content: ""; position: absolute; left: 2.35em; top: -3%; bottom: 1.5%; width: 2px; background: linear-gradient(180deg, rgba(105,245,230,0), rgba(105,245,230,.42) 8%, rgba(105,245,230,.42) 94%, rgba(105,245,230,0)); }
+    .toc-tag { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.05em; padding: .8em 1.15em .8em .6em; border: 1px solid rgba(105,245,230,.24); border-left: 3px solid var(--tc, var(--mint)); border-radius: .7vw; background: rgba(3,20,27,.94); }
+    .toc-tag:nth-child(odd) { transform: rotate(-.55deg); }
+    .toc-tag:nth-child(even) { transform: rotate(.55deg); }
+    .toc-tag i { display: grid; place-items: center; width: 2.2em; aspect-ratio: 1; margin-left: .4em; border-radius: 50%; border: 1px solid var(--tc, var(--mint)); background: rgba(3,20,27,1); color: var(--tc, var(--mint)); font: 800 clamp(10px,.98vw,18px)/1 "DejaVu Sans Mono",monospace; font-style: normal; }
+    .toc-tag b { display: block; color: var(--ink); font-size: clamp(14px,1.42vw,28px); font-weight: 880; letter-spacing: .1em; }
+    .toc-tag small { display: block; margin-top: .32em; color: var(--muted); font-size: clamp(9px,.9vw,16px); font-weight: 700; }
+    .toc-tag em { color: var(--tc, var(--mint)); font: 750 clamp(9px,.86vw,15px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .08em; }
+    .toc-right { position: absolute; left: 49%; right: 4.5%; top: 31%; z-index: 1; }
+    .toc-right .lead-bar { display: block; width: 3.4em; height: 3px; background: var(--mint); margin-bottom: 1.35em; }
+    .toc-slogan2 { color: var(--ink); font-weight: 870; font-size: clamp(20px,2.42vw,47px); line-height: 1.66; }
+    .toc-slogan2 .mint { color: var(--mint); }
+    .toc-slogan2 .gold { color: var(--gold); }
+    .toc-flowline { margin-top: 1.7em; color: var(--ink); font: 750 clamp(11px,1.12vw,20px)/1.7 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
+    .toc-flowline i { color: var(--mint); font-style: normal; padding: 0 .4em; }
+
     /* 动机页 */
-    .motive-quote { position: absolute; left: 9%; right: 9%; top: 21%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(21px,2.55vw,49px); line-height: 1.42; }
+    .motive-quote { position: absolute; left: 9%; right: 9%; top: 20%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(22px,2.75vw,53px); line-height: 1.46; }
     .motive-quote .q-mark { color: var(--mint); }
-    .motive-sub { position: absolute; left: 10%; right: 10%; top: 35%; text-align: center; color: var(--muted); font-size: clamp(12px,1.28vw,24px); font-weight: 720; }
-    .motive-grid { position: absolute; left: 5.5%; right: 5.5%; top: 43.5%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.7%; }
-    .motive-card { padding: 1.15em 1.2em 1.25em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
-    .motive-card b { display: block; color: var(--mc, var(--mint)); font: 800 clamp(11px,1.08vw,20px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
-    .motive-card p { margin: .75em 0 0; color: var(--ink); font-size: clamp(11px,1.06vw,19px); font-weight: 730; line-height: 1.6; }
-    .motive-punch { position: absolute; left: 13%; right: 13%; bottom: 14%; padding: 1.05em 1.5em; border: 1px solid rgba(105,245,230,.38); border-radius: .9vw; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(13px,1.34vw,26px); line-height: 1.55; }
+    .motive-sub { position: absolute; left: 10%; right: 10%; top: 35.5%; text-align: center; color: var(--muted); font-size: clamp(12px,1.3vw,24px); font-weight: 720; }
+    .motive-grid { position: absolute; left: 5.5%; right: 5.5%; top: 43%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.7%; }
+    .motive-card { padding: 1.45em 1.35em 1.55em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
+    .motive-card b { display: block; color: var(--mc, var(--mint)); font: 800 clamp(12px,1.16vw,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
+    .motive-card p { margin: .85em 0 0; color: var(--ink); font-size: clamp(11px,1.12vw,20px); font-weight: 730; line-height: 1.75; }
+    .motive-conv { position: absolute; left: 0; right: 0; top: 66.5%; text-align: center; color: var(--muted); font: 750 clamp(11px,1.05vw,19px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .14em; }
+    .motive-conv i { display: block; margin-top: .3em; color: var(--mint); font-style: normal; }
+    .motive-punch { position: absolute; left: 12%; right: 12%; bottom: 12.5%; padding: 1.2em 1.6em; border: 1px solid rgba(105,245,230,.38); border-radius: .9vw; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(14px,1.42vw,28px); line-height: 1.6; }
     .motive-punch .mint { color: var(--mint); }
 
     /* 团队页 */
@@ -945,6 +971,27 @@
       <template class="notes-template">各位评委好，我们是词元代理人队。我们做的是全球地球化学元素分布图谱——一个面向 AI Agent 的可复用科研 Skill。Agent 接到元素、区域、地质单元和样品类型请求后，能够采集公开测定、完成科学标准化、生成研究视图，并把每个关键结论绑定到记录级证据。地图只是入口；真正的产品是可追溯、可验证、可迭代、可跨 Agent 平台复用的 Skill。</template>
     </section>
 
+    <section class="slide" data-title="目录">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="toc-mark" aria-hidden="true">证据</div>
+      <div class="eyebrow reveal" style="--d:.08s">00 · CONTENTS</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">目录</h2>
+      <div class="toc-rail">
+        <div class="toc-tag reveal" style="--d:.3s"><i>01</i><div><b>研究问题</b><small>一句提问，四个角色的证据难题</small></div><em>01–02</em></div>
+        <div class="toc-tag reveal" style="--d:.38s;--tc:var(--gold)"><i>02</i><div><b>输出产物</b><small>五项赛题交付，逐项实测演示</small></div><em>03–07</em></div>
+        <div class="toc-tag reveal" style="--d:.46s;--tc:var(--red)"><i>03</i><div><b>Skill 机制</b><small>模型提案，代码裁决</small></div><em>08–12</em></div>
+        <div class="toc-tag reveal" style="--d:.54s"><i>04</i><div><b>效果与创新点</b><small>四域图谱 · 时序演化 · 五篇论文</small></div><em>13–17</em></div>
+        <div class="toc-tag reveal" style="--d:.62s;--tc:var(--gold)"><i>05</i><div><b>团队介绍</b><small>词元代理人队 · 致谢</small></div><em>18–19</em></div>
+      </div>
+      <div class="toc-right">
+        <span class="lead-bar reveal" style="--d:.4s"></span>
+        <div class="toc-slogan2 reveal" style="--d:.5s">一句话，让 Agent 帮我生成<br><span class="mint">可信、可回溯、可交互</span>的<span class="gold">时序演进</span><br>全球化学元素分布图谱</div>
+        <div class="toc-flowline reveal" style="--d:.64s">研究问题 <i>→</i> 输出产物 <i>→</i> Skill 机制 <i>→</i> 效果与创新点 <i>→</i> 团队介绍</div>
+      </div>
+      <div class="footer-line"><span>从一句提问，到一条可回溯的证据链</span><span>方向键翻页 · N 讲稿 · F 全屏</span></div>
+      <template class="notes-template">这页是目录。整场演示围绕一句话展开：让 Agent 帮我生成可信、可回溯、可交互的时序演进全球化学元素分布图谱。五个章节：研究问题——一句提问背后四个角色的证据难题；输出产物——五项赛题交付逐项实测；Skill 机制——模型提案、代码裁决；效果与创新点——四个分析域的图谱、时序演化和五篇论文；最后是团队介绍。</template>
+    </section>
+
     <section class="slide" data-title="一句听起来很简单的提问">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">01 · WHY THIS SKILL / FROM A QUESTION TO AN EVIDENCE CHAIN</div>
@@ -957,7 +1004,8 @@
         <div class="motive-card reveal" style="--d:.7s;--mc:var(--red)"><b>🗂️ 数据管理员</b><p>这条 1978 年的老记录，检出限、坐标系、许可证，现在还查得到吗？</p></div>
         <div class="motive-card reveal" style="--d:.78s"><b>⚖️ 评审专家</b><p>AI 给出的每一个数字，出处在哪一页哪一行？敢直接引用吗？</p></div>
       </div>
-      <div class="motive-punch reveal" style="--d:.9s">我们做的 Global Geochemical Atlas Skill，不是输入一个元素名、输出一页分布图——<br>它把一句自然语言问题，转成<span class="mint">一条可回溯的地球化学证据链</span>。</div>
+      <div class="motive-conv reveal" style="--d:.86s">四个问题，指向同一件事<i>▼</i></div>
+      <div class="motive-punch reveal" style="--d:.94s">我们做的 Global Geochemical Atlas Skill，不是输入一个元素名、输出一页分布图——<br>它把一句自然语言问题，转成<span class="mint">一条可回溯的地球化学证据链</span>。</div>
       <div class="footer-line"><span>AI 读出数字 ≠ 拿到可比较、可复用的科学数据</span><span>四个角色，同一个需求：证据</span></div>
       <template class="notes-template">先从一句提问说起：“帮我画一张全球土壤砷分布图，顺便告诉我哪里异常。”听起来像个检索问题。但放进真实的研究团队，它马上变成四个更难的问题——地球化学家会问：几十个调查、三种单位、五种消解方法，这些数字能放进同一张图里比吗？环境监管会问：西南的砷高出好几倍，是污染超标还是地质本底？数据管理员会问：一九七八年的老记录，检出限和坐标系还查得到吗？评审专家会问：AI 给的每个数字，出处在哪，敢引用吗？这四个问题指向同一件事：AI 读出数字，不代表拿到了可比较、可复用的科学数据。所以我们做的这个 Skill，不是输入元素名、输出一页图——它把一句自然语言问题，转成一条可回溯的地球化学证据链。接下来先看赛题怎么落地。</template>
     </section>
@@ -1037,11 +1085,11 @@
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/world-atlas.html?tab=database" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span class="active-tab">数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
       <div class="schema-cloud reveal" style="--d:.5s">
-        <span class="head-chip">SCHEMA · 40+ 字段 · 一行 = 样品 × 分析物 × 测定</span>
-        <span>record_id</span><span>sample_id · igsn</span><span>element_or_analyte</span>
-        <span>medium · material</span><span>original_value · unit</span><span>value_qualifier</span>
-        <span>normalized_value</span><span>conversion_factor</span><span>censored · limit</span>
-        <span>lat · lon · WGS84</span><span>coordinate_uncertainty_m</span><span>geologic_unit · GLiM</span>
+        <span class="head-chip">数据采集项：每条检测记录应包含的核心信息</span>
+        <span><b>记录编号</b><small>每条检测的唯一标识</small></span><span><b>样品编号</b><small>对应具体采样样品</small></span><span><b>检测元素</b><small>如砷、铅、锌</small></span>
+        <span><b>样品类型</b><small>土壤、岩石、水体等</small></span><span><b>原始检测结果</b><small>数值和原始单位</small></span><span><b>结果状态</b><small>未检出、低于限值等</small></span>
+        <span><b>统一后的数值</b><small>换算为统一单位</small></span><span><b>单位换算信息</b><small>换算方法与倍数</small></span><span><b>检出限信息</b><small>检出限与删失状态</small></span>
+        <span><b>采样位置</b><small>经纬度与坐标系</small></span><span><b>位置精度</b><small>坐标误差范围（米）</small></span><span><b>地质背景</b><small>所在岩性或地质单元</small></span>
       </div>
       <div class="trace-rail reveal" style="--d:.46s">
         <div class="trace-head">怎么用 · 一行一条测定</div>
@@ -1357,32 +1405,32 @@
       <div class="eyebrow reveal" style="--d:.08s">16 · FROM ATLAS TO PAPERS / FULL RESEARCH WORKFLOW</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">从图谱、发现到论文：一条完整的科研流程</h2>
       <div class="paper-flow reveal" style="--d:.28s">
-        <span>候选生成 <b class="mint">31</b></span><i>→</i><span>试点验证</span><i>→</i><span>文献核实</span><i>→</i><span>统计深化</span><i>→</i><span>成稿 <b class="mint">5</b></span><i>→</i><span class="pf-gate">a–g 质量审计门</span><i>→</i><span>期刊对标</span><i>→</i><span>缺口回灌采集</span>
+        <span>提出 <b class="mint">31</b> 个研究选题</span><i>→</i><span>小范围验证</span><i>→</i><span>查阅文献</span><i>→</i><span>深入分析</span><i>→</i><span>完成 <b class="mint">5</b> 篇论文初稿</span><i>→</i><span class="pf-gate">通过 7 项质量检查</span><i>→</i><span>按期刊要求完善</span><i>→</i><span>补充缺失数据</span>
       </div>
       <div class="paper-grid">
         <article class="paper-card reveal" style="--d:.4s">
-          <div class="pc-imgs"><img class="pc-method" src="assets/research/p1-methods-figure.png" alt="P1 方法图"><img class="pc-result" src="assets/research/p1-hg-map.png" alt="P1 欧洲汞分布实测图"></div>
-          <div class="pc-body"><b>P1 · 欧洲 Hg/Pb 遗留富集</b><p>工业时代的汞铅，是否仍滞留在欧洲表土？</p><small>表土/底土 Hg 1.364（n=392 对）· 腐殖质 5.26×；成稿 10 页</small></div>
+          <div class="pc-imgs"><img class="pc-method" src="assets/research/p1-methods-figure.png" alt="研究一的方法图"><img class="pc-result" src="assets/research/p1-hg-map.png" alt="欧洲汞分布实测图"></div>
+          <div class="pc-body"><b>研究一 · 欧洲土壤中的汞铅遗留</b><p>工业时代遗留下来的汞和铅，今天是否仍积存在欧洲表层土壤中？</p><small>392 组对照显示，表层土壤的汞含量约为深层的 1.36 倍，腐殖质层的富集倍数达到 5.26；已形成 10 页论文初稿。</small></div>
         </article>
         <article class="paper-card reveal" style="--d:.48s">
-          <div class="pc-imgs"><img class="pc-method" src="assets/research/p2-methods.png" alt="P2 方法图"><img class="pc-result" src="assets/research/p2-au-map.png" alt="P2 澳大利亚对照实测图"></div>
-          <div class="pc-body"><b>P2 · 遗留指纹的半球不对称</b><p>欧洲式的 Pb 富集，在南半球存在吗？</p><small>澳洲 0.982 vs 欧洲 1.239——不存在；当日跨洲复制；9 页</small></div>
+          <div class="pc-imgs"><img class="pc-method" src="assets/research/p2-methods.png" alt="研究二的方法图"><img class="pc-result" src="assets/research/p2-au-map.png" alt="澳大利亚对照实测图"></div>
+          <div class="pc-body"><b>研究二 · 欧洲的铅富集在澳大利亚是否存在</b><p>欧洲表层土壤中明显的铅富集，在澳大利亚是否也存在？</p><small>澳大利亚表层与深层土壤的铅含量几乎相同（0.98 倍），欧洲表层则更高（1.24 倍），说明两地存在明显差异；已形成 9 页论文初稿。</small></div>
         </article>
         <article class="paper-card reveal" style="--d:.56s">
-          <div class="pc-imgs"><img class="pc-method" src="assets/research/p3-methods.png" alt="P3 方法图"><img class="pc-result" src="assets/research/p3-scatter.png" alt="P3 跨方法散点实测图"></div>
-          <div class="pc-body"><b>P3 · 跨方法偏移与传输模型</b><p>XRF 与 ICP-MS 的测定，能直接混用吗？</p><small>Cr 偏移 2.94×；幂律模型误差 18.2%→11.0%（OOS 验证）；9 页</small></div>
+          <div class="pc-imgs"><img class="pc-method" src="assets/research/p3-methods.png" alt="研究三的方法图"><img class="pc-result" src="assets/research/p3-scatter.png" alt="不同检测方法的结果对照图"></div>
+          <div class="pc-body"><b>研究三 · 不同检测方法的数据能否直接合并</b><p>两种常用元素检测方法得到的结果，能不能直接放在一起分析？</p><small>以铬为例，两种方法测得的结果相差约 2.94 倍，不能直接混用；经过校正，误差从 18.2% 降至 11.0%；已形成 9 页论文初稿。</small></div>
         </article>
         <article class="paper-card reveal" style="--d:.64s">
-          <div class="pc-imgs"><img class="pc-method" src="assets/research/p4-methods.png" alt="P4 方法图"><img class="pc-result" src="assets/research/p4-validation-map.png" alt="P4 砷校验实测图"></div>
-          <div class="pc-body"><b>P4 · 全球砷图独立校验</b><p>全球砷风险图在共址点位可信吗？</p><small>26 共址单元 ρ=0.681 · 中位比 0.982；7 个分歧单元进再采样；9 页</small></div>
+          <div class="pc-imgs"><img class="pc-method" src="assets/research/p4-methods.png" alt="研究四的方法图"><img class="pc-result" src="assets/research/p4-validation-map.png" alt="全球砷风险图校验结果"></div>
+          <div class="pc-body"><b>研究四 · 全球砷风险图是否可靠</b><p>全球砷风险图与独立采集的实测数据是否一致？</p><small>在 26 个相同地点进行对照后，两套数据的总体趋势较一致；其中 7 个差异较大的地点需要重新采样；已形成 9 页论文初稿。</small></div>
         </article>
         <article class="paper-card reveal" style="--d:.72s">
-          <div class="pc-imgs"><img class="pc-method" src="assets/research/p5-methods.png" alt="P5 方法图"><img class="pc-result" src="assets/research/p5-nutrient-profiles.png" alt="P5 海洋剖面实测图"></div>
-          <div class="pc-body"><b>P5 · GEOTRACES 剖面审计</b><p>海洋微量金属剖面，能否零调参复现？</p><small>Zn 深/表 5.57× · 盆地结构全对（太平洋 &gt; 大西洋）；9 页</small></div>
+          <div class="pc-imgs"><img class="pc-method" src="assets/research/p5-methods.png" alt="研究五的方法图"><img class="pc-result" src="assets/research/p5-nutrient-profiles.png" alt="海洋微量金属分布结果"></div>
+          <div class="pc-body"><b>研究五 · 复核海洋微量金属的分布规律</b><p>重新分析国际海洋调查数据，能否得到相同的锌分布规律？</p><small>结果显示，深层海水中的锌含量约为表层的 5.57 倍，并再次观察到太平洋整体高于大西洋的规律；已形成 9 页论文初稿。</small></div>
         </article>
       </div>
-      <div class="paper-strip reveal" style="--d:.84s"><span>成稿 <b>5</b> 篇 · <b>46</b> 页 · <b>24</b> 图 <b>9</b> 表</span><span>选题零人工点题 · discovery_mode 自动提出</span><span>缺口输出为 sampling_priority 回灌采集</span></div>
-      <div class="footer-line"><span>五篇论文 PDF：门户「科学发现」章节可直接打开</span><span>结论为筛查级 · a–g 审计全过 · 投稿前待领域专家复核</span></div>
+      <div class="paper-strip reveal" style="--d:.84s"><span>已完成 <b>5</b> 篇论文初稿，共 <b>46</b> 页、<b>24</b> 幅图和 <b>9</b> 张表</span><span>研究选题来自数据中发现的现象</span><span>数据不足之处将用于指导下一轮采样</span></div>
+      <div class="footer-line"><span>五篇论文 PDF：门户「科学发现」章节可直接打开</span><span>结论为筛查级 · 投稿前待领域专家复核</span></div>
       <template class="notes-template">创新之一的完整版：这套数据真的能长出科学。流程一条线：discovery_mode 从冻结快照自动提出三十一个候选选题——零人工点题，试点、文献核实、统计深化后成稿五篇，每篇过 a–g 七项质量审计门，再做期刊对标，缺口回灌下一轮采集。五篇各回答一个明确的科学问题：P1，工业时代的汞铅是否仍滞留在欧洲表土——表土底土比一点三六，腐殖质五倍多；P2，欧洲式铅富集在南半球存在吗——同一套统计当天跑到澳大利亚，答案是不存在；P3，XRF 和 ICP-MS 能直接混用吗——铬偏移近三倍，我们给出经外部验证的传输模型；P4，全球砷风险图在共址点位可信吗——两个独立调查同址一致到百分之二；P5，海洋微量金属剖面能否零调参复现——连太平洋大于大西洋的盆地结构都全对。合计四十六页、二十四图九表，结论为筛查级，投稿前待领域专家复核。</template>
     </section>
 
@@ -1420,14 +1468,14 @@
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">团队 · 词元代理人队</h2>
       <div class="team-grid">
         <article class="team-card reveal" style="--d:.32s"><img src="assets/team/bio_lyf.png" alt="李雨峰"><b>李雨峰</b><span class="en">YUFENG LI</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">师从严骏驰教授；研究方向为图机器学习、具身智能与最优传输理论</span></article>
-        <article class="team-card reveal" style="--d:.4s"><img src="assets/team/bio_wps.png" alt="王培朔"><b>王培朔</b><span class="en">PEISHUO WANG</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">研究视觉-语言-动作（VLA）模型，聚焦具身场景下的长程任务执行，尤其是化学实验室自动化</span></article>
-        <article class="team-card reveal" style="--d:.48s"><img src="assets/team/bio_gxr.jpg" alt="郭欣睿"><b>郭欣睿</b><span class="en">XINRUI GUO</span><span class="aff">北京航空航天大学 · 人工智能博士生</span><span class="foc">香港理工大学机械工程硕士，金属材料专业学士</span></article>
-        <article class="team-card reveal" style="--d:.56s"><img src="assets/team/bio_bfs.png" alt="白丰硕"><b>白丰硕</b><span class="en">FENGSHUO BAI</span><span class="aff">上海交通大学 · 计算机系博士生</span><span class="foc">PAIR-Lab 成员，杨耀东、温颖两位老师联合指导</span></article>
-        <article class="team-card reveal" style="--d:.64s"><img src="assets/team/bio_lmw.png" alt="李明伟"><b>李明伟</b><span class="en">MINGWEI LI</span><span class="aff">浙江大学 · 博士生</span><span class="foc">研究方向为 3D / 4D 重建与生成模型</span></article>
+        <article class="team-card reveal" style="--d:.4s"><img src="assets/team/bio_wps.png" alt="王培朔"><b>王培朔</b><span class="en">PEISHUO WANG</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">师从吴帆教授；研究方向为视觉-语言-动作（VLA）模型与化学实验室自动化</span></article>
+        <article class="team-card reveal" style="--d:.48s"><img src="assets/team/bio_gxr.jpg" alt="郭欣睿"><b>郭欣睿</b><span class="en">XINRUI GUO</span><span class="aff">北京航空航天大学 · 人工智能博士生</span><span class="foc">香港理工大学机械工程硕士；金属材料专业学士，材料与人工智能交叉背景</span></article>
+        <article class="team-card reveal" style="--d:.56s"><img src="assets/team/bio_bfs.png" alt="白丰硕"><b>白丰硕</b><span class="en">FENGSHUO BAI</span><span class="aff">上海交通大学 · 计算机系博士生</span><span class="foc">师从杨耀东、温颖两位教授（联合指导）；PAIR-Lab 实验室成员</span></article>
+        <article class="team-card reveal" style="--d:.64s"><img src="assets/team/bio_lmw.png" alt="李明伟"><b>李明伟</b><span class="en">MINGWEI LI</span><span class="aff">浙江大学 · 博士生</span><span class="foc">研究方向为三维（3D）与四维（4D）场景重建及生成式模型</span></article>
       </div>
       <div class="team-foot reveal" style="--d:.8s">五名博士生 · 机器学习 × 具身智能 × 三维重建 × 实验室自动化 · 团队主页 <b>chembot.zgca.com</b></div>
       <div class="footer-line"><span>决赛 08 · 词元代理人队</span><span>AI4S FUTURE SCIENCESKILLS HACKATHON</span></div>
-      <template class="notes-template">介绍一下团队，我们是词元代理人队，五名博士生：李雨峰，上海交通大学，师从严骏驰教授，做图机器学习、具身智能和最优传输；王培朔，上海交通大学，做 VLA 模型和化学实验室自动化；郭欣睿，北京航空航天大学人工智能方向，机械工程和材料背景；白丰硕，上海交通大学 PAIR-Lab，杨耀东、温颖两位老师联合指导；李明伟，浙江大学，做三维四维重建和生成模型。机器学习、具身智能、三维重建、实验室自动化的组合，正好覆盖这个 Skill 从数据、算法到可视化的全链条。</template>
+      <template class="notes-template">介绍一下团队，我们是词元代理人队，五名博士生：李雨峰，上海交通大学，师从严骏驰教授，做图机器学习、具身智能和最优传输；王培朔，上海交通大学，师从吴帆教授，做 VLA 模型和化学实验室自动化；郭欣睿，北京航空航天大学人工智能方向，机械工程和材料背景；白丰硕，上海交通大学 PAIR-Lab，杨耀东、温颖两位老师联合指导；李明伟，浙江大学，做三维四维重建和生成模型。机器学习、具身智能、三维重建、实验室自动化的组合，正好覆盖这个 Skill 从数据、算法到可视化的全链条。</template>
     </section>
 
     <section class="slide" data-title="感谢各位评委，请批评指正">
@@ -1444,7 +1492,9 @@
           <div class="deliv-item reveal" style="--d:.62s;--dc:var(--gold)"><i>＋</i><span>完整科研流程：图谱 → 发现 → 论文<small>31 候选 → 5 篇成稿 · 46 页 · a–g 审计全过</small></span></div>
           <div class="deliv-item reveal" style="--d:.68s;--dc:var(--red)"><i>＋</i><span>时序元素演化图谱<small>回答“地质富集，还是工业活动”</small></span></div>
         </div>
-        <div class="qr-grid">
+        <div class="qr-grid six">
+          <div class="qr-card reveal" style="--d:.42s"><img src="assets/qr/poster-qr.png" alt="决赛海报二维码"><b>决赛海报</b></div>
+          <div class="qr-card reveal" style="--d:.46s"><img src="assets/qr/atlas-qr.png" alt="实测图谱二维码"><b>实测图谱</b></div>
           <div class="qr-card reveal" style="--d:.5s"><img src="assets/qr/demo-qr.png" alt="官网主页二维码"><b>官网主页</b></div>
           <div class="qr-card reveal" style="--d:.58s"><img src="assets/qr/slides-qr.png" alt="评审幻灯片二维码"><b>幻灯片</b></div>
           <div class="qr-card reveal" style="--d:.66s"><img src="assets/qr/xhs-qr.png" alt="小红书二维码"><b>小红书</b></div>
@@ -1452,7 +1502,7 @@
         </div>
       </div>
       <div class="thanks-close reveal" style="--d:.9s">全球地球化学元素分布图谱<small>面向 AI Agent 的可复用科研 Skill · GLOBAL GEOCHEMICAL ATLAS</small><small class="thanks-team">词元代理人队 · 李雨峰 · 王培朔 · 郭欣睿 · 白丰硕 · 李明伟</small></div>
-      <template class="notes-template">最后总结。左边七项：赛题要求的五项交付——可交互地图、标准化数据库、来源与置信度、异常识别、可复用 Skill 文档——再加两项创新：从图谱到论文的完整科研流程，和回答“地质富集还是工业活动”的时序演化图谱。右边四个二维码：官网主页、本幻灯片、小红书和知乎专栏，欢迎评委现场扫码操作。我们是词元代理人队：李雨峰、王培朔、郭欣睿、白丰硕、李明伟。感谢各位评委，请批评指正。</template>
+      <template class="notes-template">最后总结。左边七项：赛题要求的五项交付——可交互地图、标准化数据库、来源与置信度、异常识别、可复用 Skill 文档——再加两项创新：从图谱到论文的完整科研流程，和回答“地质富集还是工业活动”的时序演化图谱。右边六个二维码：决赛海报、实测图谱、官网主页、本幻灯片、小红书和知乎专栏，欢迎评委现场扫码操作。我们是词元代理人队：李雨峰、王培朔、郭欣睿、白丰硕、李明伟。感谢各位评委，请批评指正。</template>
     </section>
   </main>
 
@@ -1460,7 +1510,7 @@
   <div class="controls" role="toolbar" aria-label="演示控制">
     <a href="./" title="返回门户首页">⌂</a>
     <button type="button" id="prev" title="上一页">←</button>
-    <span class="slide-count" id="slideCount">1 / 20</span>
+    <span class="slide-count" id="slideCount">1 / 21</span>
     <button type="button" id="next" title="下一页">→</button>
     <button type="button" id="notesBtn" title="讲稿 N">N</button>
     <button type="button" class="timer" id="timer" title="计时 T">03:00</button>
