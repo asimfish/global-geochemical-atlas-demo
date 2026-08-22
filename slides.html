@@ -139,7 +139,7 @@
     .footer-line {
       position: absolute;
       left: 4%;
-      right: 18%;
+      right: max(22.5%, 445px);
       bottom: 3.2%;
       display: flex;
       justify-content: space-between;
@@ -175,10 +175,12 @@
     .cover .title { margin-top: 2.6%; font-size: clamp(36px, 4.4vw, 82px); }
     .cover-lead {
       margin-top: 4.4%;
-      font-size: clamp(19px, 2.75vw, 50px);
+      font-size: clamp(16px, 2.15vw, 40px);
       line-height: 1.28;
       font-weight: 760;
+      white-space: nowrap;
     }
+    .cover-lead .mint { margin-left: .18em; }
     .cover-sub {
       margin-top: 2.8%;
       max-width: 17em;
@@ -187,6 +189,14 @@
       line-height: 1.55;
     }
     .cover-chips { position: absolute; z-index: 2; left: 4.3%; bottom: 10.8%; display: flex; gap: 1em; }
+    .cover-flow { position: absolute; z-index: 2; left: 4.3%; right: 4.3%; bottom: 10.2%; display: flex; align-items: stretch; gap: .5em; }
+    .cover-flow .cf-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .32em; padding: .55em .5em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--cc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.88); }
+    .cover-flow .cf-step b { color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 830; white-space: nowrap; }
+    .cover-flow .cf-step small { color: var(--muted); font: 700 clamp(7px,.62vw,11px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .05em; white-space: nowrap; }
+    .cover-flow > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,1vw,18px); }
+    .formula-line { color: var(--ink); font: 800 clamp(11px,1.18vw,22px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .formula-line i { font-style: normal; color: var(--gold); padding: 0 .28em; }
+    .formula-line b { color: var(--mint); }
     .cover-frame {
       position: absolute;
       z-index: 1;
@@ -446,7 +456,8 @@
     .repo-link::before { content: "⌥"; font-weight: 900; }
 
     .brand { display: flex; align-items: center; gap: 1em; }
-    .team-badge { margin-left: .4em; padding: .55em 1em; border: 1px solid rgba(246,195,68,.6); border-radius: 999px; color: var(--gold); font: 800 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .14em; background: rgba(3,20,27,.85); box-shadow: 0 0 16px rgba(246,195,68,.15); white-space: nowrap; }
+    .team-badge { margin-left: .4em; padding: .5em .9em; border: 1px solid rgba(246,195,68,.6); border-radius: 999px; color: var(--gold); font: 800 clamp(9px,.88vw,16px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .07em; background: rgba(3,20,27,.85); box-shadow: 0 0 16px rgba(246,195,68,.15); white-space: nowrap; }
+    .cover .brand { max-width: 92%; flex-wrap: wrap; row-gap: .5em; position: relative; z-index: 3; }
     .brand .logo { width: clamp(42px, 3.6vw, 66px); flex: none; filter: drop-shadow(0 0 14px rgba(105,245,230,.35)); }
     .brand-name b { display: block; color: var(--ink); font: 800 clamp(13px,1.25vw,23px)/1.1 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
     .brand-name small { display: block; margin-top: .4em; color: var(--muted); font: 700 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .16em; }
@@ -491,35 +502,44 @@
     .schema-cloud span b { display: block; font: 800 clamp(9px,.86vw,16px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .schema-cloud span small { display: block; color: rgba(235,246,247,.7); font: 500 clamp(7px,.62vw,12px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .schema-cloud .head-chip { grid-column: 1 / -1; min-height: auto; padding: .72em .6em; color: var(--mint); border-color: rgba(105,245,230,.5); font: 800 clamp(9px,.9vw,16px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud .wide { grid-column: 1 / -1; border-color: rgba(246,195,68,.55); }
+    .schema-cloud .wide b { color: var(--gold); }
 
     /* Skill core: state machine × loop ring */
     .core-split { position: absolute; left: 4%; right: 4%; top: 20%; bottom: 16.5%; display: grid; grid-template-columns: 1.12fr .92fr; gap: 2.8%; }
     .panel-label { color: var(--mint); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
     .panel-label.gold { color: var(--gold); }
-    .stage-matrix { margin-top: 1em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
-    .stage-matrix .stage-node { min-height: 11vh; }
+    .stage-matrix { margin-top: .7em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
+    .stage-matrix .stage-node { min-height: 10.2vh; }
+    .stage-phases { margin-top: .8em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
+    .stage-phases span { padding: .42em .5em; border-radius: .45vw; border: 1px solid rgba(105,245,230,.3); background: rgba(3,20,27,.85); text-align: center; color: var(--ink); font: 780 clamp(9px,.88vw,16px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .stage-phases span small { display: block; margin-top: .18em; color: var(--muted); font: 500 clamp(7.5px,.7vw,12.5px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .stage-phases .ph1 { color: var(--mint); }
+    .stage-phases .ph2 { color: var(--gold); border-color: rgba(246,195,68,.4); }
+    .stage-phases .ph3 { color: var(--red); border-color: rgba(255,107,107,.4); }
+    .stage-node.sp1 { border-color: rgba(105,245,230,.45); }
+    .stage-node.sp1 b { color: var(--mint); }
+    .stage-node.sp2 { border-color: rgba(246,195,68,.5); }
+    .stage-node.sp2 b { color: var(--gold); }
+    .stage-node.sp3 { border-color: rgba(255,107,107,.5); }
+    .stage-node.sp3 b { color: var(--red); }
+    .stage-node.gate strong::after { content: " ⛨"; color: inherit; }
     .stage-matrix .stage-node::after { display: none; }
     .gate-line { margin-top: 1.1em; color: var(--ink); font-size: clamp(10px,1vw,18px); line-height: 2; }
     .gate-line code { margin: 0 .25em; padding: .3em .65em; border: 1px solid rgba(246,195,68,.5); border-radius: .4vw; color: var(--gold); font: 750 .92em/1 "DejaVu Sans Mono",monospace; white-space: nowrap; }
-    .loop-ring { position: relative; width: min(97%, 28.5vw); aspect-ratio: 1; margin: .8em auto 0; }
-    .ring-track { position: absolute; inset: 12%; border: 2px dashed rgba(246,195,68,.55); border-radius: 50%; animation: ringspin 26s linear infinite; }
-    @keyframes ringspin { to { transform: rotate(360deg); } }
-    html.static .ring-track { animation: none; }
-    .ring-node { position: absolute; width: 38%; padding: .7em .55em; border: 1px solid var(--rc,var(--mint)); border-radius: .6vw; background: rgba(3,20,27,.96); text-align: center; box-shadow: 0 8px 26px rgba(0,0,0,.35); }
-    .ring-node b { display: block; color: var(--rc,var(--mint)); font: 800 clamp(10px,1vw,18px)/1 "DejaVu Sans Mono",monospace; }
-    .ring-node span { display: block; margin-top: .4em; color: var(--muted); font-size: clamp(8px,.82vw,15px); line-height: 1.35; }
-    .rn1 { left: 50%; top: -2%; transform: translateX(-50%); }
-    .rn2 { right: -4%; top: 50%; transform: translateY(-50%); --rc: var(--gold); }
-    .rn3 { left: 50%; bottom: -2%; transform: translateX(-50%); --rc: var(--red); }
-    .rn4 { left: -4%; top: 50%; transform: translateY(-50%); }
-    .ring-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); text-align: center; width: 44%; }
-    .ring-core b { display: block; color: var(--gold); font: 850 clamp(16px,1.85vw,34px)/1 "DejaVu Sans Mono",monospace; }
-    .ring-core span { display: block; margin-top: .55em; color: var(--muted); font-size: clamp(8px,.82vw,15px); line-height: 1.5; }
-    .ring-arrow { position: absolute; color: var(--gold); font-size: clamp(11px,1.1vw,20px); opacity: .85; }
-    .ra1 { right: 20%; top: 20%; transform: rotate(45deg); }
-    .ra2 { right: 20%; bottom: 20%; transform: rotate(135deg); }
-    .ra3 { left: 20%; bottom: 20%; transform: rotate(225deg); }
-    .ra4 { left: 20%; top: 20%; transform: rotate(315deg); }
+    /* Iteration loop: readable vertical flow with return arrow */
+    .loop-flow { position: relative; margin-top: 1em; padding-left: 2.6em; display: grid; gap: .38em; }
+    .loop-flow::before { content: ""; position: absolute; left: .7em; top: 1.6em; bottom: 6.2em; width: 1.1em; border: 2px dashed rgba(255,107,107,.6); border-right: none; border-radius: .9em 0 0 .9em; }
+    .loop-flow::after { content: "▲"; position: absolute; left: 1.32em; top: .55em; color: var(--red); font-size: clamp(9px,.85vw,15px); }
+    .lf-step { padding: .62em .95em; border: 1px solid rgba(105,245,230,.36); border-left: 3px solid var(--lc, var(--mint)); border-radius: .55vw; background: rgba(3,20,27,.94); }
+    .lf-step b { display: block; color: var(--lc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .lf-step span { display: block; margin-top: .28em; color: var(--muted); font-size: clamp(8.5px,.86vw,15px); line-height: 1.4; }
+    .lf-step.gold { --lc: var(--gold); border-color: rgba(246,195,68,.4); }
+    .lf-arrow { padding-left: 1em; color: var(--gold); font: 750 clamp(8.5px,.85vw,15px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-arrow::before { content: "↓ "; color: var(--mint); font-weight: 800; }
+    .lf-return { margin-left: -2.6em; padding: .5em .9em .5em 2.9em; color: #ff9b9b; font: 780 clamp(9px,.9vw,16px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-stop { padding: .6em .95em; border: 1px solid rgba(246,195,68,.5); border-radius: .55vw; background: rgba(42,31,6,.6); color: var(--gold); font: 800 clamp(9.5px,.95vw,17px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-stop code { color: var(--red); font: 750 .92em/1 "DejaVu Sans Mono",monospace; }
     .fail-line { position: absolute; left: 4%; right: 4%; bottom: 8.6%; display: flex; flex-wrap: wrap; gap: .5em; align-items: center; }
     .fail-line .fl-label { color: var(--red); font: 800 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; margin-right: .4em; }
     .fail-line code { padding: .38em .62em; border: 1px solid rgba(255,92,120,.35); border-radius: .4vw; color: #ffb9c6; background: rgba(255,92,120,.06); font: 720 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono",monospace; }
@@ -559,8 +579,7 @@
     .stage-node small { color: var(--muted); font: 650 clamp(7px,.72vw,13px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
     .stage-node::after { content: "→"; position: absolute; right: -1em; top: 42%; color: var(--mint); font-weight: 800; font-size: clamp(10px,1vw,18px); z-index: 2; }
     .stage-node:last-child::after { display: none; }
-    .stage-node.gate { border-color: rgba(246,195,68,.55); }
-    .stage-node.gate b { color: var(--gold); }
+    .stage-node.gate small { color: var(--gold); }
     .machine-panels { position: absolute; left: 4%; right: 4%; top: 47%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.5%; }
     .gate-panel { padding: 1.2em 1.4em; border: 1px solid rgba(246,195,68,.4); border-radius: .9vw; background: rgba(3,20,27,.9); }
     .gate-panel h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
@@ -593,17 +612,33 @@
     .term-bar i:nth-child(2) { background: #febc2e; }
     .term-bar i:nth-child(3) { background: #28c840; }
     .term-bar span { margin-left: .8em; color: var(--muted); font: 650 clamp(9px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; }
-    .term-body { padding: 1em 1.3em; font: 600 clamp(10px,1.02vw,19px)/1.75 "DejaVu Sans Mono",monospace; color: #cfe6e4; overflow: hidden; }
+    .term-body { padding: .8em 1.3em; font: 600 clamp(9.5px,.96vw,18px)/1.58 "DejaVu Sans Mono",monospace; color: #cfe6e4; overflow: hidden; }
     .run-line b { color: var(--mint); font-weight: 800; }
     .run-line .ok { color: #43e08c; font-weight: 800; }
     .run-line .num { color: var(--gold); font-weight: 800; }
     .run-line.cmd { color: #eef7f6; }
     .run-line.done { color: var(--mint); font-weight: 800; letter-spacing: .04em; }
+    .run-line .warn { color: var(--red); font-weight: 800; }
+    .live-badge { display: inline-block; margin-left: .6em; padding: .22em .7em; vertical-align: middle; border: 1px solid rgba(255,107,107,.6); border-radius: 99px; background: rgba(60,10,14,.72); color: #ff8b8b; font: 800 clamp(10px,.95vw,17px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; letter-spacing: .04em; animation: livepulse 1.6s ease-in-out infinite; white-space: nowrap; }
+    @keyframes livepulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,107,107,.35); } 50% { opacity: .72; box-shadow: 0 0 0 .45em rgba(255,107,107,0); } }
+    html.static .live-badge { animation: none; }
+
+    /* Showcase grid */
+    .showcase-grid { position: absolute; left: 4%; right: 4%; top: 21.5%; bottom: 10.5%; display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: 1fr 1fr; gap: 1.1vw; }
+    .show-card { position: relative; display: block; overflow: hidden; border: 1px solid rgba(105,245,230,.3); border-radius: .8vw; background: rgba(3,20,27,.9); text-decoration: none; color: var(--ink); transition: transform .25s ease, border-color .25s ease; }
+    .show-card:hover { transform: translateY(-4px); border-color: rgba(105,245,230,.7); }
+    .show-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .show-card.wide { grid-column: span 2; }
+    .show-card.wide img { object-position: center 38%; }
+    .show-card.poster img { object-fit: contain; background: #eef3ef; }
+    .show-card span { position: absolute; left: 0; right: 0; bottom: 0; padding: .7em 1em .75em; background: linear-gradient(180deg, rgba(1,10,14,0), rgba(1,10,14,.94) 42%); }
+    .show-card span b { display: block; color: var(--mint); font: 800 clamp(12px,1.15vw,22px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .show-card span small { display: block; margin-top: .2em; color: var(--muted); font: 500 clamp(9px,.85vw,15px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .run-caret { display: inline-block; width: .55em; height: 1.05em; margin-left: .15em; vertical-align: -0.18em; background: var(--mint); animation: caret 1s steps(1) infinite; }
     @keyframes caret { 50% { opacity: 0; } }
     .run-progress { position: absolute; left: 4%; right: 4%; bottom: 13%; height: .5vw; min-height: 5px; border-radius: 99px; background: var(--grid); overflow: hidden; }
     .run-progress i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--mint), var(--gold)); box-shadow: 0 0 18px rgba(105,245,230,.5); }
-    .active .run-progress i { animation: fillbar 6.6s cubic-bezier(.25,.6,.3,1) forwards; animation-delay: .3s; }
+    .active .run-progress i { animation: fillbar 17.5s cubic-bezier(.25,.6,.3,1) forwards; animation-delay: .3s; }
     @keyframes fillbar { to { width: 100%; } }
     .run-stats { position: absolute; left: 4%; right: 4%; bottom: 8%; display: flex; justify-content: space-between; gap: 1em; color: var(--ink); font: 750 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; }
     .run-stats b { color: var(--mint); }
@@ -762,6 +797,32 @@
     .fig-side .fs-card b { display: block; color: var(--fc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
     .fig-side .fs-card span { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.5; }
     .fig-side .fs-card span strong { color: var(--ink); font-weight: 760; }
+    .fig-side.five { gap: .52em; }
+    .fig-side.five .fs-card { padding: .62em .9em; }
+    .fig-side.five .fs-card span { margin-top: .3em; font-size: clamp(8.5px,.86vw,15px); line-height: 1.42; }
+
+    /* 断言台账 · 原生套筛图 */
+    .ledger-board { position: absolute; left: 5.5%; right: 5.5%; top: 20%; bottom: 9.2%; display: grid; grid-template-columns: .9fr 1.1fr; gap: 2.6%; }
+    .lb-left { display: flex; flex-direction: column; justify-content: center; gap: .8em; }
+    .lb-cap { text-align: center; color: var(--muted); font: 750 clamp(10px,.98vw,17px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .sv-tray { padding: 1.3em 1.6em 1.35em; border: 2px solid rgba(235,246,247,.35); border-radius: 999px; text-align: center; background-color: rgba(11,38,48,.85); background-image: repeating-linear-gradient(45deg, rgba(235,246,247,.055) 0 2px, transparent 2px 9px), repeating-linear-gradient(-45deg, rgba(235,246,247,.055) 0 2px, transparent 2px 9px); }
+    .sv-tray b { display: block; color: var(--ink); font-size: clamp(14px,1.5vw,28px); font-weight: 860; }
+    .sv-tray b em { color: var(--gold); font-style: normal; font-family: "DejaVu Sans Mono",monospace; font-size: 1.3em; padding: 0 .12em; }
+    .sv-tray.out b em { color: var(--mint); }
+    .sv-tray small { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(10px,.98vw,17px); line-height: 1.45; }
+    .sv-drop { text-align: center; color: var(--mint); font-weight: 800; font-size: clamp(14px,1.35vw,25px); line-height: 1; }
+    .lb-right { display: flex; flex-direction: column; justify-content: center; gap: .85em; }
+    .lb-callout { padding: 1.05em 1.25em; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); border-left: 4px solid var(--gold); border-radius: .7vw; background: rgba(11,38,48,.85); }
+    .lb-callout b { display: block; color: var(--gold); font-size: clamp(14px,1.5vw,28px); font-weight: 870; }
+    .lb-callout span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,1.05vw,19px); font-weight: 740; }
+    .lb-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1em; padding: .8em 1.15em .85em; border: 1px solid rgba(235,246,247,.22); border-left: 3px solid var(--lc, var(--mint)); border-radius: .55vw; background: rgba(3,20,27,.92); }
+    .lb-row.warn { --lc: var(--gold); } .lb-row.fail { --lc: var(--red); }
+    .lb-row b { display: block; color: var(--ink); font-size: clamp(12px,1.18vw,22px); font-weight: 800; }
+    .lb-row b i { font-style: normal; color: var(--lc, var(--mint)); font-family: "DejaVu Sans Mono",monospace; }
+    .lb-row small { display: block; margin-top: .25em; color: var(--muted); font-size: clamp(9px,.88vw,15px); line-height: 1.4; }
+    .lb-row em { font-style: normal; color: var(--lc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.35 "DejaVu Sans Mono",monospace; white-space: nowrap; text-align: right; }
+    .lb-note { padding: .75em 1.15em; border: 1px dashed rgba(235,246,247,.32); border-radius: .55vw; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.6; }
+    .lb-note strong { color: var(--ink); }
 
     /* Region result cards: image + meta side panel */
     .rgrid { position: absolute; left: 4%; right: 4%; top: 19.5%; bottom: 9.4%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.3%; }
@@ -770,7 +831,8 @@
     .rmeta { flex: 1; min-width: 0; padding: 3.5% 3.5%; display: flex; flex-direction: column; justify-content: center; gap: .5em; }
     .rmeta h3 { margin: 0 0 .15em; font-size: clamp(15px,1.6vw,30px); }
     .rmeta .rline { color: var(--muted); font: 650 clamp(8px,.84vw,15px)/1.4 "DejaVu Sans Mono",monospace; }
-    .rmeta .rline b { color: var(--ink); }
+    .rmeta .rline b { display: block; color: var(--ink); font-size: 1.18em; }
+    .rmeta .rline small { display: block; font-size: 1em; }
     .rmeta .ropen { margin-top: .35em; color: var(--mint); text-decoration: none; font: 750 clamp(8px,.84vw,15px)/1 "DejaVu Sans Mono",monospace; }
     .rmeta .ropen:hover { text-decoration: underline; }
     .rcard.pending2 { border-style: dashed; border-color: rgba(246,195,68,.55); align-items: center; justify-content: center; text-align: center; padding: 3%; }
@@ -785,13 +847,16 @@
     .attr-stack .as-row span { color: var(--muted); }
 
     /* Papers grid */
-    .paper-flow { position: absolute; left: 4%; right: 4%; top: 19.5%; display: flex; flex-wrap: wrap; gap: .5em; align-items: center; color: var(--muted); font: 700 clamp(9px,.92vw,16px)/1 "DejaVu Sans Mono",monospace; }
-    .paper-flow span { padding: .5em .8em; border: 1px solid rgba(105,245,230,.26); border-radius: 999px; background: rgba(3,20,27,.85); color: var(--ink); }
-    .paper-flow i { color: var(--mint); font-style: normal; font-weight: 800; }
-    .paper-flow .pf-gate { border-color: rgba(246,195,68,.5); color: var(--gold); }
-    .paper-grid { position: absolute; left: 4%; right: 4%; top: 27%; bottom: 14.5%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2%; }
+    .research-line { position: absolute; left: 4%; right: 4%; top: 17.8%; display: flex; gap: .45em; align-items: stretch; }
+    .research-line .rl-stage { flex: 1 1 0; min-width: 0; padding: .55em .7em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--rlc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.9); }
+    .research-line .rl-stage b { display: block; color: var(--rlc, var(--mint)); font: 800 clamp(9.5px,.95vw,17px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .research-line .rl-stage span { display: block; margin-top: .3em; color: var(--muted); font: 500 clamp(8px,.76vw,13.5px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .research-line > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,1vw,18px); }
+    .research-line .rl-stage.gold { --rlc: var(--gold); }
+    .research-line .rl-stage.red { --rlc: var(--red); }
+    .paper-grid { position: absolute; left: 4%; right: 4%; top: 31.5%; bottom: 14.5%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2%; }
     .paper-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.25); border-radius: .7vw; background: rgba(3,20,27,.92); overflow: hidden; min-height: 0; }
-    .paper-card img { width: 100%; aspect-ratio: 16/8.4; object-fit: cover; background: #fff; flex: 0 0 auto; }
+    .paper-card img { width: 100%; aspect-ratio: 16/8.4; object-fit: contain; background: #fff; flex: 0 0 auto; }
     .paper-card img.pc-method { border-bottom: 1px solid rgba(105,245,230,.14); }
     .paper-card img.pc-result { border-bottom: 1px solid rgba(105,245,230,.16); }
     .paper-card .pc-imgs { position: relative; }
@@ -843,16 +908,21 @@
     .toc-flowline i { color: var(--mint); font-style: normal; padding: 0 .4em; }
 
     /* 动机页 */
-    .motive-quote { position: absolute; left: 9%; right: 9%; top: 20%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(22px,2.75vw,53px); line-height: 1.46; }
+    .motive-quote { position: absolute; left: 9%; right: 9%; top: 18.5%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(20px,2.55vw,49px); line-height: 1.46; }
     .motive-quote .q-mark { color: var(--mint); }
+    .motive-quote .q-who { display: block; margin-bottom: .5em; color: var(--muted); font-style: normal; font-weight: 750; font-size: .38em; letter-spacing: .22em; }
+    .motive-card .mc-tag { display: block; margin-top: auto; padding: .5em .8em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 62%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--mc, var(--mint)) 10%, transparent); color: var(--mc, var(--mint)); font: 800 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .1em; text-align: center; }
+    .motive-punch .gold { color: var(--gold); }
+    .motive-punch .hl { color: #ff8b8b; font-weight: 870; padding: 0 .08em; }
     .motive-sub { position: absolute; left: 10%; right: 10%; top: 35.5%; text-align: center; color: var(--muted); font-size: clamp(12px,1.3vw,24px); font-weight: 720; }
-    .motive-grid { position: absolute; left: 5.5%; right: 5.5%; top: 43%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.7%; }
-    .motive-card { padding: 1.45em 1.35em 1.55em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
+    .motive-stack { position: absolute; left: 5.5%; right: 5.5%; top: 41.5%; bottom: 10%; display: flex; flex-direction: column; justify-content: space-between; gap: 1vh; min-height: 0; }
+    .motive-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.7%; }
+    .motive-card { display: flex; flex-direction: column; padding: 1.25em 1.3em 1.2em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
     .motive-card b { display: block; color: var(--mc, var(--mint)); font: 800 clamp(12px,1.16vw,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
-    .motive-card p { margin: .85em 0 0; color: var(--ink); font-size: clamp(11px,1.12vw,20px); font-weight: 730; line-height: 1.75; }
-    .motive-conv { position: absolute; left: 0; right: 0; top: 66.5%; text-align: center; color: var(--muted); font: 750 clamp(11px,1.05vw,19px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .14em; }
-    .motive-conv i { display: block; margin-top: .3em; color: var(--mint); font-style: normal; }
-    .motive-punch { position: absolute; left: 12%; right: 12%; bottom: 12.5%; padding: 1.2em 1.6em; border: 1px solid rgba(105,245,230,.38); border-radius: .9vw; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(14px,1.42vw,28px); line-height: 1.6; }
+    .motive-card p { margin: .8em 0 .95em; color: var(--ink); font-size: clamp(11px,1.12vw,20px); font-weight: 730; line-height: 1.66; }
+    .motive-conv { padding: .4em 0; text-align: center; color: var(--muted); font: 750 clamp(11px,1.05vw,19px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .14em; }
+    .motive-conv i { display: block; margin-top: .25em; color: var(--mint); font-style: normal; }
+    .motive-punch { margin: 0 6.8%; padding: 1.1em 1.6em; border: 1px solid rgba(105,245,230,.38); border-radius: .9vw; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(14px,1.42vw,28px); line-height: 1.6; }
     .motive-punch .mint { color: var(--mint); }
 
     /* 团队页 */
@@ -951,12 +1021,12 @@
         <div class="brand reveal" style="--d:.06s">
           <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><ellipse cx="32" cy="32" rx="10" ry="25" fill="none" stroke="rgba(105,245,230,.35)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="47.5" cy="16.5" r="7.6" fill="none" stroke="rgba(246,195,68,.4)" stroke-width="1.2"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="13.5" cy="38" r="6.7" fill="none" stroke="rgba(255,92,120,.4)" stroke-width="1.2"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/><circle cx="40" cy="49.5" r="6" fill="none" stroke="rgba(105,245,230,.45)" stroke-width="1.2"/></svg>
           <span class="brand-name"><b>GLOBAL GEOCHEMICAL ATLAS</b><small>SKILL · global-geochemical-atlas</small></span>
-          <span class="team-badge">决赛08 · 词元代理人队</span>
+          <span class="team-badge">决赛 08 · 气候与地球科学赛道 · 词元代理人队</span>
         </div>
         <div class="eyebrow reveal" style="--d:.16s">AI4S FUTURE SCIENCESKILLS HACKATHON · 气候与地球科学赛道</div>
         <h1 class="title reveal" style="--d:.28s">全球地球化学元素<br>分布图谱 Skill</h1>
-        <div class="cover-lead reveal" style="--d:.46s">面向 AI Agent 的<br><span class="mint">可复用科研 Skill</span></div>
-        <p class="cover-sub reveal" style="--d:.62s">Agent 把公开测定组织为可追溯、可验证、可迭代的研究产物。</p>
+        <div class="cover-lead reveal" style="--d:.46s">面向 AI Agent 的<span class="mint">可复用科研 Skill</span></div>
+        <p class="cover-sub reveal" style="--d:.62s">一句话让 AI 为我生成全球元素地图，<span class="mint">AI Agent 全自动可信科研图谱</span>。</p>
         <a class="repo-link reveal" style="--d:.72s" href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">github.com/asimfish/global-geochemical-atlas-skill</a>
       </div>
       <div class="cover-frame reveal" style="--d:.5s">
@@ -966,8 +1036,15 @@
           <div class="frame-foot"><span>界面实拍 · 评委可现场操作</span><span class="mono">MAP / DATABASE / EVIDENCE</span></div>
         </div>
       </div>
-      <div class="cover-chips reveal" style="--d:.8s"><span class="chip">多源数据标准化</span><span class="chip">确定性质量控制</span><span class="chip">记录级来源追溯</span><span class="chip gold-chip">跨平台复用</span><span class="chip red-chip">时序元素演化图谱</span></div>
-      <div class="footer-line"><span>最终提交：一个完整、可复用的 Skill 文档</span><span>MAP / DATABASE / EVIDENCE / ANOMALY</span></div>
+      <div class="cover-flow reveal" style="--d:.8s">
+        <span class="cf-step"><b>多源采集</b><small>36 SOURCES</small></span><i>→</i>
+        <span class="cf-step"><b>标准化</b><small>mg/kg · WGS84</small></span><i>→</i>
+        <span class="cf-step" style="--cc:var(--gold)"><b>质控修复</b><small>ITERATION LOOP</small></span><i>→</i>
+        <span class="cf-step" style="--cc:var(--red)"><b>异常识别</b><small>ROBUST-Z · FDR</small></span><i>→</i>
+        <span class="cf-step" style="--cc:var(--gold)"><b>时序归因</b><small>GEOGENIC / INPUT</small></span><i>→</i>
+        <span class="cf-step"><b>成稿论文</b><small>5 个科学问题</small></span>
+      </div>
+      <div class="footer-line" style="right:4%;justify-content:center"><span class="formula-line">多源采集 <i>+</i> 标准化门禁 <i>+</i> 质控修复 Loop <i>=</i> <b>可信的全球元素图谱与论文</b></span></div>
       <template class="notes-template">各位评委好，我们是词元代理人队。我们做的是全球地球化学元素分布图谱——一个面向 AI Agent 的可复用科研 Skill。Agent 接到元素、区域、地质单元和样品类型请求后，能够采集公开测定、完成科学标准化、生成研究视图，并把每个关键结论绑定到记录级证据。地图只是入口；真正的产品是可追溯、可验证、可迭代、可跨 Agent 平台复用的 Skill。</template>
     </section>
 
@@ -980,8 +1057,8 @@
         <div class="toc-tag reveal" style="--d:.3s"><i>01</i><div><b>研究问题</b><small>一句提问，四个角色的证据难题</small></div><em>01–02</em></div>
         <div class="toc-tag reveal" style="--d:.38s;--tc:var(--gold)"><i>02</i><div><b>输出产物</b><small>五项赛题交付，逐项实测演示</small></div><em>03–07</em></div>
         <div class="toc-tag reveal" style="--d:.46s;--tc:var(--red)"><i>03</i><div><b>Skill 机制</b><small>模型提案，代码裁决</small></div><em>08–12</em></div>
-        <div class="toc-tag reveal" style="--d:.54s"><i>04</i><div><b>效果与创新点</b><small>四域图谱 · 时序演化 · 五篇论文</small></div><em>13–17</em></div>
-        <div class="toc-tag reveal" style="--d:.62s;--tc:var(--gold)"><i>05</i><div><b>团队介绍</b><small>词元代理人队 · 致谢</small></div><em>18–19</em></div>
+        <div class="toc-tag reveal" style="--d:.54s"><i>04</i><div><b>效果与创新点</b><small>四域图谱 · 时序演化 · 五篇论文 · 作品展示</small></div><em>13–18</em></div>
+        <div class="toc-tag reveal" style="--d:.62s;--tc:var(--gold)"><i>05</i><div><b>团队介绍</b><small>词元代理人队 · 致谢</small></div><em>19–20</em></div>
       </div>
       <div class="toc-right">
         <span class="lead-bar reveal" style="--d:.4s"></span>
@@ -996,17 +1073,19 @@
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">01 · WHY THIS SKILL / FROM A QUESTION TO AN EVIDENCE CHAIN</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">一句听起来很简单的提问</h2>
-      <div class="motive-quote reveal" style="--d:.32s"><span class="q-mark">“</span>帮我画一张全球土壤砷分布图，<br>顺便告诉我哪里异常。<span class="q-mark">”</span></div>
+      <div class="motive-quote reveal" style="--d:.32s"><em class="q-who">一位地球化学研究者的提问</em><span class="q-mark">“</span>帮我画一张全球土壤砷元素的分布图谱，<br>整理成可交互的数据库，并告诉我哪里异常。<span class="q-mark">”</span></div>
       <div class="motive-sub reveal" style="--d:.44s">这听起来像一个检索问题。但放进真实的研究团队，它马上变成四个更难的问题：</div>
-      <div class="motive-grid">
-        <div class="motive-card reveal" style="--d:.54s"><b>🧪 地球化学家</b><p>几十个调查、三种单位、五种消解方法——这些数字能放进同一张图里比吗？</p></div>
-        <div class="motive-card reveal" style="--d:.62s;--mc:var(--gold)"><b>🏛️ 环境监管</b><p>西南的砷比全国中位数高好几倍，是污染超标，还是地质本底就这么高？</p></div>
-        <div class="motive-card reveal" style="--d:.7s;--mc:var(--red)"><b>🗂️ 数据管理员</b><p>这条 1978 年的老记录，检出限、坐标系、许可证，现在还查得到吗？</p></div>
-        <div class="motive-card reveal" style="--d:.78s"><b>⚖️ 评审专家</b><p>AI 给出的每一个数字，出处在哪一页哪一行？敢直接引用吗？</p></div>
+      <div class="motive-stack">
+        <div class="motive-grid">
+          <div class="motive-card reveal" style="--d:.54s"><b>🧪 地球化学家</b><p>几十个调查、三种单位、五种消解方法——这些数字能放进同一张图里比吗？</p><em class="mc-tag">→ 统一指标</em></div>
+          <div class="motive-card reveal" style="--d:.62s;--mc:var(--gold)"><b>🏛️ 环境监管</b><p>西南的砷比全国中位数高好几倍，是污染超标，还是地质本底就这么高？</p><em class="mc-tag">→ 动态时序</em></div>
+          <div class="motive-card reveal" style="--d:.7s;--mc:var(--red)"><b>🗂️ 数据管理员</b><p>这条 1978 年的老记录，检出限、坐标系、许可证，现在还查得到吗？</p><em class="mc-tag">→ 质量控制</em></div>
+          <div class="motive-card reveal" style="--d:.78s"><b>⚖️ 评审专家</b><p>AI 给出的每一个数字，出处在哪一页哪一行？敢直接引用吗？</p><em class="mc-tag">→ 来源可回溯</em></div>
+        </div>
+        <div class="motive-conv reveal" style="--d:.86s">四个问题，指向同一件事<i>▼</i></div>
+        <div class="motive-punch reveal" style="--d:.94s">Global Geochemical Atlas Skill 把来自<span class="hl">不同</span>科研工作者的<span class="hl">不同</span>需求，<br>转化成一套 <span class="mint">Agentic-Native</span> 的可信、可交互、可回溯、统一的<span class="gold">动态时序</span>地球化学元素研究流程。</div>
       </div>
-      <div class="motive-conv reveal" style="--d:.86s">四个问题，指向同一件事<i>▼</i></div>
-      <div class="motive-punch reveal" style="--d:.94s">我们做的 Global Geochemical Atlas Skill，不是输入一个元素名、输出一页分布图——<br>它把一句自然语言问题，转成<span class="mint">一条可回溯的地球化学证据链</span>。</div>
-      <div class="footer-line"><span>AI 读出数字 ≠ 拿到可比较、可复用的科学数据</span><span>四个角色，同一个需求：证据</span></div>
+      <div class="footer-line"><span>AI 读出数字 ≠ 拿到可比较、可复用的科学数据</span><span>不同科研工作者的不同需求，统一到一个 Skill 中</span></div>
       <template class="notes-template">先从一句提问说起：“帮我画一张全球土壤砷分布图，顺便告诉我哪里异常。”听起来像个检索问题。但放进真实的研究团队，它马上变成四个更难的问题——地球化学家会问：几十个调查、三种单位、五种消解方法，这些数字能放进同一张图里比吗？环境监管会问：西南的砷高出好几倍，是污染超标还是地质本底？数据管理员会问：一九七八年的老记录，检出限和坐标系还查得到吗？评审专家会问：AI 给的每个数字，出处在哪，敢引用吗？这四个问题指向同一件事：AI 读出数字，不代表拿到了可比较、可复用的科学数据。所以我们做的这个 Skill，不是输入元素名、输出一页图——它把一句自然语言问题，转成一条可回溯的地球化学证据链。接下来先看赛题怎么落地。</template>
     </section>
 
@@ -1040,10 +1119,10 @@
       </div>
       <div class="brief-outputs seven">
         <div class="brief-output reveal" style="--d:.78s"><b>交付 1</b><span>可交互元素分布地图</span></div>
-        <div class="brief-output reveal" style="--d:.84s;--c:var(--gold)"><b>交付 2</b><span>标准化地球化学数据库</span></div>
+        <div class="brief-output reveal" style="--d:.84s"><b>交付 2</b><span>标准化地球化学数据库</span></div>
         <div class="brief-output reveal" style="--d:.9s"><b>交付 3</b><span>数据来源与置信度说明</span></div>
-        <div class="brief-output reveal" style="--d:.96s;--c:var(--red)"><b>交付 4</b><span>异常区域识别结果</span></div>
-        <div class="brief-output reveal" style="--d:1.02s;--c:var(--gold)"><b>交付 5</b><span>可复用 Skill 文档</span></div>
+        <div class="brief-output reveal" style="--d:.96s"><b>交付 4</b><span>异常区域识别结果</span></div>
+        <div class="brief-output reveal" style="--d:1.02s"><b>交付 5</b><span>可复用 Skill 文档</span></div>
         <div class="brief-output innov reveal" style="--d:1.08s"><b>创新 ①</b><span>完整科研流程：图谱 → 发现 → 论文</span></div>
         <div class="brief-output innov reveal" style="--d:1.14s"><b>创新 ②</b><span>时序演化图谱：地质富集 or 工业活动</span></div>
       </div>
@@ -1062,17 +1141,17 @@
         <span class="pip-cap"><b>3D 地球仪</b> · 同一份数据 · 点击放大 ↗</span>
       </a>
       <div class="trace-rail reveal" style="--d:.46s">
-        <div class="trace-head">评委现场就能操作</div>
+        <div class="trace-head">现场操作说明</div>
         <div class="trace-chain">
-          <div class="trace-step"><b>① 圈范围</b><span>想看哪个元素、哪片区域、哪类样品，随手筛</span></div>
-          <div class="trace-step"><b>② 读图</b><span>颜色深浅是采样密度，圆点是聚合后的点位</span></div>
-          <div class="trace-step"><b>③ 刨根</b><span>点任何一个点，一路追到那条原始测定</span></div>
+          <div class="trace-step"><b>① 选择范围</b><span>按元素、区域、地质单元和样品类型筛选</span></div>
+          <div class="trace-step"><b>② 查看分布</b><span>颜色表示采样密度，圆点表示汇总后的采样位置</span></div>
+          <div class="trace-step"><b>③ 查看记录</b><span>点击点位可查看对应的原始测定</span></div>
         </div>
-        <div class="trace-note"><strong>一个页面装下五个研究视图：</strong>分布、数据库、组合对比、来源置信、异常识别，切换不丢筛选状态。</div>
+        <div class="trace-note">页面包含分布图、数据库、组合对比、来源说明和异常识别五个视图，切换时保留当前筛选条件。</div>
       </div>
       <div class="science-callout reveal" style="--d:.62s">
-        <b>最新运行：198,445 条可上图测定 · 42,566 个物理采样点 · 3,446 个候选异常。</b>
-        <span class="muted">整张图谱压在一个 HTML 文件里，拷进 U 盘就能带走，断网照样全功能操作；哪里没数据就留白，不靠插值把图“补漂亮”。</span>
+        <b>本次运行共有 198,445 条测定可上图，覆盖 42,566 个采样点；另有 3,446 条异常记录等待复核。</b>
+        <span class="muted">支持按元素、区域、地质单元和样品类型生成全球或区域分布图；网页和交互数据可离线使用；没有数据的区域保持空白，不使用插值补齐。</span>
       </div>
       <div class="footer-line"><span>元素 / 区域 / 地质单元 / 样品类型，任意组合出图</span><span>空白 = 真实数据缺口，不做粉饰</span></div>
       <template class="notes-template">第一项交付：可交互元素分布地图，这是最新一次运行的界面实拍——十九万八千多条可上图测定、四万两千多个物理采样点。各位评委现场就能上手：想看哪个元素、哪片区域、哪类样品，随手筛；图上颜色深浅是采样密度，圆点是聚合后的点位；点任何一个点，能一路追到那条原始测定是谁测的、怎么测的。右侧是同一份数据的三维地球仪，可拖动旋转。特别说一句：整张图谱压在一个 HTML 文件里，拷进 U 盘就能带走，断网照样全功能操作；图上哪里空白，就是哪里真的没数据——我们不靠插值把图补漂亮。</template>
@@ -1090,6 +1169,7 @@
         <span><b>样品类型</b><small>土壤、岩石、水体等</small></span><span><b>原始检测结果</b><small>数值和原始单位</small></span><span><b>结果状态</b><small>未检出、低于限值等</small></span>
         <span><b>统一后的数值</b><small>换算为统一单位</small></span><span><b>单位换算信息</b><small>换算方法与倍数</small></span><span><b>检出限信息</b><small>检出限与删失状态</small></span>
         <span><b>采样位置</b><small>经纬度与坐标系</small></span><span><b>位置精度</b><small>坐标误差范围（米）</small></span><span><b>地质背景</b><small>所在岩性或地质单元</small></span>
+        <span class="wide"><b>采样时间</b><small>采样年份与日期——支撑时序演化图谱与成因归因分析</small></span>
       </div>
       <div class="trace-rail reveal" style="--d:.46s">
         <div class="trace-head">怎么用 · 一行一条测定</div>
@@ -1121,18 +1201,18 @@
         <div class="stat-card reveal" style="--d:.74s;--c:var(--red)"><b>0</b><span>证据不足 · 0.0%</span></div>
       </div>
       <div class="trace-rail reveal" style="--d:.46s">
-        <div class="trace-head">四维证据诊断 · 四个口径分开判读（真实运行值）</div>
+        <div class="trace-head">每条数据从四个方面分别说明</div>
         <div class="conf-list">
-          <div class="conf-item"><span>来源证据 <small>可追溯性</small></span><div class="conf-bar"><i style="--v:98%"></i></div><b>98 / 100</b></div>
-          <div class="conf-item"><span>分析可用性 <small>方法与 QC</small></span><div class="conf-bar"><i style="--v:81%"></i></div><b>81 / 100</b></div>
-          <div class="conf-item" style="--c:var(--gold)"><span>空间可用性 <small>坐标与 CRS</small></span><div class="conf-bar"><i style="--v:59%"></i></div><b>59 / 100</b></div>
-          <div class="conf-item" style="--c:var(--gold)"><span>工作流可用性 <small>复核级别</small></span><div class="conf-bar"><i style="--v:73%"></i></div><b>73 / 100</b></div>
+          <div class="conf-item"><span>来源是否可回溯 <small>能否找到对应的原始记录</small></span><div class="conf-bar"><i style="--v:98%"></i></div><b>98 / 100</b></div>
+          <div class="conf-item"><span>检测结果是否可用 <small>方法与质量控制信息是否完整</small></span><div class="conf-bar"><i style="--v:81%"></i></div><b>81 / 100</b></div>
+          <div class="conf-item" style="--c:var(--gold)"><span>位置是否可用 <small>坐标和坐标系信息是否完整</small></span><div class="conf-bar"><i style="--v:59%"></i></div><b>59 / 100</b></div>
+          <div class="conf-item" style="--c:var(--gold)"><span>能否直接使用 <small>按缺失信息量估计还需多少人工复核</small></span><div class="conf-bar"><i style="--v:73%"></i></div><b>73 / 100</b></div>
         </div>
-        <div class="trace-note"><strong>四个口径必须分开读：</strong>空间缺位不降低来源证据；任何一项都不是测量正确概率。</div>
+        <div class="trace-note">四项反映不同问题，需要分别解读。例如缺少坐标，只表示无法准确上图，不代表数据来源不可靠；这些分数也不是测量准确率。</div>
       </div>
       <div class="science-callout reveal" style="--d:.62s;--callout:var(--gold)">
-        <b>36 个来源全部附许可、版本与接口说明；每条记录都能追到原始源行。</b>
-        <span class="muted">证据链到底：原始值 → 来源 DOI / 表 / 行 → SHA-256 manifest；溯源设计对齐 FAIR 原则（Wilkinson et al. 2016）。</span>
+        <b>36 个来源均记录了使用许可、数据版本和获取方式；每条数据都能追溯到原始表格或记录。</b>
+        <span class="muted">同时保留原始数值、出处位置和文件校验信息，便于复查数据来自哪里、使用的是哪个版本。</span>
       </div>
       <div class="footer-line"><span>来源追溯 · 许可合规 · 覆盖说明</span><span>每个关键结论绑定来源定位</span></div>
       <template class="notes-template">第三项交付：数据来源与置信度说明。最新版把置信度拆成四个必须分开判读的口径，这是真实运行值：来源证据九十八分——证据充分的记录占百分之九十九点七，均值零点九八；分析可用性八十一分；空间可用性五十九分；工作流可用性七十三分。为什么分开？因为空间坐标缺位不应该反过来贬低来源证据——这回答的是数据是否真实可追溯，两码事。三十六个来源全部附许可、版本与接口说明；任何一条记录都能沿证据链追到原始源行——原始值、来源 DOI 和表行位置，再到文件与运行的 SHA-256。我们如实标注：这些分数衡量工作流可用性，不等于测量正确概率。</template>
@@ -1149,17 +1229,17 @@
         <span class="pip-cap"><b>判据卡片实拍</b> · 比背景中位数高 23.3 倍 · 点击打开 ↗</span>
       </a>
       <div class="trace-rail reveal" style="--d:.46s">
-        <div class="trace-head">异常点怎么看 · 三层呈现（中国区域实测）</div>
+        <div class="trace-head">异常记录的查看方式</div>
         <div class="trace-chain">
-          <div class="trace-step"><b>① 空间密度</b><span>红 = 富集候选聚集，蓝 = 亏损候选聚集</span></div>
-          <div class="trace-step"><b>② 候选统计</b><span>740 条候选：富集 386 · 亏损 354</span></div>
-          <div class="trace-step"><b>③ 判据卡片</b><span>解释每个候选“为什么被标记”</span></div>
+          <div class="trace-step"><b>① 查看分布</b><span>红色表示偏高记录聚集，蓝色表示偏低记录聚集</span></div>
+          <div class="trace-step"><b>② 查看数量</b><span>本次共标出 740 条，其中偏高 386 条、偏低 354 条</span></div>
+          <div class="trace-step"><b>③ 查看原因</b><span>打开记录卡片，查看它为什么被列为异常</span></div>
         </div>
-        <div class="trace-note"><strong>判定口径，每项有文献依据：</strong>修正 z 分数 ≥ 3.5（Iglewicz–Hoaglin 1993）；背景组同元素/介质/测量基准，对数尺度中位数 + MAD（Reimann–Filzmoser–Garrett 2005）；网格富集 BH-FDR q ≤ 0.10（Benjamini–Hochberg 1995）。</div>
+        <div class="trace-note"><strong>判定指标均有文献依据：</strong>修正 z 分数 ≥ 3.5 判为候选（Iglewicz–Hoaglin 1993）；背景组限定同元素、同介质、同测量基准，用对数尺度中位数 + MAD 稳健估计（Reimann–Filzmoser–Garrett 2005）；空间网格富集经 BH-FDR 多重检验校正 q ≤ 0.10（Benjamini–Hochberg 1995）。</div>
       </div>
       <div class="science-callout reveal" style="--d:.62s;--callout:var(--red)">
-        <b>富集与亏损分开呈现，每个候选都带统计判据与复核入口。</b>
-        <span class="muted">如实标注：候选 ≠ 矿化定论，复核链路直达原始记录。</span>
+        <b>偏高和偏低记录分别展示，每条记录都附有判定依据和复查入口。</b>
+        <span class="muted">这里标出的是需要进一步核查的异常记录，不代表已经发现矿化或污染；可以继续查看对应的原始数据。</span>
       </div>
       <div class="footer-line"><span>识别异常富集与亏损区域 · 全球与区域视图均支持</span><span>演示：中国区域候选异常（最新运行）</span></div>
       <template class="notes-template">第四项交付：异常区域识别结果，这是中国区域最新运行的实拍。本次共识别七百四十条记录级候选，富集三百八十六条、亏损三百五十四条；主图是空间密度，红色是富集候选聚集、蓝色是亏损候选聚集。右侧缩略图是一张真实判据卡片：这个候选五十六毫克每千克，比背景中位数高二十三点三倍，稳健异常分数三点九四，超过判定阈值三点五，可比背景样本九十七条——每个候选都能这样解释“为什么被标记”。判定口径不是我们拍脑袋定的，每一项都有文献依据：三点五的阈值来自 Iglewicz 和 Hoaglin 一九九三年的修正 z 分数标准；对数尺度加中位数、MAD 的稳健背景估计，遵循地球化学背景与阈值方法学的标准文献 Reimann、Filzmoser 和 Garrett 二〇〇五年发表在《Science of the Total Environment》的比较研究；空间网格富集用超几何检验加 Benjamini–Hochberg 一九九五年的 FDR 校正，q 不超过零点一。背景组严格限定同元素、同介质、同测量基准——两个不同消解方法测出的数字，数学上能比大小，科学上不能比高低。我们如实标注：候选不等于矿化定论，复核链路直达原始记录。</template>
@@ -1175,77 +1255,85 @@
         <div class="compat-item"><b>CODEX · CLI · CI</b><span>普通文件 + 命令即可调用，零专有 API</span></div>
       </div>
       <div class="design-grid">
-        <article class="design-card reveal" style="--d:.4s"><span class="layer">L1 · 流程</span><code>SKILL.md</code><h3>状态机与决策门</h3><p><strong>9 个阶段</strong>按序执行；每步有明确输入、输出与失败状态，不允许跳步。</p></article>
-        <article class="design-card reveal" style="--d:.5s;--card:var(--gold)"><span class="layer">L2 · 知识</span><code>references/</code><h3>科学知识库</h3><p>数据格式、科学规则与来源准入独立成文，<strong>按需加载</strong>，不塞进提示词。</p></article>
-        <article class="design-card reveal" style="--d:.6s;--card:var(--red)"><span class="layer">L3 · 执行</span><code>scripts/</code><h3>确定性执行器</h3><p>单位、坐标、QC、异常与地图全由可测试脚本执行，<strong>核心零第三方依赖</strong>。</p></article>
-        <article class="design-card reveal" style="--d:.7s"><span class="layer">L4 · 证明</span><code>fixtures + tests</code><h3>可复现，可评测</h3><p>真实数据切片 + 哈希重放；有 / 无 Skill 对照评测，<strong>证明真实提升</strong>。</p></article>
+        <article class="design-card reveal" style="--d:.4s"><span class="layer">工作流程</span><code>SKILL.md</code><h3>任务步骤与判断规则</h3><p>整个任务分为<strong>9 个阶段</strong>，逐步执行。每一步都写清需要什么、产出什么，以及失败后如何处理。</p></article>
+        <article class="design-card reveal" style="--d:.5s;--card:var(--gold)"><span class="layer">参考资料</span><code>references/</code><h3>科学规则与数据说明</h3><p>数据格式、科学判断标准和数据来源要求分别保存，使用时再读取。</p></article>
+        <article class="design-card reveal" style="--d:.6s;--card:var(--red)"><span class="layer">处理脚本</span><code>scripts/</code><h3>可检查的计算与处理</h3><p>单位换算、坐标处理、质量检查、异常识别和地图生成均由脚本完成，并可单独测试。</p></article>
+        <article class="design-card reveal" style="--d:.7s"><span class="layer">示例与测试</span><code>fixtures + tests</code><h3>检查结果能否重复得到</h3><p>使用真实数据样例重复运行，并比较使用 Skill 前后的结果，检查流程是否稳定有效。</p></article>
       </div>
-      <div class="design-foot reveal" style="--d:.86s"><span>EarthChem ECL</span><span>USGS AGDB2</span><span>ODM2</span><span>IGSN / DataCite</span><span>字段映射对照 · 非平台认证</span></div>
+      <div class="design-foot reveal" style="--d:.86s"><span>字段设计参考：</span><span>EarthChem（地球化学开放数据平台）</span><span>USGS（美国地质调查局）</span><span>ODM2（环境观测数据模型标准）</span><span>IGSN（国际样品唯一编号）</span><span>DataCite（科研数据 DOI 注册机构）</span><span>仅作字段对应 · 不代表获得相关平台认证</span></div>
       <template class="notes-template">第五项、也是比赛的最终交付物：可复用 Skill 文档。它的核心不是长提示词，而是四层结构。SKILL.md 只保留九阶段状态机、决策门和失败状态；references 维护 JSON Schema、科学规则、来源准入，以及 EarthChem ECL、USGS AGDB2、ODM2、IGSN/DataCite 的专业字段映射；scripts 把单位、坐标、QC、异常和地图变成确定性执行；fixtures 与评测则证明可复现和真实提升。格式采用 Agent Skills 公共子集，OpenCode 冻结环境评测已接入；Codex、命令行和 CI 通过普通文件与命令接口调用。</template>
     </section>
 
     <section class="slide" data-title="机制总图：模型提案，代码裁决">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">08 · MECHANISM OVERVIEW / MODEL PROPOSES, CODE DECIDES</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">机制总图：模型提案，代码裁决</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(24px,3vw,56px)">Global Geochemical Atlas · Skill 机制图</h2>
       <div class="figrow">
         <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig6-green-overview-v2.png" alt="Skill 机制总图：输入与准入、确定性处理与验证循环、出版审计与模块化交付"></div>
-        <div class="fig-side">
-          <div class="fs-card reveal" style="--d:.42s"><b>① 输入与准入</b><span>研究请求 <strong>SHA-256 冻结</strong>；来源过许可 · 版本 · 哈希审计门，才允许在线采集。</span></div>
-          <div class="fs-card reveal" style="--d:.52s;--fc:var(--gold)"><b>② 确定性处理与验证循环</b><span>标准化到产物验证 <strong>5 道工序</strong>，产物按<strong>十六文件契约</strong>逐项对账；验证不过走修复 loop 重跑比对，缺候选时触发<strong>来源对决</strong>，教训写入<strong>跨次记忆</strong>。</span></div>
-          <div class="fs-card reveal" style="--d:.62s;--fc:var(--red)"><b>③ 出版审计与交付</b><span>审计员<strong>先考试再上岗</strong>；断言台账逐条对数，<strong>无出处数字不出门</strong>，然后才交付五件套。</span></div>
-          <div class="fs-card reveal" style="--d:.72s"><b>贯穿一条规矩</b><span><strong>模型负责提案，代码负责裁决</strong>——候选与修复由模型大胆提出，放行与否由确定性脚本按明文判据决定；全程三道硬门：来源审计、质量控制、产物验证。</span></div>
+        <div class="fig-side five">
+          <div class="fs-card reveal" style="--d:.4s"><b>数据采集</b><span><strong>36 个来源</strong>逐一登记编号、许可与版本；任务请求先做 <strong>SHA-256 指纹</strong>冻结，来源过许可、版本、哈希三查后才允许采集。</span></div>
+          <div class="fs-card reveal" style="--d:.48s;--fc:var(--gold)"><b>数据处理</b><span>标准化、质量控制、地质匹配、置信度与异常识别按固定顺序执行，产物对照 <strong>16 项文件要求</strong>逐项核对。</span></div>
+          <div class="fs-card reveal" style="--d:.56s;--fc:var(--red)"><b>Loop 与跨次记忆</b><span>核对不通过就修复重跑；每个来源的成功率和失败原因写入记忆文件，下次运行<strong>优先用可靠来源、跳过屡次失败的来源</strong>。</span></div>
+          <div class="fs-card reveal" style="--d:.64s"><b>对抗审计</b><span>侦察、质疑、裁判<strong>三个角色相互独立</strong>：一方提出候选，一方专挑问题，最后按事先写明的规则打分裁决。</span></div>
+          <div class="fs-card reveal" style="--d:.72s;--fc:var(--gold)"><b>任务与检验分离</b><span>模型只负责提出候选和修改建议，<strong>采不采用由脚本按明文规则判定</strong>——这条原则贯穿以上全部模块。</span></div>
         </div>
       </div>
-      <div class="footer-line"><span>三段全景 · 下一页展开中间的执行内核</span><span>模型提案 · 代码裁决</span></div>
-      <template class="notes-template">先看全景。整个 Skill 分三段：第一段输入与准入——研究请求先做 SHA-256 冻结，来源要过许可、版本、哈希的审计门才允许采集；第二段确定性处理与验证循环——标准化、质量控制、地质匹配、置信度与异常、产物验证五道工序，产物按十六文件契约逐项对账，验证不过就走红色的修复 loop 重跑比对，补采缺候选时触发来源对决，教训写进跨次记忆；第三段出版审计与交付——审计员先考试再上岗，断言台账逐条对数，无出处数字不出门。全程三道硬门：来源审计、质量控制、产物验证；贯穿三段只有一条规矩：模型负责提案，代码负责裁决。下一页把中间这段执行内核展开成工程细节。</template>
+      <div class="footer-line"><span>五个模块协同 · 下一页展开中间的执行内核</span><span>模型提案 · 代码裁决</span></div>
+      <template class="notes-template">这是整个 Skill 的机制图，五个模块。第一，数据采集：36 个来源全部在文档里登记编号、许可和版本，任务请求先做 SHA-256 冻结，来源过许可、版本、哈希三道检查才允许采集。第二，数据处理：标准化、质量控制、地质匹配、置信度与异常识别按固定顺序执行，产物对照十六项文件要求逐项核对。第三，Loop 与跨次记忆：核对不过就修复重跑，每个来源的成败记录写入记忆文件，下次运行优先用可靠来源、跳过屡次失败的来源——运行越多，采集越准。第四，对抗审计：侦察、质疑、裁判三个角色互相独立，提候选的不管裁决，裁决只看明文规则。第五，任务与检验分离：模型只提案，采不采用由脚本判定。这条原则贯穿全部模块，下一页展开中间的执行内核。</template>
     </section>
 
-    <section class="slide" data-title="Skill 内核：状态机前向执行 × loop 反向修复">
+    <section class="slide" data-title="Skill 内核：按研究步骤往前走，发现问题就回头修">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">09 · SKILL INTERNALS / STATE MACHINE × ITERATION LOOP</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">Skill 内核：状态机前向执行，loop 反向修复</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">Skill 内核：按研究步骤往前走，发现问题就回头修</h2>
       <div class="core-split">
         <div class="core-left">
-          <div class="panel-label reveal" style="--d:.28s">九阶段执行状态机 · 严格顺序 · 不允许跳步</div>
-          <div class="stage-matrix">
-            <div class="stage-node reveal" style="--d:.34s"><b>01</b><strong>冻结请求</strong><small>freeze</small></div>
-            <div class="stage-node gate reveal" style="--d:.38s"><b>02</b><strong>路由与审计来源</strong><small>gate·准入</small></div>
-            <div class="stage-node reveal" style="--d:.42s"><b>03</b><strong>获取与逐记录证据</strong><small>acquire</small></div>
-            <div class="stage-node reveal" style="--d:.46s"><b>04</b><strong>确定性过滤</strong><small>filter</small></div>
-            <div class="stage-node gate reveal" style="--d:.5s"><b>05</b><strong>单位·删失·坐标 QC</strong><small>gate·QC</small></div>
-            <div class="stage-node reveal" style="--d:.54s"><b>06</b><strong>地质空间匹配</strong><small>GLiM</small></div>
-            <div class="stage-node reveal" style="--d:.58s"><b>07</b><strong>置信度与候选异常</strong><small>robust-z</small></div>
-            <div class="stage-node reveal" style="--d:.62s"><b>08</b><strong>生成十六文件产物</strong><small>build</small></div>
-            <div class="stage-node gate reveal" style="--d:.66s"><b>09</b><strong>验证与边界报告</strong><small>gate·验证</small></div>
+          <div class="panel-label reveal" style="--d:.28s">九阶段状态机 · 按研究顺序走 · 一步也不跳</div>
+          <div class="stage-phases reveal" style="--d:.31s">
+            <span class="ph1">01–03 定题取材<small>先把问题说清，再查文献、找数据</small></span>
+            <span class="ph2">04–06 整理校核<small>清洗数据，把单位、坐标和地质背景逐项对齐</small></span>
+            <span class="ph3">07–09 结论自查<small>看证据够不够，再成稿、复核、交付</small></span>
           </div>
-          <div class="gate-line reveal" style="--d:.74s">决策门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>不满足就停，不硬算。</div>
+          <div class="stage-matrix">
+            <div class="stage-node sp1 reveal" style="--d:.34s"><b>01</b><strong>冻结请求</strong><small>freeze</small></div>
+            <div class="stage-node sp1 gate reveal" style="--d:.38s"><b>02</b><strong>路由与审计来源</strong><small>gate·准入</small></div>
+            <div class="stage-node sp1 reveal" style="--d:.42s"><b>03</b><strong>获取与逐记录证据</strong><small>acquire</small></div>
+            <div class="stage-node sp2 reveal" style="--d:.46s"><b>04</b><strong>确定性过滤</strong><small>filter</small></div>
+            <div class="stage-node sp2 gate reveal" style="--d:.5s"><b>05</b><strong>单位·删失·坐标 QC</strong><small>gate·QC</small></div>
+            <div class="stage-node sp2 reveal" style="--d:.54s"><b>06</b><strong>地质空间匹配</strong><small>GLiM</small></div>
+            <div class="stage-node sp3 reveal" style="--d:.58s"><b>07</b><strong>置信度与候选异常</strong><small>robust-z</small></div>
+            <div class="stage-node sp3 reveal" style="--d:.62s"><b>08</b><strong>产出 16 项文件</strong><small>build</small></div>
+            <div class="stage-node sp3 gate reveal" style="--d:.66s"><b>09</b><strong>验证与边界报告</strong><small>gate·验证</small></div>
+          </div>
+          <div class="gate-line reveal" style="--d:.74s">三道门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>有一道过不了，就停，不硬算。</div>
         </div>
         <div class="core-right">
-          <div class="panel-label gold reveal" style="--d:.3s">核心机制 · 可审计 iteration loop：验证驱动、证据修复</div>
-          <div class="loop-ring reveal" style="--d:.42s">
-            <div class="ring-track"></div>
-            <span class="ring-arrow ra1">➤</span><span class="ring-arrow ra2">➤</span><span class="ring-arrow ra3">➤</span><span class="ring-arrow ra4">➤</span>
-            <div class="ring-node rn1"><b>VALIDATE</b><span>十六文件逐项验证</span></div>
-            <div class="ring-node rn2"><b>BACKLOG</b><span>问题登记 iteration_backlog</span></div>
-            <div class="ring-node rn3"><b>ROUTE</b><span>定向修复 · 补证据补规则</span></div>
-            <div class="ring-node rn4"><b>RERUN + DIFF</b><span>重跑并按 item_id 比较</span></div>
-            <div class="ring-core"><b>≤ 2 轮</b><span>问题不降即停<br>→ needs_human_review</span></div>
+          <div class="panel-label gold reveal" style="--d:.3s">核心机制 · 可审计 iteration loop：问题不藏着，修复有记录</div>
+          <div class="loop-flow reveal" style="--d:.42s">
+            <div class="lf-step"><b>① 验证 VALIDATE</b><span>把结果摊开，对照 16 项文件要求，缺什么就记什么</span></div>
+            <div class="lf-arrow">发现问题</div>
+            <div class="lf-step gold"><b>② 登记 BACKLOG</b><span>每个问题都写进 iteration_backlog，也写清准备怎么处理</span></div>
+            <div class="lf-arrow">分清问题类型</div>
+            <div class="lf-step gold"><b>③ 定向修复 ROUTE</b><span>缺来源证据就补证据，缺确定性规则就补规则，没登记的不乱动</span></div>
+            <div class="lf-arrow">修复完成</div>
+            <div class="lf-step"><b>④ 重跑比对 RERUN + DIFF</b><span>从头再跑一遍，用 item_id 看每个问题到底有没有解决</span></div>
+            <div class="lf-return">问题确实变少 → 沿左侧红色虚线回到 ①，再查一轮</div>
+            <div class="lf-stop">最多 2 轮 · 问题数没下降就停，标记 <code>needs_human_review</code>，交给人工复核</div>
           </div>
         </div>
       </div>
-      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">8 个稳定失败状态 · 可编程处理</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
-      <div class="footer-line"><span>SKILL.md 状态机与 loop 原文 · 每步输入输出可验证</span><span>修复生成新运行 · 原始证据不可变</span></div>
-      <template class="notes-template">把总图中间那段循环展开，就是 Skill 的内核，也是它区别于“长提示词”的地方：前向是九阶段确定性状态机，严格按序、三道决策门不满足就停——来源准入不过整源拒绝，背景组不足二十不做异常判定，出图验证不过拒绝交付。反向是核心机制可审计 iteration loop：验证器按十六文件契约逐项检查产物，问题显式登记进 iteration_backlog，按问题码定向路由修复——补来源证据或补确定性规则，然后重跑并按稳定 item_id 比较，最多两轮，问题不降即停并转人工复核。所有失败收敛到八个稳定状态码，Agent 和 CI 都能编程处理；修复生成新运行，原始证据永远不可变。下一页看 loop 真实留下的台账。</template>
+      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">8 个稳定失败状态 · 每种失败都有明确去处</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
+      <div class="footer-line"><span>状态机和 loop 都写在 SKILL.md · 每步输入输出都能验证</span><span>修复另开新运行 · 原始证据始终不动</span></div>
+      <template class="notes-template">这一页看 Skill 怎么干活。左边像严谨的研究者：冻结问题、查来源、拿证据，再清洗、校对，证据足够才计算异常、生成 16 项产物。三道门有一道不过，就停，不拿缺证据的数据硬算。右边讲出问题怎么办：不藏着，先写进 iteration_backlog，说明处置办法；再按类型补证据或规则，重新运行，用 item_id 对照问题是否解决。最多 2 轮；问题不减少，就标记 needs_human_review，交给人复核。8 个稳定失败状态让程序知道下一步；旧证据不改，每次修复都另开新运行。下一页看 loop 真实留下的台账。</template>
     </section>
 
-    <section class="slide" data-title="质检留痕：11 万个问题，全部记在案">
+    <section class="slide" data-title="高质量数据的 Loop 自动修复机制">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">10 · LOOP EVIDENCE / REAL ITERATION BACKLOG</div>
-      <h2 class="title reveal" style="--d:.18s">质检留痕：11 万个问题，全部记在案</h2>
+      <h2 class="title reveal" style="--d:.18s">高质量数据的 Loop 自动修复机制</h2>
       <div class="artifact-strip reveal" style="--d:.26s">
         <span class="strip-label">为什么要记账</span>
-        <span class="strip-note">自动清洗数据最怕两件事：<b>悄悄丢数据</b>、<b>悄悄改数值</b>。我们的规矩是——发现的每个问题都记进 <code class="gold">iteration_backlog.csv</code>，怎么处置写明白；修复只出新版本，旧数据一个字节不动。</span>
+        <span class="strip-note">自动清洗数据最怕两件事：<b>悄悄丢数据</b>、<b>悄悄改数值</b>。我们的规矩是——发现的每个问题都记进 <code class="gold">iteration_backlog.csv</code>，按性质分三路处置：能修的自动修、要判断的转人工、属于科学事实的原样保留，<b>既不遗漏，也不歪曲</b>。</span>
       </div>
       <div class="backlog-wrap reveal" style="--d:.4s">
         <div class="backlog-head">
@@ -1266,59 +1354,75 @@
         <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>转人工 · 25,352</code><p>坐标系、方法语义这类要专家拿主意的，自动修复到此止步。</p></article>
         <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>科学事实 · 248</code><p>删失值、背景样本太少——这是数据本来的样子，不算失败，更不许编个数“修好”。</p></article>
       </div>
-      <div class="footer-line"><span>修复只出新版本，旧账原样保留</span><span>反复修不好 → 转人工复核</span></div>
+      <div class="footer-line"><span>每次修复都会生成新版本，原始记录完整保留</span><span>自动处理仍无法解决的问题，交由人工复核</span></div>
       <template class="notes-template">上一页说 loop 每轮都在登记问题，这一页解释为什么要记账：自动清洗数据最怕两件事——悄悄丢数据、悄悄改数值。所以我们规定：发现的每个问题都记进账本，怎么处置写明白。这次世界图谱运行记下了十一万四千八百零七个问题，没有一条被悄悄扔掉。屏幕上是账本的真实片段：方法适用范围没写清、单位换算失败、缺地质背景、坐标不可用、低于检出限——每一条都有编号、严重度、去向和处置规则。三类分流：八万九千多个能自动修，两万五千多个要专家过目，还有二百四十八个是数据本来的样子，不算失败，更不许编个数“修好”。修复只出新版本，旧数据一个字节不动。账本里最难修的一类问题是“这个区域根本没数据”——下一页讲我们怎么补。</template>
     </section>
 
-    <section class="slide" data-title="来源对决：哪里缺数据，新来源先过擂台">
+    <section class="slide" data-title="数据的对抗审计机制">
       <div class="bg-field"></div><div class="grid-field"></div>
-      <div class="eyebrow reveal" style="--d:.08s">11 · MECHANISM / SOURCE DISCOVERY DUEL</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">来源对决：哪里缺数据，新来源先过擂台</h2>
+      <div class="eyebrow reveal" style="--d:.08s">11 · MECHANISM / ADVERSARIAL SOURCE AUDIT</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">数据的对抗审计机制</h2>
       <div class="figrow">
-        <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig5-white-duel.png" alt="来源对决机制图：侦察、质疑、裁判"></div>
+        <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig5-white-duel.png" alt="新数据来源的对抗审计：侦察提名、质疑挑刺、裁判打分"></div>
         <div class="fig-side">
-          <div class="fs-card reveal" style="--d:.42s"><b>裁判手里只有一张计分牌</b><span>开放许可 <strong>+3</strong> · DOI 能解析 <strong>+2</strong> · 稀缺介质 <strong>+2</strong> · 正好补空白区 <strong>+2</strong> · 质疑没答上来 <strong>−3</strong></span></div>
-          <div class="fs-card reveal" style="--d:.52s;--fc:var(--gold)"><b>及格线写死在代码里</b><span><strong>7 分以上</strong>准许起草接入方案 · <strong>4–6 分</strong>回去补材料 · <strong>不到 4 分</strong>淘汰</span></div>
-          <div class="fs-card reveal" style="--d:.62s"><b>真实一战</b><span>候选拿不出许可证据，<strong>4 分被打回</strong>；侦察员补上 CC0 证明，<strong>10 分过关</strong></span></div>
-          <div class="fs-card reveal" style="--d:.72s;--fc:var(--red)"><b>赢了擂台也进不了库</b><span>对决赢家只拿到“起草资格”，<strong>正式接入必须人签字</strong>。</span></div>
+          <div class="fs-card reveal" style="--d:.42s"><b>第一层 · 侦察员只管提候选</b><span>针对账本中的数据空白区域尽量多提名新来源，<strong>宁可多报，不可漏报</strong>。</span></div>
+          <div class="fs-card reveal" style="--d:.52s;--fc:var(--gold)"><b>第二层 · 质疑员只管挑问题</b><span>按<strong>许可、介质、区域</strong>逐条质询候选来源；答不上来的记为反对意见，直接计入扣分。</span></div>
+          <div class="fs-card reveal" style="--d:.62s;--fc:var(--red)"><b>第三层 · 裁判只按明文规则打分</b><span>开放许可 <strong>+3</strong> · DOI 可访问 <strong>+2</strong> · 补稀缺样品 <strong>+2</strong> · 填数据空白 <strong>+2</strong> · 质疑未答复 <strong>−3</strong>；≥7 分起草接入，4–6 分补材料，&lt;4 分淘汰。实例：某候选缺许可证明得 4 分，补上 CC0 证明后 10 分过关。</span></div>
+          <div class="fs-card reveal" style="--d:.72s"><b>三层独立 + 人工终审</b><span>提名、质疑、裁决<strong>三个角色互不隶属</strong>，谁也不能替对方做决定；评分通过只是起草资格，正式入库仍须负责人确认。</span></div>
         </div>
       </div>
-      <div class="footer-line"><span>侦察提名 · 质疑挑刺 · 代码算分</span><span>赢了擂台 ≠ 进库 · 接入要人签字</span></div>
-      <template class="notes-template">上一页账本里最难修的问题是“这个区域根本没数据”——这一页就是解法，也是我们治“数据挤在欧洲”的办法。缺数据的时候，新来源要先过一场擂台：侦察员负责多提名，质疑员按许可、介质、区域逐条挑刺，裁判不是人、是一段代码，手里只有一张计分牌——开放许可加三分，DOI 能解析加二，稀缺介质加二，正好补空白区加二，质疑没答上来的减三分。七分以上准许起草接入方案，四到六分回去补材料，不到四分淘汰。右边有场真实的：一个候选拿不出许可证据被四分打回，侦察员补上 CC0 证明后十分过关。但赢了擂台也进不了库——它只拿到起草资格，正式接入必须人签字，这道门机器过不去。</template>
+      <div class="footer-line"><span>一方提候选、一方挑问题、裁判按明文规则打分 · 三层相互制衡</span><span>评分通过后仍不能直接入库，还要由负责人审核确认</span></div>
+      <template class="notes-template">上一页账本里最难修的问题是“这个区域根本没数据”——这一页就是解法，也是我们治“数据挤在欧洲”的办法。新来源的可信度靠对抗审计保证，三层角色互相独立：第一层侦察员只管提候选，面向数据空白区尽量多提名，宁多勿漏；第二层质疑员只管挑问题，按许可、介质、区域逐条质询，答不上来的记为反对意见；第三层裁判不是人、是一段代码，只按明文计分牌裁决——开放许可加三，DOI 可访问加二，稀缺样品加二，填补空白加二，质疑未答复减三。七分以上起草接入方案，四到六分回去补材料，不到四分淘汰。右边有场真实的：一个候选拿不出许可证据被四分打回，补上 CC0 证明后十分过关。三层谁也不能替对方做决定，而且赢了也进不了库——只拿到起草资格，正式接入必须负责人签字，这道门机器过不去。</template>
     </section>
 
-    <section class="slide" data-title="出门前最后一关：报告里的每个数字，先对账">
+    <section class="slide" data-title="最后一层门禁：报告里的每个数字，先对账">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">12 · MECHANISM / CLAIM LEDGER</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">出门前最后一关：报告里的每个数字，先对账</h2>
-      <div class="figwrap reveal" style="--d:.32s"><img src="assets/figures/fig3-white-sieve.png" alt="断言台账套筛机制图"></div>
-      <div class="footer-line"><span>每个数字回产物里重算一遍 · 对上了才放行</span><span>查无出处的数字 → 整份报告作废重写</span></div>
-      <template class="notes-template">问题登记了、缺口补上了，出门前还有最后一关：断言台账。前面数据库那页说过，一个数字要绑定介质、方法、检出限和来源才算科研数据——这条规矩在出口处也要执行一遍：报告里的每一个数字，都拿回产物里重算，对上了才放行。台账还管两句容易说过头的话：异常不能说成污染，只能说候选异常；置信度不是“测得对的概率”，是这批数据的证据有多硬。只要报告里出现一个产物里查不到的数字，整份作废重写。数字对上还不够，话也不能说过头——审图不过，就不出版。</template>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">最后一层门禁：报告里的每个数字，先对账</h2>
+      <div class="ledger-board reveal" style="--d:.32s">
+        <div class="lb-left">
+          <div class="lb-cap">断言台账 · 出版前逐条核验</div>
+          <div class="sv-tray"><b>报告草稿</b><small>正文中出现的全部待核数字</small></div>
+          <div class="sv-drop">▼</div>
+          <div class="sv-tray"><b><em>8</em> 条断言 · 逐条溯源复算</b><small>每条断言都是一项可核验的判断指标：数值、出处、证据链缺一不可，全部追溯到运行产物并独立重算</small></div>
+          <div class="sv-drop">▼</div>
+          <div class="sv-tray out"><b><em>0</em> 条无据数字流出</b><small>产物中无法复算的数字，一律拦下</small></div>
+        </div>
+        <div class="lb-right">
+          <div class="lb-callout"><b>置信度 0.87 ≠ 正确概率</b><span>它度量的是这批数据证据链的完备程度</span></div>
+          <div class="lb-row"><span><b>「共 <i>1,422</i> 条标准化记录」</b><small>溯源复算，数值一致</small></span><em>✓ 核验通过</em></div>
+          <div class="lb-row warn"><span><b>「发现 <i>16</i> 个异常」</b><small>须限定为「候选异常」，不得表述为污染定论</small></span><em>◐ 限定口径后通过</em></div>
+          <div class="lb-row fail"><span><b>「获取 <i>25,000</i> 条高质量记录」</b><small>运行产物中无对应数据，判为无据断言</small></span><em>✕ 驳回 · 整稿重写</em></div>
+          <div class="lb-note"><strong>数值一致只是底线：</strong>表述超出证据边界——把候选写成定论、把置信度当作概率——同样无法通过出版核验。</div>
+        </div>
+      </div>
+      <div class="footer-line"><span>报告中的每个数字都要回到计算结果中核对，确认一致后才能使用</span><span>发现无法核实来源的数字，整份报告退回核查并重写</span></div>
+      <template class="notes-template">问题登记了、缺口补上了，出版前还有最后一层门禁：断言台账。报告里的八条断言，每一条都是一项可核验的判断指标——数值、出处、证据链缺一不可。前面数据库那页说过，一个数字要绑定介质、方法、检出限和来源才算科研数据——这条规矩在出口处也要执行一遍：报告里的每一个数字，都拿回产物里重算，对上了才放行。台账还管两句容易说过头的话：异常不能说成污染，只能说候选异常；置信度不是“测得对的概率”，是这批数据的证据有多硬。只要报告里出现一个产物里查不到的数字，整份作废重写。数字对上还不够，话也不能说过头——审图不过，就不出版。</template>
     </section>
 
-    <section class="slide" data-title="一套 Skill，四个分析域的实测产物">
+    <section class="slide" data-title="同一套方法在四个地区的实际运行结果">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">13 · RESULTS / WORLD · CHINA · EUROPE · US</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">一套 Skill，四个分析域的实测产物：全部交付</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">同一套方法在四个地区的实际运行结果</h2>
       <div class="rgrid">
         <div class="rcard reveal" style="--d:.3s">
           <img src="assets/region-maps/world-card.png" alt="世界图谱实测界面">
-          <div class="rmeta"><h3>世界</h3><div class="rline">可上图测定 <b>198,445</b></div><div class="rline">物理采样点 <b>42,566</b></div><div class="rline">候选异常 <b>3,446</b></div><a class="ropen" href="live/world-atlas.html" target="_blank" rel="noopener">打开交互图谱 ↗</a></div>
+          <div class="rmeta"><h3>世界</h3><div class="rline">可在地图中显示的测定记录 <b>198,445</b></div><div class="rline">实际采样位置 <b>42,566</b></div><div class="rline">需要进一步复核的异常记录 <b>3,446</b></div><a class="ropen" href="live/world-atlas.html" target="_blank" rel="noopener">查看交互地图 ↗</a></div>
         </div>
         <div class="rcard reveal" style="--d:.4s">
           <img src="assets/region-maps/china-card.png" alt="中国图谱实测界面">
-          <div class="rmeta"><h3>中国</h3><div class="rline">区域测定 <b>24,536</b></div><div class="rline">候选异常 <b>740</b>（富集 386 · 亏损 354）</div><div class="rline">异常区域 <b>78</b></div><a class="ropen" href="live/china-atlas.html" target="_blank" rel="noopener">打开交互图谱 ↗</a></div>
+          <div class="rmeta"><h3>中国</h3><div class="rline">测定记录 <b>24,536</b></div><div class="rline">需要进一步复核的异常记录 <b>740</b><small>其中偏高 386 条、偏低 354 条</small></div><div class="rline">异常集中区域 <b>78</b></div><a class="ropen" href="live/china-atlas.html" target="_blank" rel="noopener">查看交互地图 ↗</a></div>
         </div>
         <div class="rcard reveal" style="--d:.5s">
           <img src="assets/region-maps/europe-card.png" alt="欧洲图谱实测界面">
-          <div class="rmeta"><h3>欧洲</h3><div class="rline">区域测定 <b>47,459</b></div><div class="rline">物理采样点 <b>8,302</b></div><div class="rline">候选异常 <b>981</b></div><a class="ropen" href="live/europe-atlas.html" target="_blank" rel="noopener">打开交互图谱 ↗</a></div>
+          <div class="rmeta"><h3>欧洲</h3><div class="rline">测定记录 <b>47,459</b></div><div class="rline">实际采样位置 <b>8,302</b></div><div class="rline">需要进一步复核的异常记录 <b>981</b></div><a class="ropen" href="live/europe-atlas.html" target="_blank" rel="noopener">查看交互地图 ↗</a></div>
         </div>
         <div class="rcard reveal" style="--d:.6s">
           <img src="assets/region-maps/us-card.png" alt="美国图谱实测界面">
-          <div class="rmeta"><h3>美国</h3><div class="rline">区域测定 <b>91,458</b></div><div class="rline">物理采样点 <b>24,701</b></div><div class="rline">候选异常 <b>1,398</b></div><a class="ropen" href="live/us-atlas.html" target="_blank" rel="noopener">打开交互图谱 ↗</a></div>
+          <div class="rmeta"><h3>美国</h3><div class="rline">测定记录 <b>91,458</b></div><div class="rline">实际采样位置 <b>24,701</b></div><div class="rline">需要进一步复核的异常记录 <b>1,398</b></div><a class="ropen" href="live/us-atlas.html" target="_blank" rel="noopener">查看交互地图 ↗</a></div>
         </div>
       </div>
-      <div class="footer-line"><span>真实运行产物 · 评委可现场打开交互图谱</span><span>区域产物口径 · 与全库总数不混算</span></div>
+      <div class="footer-line"><span>以上数据均来自实际运行结果，可打开对应地图查看</span><span>各地区按照各自范围统计，不能与全球总数直接相加或对比</span></div>
       <template class="notes-template">机制讲完，看结果：同一套 Skill 换个分析域就能再跑，这四张卡片都是实测界面。世界产物十九万八千多条可上图测定、四万两千多个物理采样点、三千四百多个候选异常；中国区域两万四千多条测定、七百四十个候选异常，富集与亏损分开；欧洲四万七千多条测定、九百八十一个候选异常；美国九万一千多条区域测定、两万四千多个物理采样点、一千三百九十八个候选异常，来源覆盖 USGS 全国地球化学库、CONUS 土壤和各州水质门户。每张卡片都能现场点开对应的交互图谱操作。这些是区域产物口径，和全库总数不混算。</template>
     </section>
 
@@ -1328,55 +1432,45 @@
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">运行实况：Qwen3.8-Max 挂载 Skill 干活</h2>
       <div class="run-layout">
         <div class="run-stages">
-          <div class="run-step reveal" style="--d:.9s"><i>1</i><span>读 SKILL.md · 冻结请求<small>freeze request</small></span></div>
-          <div class="run-step reveal" style="--d:1.5s"><i>2</i><span>路由与审计来源<small>source_router · source_audit</small></span></div>
-          <div class="run-step reveal" style="--d:2.1s"><i>3</i><span>采集与逐记录证据<small>run_atlas_request</small></span></div>
-          <div class="run-step reveal" style="--d:2.7s"><i>4</i><span>汇总与确定性过滤<small>deterministic filter</small></span></div>
-          <div class="run-step reveal" style="--d:3.3s"><i>5</i><span>标准化 · 单位坐标 QC<small>standardize_geochemistry</small></span></div>
-          <div class="run-step reveal" style="--d:3.9s"><i>6</i><span>地质空间匹配<small>GLiM geo match</small></span></div>
-          <div class="run-step reveal" style="--d:4.5s"><i>7</i><span>置信度与候选异常<small>confidence · robust-z</small></span></div>
-          <div class="run-step reveal" style="--d:5.1s"><i>8</i><span>可视化与十六文件产物<small>build_interactive_map</small></span></div>
-          <div class="run-step reveal" style="--d:5.7s"><i>9</i><span>验证 · loop 收敛<small>validate_outputs · backlog</small></span></div>
+          <div class="run-step reveal" style="--d:.4s"><i>1</i><span>读 SKILL.md · 冻结请求<small>freeze request</small></span></div>
+          <div class="run-step reveal" style="--d:1.7s"><i>2</i><span>路由与审计来源<small>source_router · source_audit</small></span></div>
+          <div class="run-step reveal" style="--d:3.4s"><i>3</i><span>采集与逐记录证据<small>run_atlas_request</small></span></div>
+          <div class="run-step reveal" style="--d:5.3s"><i>4</i><span>汇总与确定性过滤<small>deterministic filter</small></span></div>
+          <div class="run-step reveal" style="--d:6s"><i>5</i><span>标准化 · 单位坐标 QC<small>standardize_geochemistry</small></span></div>
+          <div class="run-step reveal" style="--d:8.7s"><i>6</i><span>地质空间匹配<small>GLiM geo match</small></span></div>
+          <div class="run-step reveal" style="--d:9.4s"><i>7</i><span>置信度与候选异常<small>confidence · robust-z</small></span></div>
+          <div class="run-step reveal" style="--d:10.7s"><i>8</i><span>可视化与十六文件产物<small>build_interactive_map</small></span></div>
+          <div class="run-step reveal" style="--d:12.1s"><i>9</i><span>验证 · loop 收敛<small>validate_outputs · backlog</small></span></div>
         </div>
         <div class="run-term reveal" style="--d:.2s">
           <div class="term-bar"><i></i><i></i><i></i><span>opencode — qwen3.8-max · skill: global-geochemical-atlas</span></div>
-          <div class="term-body">
-            <div class="run-line cmd reveal" style="--d:.4s">$ opencode run -m qwen3.8-max "全球 Cr·Cu·Ni·Pb·Zn 元素图谱与异常筛查"<span class="run-caret"></span></div>
-            <div class="run-line reveal" style="--d:.9s">[agent] 发现并读取 <b>SKILL.md</b> → 进入九阶段状态机 · profile 冻结</div>
-            <div class="run-line reveal" style="--d:1.5s">[agent] <b>source_router.py</b> + <b>source_audit.py</b> → <span class="num">15/15</span> 来源过准入 <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:2.1s">[agent] <b>run_atlas_request.py</b> → <span class="num">44,536</span> 条测定 · 逐记录证据 <span class="num">100%</span> <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:2.7s">[agent] 确定性过滤 → <span class="num">44,510</span> 条进入范围 · 排除项留痕 <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:3.3s">[agent] <b>standardize_geochemistry.py</b> → <b>mg/kg</b> · <b>WGS84</b> · qualifier 保留 <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:3.9s">[agent] <b>GLiM</b> 地质单元匹配 · 1° 网格聚合 <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:4.5s">[agent] 置信度 overall <span class="num">0.874</span> · robust-z 候选 <span class="num">535</span> <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:5.1s">[agent] <b>build_interactive_map.py</b> + <b>render_visualization.py</b> → <span class="num">15/15</span> 产物 <span class="ok">✓</span></div>
-            <div class="run-line reveal" style="--d:5.7s">[agent] <b>validate_outputs.py</b> <span class="ok">PASS</span> · backlog 登记 <span class="num">114,807</span> 项 · 无阻塞 → 交付</div>
-            <div class="run-line done reveal" style="--d:6.3s">AGENT DONE · 模型只做编排与解读，科学计算全部由确定性脚本完成</div>
+          <div class="term-body" id="runFeed">
+            <div class="run-line cmd">$ opencode run -m qwen3.8-max "全球 Cr·Cu·Ni·Pb·Zn 元素图谱与异常筛查"<span class="run-caret"></span></div>
           </div>
         </div>
         <div class="run-outs">
-          <div class="out-card reveal" style="--d:5.2s"><img src="assets/global-overview-1920x1080.png" alt="交互图谱"><span>✓ 交互图谱 + 3D</span></div>
-          <div class="out-card reveal" style="--d:5.6s"><img src="assets/database-view-1920x1080.png" alt="标准化数据库"><span>✓ 标准化数据库</span></div>
-          <div class="out-card reveal" style="--d:6s"><img src="assets/anomaly-view-1920x1080.png" alt="异常识别"><span>✓ 异常识别结果</span></div>
-          <div class="out-badge reveal" style="--d:6.5s">五项交付就绪</div>
+          <div class="out-card reveal" style="--d:14.5s"><img src="assets/global-overview-1920x1080.png" alt="交互图谱"><span>✓ 交互图谱 + 3D</span></div>
+          <div class="out-card reveal" style="--d:15.3s"><img src="assets/database-view-1920x1080.png" alt="标准化数据库"><span>✓ 标准化数据库</span></div>
+          <div class="out-card reveal" style="--d:16.1s"><img src="assets/anomaly-view-1920x1080.png" alt="异常识别"><span>✓ 异常识别结果</span></div>
+          <div class="out-badge reveal" style="--d:17.2s">五项交付就绪</div>
         </div>
       </div>
       <div class="run-progress"><i></i></div>
       <div class="run-stats">
-        <span class="reveal" style="--d:6.5s">来源 <b>15/15</b></span>
-        <span class="reveal" style="--d:6.62s">可上图测定 <b>44,510</b></span>
-        <span class="reveal" style="--d:6.74s">综合置信度 <b>0.874</b></span>
-        <span class="reveal" style="--d:6.86s">候选异常 <b>535</b></span>
-        <span class="reveal" style="--d:6.98s">产物 <b>15/15 · PASS</b></span>
+        <span class="reveal" style="--d:17.2s">来源 <b>15/15</b></span>
+        <span class="reveal" style="--d:17.35s">可上图测定 <b>44,510</b></span>
+        <span class="reveal" style="--d:17.5s">综合置信度 <b>0.874</b></span>
+        <span class="reveal" style="--d:17.65s">候选异常 <b>535</b></span>
+        <span class="reveal" style="--d:17.8s">产物 <b>16/16 · PASS</b></span>
       </div>
-      <div class="footer-line"><span>搜集 → 汇总 → 标准化 → 分析 → 可视化 → 验证，全程留痕</span><span>OpenCode 有 / 无 Skill 对照评测已实测 · 重新进入本页可重放</span></div>
-      <template class="notes-template">这是通用 Agent 用我们 Skill 干活的实况：Qwen3.8-Max 在 OpenCode 里挂载 global-geochemical-atlas，接到任务后自己读 SKILL.md、进入九阶段状态机——路由审计来源、采集带证据的测定、确定性过滤、标准化、地质匹配、置信度与异常、生成产物、验证收敛，右侧产出实时就绪：交互图谱、标准化数据库、异常识别，五项交付齐活。关键分工是：模型只做编排与解读，单位、坐标、QC、异常判定这些科学计算全部由确定性脚本完成，所以换任何兼容 Agent 结果一致。我们做过 OpenCode 有无 Skill 的对照评测，提升是实测的。</template>
+      <div class="footer-line"><span>数据搜集、整理、分析和验证，每一步都有记录可查</span><span>已比较 OpenCode 使用和不使用 Skill 的结果；重新打开本页可再次播放</span></div>
+      <template class="notes-template">这是通用 Agent 用我们 Skill 干活的实况：Qwen3.8-Max 在 OpenCode 里挂载 global-geochemical-atlas，接到任务后自己读 SKILL.md、进入九阶段状态机——路由审计来源、采集带证据的测定、确定性过滤、标准化、地质匹配、置信度与异常、生成产物、验证收敛。注意日志中间那两行 loop：第一次验证发现两项不通过，问题登记进账本、定向修复、重跑比对，第一轮就收敛归零——这就是前面讲的修复循环在真实运行中的样子。右侧产出实时就绪：交互图谱、标准化数据库、异常识别，五项交付齐活。关键分工是：模型只做编排与解读，单位、坐标、QC、异常判定这些科学计算全部由确定性脚本完成，所以换任何兼容 Agent 结果一致。我们做过 OpenCode 有无 Skill 的对照评测，提升是实测的。</template>
     </section>
 
     <section class="slide map-slide" data-title="时序演化图谱：地质富集，还是工业活动？">
       <div class="map-shell" data-auto="1" style="--fallback:url('assets/world-temporal-1920x1080.png')"><iframe data-src="live/world-temporal.html?autoplay=1" title="全球时序演化可交互地图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">15 · TEMPORAL ATLAS / GEOGENIC VS ANTHROPOGENIC</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">时序演化图谱：地质富集，还是工业活动？</h2></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">15 · TEMPORAL ATLAS / GEOGENIC VS ANTHROPOGENIC</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">时序演化图谱：地质富集，还是工业活动？<span class="live-badge">● 1986–2024 自动播放中</span></h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">退出交互</button><a class="open-map" href="live/world-temporal.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">区域对比</span><span>异常成因</span><span>采样史回放</span><span>站点演变</span></div>
       <div class="trace-rail reveal" style="--d:.46s">
@@ -1396,7 +1490,7 @@
         <div class="as-row" style="--ac:#8bb4ff"><span>混合叠加 · 难以分开</span><b>256</b></div>
         <div class="as-row" style="--ac:var(--muted)"><span>亏损候选 · 不做归因</span><b>1,958</b></div>
       </div>
-      <div class="footer-line"><span>进入本页自动播放采样史回放 · 时间轴正在走</span><span>分不清就不下结论，只报缺口</span></div>
+      <div class="footer-line"><span>进入本页后，地图会自动播放不同年份的采样变化</span><span>如果现有证据不足以判断原因，就只说明缺少哪些数据，不勉强下结论</span></div>
       <template class="notes-template">创新之二：时序演化图谱，回答环境监测最大的争议——“超标还是高背景”。比如西南地区土壤砷本底就高，按国标 GB 15618-2018 的通用筛选值口径会被误判成异常——这也是国内高背景区研究反复讨论的问题。逻辑三步：第一步，标准化数据库本来就带采样时间，七万条带时间戳，覆盖一九八六到二〇二四；第二步，异常识别叠加时序信息做成因归因——同一格网早期与晚期对比，判断富集是母质先天决定，还是工业排放后天造成；第三步，做成可交互的时间演变地图——大家现在看到时间轴已经自动在走，这就是采样史回放；四个视图：区域对比、异常成因、采样史回放、站点演变。右下是实测归因：母质高背景一百二十五个，疑似人为输入八十三个，证据不足一千零二十六个——分不清就不下结论，只报缺口。</template>
     </section>
 
@@ -1404,8 +1498,13 @@
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">16 · FROM ATLAS TO PAPERS / FULL RESEARCH WORKFLOW</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">从图谱、发现到论文：一条完整的科研流程</h2>
-      <div class="paper-flow reveal" style="--d:.28s">
-        <span>提出 <b class="mint">31</b> 个研究选题</span><i>→</i><span>小范围验证</span><i>→</i><span>查阅文献</span><i>→</i><span>深入分析</span><i>→</i><span>完成 <b class="mint">5</b> 篇论文初稿</span><i>→</i><span class="pf-gate">通过 7 项质量检查</span><i>→</i><span>按期刊要求完善</span><i>→</i><span>补充缺失数据</span>
+      <div class="research-line reveal" style="--d:.28s">
+        <div class="rl-stage"><b>① 图谱扫描 · 发现现象</b><span>在冻结数据上扫遍元素 × 介质 × 区域，让反常信号自己冒出来</span></div><i>→</i>
+        <div class="rl-stage"><b>② 提出选题 · 31 个候选</b><span>把现象写成可检验的问题，按证据排队，不靠人工点题</span></div><i>→</i>
+        <div class="rl-stage gold"><b>③ 试点验证</b><span>先用小成本验一遍，站不住的题当场停掉</span></div><i>→</i>
+        <div class="rl-stage gold"><b>④ 复现闸门 · 文献核对</b><span>已知结论复现不过，就没资格谈新发现</span></div><i>→</i>
+        <div class="rl-stage"><b>⑤ 多角色接力 · 成稿 5 篇</b><span>统计、文献、写作、绘图各司其职，把题目做深</span></div><i>→</i>
+        <div class="rl-stage red"><b>⑥ 独立审稿 · 缺口回灌</b><span>换一类模型做 7 项检查，缺口送回采集队列 ↺</span></div>
       </div>
       <div class="paper-grid">
         <article class="paper-card reveal" style="--d:.4s">
@@ -1429,9 +1528,8 @@
           <div class="pc-body"><b>研究五 · 复核海洋微量金属的分布规律</b><p>重新分析国际海洋调查数据，能否得到相同的锌分布规律？</p><small>结果显示，深层海水中的锌含量约为表层的 5.57 倍，并再次观察到太平洋整体高于大西洋的规律；已形成 9 页论文初稿。</small></div>
         </article>
       </div>
-      <div class="paper-strip reveal" style="--d:.84s"><span>已完成 <b>5</b> 篇论文初稿，共 <b>46</b> 页、<b>24</b> 幅图和 <b>9</b> 张表</span><span>研究选题来自数据中发现的现象</span><span>数据不足之处将用于指导下一轮采样</span></div>
-      <div class="footer-line"><span>五篇论文 PDF：门户「科学发现」章节可直接打开</span><span>结论为筛查级 · 投稿前待领域专家复核</span></div>
-      <template class="notes-template">创新之一的完整版：这套数据真的能长出科学。流程一条线：discovery_mode 从冻结快照自动提出三十一个候选选题——零人工点题，试点、文献核实、统计深化后成稿五篇，每篇过 a–g 七项质量审计门，再做期刊对标，缺口回灌下一轮采集。五篇各回答一个明确的科学问题：P1，工业时代的汞铅是否仍滞留在欧洲表土——表土底土比一点三六，腐殖质五倍多；P2，欧洲式铅富集在南半球存在吗——同一套统计当天跑到澳大利亚，答案是不存在；P3，XRF 和 ICP-MS 能直接混用吗——铬偏移近三倍，我们给出经外部验证的传输模型；P4，全球砷风险图在共址点位可信吗——两个独立调查同址一致到百分之二；P5，海洋微量金属剖面能否零调参复现——连太平洋大于大西洋的盆地结构都全对。合计四十六页、二十四图九表，结论为筛查级，投稿前待领域专家复核。</template>
+      <div class="paper-strip reveal" style="--d:.84s"><span>已完成 <b>5</b> 篇论文初稿，共 <b>46</b> 页、<b>24</b> 幅图和 <b>9</b> 张表</span><span>题目不是人拍脑袋定的，是从图谱现象里长出来的</span><span>论文暴露的数据缺口，会回到下一轮采样</span></div>
+      <template class="notes-template">可以把这条线想成一个不知疲倦的研究生。它先扫图谱，把异常现象变成 31 个可检验的问题；但不会一上来就写论文，而是先小规模试跑，免得整套分析花在站不住的题上。接着是防幻觉的硬门：已知结论复现不过，就不准讲新发现。通过后，选题、大纲、文献、分节写作、精修和绘图由不同角色接力。写稿的模型不审自己，换一类模型独立做 7 项检查；审稿意见和已验证事实写进研究记忆，下一轮接着改。现在已经形成 5 篇初稿、46 页、24 幅图和 9 张表——比如研究一发现工业时代的汞铅仍滞留在欧洲表土，研究三证明两种检测方法的数据不能直接混用。结论为筛查级，投稿前待领域专家复核。论文暴露的数据缺口再进入采集队列，于是数据、发现、论文又回到数据。</template>
     </section>
 
     <section class="slide" data-title="相比同类数据库，我们的优势在哪里">
@@ -1454,17 +1552,47 @@
         </table>
       </div>
       <div class="loop-states" style="top:78.5%">
-        <article class="loop-state reveal" style="--d:.9s"><code>更全面 · 四介质两半球</code><p>同一 schema 覆盖土壤、沉积物、淡水与海水；五篇论文横跨欧洲、澳洲与全球大洋。</p></article>
-        <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>更可靠 · 缺失也可审计</code><p>100% 许可证 / SHA-256 / 置信度 / QC；36.3% 缺方法记录逐条记 missing_reason——「缺什么」本身也是数据。</p></article>
-        <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>更统一 · 一晚两大洲</code><p>P1→P2 同一脚本框架跑欧洲与澳洲；已知科学全部自动复现后才输出新问题。</p></article>
+        <article class="loop-state reveal" style="--d:.9s"><code>更全面 · 可扩展可定制</code><p>同一 schema 覆盖土壤、沉积物、淡水与海水四种介质；新来源按声明式接入规范随时加入，元素、区域、介质均可按需定制。</p></article>
+        <article class="loop-state reveal" style="--d:.98s;--state:var(--gold)"><code>更可靠 · 每条数据带完整证据链</code><p>每条记录都有许可证、SHA-256 哈希、置信度与 QC 标记，可回溯到原始来源；36.3% 缺方法的记录逐条记明缺失原因——「缺什么」本身也是数据。</p></article>
+        <article class="loop-state reveal" style="--d:1.06s;--state:var(--red)"><code>更统一 · 跨来源跨介质可比</code><p>36 个来源统一到同一单位、坐标系和字段口径，不同调查的数据可以直接放在一起比较；同一脚本框架一晚跑完欧洲与澳洲两大洲。</p></article>
       </div>
-      <div class="footer-line"><span>外部数字全部核验自官方页面（georoc.eu 计数器 · USGS · geotraces.org · BGS/GA/JRC），访问日期 2026-08-20</span><span>出处：database-comparison.md</span></div>
+      <div class="footer-line"><span>本页引用的外部数字均已对照 GEOROC、USGS、GEOTRACES、BGS、GA 和 JRC 官方页面核实，查阅日期：2026 年 8 月 20 日</span><span>详细出处见 database-comparison.md</span></div>
       <template class="notes-template">最后回答一个定位问题：这个东西和 EarthChem、GEOROC、USGS 数据库有什么区别？诚实地说，论绝对规模我们不竞争——GEOROC 官网计数器四千二百七十万值、七十万样品，EarthChem 门户约五千万值、超一百万样品，USGS 数据库一百五十二万样品、五千九百万测定，都是几十年机构积累。但它们要么大而不统一：文献和档案汇编，一百零八种方法二十五个实验室并存，池化风险用户自负；要么统一而窄：GEOTRACES 最新 2025 数据产品一百二十三个航次、四千余站，但只有海水；GEMAS、FOREGS、NGSA、LUCAS 这些大洲级调查内部很统一，调查之间互不可比。跨源、跨介质、记录级可审计的统一层此前不存在——OneGeochemistry 发起人自己说，全球数据碎片化在数千个库里、几乎不可复用。这正是我们补上的空位：百分之百行级哈希、许可证、四维置信度，连缺失都逐条记账。表格最右两列是本轮新增的维度：带成因归因的时序演化、从数据直接长出的五篇论文——在同类系统里都没有对应物。所有外部数字都核验自官方页面，出处清单在仓库里。</template>
+    </section>
+
+    <section class="slide" data-title="作品展示">
+      <div class="bg-field"></div><div class="grid-field"></div>
+      <div class="eyebrow reveal" style="--d:.08s">18 · SHOWCASE / ALL DELIVERABLES AT A GLANCE</div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">作品展示</h2>
+      <div class="showcase-grid">
+        <a class="show-card poster reveal" style="--d:.32s" href="finals/Global-Geochemical-Atlas-Poster.pdf" target="_blank" rel="noopener">
+          <img src="assets/showcase/poster-thumb.png" alt="决赛海报">
+          <span><b>决赛海报</b><small>方案 · 机制 · 实测结果一页总览</small></span>
+        </a>
+        <a class="show-card reveal" style="--d:.42s" href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">
+          <img src="assets/showcase/repo-shot.png" alt="开源代码仓库">
+          <span><b>开源代码仓库</b><small>SKILL.md · 契约 · 脚本 · 评测全部在库</small></span>
+        </a>
+        <a class="show-card reveal" style="--d:.5s" href="https://chembot.zgca.com/" target="_blank" rel="noopener">
+          <img src="assets/showcase/site-shot.png" alt="团队官网">
+          <span><b>团队官网</b><small>chembot.zgca.com · 项目与团队主页</small></span>
+        </a>
+        <a class="show-card reveal" style="--d:.58s" href="live/world-atlas.html" target="_blank" rel="noopener">
+          <img src="assets/global-overview-1920x1080.png" alt="全球交互图谱">
+          <span><b>全球交互图谱</b><small>198,445 条测定 · 可离线使用</small></span>
+        </a>
+        <a class="show-card wide reveal" style="--d:.66s" href="live/world-temporal.html" target="_blank" rel="noopener">
+          <img src="assets/world-temporal-1920x1080.png" alt="时序演化图谱">
+          <span><b>时序演化图谱</b><small>1986–2024 · 地质富集 vs 工业活动 · 进入第 17 页自动播放</small></span>
+        </a>
+      </div>
+      <div class="footer-line"><span>五件作品全部在线可访问，点击任意卡片即可打开</span><span>压缩包内含全部文件，可离线查看</span></div>
+      <template class="notes-template">这一页把全部作品放在一起：决赛海报一页总览方案与结果；演示仓库完全开源，幻灯片、四域图谱和五篇论文成果都在里面；团队官网有项目和成员介绍；最右是两件实测产物——全球交互图谱和时序演化图谱，都可以现场点开操作。所有内容在线可访问，也打包了离线版本。</template>
     </section>
 
     <section class="slide" data-title="团队 · 词元代理人队">
       <div class="bg-field"></div><div class="grid-field"></div>
-      <div class="eyebrow reveal" style="--d:.08s">18 · TEAM / TOKEN AGENTS</div>
+      <div class="eyebrow reveal" style="--d:.08s">19 · TEAM / TOKEN AGENTS</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">团队 · 词元代理人队</h2>
       <div class="team-grid">
         <article class="team-card reveal" style="--d:.32s"><img src="assets/team/bio_lyf.png" alt="李雨峰"><b>李雨峰</b><span class="en">YUFENG LI</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">师从严骏驰教授；研究方向为图机器学习、具身智能与最优传输理论</span></article>
@@ -1480,7 +1608,7 @@
 
     <section class="slide" data-title="感谢各位评委，请批评指正">
       <div class="bg-field"></div><div class="grid-field"></div>
-      <div class="eyebrow reveal" style="--d:.08s">19 · THANK YOU / FIVE DELIVERABLES + TWO INNOVATIONS</div>
+      <div class="eyebrow reveal" style="--d:.08s">20 · THANK YOU / FIVE DELIVERABLES + TWO INNOVATIONS</div>
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">感谢各位评委，请批评指正</h2>
       <div class="thanks-grid">
         <div class="deliv-list">
@@ -1510,7 +1638,7 @@
   <div class="controls" role="toolbar" aria-label="演示控制">
     <a href="./" title="返回门户首页">⌂</a>
     <button type="button" id="prev" title="上一页">←</button>
-    <span class="slide-count" id="slideCount">1 / 21</span>
+    <span class="slide-count" id="slideCount">1 / 22</span>
     <button type="button" id="next" title="下一页">→</button>
     <button type="button" id="notesBtn" title="讲稿 N">N</button>
     <button type="button" class="timer" id="timer" title="计时 T">03:00</button>
@@ -1554,6 +1682,7 @@
           const autoToggle = slides[index].querySelector('.map-toggle');
           if (autoToggle) autoToggle.textContent = '退出交互';
         }
+        if (runSlide) { if (slides[index] === runSlide) startRunFeed(); else stopRunFeed(); }
         location.hash = String(index + 1);
         count.textContent = `${index + 1} / ${slides.length}`;
         progress.style.width = `${((index + 1) / slides.length) * 100}%`;
@@ -1615,11 +1744,94 @@
         }
       });
 
-      // 网页访客场景：压缩“运行实况”页的入场延时，避免长时间近空白
-      document.querySelectorAll('.slide[data-title^="运行实况"] .reveal').forEach(el => {
-        const d = parseFloat(el.style.getPropertyValue('--d')) || 0;
-        el.style.setProperty('--d', (d * 0.55).toFixed(2) + 's');
-      });
+      // 运行实况页：JS 逐行输出完整运行日志，自动滚动
+      const RUN_LINES = [
+        '[boot] 检测到 <b>skills/global-geochemical-atlas/SKILL.md</b> · 版本与哈希核对通过',
+        '[boot] 加载九阶段状态机：freeze → route → acquire → filter → standardize → geo-match → confidence → build → validate',
+        '[boot] 加载 16 项文件契约与 8 个稳定失败状态定义',
+        '[freeze] 任务请求规范化：元素 <b>Cr·Cu·Ni·Pb·Zn</b> × 全球 × 全介质',
+        '[freeze] profile.json 冻结 · <b>SHA-256</b> 指纹写入 · 任务中途不可改动 <span class="ok">✓</span>',
+        '[route] <b>source_router.py</b> → 按元素 × 介质 × 区域匹配候选来源：<span class="num">15</span> 个',
+        '[route] 读取跨次记忆 memory.json → 按历史成功率排定采集顺序',
+        '[audit] <b>source_audit.py</b> 逐源三查：使用许可 / 数据版本 / 文件哈希',
+        '[audit] foregs_topsoil <span class="ok">✓</span> · gemas_agri <span class="ok">✓</span> · lucas_2018 <span class="ok">✓</span> · ngsa_australia <span class="ok">✓</span>',
+        '[audit] usgs_ngdb <span class="ok">✓</span> · geotraces_seawater <span class="ok">✓</span> · 其余 9 源逐一核验中……',
+        '[audit] <span class="num">15/15</span> 来源全部通过准入门 · 拒绝 0 个 <span class="ok">✓</span>',
+        '[acquire] <b>run_atlas_request.py</b> 启动 · 并行拉取 15 个来源',
+        '[acquire] foregs_topsoil → 下载完成 · 每条记录登记来源 URL + 行号证据',
+        '[acquire] gemas_agri → 下载完成 · 原始文件哈希入库',
+        '[acquire] lucas_2018 → 下载完成 · 许可证副本随数据归档',
+        '[acquire] ngsa_australia → 下载完成 · 检出限与 qualifier 原样保留',
+        '[acquire] 其余来源依次完成 · 全部带逐记录证据',
+        '[acquire] 合计 <span class="num">44,536</span> 条测定 · 逐记录证据 <span class="num">100%</span> <span class="ok">✓</span>',
+        '[filter] 确定性过滤：超出任务范围与重复记录排除并留痕',
+        '[filter] <span class="num">44,536</span> → <span class="num">44,510</span> 条进入处理 · 排除 26 条全部写入排除清单 <span class="ok">✓</span>',
+        '[std] <b>standardize_geochemistry.py</b> · 单位词表加载 · 目标基准 <b>mg/kg</b>',
+        '[std] Cr：ppm→mg/kg 换算 · 换算因子与公式留档',
+        '[std] Cu：wt%→mg/kg 换算 · 原始值 original 列永不覆盖',
+        '[std] Ni：单位已一致 · 直接通过',
+        '[std] Pb：删失值保留 qualifier 与检出限 · 不填 0 · 不用 LOD/2',
+        '[std] Zn：三种消解方法标注 method 字段 · 不同方法不混池',
+        '[std] 五元素标准化完成 <span class="ok">✓</span> 失败换算保留失败状态，不猜值',
+        '[qc] 坐标 QC：统一 <b>WGS84</b> · CRS 缺失记录标记待修',
+        '[qc] 位置精度分级写入 location_precision_m 字段',
+        '[qc] 单位·删失·坐标三类 QC 标记全部落库 <span class="ok">✓</span>',
+        '[geo] <b>GLiM</b> 岩性图加载（Hartmann–Moosdorf 2012）',
+        '[geo] 空间匹配：每条记录标注所在地质单元 · 1° 网格聚合 <span class="ok">✓</span>',
+        '[conf] 四维置信度：来源证据 / 分析可用性 / 空间可用性 / 工作流可用性',
+        '[conf] overall <span class="num">0.874</span> · 逐记录置信度写入 confidence 列 <span class="ok">✓</span>',
+        '[anomaly] 背景组：同元素·同介质·同测量基准 · 对数尺度中位数 + MAD',
+        '[anomaly] robust-z ≥ 3.5 判为候选（Iglewicz–Hoaglin 1993）· BH-FDR q ≤ 0.10',
+        '[anomaly] 候选异常 <span class="num">535</span> 条 · 每条附判定依据卡片 <span class="ok">✓</span>',
+        '[build] <b>build_interactive_map.py</b> → 交互图谱 atlas.html（自包含单文件）',
+        '[build] geochemistry.csv · source_manifest.json · confidence_report.json',
+        '[build] anomaly_candidates.csv · iteration_backlog.csv · boundary_report.md',
+        '[build] <b>render_visualization.py</b> → 分布图 · 密度图 · 3D 地球仪视图',
+        '[build] <span class="num">16</span> 项产物全部生成 <span class="ok">✓</span>',
+        '[validate] <b>validate_outputs.py</b> → 16 项契约逐项核对',
+        '[validate] <span class="warn">2 项不通过</span>：方法出处缺失（METHOD_SCOPE_MISSING）· 坐标不可用（COORDINATE_UNUSABLE）',
+        '[loop#1] 问题登记 <b>iteration_backlog</b> · 按问题码定向分派修复脚本',
+        '[loop#1] 修复 1/2：依据来源证据补方法出处 · 不得把数据集级方法伪装为记录级',
+        '[loop#1] 修复 2/2：从原始来源恢复坐标与 CRS · 只有区域名称时保留缺失，不填质心',
+        '[loop#1] 重跑受影响阶段 · 按 item_id 逐条比对新旧结果',
+        '[loop#1] 问题 <span class="warn">2</span> → <span class="ok">0</span> · 第 1 轮收敛 · 修复生成新版本，原始数据一字节不动 <span class="ok">✓</span>',
+        '[validate] 复验 16/16 <span class="ok">PASS</span>',
+        '[backlog] 全量质检账本：<span class="num">114,807</span> 项 · 无一遗漏',
+        '[backlog] 自动修复 <span class="num">89,207</span> · 转人工 <span class="num">25,352</span> · 科学事实 <span class="num">248</span>',
+        '[memory] 跨次记忆更新：15 个来源的成功率与失败原因写入 memory.json',
+        '[memory] 下次运行将优先使用可靠来源 · 屡次失败来源自动降权',
+        '[ledger] <b>claim_ledger</b> 断言台账：报告草稿提取待核数字 <span class="num">8</span> 条',
+        '[ledger] 逐条溯源到运行产物并独立复算 · 数值一致 8/8',
+        '[ledger] 口径检查：候选异常不得写成污染定论 · 置信度不得当作概率',
+        '[ledger] <span class="num">0</span> 条无据数字流出 <span class="ok">✓</span>',
+        '[deliver] 交付 1 可交互图谱 · 交付 2 标准化数据库 · 交付 3 来源与置信度',
+        '[deliver] 交付 4 异常识别结果 · 交付 5 可复用 Skill 文档',
+        'AGENT DONE · 模型只做编排与解读，科学计算全部由确定性脚本完成'
+      ];
+      const runFeed = document.getElementById('runFeed');
+      const runSlide = runFeed ? runFeed.closest('.slide') : null;
+      let feedTimer = null;
+      function stopRunFeed() { clearInterval(feedTimer); feedTimer = null; }
+      function startRunFeed() {
+        stopRunFeed();
+        runFeed.querySelectorAll('.run-line:not(.cmd)').forEach(el => el.remove());
+        let li = 0;
+        const push = () => {
+          if (li >= RUN_LINES.length) { stopRunFeed(); return; }
+          const div = document.createElement('div');
+          div.className = 'run-line' + (li === RUN_LINES.length - 1 ? ' done' : '');
+          div.innerHTML = RUN_LINES[li++];
+          runFeed.appendChild(div);
+          runFeed.scrollTop = runFeed.scrollHeight;
+        };
+        if (document.documentElement.classList.contains('static')) {
+          while (li < RUN_LINES.length) push();
+          runFeed.scrollTop = runFeed.scrollHeight;
+          return;
+        }
+        push();
+        feedTimer = setInterval(push, 280);
+      }
 
       // 滚轮与触摸滑动翻页（交互地图激活时不拦截）
       let wheelLock = 0;

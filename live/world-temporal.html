@@ -1599,6 +1599,8 @@ if (new URLSearchParams(location.search).get("autoplay") === "1") {
   const autoKick = () => {
     try {
       if (!autoKicked) { setMode("replay"); fitWorldView(); autoKicked = true; }
+      /* 幻灯片场景放慢播放：约 1.5 年/秒，38 年时间轴走完约 25 秒，采样点渐进浮现 */
+      state.speed = 1.5;
       if (!state.playing) $("playBtn").click();
     } catch (e) {}
   };
