@@ -537,6 +537,8 @@
     .lf-step.gold { --lc: var(--gold); border-color: rgba(246,195,68,.4); }
     .lf-arrow { padding-left: 1em; color: var(--gold); font: 750 clamp(8.5px,.85vw,15px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-arrow::before { content: "↓ "; color: var(--mint); font-weight: 800; }
+    .lf-entry { margin-left: -2.6em; padding: .4em .9em .1em 1em; color: var(--red); font: 800 clamp(9px,.92vw,16px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-entry b { color: #ffd9d9; font-weight: 850; }
     .lf-return { margin-left: -2.6em; padding: .5em .9em .5em 2.9em; color: #ff9b9b; font: 780 clamp(9px,.9vw,16px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-stop { padding: .6em .95em; border: 1px solid rgba(246,195,68,.5); border-radius: .55vw; background: rgba(42,31,6,.6); color: var(--gold); font: 800 clamp(9.5px,.95vw,17px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-stop code { color: var(--red); font: 750 .92em/1 "DejaVu Sans Mono",monospace; }
@@ -1288,43 +1290,44 @@
       <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">Skill 内核：按研究步骤往前走，发现问题就回头修</h2>
       <div class="core-split">
         <div class="core-left">
-          <div class="panel-label reveal" style="--d:.28s">九阶段状态机 · 按研究顺序走 · 一步也不跳</div>
+          <div class="panel-label reveal" style="--d:.28s">往前走：九个步骤，三道门 · 一步也不跳</div>
           <div class="stage-phases reveal" style="--d:.31s">
             <span class="ph1">01–03 定题取材<small>先把问题说清，再查文献、找数据</small></span>
             <span class="ph2">04–06 整理校核<small>清洗数据，把单位、坐标和地质背景逐项对齐</small></span>
             <span class="ph3">07–09 结论自查<small>看证据够不够，再成稿、复核、交付</small></span>
           </div>
           <div class="stage-matrix">
-            <div class="stage-node sp1 reveal" style="--d:.34s"><b>01</b><strong>冻结请求</strong><small>freeze</small></div>
-            <div class="stage-node sp1 gate reveal" style="--d:.38s"><b>02</b><strong>路由与审计来源</strong><small>gate·准入</small></div>
-            <div class="stage-node sp1 reveal" style="--d:.42s"><b>03</b><strong>获取与逐记录证据</strong><small>acquire</small></div>
-            <div class="stage-node sp2 reveal" style="--d:.46s"><b>04</b><strong>确定性过滤</strong><small>filter</small></div>
-            <div class="stage-node sp2 gate reveal" style="--d:.5s"><b>05</b><strong>单位·删失·坐标 QC</strong><small>gate·QC</small></div>
-            <div class="stage-node sp2 reveal" style="--d:.54s"><b>06</b><strong>地质空间匹配</strong><small>GLiM</small></div>
-            <div class="stage-node sp3 reveal" style="--d:.58s"><b>07</b><strong>置信度与候选异常</strong><small>robust-z</small></div>
+            <div class="stage-node sp1 reveal" style="--d:.34s"><b>01</b><strong>锁定问题</strong><small>freeze</small></div>
+            <div class="stage-node sp1 gate reveal" style="--d:.38s"><b>02</b><strong>审查数据来源</strong><small>gate·准入</small></div>
+            <div class="stage-node sp1 reveal" style="--d:.42s"><b>03</b><strong>取数并留证据</strong><small>acquire</small></div>
+            <div class="stage-node sp2 reveal" style="--d:.46s"><b>04</b><strong>筛掉不合格记录</strong><small>filter</small></div>
+            <div class="stage-node sp2 gate reveal" style="--d:.5s"><b>05</b><strong>校单位、查坐标</strong><small>gate·QC</small></div>
+            <div class="stage-node sp2 reveal" style="--d:.54s"><b>06</b><strong>对上地质底图</strong><small>GLiM</small></div>
+            <div class="stage-node sp3 reveal" style="--d:.58s"><b>07</b><strong>打分、找异常</strong><small>robust-z</small></div>
             <div class="stage-node sp3 reveal" style="--d:.62s"><b>08</b><strong>产出 16 项文件</strong><small>build</small></div>
-            <div class="stage-node sp3 gate reveal" style="--d:.66s"><b>09</b><strong>验证与边界报告</strong><small>gate·验证</small></div>
+            <div class="stage-node sp3 gate reveal" style="--d:.66s"><b>09</b><strong>逐项验收</strong><small>gate·验证</small></div>
           </div>
-          <div class="gate-line reveal" style="--d:.74s">三道门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>有一道过不了，就停，不硬算。</div>
+          <div class="gate-line reveal" style="--d:.74s">三道门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>有一道不过就停，不硬算。</div>
         </div>
         <div class="core-right">
-          <div class="panel-label gold reveal" style="--d:.3s">核心机制 · 可审计 iteration loop：问题不藏着，修复有记录</div>
+          <div class="panel-label gold reveal" style="--d:.3s">回头修：第 09 步验收不过，怎么办？</div>
           <div class="loop-flow reveal" style="--d:.42s">
-            <div class="lf-step"><b>① 验证 VALIDATE</b><span>把结果摊开，对照 16 项文件要求，缺什么就记什么</span></div>
-            <div class="lf-arrow">发现问题</div>
-            <div class="lf-step gold"><b>② 登记 BACKLOG</b><span>每个问题都写进 iteration_backlog，也写清准备怎么处理</span></div>
-            <div class="lf-arrow">分清问题类型</div>
-            <div class="lf-step gold"><b>③ 定向修复 ROUTE</b><span>缺来源证据就补证据，缺确定性规则就补规则，没登记的不乱动</span></div>
-            <div class="lf-arrow">修复完成</div>
-            <div class="lf-step"><b>④ 重跑比对 RERUN + DIFF</b><span>从头再跑一遍，用 item_id 看每个问题到底有没有解决</span></div>
-            <div class="lf-return">问题确实变少 → 沿左侧红色虚线回到 ①，再查一轮</div>
-            <div class="lf-stop">最多 2 轮 · 问题数没下降就停，标记 <code>needs_human_review</code>，交给人工复核</div>
+            <div class="lf-entry"><b>09 验收不过</b> → 进入 ①</div>
+            <div class="lf-step"><b>① 列清问题<small style="opacity:.55;font-weight:700"> · validate</small></b><span>接住第 09 步的验收结果：16 项产物哪里没过，一条条列出来</span></div>
+            <div class="lf-arrow">逐条登记</div>
+            <div class="lf-step gold"><b>② 记在案<small style="opacity:.55;font-weight:700"> · backlog</small></b><span>每条都写进 iteration_backlog：修什么、怎么修，先说清楚</span></div>
+            <div class="lf-arrow">按登记的方法修</div>
+            <div class="lf-step gold"><b>③ 对症修<small style="opacity:.55;font-weight:700"> · route</small></b><span>缺证据就补证据，缺规则就补规则；没登记的，一律不碰</span></div>
+            <div class="lf-arrow">修完重跑</div>
+            <div class="lf-step"><b>④ 再验收<small style="opacity:.55;font-weight:700"> · rerun+diff</small></b><span>重跑一遍，按 item_id 核对老问题有没有消失</span></div>
+            <div class="lf-return">仍有问题 → 沿红色虚线再进 ①；修干净了 → 回到左栏 09 交付</div>
+            <div class="lf-stop">最多 2 轮 · 问题没变少，就承认修不动——标记 <code>needs_human_review</code>，交给人</div>
           </div>
         </div>
       </div>
-      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">8 个稳定失败状态 · 每种失败都有明确去处</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
-      <div class="footer-line"><span>状态机和 loop 都写在 SKILL.md · 每步输入输出都能验证</span><span>修复另开新运行 · 原始证据始终不动</span></div>
-      <template class="notes-template">这一页看 Skill 怎么干活。左边像严谨的研究者：冻结问题、查来源、拿证据，再清洗、校对，证据足够才计算异常、生成 16 项产物。三道门有一道不过，就停，不拿缺证据的数据硬算。右边讲出问题怎么办：不藏着，先写进 iteration_backlog，说明处置办法；再按类型补证据或规则，重新运行，用 item_id 对照问题是否解决。最多 2 轮；问题不减少，就标记 needs_human_review，交给人复核。8 个稳定失败状态让程序知道下一步；旧证据不改，每次修复都另开新运行。下一页看 loop 真实留下的台账。</template>
+      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">停下来时会说清楚为什么停 · 8 种失败状态</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
+      <div class="footer-line"><span>09 验收不过 → 回头修 → 回到 09 再验</span><span>每次修复另开新运行 · 原始证据不改</span></div>
+      <template class="notes-template">左边是 Skill 往前走的路线：锁定问题、审来源、取数据，再筛选、质检、对地质底图，打分、出文件、逐项验收。三道门都得过：来源准入、背景组 n ≥ 20、出图验证；少一道就停，不硬算。那第 09 步验收不过怎么办？问题先记进 iteration_backlog，按登记的方法修，修完回到 09 重验。最多 2 轮；问题没变少，就标记 needs_human_review，交给人。我们允许失败，但不允许悄悄失败。下一页看 loop 真实留下的台账。</template>
     </section>
 
     <section class="slide" data-title="高质量数据的 Loop 自动修复机制">
