@@ -30,13 +30,15 @@
     button, a { font: inherit; }
     button { color: inherit; }
 
+    /* 固定 1920×1080 设计画布，JS 按视口等比缩放（信箱式留边）。
+       画布内一律使用设计像素，渲染结果与屏幕尺寸/宽高比无关。 */
     .stage {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(100vw, calc(100vh * var(--slide-ratio)));
-      height: min(100vh, calc(100vw / var(--slide-ratio)));
-      transform: translate(-50%, -50%);
+      width: 1920px;
+      height: 1080px;
+      transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
       overflow: hidden;
       background: var(--bg);
       box-shadow: 0 0 100px rgba(0, 0, 0, .72);
@@ -87,20 +89,20 @@
     }
 
     .eyebrow {
-      font: 700 clamp(11px, 1.25vw, 22px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
+      font: 700 clamp(11px, 24px, 22px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
       letter-spacing: .16em;
       color: var(--mint);
       text-transform: uppercase;
     }
     .title {
       margin: 1.2% 0 0;
-      font-size: clamp(30px, 4.4vw, 80px);
+      font-size: clamp(30px, 84.48px, 80px);
       line-height: 1.08;
       letter-spacing: -.04em;
       font-weight: 850;
     }
     .display {
-      font: 850 clamp(46px, 7.1vw, 130px)/.9 "DejaVu Sans Mono", ui-monospace, monospace;
+      font: 850 clamp(46px, 136.32px, 130px)/.9 "DejaVu Sans Mono", ui-monospace, monospace;
       letter-spacing: -.06em;
     }
     .mono { font-family: "DejaVu Sans Mono", ui-monospace, monospace; }
@@ -119,7 +121,7 @@
       border-radius: 999px;
       background: rgba(3, 20, 27, .86);
       color: var(--ink);
-      font-size: clamp(11px, 1.15vw, 20px);
+      font-size: clamp(11px, 22.08px, 20px);
       font-weight: 730;
       backdrop-filter: blur(6px);
     }
@@ -146,7 +148,7 @@
       align-items: center;
       gap: 2em;
       color: var(--muted);
-      font: 600 clamp(9px, .9vw, 16px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
+      font: 600 clamp(9px, 17.28px, 16px)/1.2 "DejaVu Sans Mono", ui-monospace, monospace;
       z-index: 8;
     }
     .footer-line::before {
@@ -171,11 +173,11 @@
       background: radial-gradient(closest-side, rgba(105,245,230,.16), transparent 72%);
     }
     .cover-copy { position: relative; z-index: 2; width: 46%; padding-top: .5%; }
-    .cover .eyebrow { margin-top: 4.5%; font-size: clamp(10px, 1.02vw, 19px); letter-spacing: .12em; white-space: nowrap; }
-    .cover .title { margin-top: 2.6%; font-size: clamp(36px, 4.4vw, 82px); }
+    .cover .eyebrow { margin-top: 4.5%; font-size: clamp(10px, 19.58px, 19px); letter-spacing: .12em; white-space: nowrap; }
+    .cover .title { margin-top: 2.6%; font-size: clamp(36px, 84.48px, 82px); }
     .cover-lead {
       margin-top: 4.4%;
-      font-size: clamp(16px, 2.15vw, 40px);
+      font-size: clamp(16px, 41.28px, 40px);
       line-height: 1.28;
       font-weight: 760;
       white-space: nowrap;
@@ -185,16 +187,16 @@
       margin-top: 2.8%;
       max-width: 17em;
       color: var(--muted);
-      font-size: clamp(14px, 1.42vw, 26px);
+      font-size: clamp(14px, 27.26px, 26px);
       line-height: 1.55;
     }
     .cover-chips { position: absolute; z-index: 2; left: 4.3%; bottom: 10.8%; display: flex; gap: 1em; }
     .cover-flow { position: absolute; z-index: 2; left: 4.3%; right: 4.3%; bottom: 10.2%; display: flex; align-items: stretch; gap: .5em; }
-    .cover-flow .cf-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .32em; padding: .55em .5em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--cc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.88); }
-    .cover-flow .cf-step b { color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 830; white-space: nowrap; }
-    .cover-flow .cf-step small { color: var(--muted); font: 700 clamp(7px,.62vw,11px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .05em; white-space: nowrap; }
-    .cover-flow > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,1vw,18px); }
-    .formula-line { color: var(--ink); font: 800 clamp(11px,1.18vw,22px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .cover-flow .cf-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .32em; padding: .55em .5em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--cc, var(--mint)); border-radius: 9.6px; background: rgba(3,20,27,.88); }
+    .cover-flow .cf-step b { color: var(--ink); font-size: clamp(10px,19.2px,18px); font-weight: 830; white-space: nowrap; }
+    .cover-flow .cf-step small { color: var(--muted); font: 700 clamp(7px,11.9px,11px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .05em; white-space: nowrap; }
+    .cover-flow > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,19.2px,18px); }
+    .formula-line { color: var(--ink); font: 800 clamp(11px,22.66px,22px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
     .formula-line i { font-style: normal; color: var(--gold); padding: 0 .28em; }
     .formula-line b { color: var(--mint); }
     .cover-frame {
@@ -204,7 +206,7 @@
       top: 15%;
       width: 50%;
       border: 1px solid rgba(105,245,230,.42);
-      border-radius: 1vw;
+      border-radius: 19.2px;
       overflow: hidden;
       background: var(--panel);
       box-shadow: 0 34px 90px rgba(0,0,0,.6), 0 0 60px rgba(105,245,230,.12);
@@ -227,7 +229,7 @@
       border: 1px solid rgba(105,245,230,.25);
       border-radius: 999px;
       color: var(--muted);
-      font: 650 clamp(9px, .85vw, 15px)/1.2 "DejaVu Sans Mono", monospace;
+      font: 650 clamp(9px, 16.32px, 15px)/1.2 "DejaVu Sans Mono", monospace;
       white-space: nowrap;
       overflow: hidden;
     }
@@ -237,7 +239,7 @@
       align-items: center;
       gap: .55em;
       color: var(--mint);
-      font: 800 clamp(9px, .85vw, 15px)/1 "DejaVu Sans Mono", monospace;
+      font: 800 clamp(9px, 16.32px, 15px)/1 "DejaVu Sans Mono", monospace;
       letter-spacing: .1em;
     }
     .frame-live::before {
@@ -276,7 +278,7 @@
       padding: 2.2em 1.3em .95em;
       background: linear-gradient(0deg, rgba(3,20,27,.92), transparent);
       color: var(--ink);
-      font-size: clamp(10px, .95vw, 17px);
+      font-size: clamp(10px, 18.24px, 17px);
       font-weight: 730;
     }
     .frame-foot .mono { color: var(--mint); font-size: .88em; letter-spacing: .08em; }
@@ -289,9 +291,9 @@
       display: flex; align-items: center;
       padding: 0 2.2%;
       border: 1px solid rgba(105,245,230,.6);
-      border-radius: .8vw;
+      border-radius: 15.36px;
       background: rgba(3,20,27,.9);
-      font-size: clamp(12px, 1.35vw, 24px);
+      font-size: clamp(12px, 25.92px, 24px);
       white-space: nowrap;
       box-shadow: inset 0 0 30px rgba(105,245,230,.04);
     }
@@ -320,9 +322,9 @@
       background: radial-gradient(circle, rgba(11,38,48,.96), rgba(3,20,27,.92));
       box-shadow: 0 0 28px color-mix(in srgb, var(--node, var(--mint)) 18%, transparent);
     }
-    .engine-node b { color: var(--node, var(--mint)); font: 800 clamp(12px, 1.45vw, 26px)/1 "DejaVu Sans Mono", monospace; }
-    .engine-node strong { margin-top: .55em; font-size: clamp(14px, 1.7vw, 30px); }
-    .engine-node small { margin-top: .7em; color: var(--muted); font-size: clamp(9px, .95vw, 17px); }
+    .engine-node b { color: var(--node, var(--mint)); font: 800 clamp(12px, 27.84px, 26px)/1 "DejaVu Sans Mono", monospace; }
+    .engine-node strong { margin-top: .55em; font-size: clamp(14px, 32.64px, 30px); }
+    .engine-node small { margin-top: .7em; color: var(--muted); font-size: clamp(9px, 18.24px, 17px); }
     .output-hub { --node: var(--mint); aspect-ratio: 1; }
     .output-arc {
       position: absolute;
@@ -336,13 +338,13 @@
       width: 17%;
       display: flex; align-items: center; gap: .75em;
       color: var(--ink);
-      font-size: clamp(10px, 1.2vw, 21px);
+      font-size: clamp(10px, 23.04px, 21px);
       font-weight: 760;
     }
     .output-pill i { display: grid; place-items: center; width: 2.3em; aspect-ratio: 1; border: 1px solid var(--c, var(--mint)); border-radius: 50%; color: var(--c, var(--mint)); font-style: normal; box-shadow: 0 0 18px color-mix(in srgb, var(--c, var(--mint)) 22%, transparent); }
     .op1 { left: 2%; top: 36%; } .op2 { left: 22%; top: 14%; } .op3 { left: 42%; top: 2%; }
     .op4 { left: 63%; top: 14%; --c: var(--red); } .op5 { left: 82%; top: 36%; }
-    .boundary-line { position: absolute; left: 7%; right: 7%; bottom: 8.5%; text-align: center; color: var(--ink); font-size: clamp(15px, 1.7vw, 30px); font-weight: 730; }
+    .boundary-line { position: absolute; left: 7%; right: 7%; bottom: 8.5%; text-align: center; color: var(--ink); font-size: clamp(15px, 32.64px, 30px); font-weight: 730; }
 
     /* Live map slides */
     .map-slide { padding: 0; background: var(--bg); }
@@ -376,7 +378,7 @@
       cursor: pointer;
       text-decoration: none;
       color: var(--ink);
-      font: 750 clamp(10px, 1vw, 18px)/1 "DejaVu Sans Mono", monospace;
+      font: 750 clamp(10px, 19.2px, 18px)/1 "DejaVu Sans Mono", monospace;
       transition: border-color .2s, box-shadow .2s, transform .2s;
     }
     .map-toggle:hover, .open-map:hover { border-color: var(--mint); box-shadow: 0 0 20px rgba(105,245,230,.25); transform: translateY(-1px); }
@@ -390,14 +392,14 @@
       width: 37%;
       padding: 2.1% 2.4%;
       border: 1px solid rgba(105,245,230,.58);
-      border-radius: 1vw;
+      border-radius: 19.2px;
       background: linear-gradient(135deg, rgba(3,20,27,.97), rgba(11,38,48,.84));
       box-shadow: 0 18px 60px rgba(0,0,0,.35), inset 0 0 35px rgba(105,245,230,.035);
       backdrop-filter: blur(8px);
     }
-    .metric-label { color: var(--muted); font: 760 clamp(9px, 1vw, 18px)/1.2 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
+    .metric-label { color: var(--muted); font: 760 clamp(9px, 19.2px, 18px)/1.2 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
     .metric-rail .display { margin-top: .22em; color: var(--metric, var(--mint)); text-shadow: 0 0 24px color-mix(in srgb, var(--metric, var(--mint)) 40%, transparent); }
-    .metric-sub { margin-top: .6em; display: flex; flex-wrap: wrap; gap: .55em 1.2em; font-size: clamp(10px, 1.15vw, 21px); }
+    .metric-sub { margin-top: .6em; display: flex; flex-wrap: wrap; gap: .55em 1.2em; font-size: clamp(10px, 22.08px, 21px); }
     .metric-sub b { font-family: "DejaVu Sans Mono", monospace; color: var(--ink); }
     .science-callout {
       position: absolute;
@@ -407,35 +409,35 @@
       width: 50%;
       padding: 1.4% 1.8%;
       border: 1px solid var(--callout, var(--gold));
-      border-radius: .8vw;
+      border-radius: 15.36px;
       background: rgba(3,20,27,.92);
-      font-size: clamp(11px, 1.25vw, 22px);
+      font-size: clamp(11px, 24px, 22px);
       line-height: 1.5;
       box-shadow: 0 0 24px color-mix(in srgb, var(--callout, var(--gold)) 14%, transparent);
     }
     .science-callout b { display: block; color: var(--ink); }
-    .map-tabs { position: absolute; z-index: 6; right: 3.5%; top: 18%; display: flex; gap: 1.4em; font: 760 clamp(9px, 1vw, 18px)/1 "DejaVu Sans Mono", monospace; }
+    .map-tabs { position: absolute; z-index: 6; right: 3.5%; top: 18%; display: flex; gap: 1.4em; font: 760 clamp(9px, 19.2px, 18px)/1 "DejaVu Sans Mono", monospace; }
     .map-tabs span { color: var(--muted); } .map-tabs .active-tab { color: var(--mint); }
-    .candidate-legend { position: absolute; z-index: 6; right: 3.5%; top: 37%; padding: 1em 1.2em; border: 1px solid var(--grid); border-radius: .7vw; background: rgba(3,20,27,.9); font-size: clamp(10px, 1.05vw, 19px); }
+    .candidate-legend { position: absolute; z-index: 6; right: 3.5%; top: 37%; padding: 1em 1.2em; border: 1px solid var(--grid); border-radius: 13.44px; background: rgba(3,20,27,.9); font-size: clamp(10px, 20.16px, 19px); }
     .candidate-legend div { display: flex; align-items: center; gap: .75em; margin: .45em 0; }
     .candidate-legend i { width: .8em; aspect-ratio: 1; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
 
     /* Task breakdown slide */
     .brief-rows { position: absolute; left: 4%; right: 4%; top: 19%; display: grid; gap: 2.6%; }
-    .brief-row { display: grid; grid-template-columns: 11em 1fr; align-items: center; gap: 1.6em; min-height: 10.2vh; padding: .95em 1.6em; border: 1px solid color-mix(in srgb, var(--c, var(--mint)) 36%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
-    .brief-step b { display: block; color: var(--c, var(--mint)); font-size: clamp(16px,1.75vw,32px); font-weight: 820; line-height: 1.15; }
-    .brief-step small { display: block; margin-top: .45em; color: var(--muted); font: 700 clamp(8px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .brief-row { display: grid; grid-template-columns: 11em 1fr; align-items: center; gap: 1.6em; min-height: 110.16px; padding: .95em 1.6em; border: 1px solid color-mix(in srgb, var(--c, var(--mint)) 36%, transparent); border-radius: 17.28px; background: rgba(3,20,27,.88); }
+    .brief-step b { display: block; color: var(--c, var(--mint)); font-size: clamp(16px,33.6px,32px); font-weight: 820; line-height: 1.15; }
+    .brief-step small { display: block; margin-top: .45em; color: var(--muted); font: 700 clamp(8px,16.32px,15px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
     .brief-tags { display: flex; flex-wrap: wrap; gap: .62em .75em; }
-    .brief-tags span { padding: .42em .85em; border: 1px solid rgba(243,248,250,.22); border-radius: 999px; color: var(--ink); font-size: clamp(11px,1.12vw,21px); font-weight: 700; }
+    .brief-tags span { padding: .42em .85em; border: 1px solid rgba(243,248,250,.22); border-radius: 999px; color: var(--ink); font-size: clamp(11px,21.5px,21px); font-weight: 700; }
     .brief-tags .hl { border-color: color-mix(in srgb, var(--c, var(--mint)) 65%, transparent); color: var(--c, var(--mint)); }
-    .brief-bridge { position: absolute; left: 15%; right: 15%; top: 54.5%; text-align: center; color: var(--mint); font: 750 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; }
+    .brief-bridge { position: absolute; left: 15%; right: 15%; top: 54.5%; text-align: center; color: var(--mint); font: 750 clamp(10px,20.16px,19px)/1 "DejaVu Sans Mono",monospace; }
     .brief-bridge::before, .brief-bridge::after { content: ""; position: absolute; top: 50%; width: 28%; height: 1px; background: linear-gradient(90deg, transparent, rgba(105,245,230,.55)); }
     .brief-bridge::before { left: 0; }
     .brief-bridge::after { right: 0; transform: scaleX(-1); }
     .brief-outputs { position: absolute; left: 4%; right: 4%; bottom: 8.6%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.8%; }
     .brief-output { padding: .95em 1em .8em; border-top: 3px solid var(--c,var(--mint)); background: linear-gradient(180deg, rgba(11,38,48,.62), rgba(11,38,48,0)); }
-    .brief-output b { display: block; color: var(--c,var(--mint)); font: 800 clamp(9px,.92vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
-    .brief-output span { display: block; margin-top: .65em; color: var(--ink); font-size: clamp(11px,1.08vw,20px); font-weight: 760; line-height: 1.42; }
+    .brief-output b { display: block; color: var(--c,var(--mint)); font: 800 clamp(9px,17.66px,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .brief-output span { display: block; margin-top: .65em; color: var(--ink); font-size: clamp(11px,20.74px,20px); font-weight: 760; line-height: 1.42; }
     .trace-chain.plain .trace-step::after { display: none; }
 
     .repo-link {
@@ -448,7 +450,7 @@
       border-radius: 999px;
       color: var(--mint);
       text-decoration: none;
-      font: 700 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono", monospace;
+      font: 700 clamp(11px,20.16px,19px)/1 "DejaVu Sans Mono", monospace;
       background: rgba(3,20,27,.85);
       transition: border-color .2s, box-shadow .2s;
     }
@@ -456,64 +458,64 @@
     .repo-link::before { content: "⌥"; font-weight: 900; }
 
     .brand { display: flex; align-items: center; gap: 1em; }
-    .team-badge { margin-left: .4em; padding: .5em .9em; border: 1px solid rgba(246,195,68,.6); border-radius: 999px; color: var(--gold); font: 800 clamp(9px,.88vw,16px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .07em; background: rgba(3,20,27,.85); box-shadow: 0 0 16px rgba(246,195,68,.15); white-space: nowrap; }
+    .team-badge { margin-left: .4em; padding: .5em .9em; border: 1px solid rgba(246,195,68,.6); border-radius: 999px; color: var(--gold); font: 800 clamp(9px,16.9px,16px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .07em; background: rgba(3,20,27,.85); box-shadow: 0 0 16px rgba(246,195,68,.15); white-space: nowrap; }
     .cover .brand { max-width: 92%; flex-wrap: wrap; row-gap: .5em; position: relative; z-index: 3; }
-    .brand .logo { width: clamp(42px, 3.6vw, 66px); flex: none; filter: drop-shadow(0 0 14px rgba(105,245,230,.35)); }
-    .brand-name b { display: block; color: var(--ink); font: 800 clamp(13px,1.25vw,23px)/1.1 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
-    .brand-name small { display: block; margin-top: .4em; color: var(--muted); font: 700 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .16em; }
+    .brand .logo { width: clamp(42px, 69.12px, 66px); flex: none; filter: drop-shadow(0 0 14px rgba(105,245,230,.35)); }
+    .brand-name b { display: block; color: var(--ink); font: 800 clamp(13px,24px,23px)/1.1 "DejaVu Sans Mono", monospace; letter-spacing: .12em; }
+    .brand-name small { display: block; margin-top: .4em; color: var(--muted); font: 700 clamp(8px,15.36px,14px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .16em; }
 
     .source-grid { margin-top: 1em; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.3%; }
-    .source-col { padding: .85em 1em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--sc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.88); }
-    .source-col b { display: block; color: var(--sc, var(--mint)); font: 800 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .1em; }
-    .source-col span { display: block; margin-top: .6em; color: var(--ink); font-size: clamp(9px,.92vw,16px); font-weight: 700; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .source-col { padding: .85em 1em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--sc, var(--mint)); border-radius: 9.6px; background: rgba(3,20,27,.88); }
+    .source-col b { display: block; color: var(--sc, var(--mint)); font: 800 clamp(9px,18.24px,17px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .1em; }
+    .source-col span { display: block; margin-top: .6em; color: var(--ink); font-size: clamp(9px,17.66px,16px); font-weight: 700; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .source-col span i { font-style: normal; color: var(--muted); font-weight: 650; }
 
     .source-strip { position: absolute; left: 4%; right: 4%; top: 58%; }
-    .source-strip .strip-head { color: var(--muted); font: 750 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
+    .source-strip .strip-head { color: var(--muted); font: 750 clamp(9px,18.24px,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
     .source-strip .strip-head b { color: var(--mint); }
     .source-chips { margin-top: .8em; display: flex; flex-wrap: wrap; gap: .5em .55em; }
-    .source-chips span { padding: .42em .8em; border: 1px solid rgba(105,245,230,.26); border-radius: .5vw; background: rgba(3,20,27,.85); color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 700; }
+    .source-chips span { padding: .42em .8em; border: 1px solid rgba(105,245,230,.26); border-radius: 9.6px; background: rgba(3,20,27,.85); color: var(--ink); font-size: clamp(10px,19.2px,18px); font-weight: 700; }
     .source-chips span b { color: var(--mint); font-family: "DejaVu Sans Mono",monospace; }
 
     .pip { position: absolute; z-index: 7; display: block; text-decoration: none; }
     .pip-globe { right: 3%; top: 22.5%; width: 22%; }
     .pip-frame { position: relative; display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 1px solid rgba(105,245,230,.55); box-shadow: 0 14px 44px rgba(0,0,0,.5), 0 0 34px rgba(105,245,230,.16); background: #02090d; }
     .pip-frame iframe { position: absolute; left: -12%; top: -12%; width: 124%; height: 124%; border: 0; pointer-events: none; }
-    .pip-cap { display: block; margin-top: .7em; padding: .5em .85em; text-align: center; color: var(--ink); font: 750 clamp(9px,.92vw,16px)/1.3 "DejaVu Sans Mono",monospace; background: rgba(3,20,27,.9); border: 1px solid rgba(105,245,230,.28); border-radius: 999px; }
+    .pip-cap { display: block; margin-top: .7em; padding: .5em .85em; text-align: center; color: var(--ink); font: 750 clamp(9px,17.66px,16px)/1.3 "DejaVu Sans Mono",monospace; background: rgba(3,20,27,.9); border: 1px solid rgba(105,245,230,.28); border-radius: 999px; }
     .pip-cap b { color: var(--mint); }
     .pip-rect { right: 3.5%; top: 24%; width: 23%; }
-    .pip-rect .pip-frame { aspect-ratio: 16/9; border-radius: .7vw; }
+    .pip-rect .pip-frame { aspect-ratio: 16/9; border-radius: 13.44px; }
     .pip-rect .pip-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .conf-list { margin-top: 1em; display: grid; gap: .7em; }
-    .conf-item { display: grid; grid-template-columns: 9.5em 1fr auto; align-items: center; gap: .9em; font-size: clamp(10px,1vw,18px); }
-    .conf-item .conf-bar { height: .45vw; min-height: 4px; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .conf-item { display: grid; grid-template-columns: 9.5em 1fr auto; align-items: center; gap: .9em; font-size: clamp(10px,19.2px,18px); }
+    .conf-item .conf-bar { height: 8.64px; min-height: 4px; border-radius: 99px; background: var(--grid); overflow: hidden; }
     .conf-item .conf-bar i { display: block; height: 100%; width: var(--v); background: var(--c, var(--mint)); border-radius: inherit; box-shadow: 0 0 12px var(--c, var(--mint)); }
     .conf-item b { font-family: "DejaVu Sans Mono",monospace; color: var(--c, var(--mint)); }
     .conf-item small { color: var(--muted); }
 
     .stat-cloud { position: absolute; z-index: 6; right: 3.5%; top: 27%; width: 26%; display: grid; grid-template-columns: 1fr 1fr; gap: .7em; }
-    .stat-card { padding: .95em 1.05em; border: 1px solid rgba(105,245,230,.3); border-radius: .7vw; background: rgba(3,20,27,.92); }
-    .stat-card b { display: block; font: 850 clamp(16px,1.9vw,34px)/1 "DejaVu Sans Mono",monospace; color: var(--c, var(--mint)); }
-    .stat-card span { display: block; margin-top: .5em; color: var(--muted); font-size: clamp(9px,.9vw,16px); }
+    .stat-card { padding: .95em 1.05em; border: 1px solid rgba(105,245,230,.3); border-radius: 13.44px; background: rgba(3,20,27,.92); }
+    .stat-card b { display: block; font: 850 clamp(16px,36.48px,34px)/1 "DejaVu Sans Mono",monospace; color: var(--c, var(--mint)); }
+    .stat-card span { display: block; margin-top: .5em; color: var(--muted); font-size: clamp(9px,17.28px,16px); }
 
     .schema-cloud { position: absolute; z-index: 6; right: 3.5%; top: 26%; width: 34%; display: grid; grid-template-columns: repeat(3,1fr); gap: .55em; }
-    .schema-cloud span { display: flex; min-height: 3.35em; padding: .52em .45em; align-items: center; justify-content: center; flex-direction: column; gap: .2em; text-align: center; border: 1px solid rgba(105,245,230,.24); border-radius: .5vw; background: rgba(3,20,27,.9); color: var(--ink); }
-    .schema-cloud span b { display: block; font: 800 clamp(9px,.86vw,16px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .schema-cloud span small { display: block; color: rgba(235,246,247,.7); font: 500 clamp(7px,.62vw,12px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .schema-cloud .head-chip { grid-column: 1 / -1; min-height: auto; padding: .72em .6em; color: var(--mint); border-color: rgba(105,245,230,.5); font: 800 clamp(9px,.9vw,16px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud span { display: flex; min-height: 3.35em; padding: .52em .45em; align-items: center; justify-content: center; flex-direction: column; gap: .2em; text-align: center; border: 1px solid rgba(105,245,230,.24); border-radius: 9.6px; background: rgba(3,20,27,.9); color: var(--ink); }
+    .schema-cloud span b { display: block; font: 800 clamp(9px,16.51px,16px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud span small { display: block; color: rgba(235,246,247,.7); font: 500 clamp(7px,11.9px,12px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .schema-cloud .head-chip { grid-column: 1 / -1; min-height: auto; padding: .72em .6em; color: var(--mint); border-color: rgba(105,245,230,.5); font: 800 clamp(9px,17.28px,16px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .schema-cloud .wide { grid-column: 1 / -1; border-color: rgba(246,195,68,.55); }
     .schema-cloud .wide b { color: var(--gold); }
 
     /* Skill core: state machine × loop ring */
-    .core-split { position: absolute; left: 4%; right: 4%; top: 20%; bottom: 16.5%; display: grid; grid-template-columns: 1.12fr .92fr; gap: 2.8%; }
-    .panel-label { color: var(--mint); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
+    .core-split { position: absolute; left: 4%; right: 4%; top: 22%; bottom: 9.5%; display: grid; grid-template-columns: 1.12fr .92fr; gap: 2.8%; }
+    .panel-label { color: var(--mint); font: 800 clamp(10px,19.2px,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
     .panel-label.gold { color: var(--gold); }
-    .stage-matrix { margin-top: .7em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
-    .stage-matrix .stage-node { min-height: 10.2vh; }
-    .stage-phases { margin-top: .8em; display: grid; grid-template-columns: repeat(3,1fr); gap: .7em; }
-    .stage-phases span { padding: .42em .5em; border-radius: .45vw; border: 1px solid rgba(105,245,230,.3); background: rgba(3,20,27,.85); text-align: center; color: var(--ink); font: 780 clamp(9px,.88vw,16px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .stage-phases span small { display: block; margin-top: .18em; color: var(--muted); font: 500 clamp(7.5px,.7vw,12.5px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .stage-matrix { margin-top: .8em; display: grid; grid-template-columns: repeat(3,1fr); gap: .85em; }
+    .stage-matrix .stage-node { min-height: 168px; align-content: center; }
+    .stage-phases { margin-top: 1em; display: grid; grid-template-columns: repeat(3,1fr); gap: .85em; }
+    .stage-phases span { padding: .55em .5em; border-radius: 8.64px; border: 1px solid rgba(105,245,230,.3); background: rgba(3,20,27,.85); text-align: center; color: var(--ink); font: 780 18px/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .stage-phases span small { display: block; margin-top: .22em; color: var(--muted); font: 500 14px/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .stage-phases .ph1 { color: var(--mint); }
     .stage-phases .ph2 { color: var(--gold); border-color: rgba(246,195,68,.4); }
     .stage-phases .ph3 { color: var(--red); border-color: rgba(255,107,107,.4); }
@@ -525,34 +527,37 @@
     .stage-node.sp3 b { color: var(--red); }
     .stage-node.gate strong::after { content: " ⛨"; color: inherit; }
     .stage-matrix .stage-node::after { display: none; }
-    .gate-line { margin-top: 1.1em; color: var(--ink); font-size: clamp(10px,1vw,18px); line-height: 2; }
-    .gate-line code { margin: 0 .25em; padding: .3em .65em; border: 1px solid rgba(246,195,68,.5); border-radius: .4vw; color: var(--gold); font: 750 .92em/1 "DejaVu Sans Mono",monospace; white-space: nowrap; }
+    .gate-line { margin-top: 1.1em; color: var(--ink); font-size: clamp(10px,19.2px,18px); line-height: 2; }
+    .gate-line code { margin: 0 .25em; padding: .3em .65em; border: 1px solid rgba(246,195,68,.5); border-radius: 7.68px; color: var(--gold); font: 750 .92em/1 "DejaVu Sans Mono",monospace; white-space: nowrap; }
     /* Iteration loop: readable vertical flow with return arrow */
-    .loop-flow { position: relative; margin-top: 1em; padding-left: 2.6em; display: grid; gap: .38em; }
-    .loop-flow::before { content: ""; position: absolute; left: .7em; top: 1.6em; bottom: 6.2em; width: 1.1em; border: 2px dashed rgba(255,107,107,.6); border-right: none; border-radius: .9em 0 0 .9em; }
-    .loop-flow::after { content: "▲"; position: absolute; left: 1.32em; top: .55em; color: var(--red); font-size: clamp(9px,.85vw,15px); }
-    .lf-step { padding: .62em .95em; border: 1px solid rgba(105,245,230,.36); border-left: 3px solid var(--lc, var(--mint)); border-radius: .55vw; background: rgba(3,20,27,.94); }
-    .lf-step b { display: block; color: var(--lc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
-    .lf-step span { display: block; margin-top: .28em; color: var(--muted); font-size: clamp(8.5px,.86vw,15px); line-height: 1.4; }
+    .loop-flow { position: relative; margin-top: 1em; padding-left: 2.8em; display: grid; gap: .6em; }
+    .loop-flow::before { content: ""; position: absolute; left: .7em; top: 4.4em; bottom: 9.2em; width: 1.1em; border: 2px dashed rgba(255,107,107,.6); border-right: none; border-radius: .9em 0 0 .9em; }
+    .loop-flow::after { content: "▲"; position: absolute; left: 1.32em; top: 3.4em; color: var(--red); font-size: 16px; }
+    .lf-step { padding: .9em 1.1em; border: 1px solid rgba(105,245,230,.36); border-left: 3px solid var(--lc, var(--mint)); border-radius: 10.56px; background: rgba(3,20,27,.94); }
+    .lf-step b { display: block; color: var(--lc, var(--mint)); font: 800 21px/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .lf-step span { display: block; margin-top: .35em; color: var(--muted); font-size: 17px; line-height: 1.45; }
     .lf-step.gold { --lc: var(--gold); border-color: rgba(246,195,68,.4); }
-    .lf-arrow { padding-left: 1em; color: var(--gold); font: 750 clamp(8.5px,.85vw,15px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-arrow { padding-left: 1em; color: var(--gold); font: 750 16px/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-arrow::before { content: "↓ "; color: var(--mint); font-weight: 800; }
-    .lf-entry { margin-left: -2.6em; padding: .4em .9em .1em 1em; color: var(--red); font: 800 clamp(9px,.92vw,16px)/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-entry { padding: .3em .2em .1em; color: var(--red); font: 800 20px/1.3 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-entry b { color: #ffd9d9; font-weight: 850; }
-    .lf-return { margin-left: -2.6em; padding: .5em .9em .5em 2.9em; color: #ff9b9b; font: 780 clamp(9px,.9vw,16px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .lf-stop { padding: .6em .95em; border: 1px solid rgba(246,195,68,.5); border-radius: .55vw; background: rgba(42,31,6,.6); color: var(--gold); font: 800 clamp(9.5px,.95vw,17px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-mem { padding: .8em 1em; border: 1px solid rgba(246,195,68,.5); border-left: 3px solid var(--gold); border-radius: 10.56px; background: rgba(42,31,6,.6); }
+    .lf-mem b { display: block; color: var(--gold); font: 800 20px/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .lf-mem span { display: block; margin-top: .35em; color: var(--muted); font-size: 16px; line-height: 1.45; }
+    .lf-return { margin-left: -2.6em; padding: .5em .9em .5em 2.9em; color: #ff9b9b; font: 780 clamp(9px,17.28px,16px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .lf-stop { padding: .6em .95em; border: 1px solid rgba(246,195,68,.5); border-radius: 10.56px; background: rgba(42,31,6,.6); color: var(--gold); font: 800 clamp(9.5px,18.24px,17px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .lf-stop code { color: var(--red); font: 750 .92em/1 "DejaVu Sans Mono",monospace; }
     .fail-line { position: absolute; left: 4%; right: 4%; bottom: 8.6%; display: flex; flex-wrap: wrap; gap: .5em; align-items: center; }
-    .fail-line .fl-label { color: var(--red); font: 800 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; margin-right: .4em; }
-    .fail-line code { padding: .38em .62em; border: 1px solid rgba(255,92,120,.35); border-radius: .4vw; color: #ffb9c6; background: rgba(255,92,120,.06); font: 720 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono",monospace; }
+    .fail-line .fl-label { color: var(--red); font: 800 clamp(9px,18.24px,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; margin-right: .4em; }
+    .fail-line code { padding: .38em .62em; border: 1px solid rgba(255,92,120,.35); border-radius: 7.68px; color: #ffb9c6; background: rgba(255,92,120,.06); font: 720 clamp(8px,15.36px,14px)/1 "DejaVu Sans Mono",monospace; }
 
     /* Backlog table */
     .backlog-wrap { position: absolute; left: 4%; right: 4%; top: 29.5%; }
     .backlog-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; flex-wrap: wrap; }
-    .backlog-head h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
-    .backlog-head .bh-stats { color: var(--muted); font: 700 clamp(9px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; }
+    .backlog-head h3 { margin: 0; color: var(--gold); font: 800 20px/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .backlog-head .bh-stats { color: var(--muted); font: 700 17px/1.4 "DejaVu Sans Mono",monospace; }
     .backlog-head .bh-stats b { color: var(--ink); }
-    table.backlog { width: 100%; margin-top: .8em; border-collapse: collapse; font: 650 clamp(9px,.88vw,16px)/1.5 "DejaVu Sans Mono",monospace; }
+    table.backlog { width: 100%; margin-top: .8em; border-collapse: collapse; font: 650 clamp(9px,16.9px,16px)/1.5 "DejaVu Sans Mono",monospace; }
     table.backlog th { text-align: left; padding: .45em .8em; color: var(--muted); font-weight: 750; font-size: .82em; letter-spacing: .1em; border-bottom: 1px solid rgba(105,245,230,.3); }
     table.backlog td { padding: .55em .8em; border-bottom: 1px solid rgba(105,245,230,.12); color: var(--ink); vertical-align: top; }
     table.backlog td.st-a { color: var(--mint); }
@@ -562,93 +567,93 @@
 
     /* Run outputs column */
     .run-outs { display: grid; gap: .7em; align-content: center; }
-    .out-card { border: 1px solid rgba(105,245,230,.35); border-radius: .6vw; overflow: hidden; background: var(--panel); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .out-card { border: 1px solid rgba(105,245,230,.35); border-radius: 11.52px; overflow: hidden; background: var(--panel); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
     .out-card img { width: 100%; aspect-ratio: 16/8; object-fit: cover; object-position: top; display: block; }
-    .out-card span { display: block; padding: .45em .8em; color: var(--ink); font: 750 clamp(9px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; }
-    .out-badge { text-align: center; padding: .6em; border: 1px solid rgba(67,224,140,.55); border-radius: 999px; color: #43e08c; font: 800 clamp(10px,.95vw,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+    .out-card span { display: block; padding: .45em .8em; color: var(--ink); font: 750 clamp(9px,16.32px,15px)/1 "DejaVu Sans Mono",monospace; }
+    .out-badge { text-align: center; padding: .6em; border: 1px solid rgba(67,224,140,.55); border-radius: 999px; color: #43e08c; font: 800 clamp(10px,18.24px,17px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
 
     .core.core-brand { width: 21%; }
     .core.core-brand::before { content: none; }
     .core.core-brand .logo { width: 30%; justify-self: center; filter: drop-shadow(0 0 16px rgba(105,245,230,.4)); }
-    .core.core-brand b { margin-top: .8em; font: 850 clamp(10px,.92vw,17px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
-    .core.core-brand small { margin-top: .7em; color: var(--muted); font: 700 clamp(7px,.66vw,12px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .core.core-brand b { margin-top: .8em; font: 850 clamp(10px,17.66px,17px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .core.core-brand small { margin-top: .7em; color: var(--muted); font: 700 clamp(7px,12.67px,12px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
 
     /* State machine slide */
     .stage-flow { position: absolute; left: 4%; right: 4%; top: 21%; display: grid; grid-template-columns: repeat(9, 1fr); gap: .8%; }
-    .stage-node { position: relative; min-height: 17vh; padding: .9em .55em; border: 1px solid rgba(105,245,230,.35); border-radius: .7vw; background: linear-gradient(160deg, rgba(11,38,48,.95), rgba(3,20,27,.92)); text-align: center; display: grid; align-content: start; justify-items: center; gap: .5em; }
-    .stage-node b { color: var(--mint); font: 850 clamp(12px,1.3vw,24px)/1 "DejaVu Sans Mono",monospace; }
-    .stage-node strong { font-size: clamp(10px,1.02vw,19px); line-height: 1.25; }
-    .stage-node small { color: var(--muted); font: 650 clamp(7px,.72vw,13px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
-    .stage-node::after { content: "→"; position: absolute; right: -1em; top: 42%; color: var(--mint); font-weight: 800; font-size: clamp(10px,1vw,18px); z-index: 2; }
+    .stage-node { position: relative; min-height: 183.6px; padding: .9em .55em; border: 1px solid rgba(105,245,230,.35); border-radius: 13.44px; background: linear-gradient(160deg, rgba(11,38,48,.95), rgba(3,20,27,.92)); text-align: center; display: grid; align-content: start; justify-items: center; gap: .5em; }
+    .stage-node b { color: var(--mint); font: 850 clamp(12px,24.96px,24px)/1 "DejaVu Sans Mono",monospace; }
+    .stage-node strong { font-size: clamp(10px,19.58px,19px); line-height: 1.25; }
+    .stage-node small { color: var(--muted); font: 650 clamp(7px,13.82px,13px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
+    .stage-node::after { content: "→"; position: absolute; right: -1em; top: 42%; color: var(--mint); font-weight: 800; font-size: clamp(10px,19.2px,18px); z-index: 2; }
     .stage-node:last-child::after { display: none; }
     .stage-node.gate small { color: var(--gold); }
     .machine-panels { position: absolute; left: 4%; right: 4%; top: 47%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.5%; }
-    .gate-panel { padding: 1.2em 1.4em; border: 1px solid rgba(246,195,68,.4); border-radius: .9vw; background: rgba(3,20,27,.9); }
-    .gate-panel h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .gate-panel { padding: 1.2em 1.4em; border: 1px solid rgba(246,195,68,.4); border-radius: 17.28px; background: rgba(3,20,27,.9); }
+    .gate-panel h3 { margin: 0; color: var(--gold); font: 800 clamp(11px,22.08px,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
     .gate-panel ul { margin: .9em 0 0; padding: 0; list-style: none; display: grid; gap: .65em; }
-    .gate-panel li { display: grid; grid-template-columns: auto 1fr; gap: .8em; align-items: baseline; font-size: clamp(10px,1.02vw,19px); color: var(--ink); }
-    .gate-panel li code { color: var(--gold); font: 750 clamp(9px,.9vw,16px)/1.3 "DejaVu Sans Mono",monospace; }
-    .fail-panel { padding: 1.2em 1.4em; border: 1px solid rgba(255,92,120,.42); border-radius: .9vw; background: rgba(3,20,27,.9); }
-    .fail-panel h3 { margin: 0; color: var(--red); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .gate-panel li { display: grid; grid-template-columns: auto 1fr; gap: .8em; align-items: baseline; font-size: clamp(10px,19.58px,19px); color: var(--ink); }
+    .gate-panel li code { color: var(--gold); font: 750 clamp(9px,17.28px,16px)/1.3 "DejaVu Sans Mono",monospace; }
+    .fail-panel { padding: 1.2em 1.4em; border: 1px solid rgba(255,92,120,.42); border-radius: 17.28px; background: rgba(3,20,27,.9); }
+    .fail-panel h3 { margin: 0; color: var(--red); font: 800 clamp(11px,22.08px,21px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
     .fail-panel .fail-cloud { margin-top: .9em; display: flex; flex-wrap: wrap; gap: .5em; }
-    .fail-panel .fail-cloud code { padding: .45em .7em; border: 1px solid rgba(255,92,120,.35); border-radius: .45vw; color: #ffb9c6; font: 720 clamp(8px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; background: rgba(255,92,120,.06); }
-    .fail-panel p { margin: .9em 0 0; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.5; }
+    .fail-panel .fail-cloud code { padding: .45em .7em; border: 1px solid rgba(255,92,120,.35); border-radius: 8.64px; color: #ffb9c6; font: 720 clamp(8px,16.32px,15px)/1 "DejaVu Sans Mono",monospace; background: rgba(255,92,120,.06); }
+    .fail-panel p { margin: .9em 0 0; color: var(--muted); font-size: clamp(9px,18.24px,17px); line-height: 1.5; }
 
     .artifact-strip { position: absolute; left: 4%; right: 4%; top: 21.5%; display: flex; flex-wrap: wrap; gap: .45em; align-items: center; }
-    .artifact-strip .strip-label { color: var(--gold); font: 800 clamp(9px,.92vw,16px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; margin-right: .5em; }
-    .artifact-strip code { padding: .4em .6em; border: 1px solid rgba(105,245,230,.24); border-radius: .4vw; background: rgba(3,20,27,.85); color: var(--ink); font: 700 clamp(8px,.78vw,14px)/1 "DejaVu Sans Mono",monospace; }
+    .artifact-strip .strip-label { color: var(--gold); font: 800 clamp(9px,17.66px,16px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; margin-right: .5em; }
+    .artifact-strip code { padding: .4em .6em; border: 1px solid rgba(105,245,230,.24); border-radius: 7.68px; background: rgba(3,20,27,.85); color: var(--ink); font: 700 clamp(8px,14.98px,14px)/1 "DejaVu Sans Mono",monospace; }
     .artifact-strip code.gold { color: var(--gold); border-color: rgba(246,195,68,.4); }
-    .artifact-strip .strip-note { flex: 1; min-width: 60%; color: var(--ink); font-size: clamp(11px,1.08vw,20px); font-weight: 720; line-height: 1.55; }
+    .artifact-strip .strip-note { flex: 1; min-width: 60%; color: var(--ink); font-size: 18px; font-weight: 720; line-height: 1.55; }
     .artifact-strip .strip-note b { color: var(--red); }
     table.backlog td small { display: block; margin-top: .3em; color: var(--muted); font: 650 .72em/1 "DejaVu Sans Mono",monospace; letter-spacing: .04em; }
 
     /* Run trace slide */
     .run-layout { position: absolute; left: 4%; right: 4%; top: 19%; bottom: 17.5%; display: grid; grid-template-columns: .74fr 1.62fr .55fr; gap: 1.8%; }
     .run-stages { display: grid; gap: 1.6%; align-content: stretch; }
-    .run-step { display: grid; grid-template-columns: 2em 1fr; align-items: center; gap: .7em; padding: .22em .8em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--mint); border-radius: .45vw; background: rgba(3,20,27,.88); font-size: clamp(9px,.98vw,18px); font-weight: 740; }
+    .run-step { display: grid; grid-template-columns: 2em 1fr; align-items: center; gap: .7em; padding: .22em .8em; border: 1px solid rgba(105,245,230,.22); border-left: 3px solid var(--mint); border-radius: 8.64px; background: rgba(3,20,27,.88); font-size: clamp(9px,18.82px,18px); font-weight: 740; }
     .run-step i { display: grid; place-items: center; width: 1.9em; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--mint); color: var(--mint); font: 800 .78em/1 "DejaVu Sans Mono",monospace; font-style: normal; }
-    .run-step small { display: block; color: var(--muted); font: 650 clamp(7px,.72vw,13px)/1.3 "DejaVu Sans Mono",monospace; }
-    .run-term { border: 1px solid rgba(105,245,230,.4); border-radius: .9vw; background: #010d12; overflow: hidden; display: grid; grid-template-rows: auto 1fr; box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 0 40px rgba(105,245,230,.03); }
+    .run-step small { display: block; color: var(--muted); font: 650 clamp(7px,13.82px,13px)/1.3 "DejaVu Sans Mono",monospace; }
+    .run-term { border: 1px solid rgba(105,245,230,.4); border-radius: 17.28px; background: #010d12; overflow: hidden; display: grid; grid-template-rows: auto 1fr; box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 0 40px rgba(105,245,230,.03); }
     .term-bar { display: flex; align-items: center; gap: .45em; padding: .75em 1.1em; background: rgba(3,20,27,.98); border-bottom: 1px solid rgba(105,245,230,.2); }
     .term-bar i { width: .6em; aspect-ratio: 1; border-radius: 50%; background: #ff5f57; }
     .term-bar i:nth-child(2) { background: #febc2e; }
     .term-bar i:nth-child(3) { background: #28c840; }
-    .term-bar span { margin-left: .8em; color: var(--muted); font: 650 clamp(9px,.85vw,15px)/1 "DejaVu Sans Mono",monospace; }
-    .term-body { padding: .8em 1.3em; font: 600 clamp(9.5px,.96vw,18px)/1.58 "DejaVu Sans Mono",monospace; color: #cfe6e4; overflow: hidden; }
+    .term-bar span { margin-left: .8em; color: var(--muted); font: 650 clamp(9px,16.32px,15px)/1 "DejaVu Sans Mono",monospace; }
+    .term-body { padding: .8em 1.3em; font: 600 clamp(9.5px,18.43px,18px)/1.58 "DejaVu Sans Mono",monospace; color: #cfe6e4; overflow: hidden; }
     .run-line b { color: var(--mint); font-weight: 800; }
     .run-line .ok { color: #43e08c; font-weight: 800; }
     .run-line .num { color: var(--gold); font-weight: 800; }
     .run-line.cmd { color: #eef7f6; }
     .run-line.done { color: var(--mint); font-weight: 800; letter-spacing: .04em; }
     .run-line .warn { color: var(--red); font-weight: 800; }
-    .live-badge { display: inline-block; margin-left: .6em; padding: .22em .7em; vertical-align: middle; border: 1px solid rgba(255,107,107,.6); border-radius: 99px; background: rgba(60,10,14,.72); color: #ff8b8b; font: 800 clamp(10px,.95vw,17px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; letter-spacing: .04em; animation: livepulse 1.6s ease-in-out infinite; white-space: nowrap; }
+    .live-badge { display: inline-block; margin-left: .6em; padding: .22em .7em; vertical-align: middle; border: 1px solid rgba(255,107,107,.6); border-radius: 99px; background: rgba(60,10,14,.72); color: #ff8b8b; font: 800 clamp(10px,18.24px,17px)/1.2 "Microsoft YaHei","Noto Sans SC",sans-serif; letter-spacing: .04em; animation: livepulse 1.6s ease-in-out infinite; white-space: nowrap; }
     @keyframes livepulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,107,107,.35); } 50% { opacity: .72; box-shadow: 0 0 0 .45em rgba(255,107,107,0); } }
     html.static .live-badge { animation: none; }
 
     /* Showcase grid */
-    .showcase-grid { position: absolute; left: 4%; right: 4%; top: 21.5%; bottom: 10.5%; display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: 1fr 1fr; gap: 1.1vw; }
-    .show-card { position: relative; display: block; overflow: hidden; border: 1px solid rgba(105,245,230,.3); border-radius: .8vw; background: rgba(3,20,27,.9); text-decoration: none; color: var(--ink); transition: transform .25s ease, border-color .25s ease; }
+    .showcase-grid { position: absolute; left: 4%; right: 4%; top: 21.5%; bottom: 10.5%; display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: 1fr 1fr; gap: 21.12px; }
+    .show-card { position: relative; display: block; overflow: hidden; border: 1px solid rgba(105,245,230,.3); border-radius: 15.36px; background: rgba(3,20,27,.9); text-decoration: none; color: var(--ink); transition: transform .25s ease, border-color .25s ease; }
     .show-card:hover { transform: translateY(-4px); border-color: rgba(105,245,230,.7); }
     .show-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
     .show-card.wide { grid-column: span 2; }
     .show-card.wide img { object-position: center 38%; }
     .show-card.poster img { object-fit: contain; background: #eef3ef; }
     .show-card span { position: absolute; left: 0; right: 0; bottom: 0; padding: .7em 1em .75em; background: linear-gradient(180deg, rgba(1,10,14,0), rgba(1,10,14,.94) 42%); }
-    .show-card span b { display: block; color: var(--mint); font: 800 clamp(12px,1.15vw,22px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .show-card span small { display: block; margin-top: .2em; color: var(--muted); font: 500 clamp(9px,.85vw,15px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .show-card span b { display: block; color: var(--mint); font: 800 clamp(12px,22.08px,22px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .show-card span small { display: block; margin-top: .2em; color: var(--muted); font: 500 clamp(9px,16.32px,15px)/1.35 "Microsoft YaHei","Noto Sans SC",sans-serif; }
     .run-caret { display: inline-block; width: .55em; height: 1.05em; margin-left: .15em; vertical-align: -0.18em; background: var(--mint); animation: caret 1s steps(1) infinite; }
     @keyframes caret { 50% { opacity: 0; } }
-    .run-progress { position: absolute; left: 4%; right: 4%; bottom: 13%; height: .5vw; min-height: 5px; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .run-progress { position: absolute; left: 4%; right: 4%; bottom: 13%; height: 9.6px; min-height: 5px; border-radius: 99px; background: var(--grid); overflow: hidden; }
     .run-progress i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--mint), var(--gold)); box-shadow: 0 0 18px rgba(105,245,230,.5); }
     .active .run-progress i { animation: fillbar 17.5s cubic-bezier(.25,.6,.3,1) forwards; animation-delay: .3s; }
     @keyframes fillbar { to { width: 100%; } }
-    .run-stats { position: absolute; left: 4%; right: 4%; bottom: 8%; display: flex; justify-content: space-between; gap: 1em; color: var(--ink); font: 750 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; }
+    .run-stats { position: absolute; left: 4%; right: 4%; bottom: 8%; display: flex; justify-content: space-between; gap: 1em; color: var(--ink); font: 750 clamp(10px,20.16px,19px)/1 "DejaVu Sans Mono",monospace; }
     .run-stats b { color: var(--mint); }
     html.static .run-progress i { width: 100%; animation: none; }
 
     /* Slide 5 */
     .equations { position: absolute; left: 4%; right: 4%; top: 19%; height: 22%; }
-    .equation { display: flex; align-items: baseline; gap: .65em; font-size: clamp(20px, 3.1vw, 56px); font-weight: 780; white-space: nowrap; }
+    .equation { display: flex; align-items: baseline; gap: .65em; font-size: clamp(20px, 59.52px, 56px); font-weight: 780; white-space: nowrap; }
     .equation + .equation { margin-top: 2.5%; margin-left: 11%; }
     .equation .value { font-family: "DejaVu Sans Mono", monospace; color: var(--mint); font-weight: 850; }
     .equation:nth-child(2) .value { color: var(--gold); }
@@ -656,15 +661,15 @@
     .forbidden { color: var(--red); }
     .confidence-rail { position: absolute; left: 4%; right: 4%; top: 46%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.2%; }
     .component { min-width: 0; }
-    .component-head { display: flex; justify-content: space-between; align-items: baseline; font-size: clamp(10px, 1.1vw, 20px); }
+    .component-head { display: flex; justify-content: space-between; align-items: baseline; font-size: clamp(10px, 21.12px, 20px); }
     .component-head b { font-family: "DejaVu Sans Mono", monospace; color: var(--c, var(--mint)); }
-    .bar { height: .48vw; min-height: 4px; margin-top: .8em; border-radius: 99px; background: var(--grid); overflow: hidden; }
+    .bar { height: 9.22px; min-height: 4px; margin-top: .8em; border-radius: 99px; background: var(--grid); overflow: hidden; }
     .bar i { display: block; height: 100%; width: var(--v); border-radius: inherit; background: var(--c, var(--mint)); box-shadow: 0 0 16px var(--c, var(--mint)); }
-    .component small { display: block; margin-top: .9em; color: var(--muted); font: 650 clamp(8px, .8vw, 14px)/1 "DejaVu Sans Mono", monospace; }
+    .component small { display: block; margin-top: .9em; color: var(--muted); font: 650 clamp(8px, 15.36px, 14px)/1 "DejaVu Sans Mono", monospace; }
     .guardrails { position: absolute; left: 4%; right: 4%; top: 65%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4%; }
     .guardrail { border-top: 3px solid var(--c); padding-top: 1.2em; }
-    .guardrail h3 { margin: 0; font: 800 clamp(13px, 1.55vw, 28px)/1.2 "DejaVu Sans Mono", monospace; }
-    .guardrail p { margin: .7em 0 0; color: var(--muted); font-size: clamp(10px, 1.08vw, 19px); line-height: 1.55; }
+    .guardrail h3 { margin: 0; font: 800 clamp(13px, 29.76px, 28px)/1.2 "DejaVu Sans Mono", monospace; }
+    .guardrail p { margin: .7em 0 0; color: var(--muted); font-size: clamp(10px, 20.74px, 19px); line-height: 1.55; }
 
     /* Slide 6 */
     .orbit-stage { position: absolute; inset: 17% 7% 11%; }
@@ -677,265 +682,299 @@
       background: radial-gradient(circle, rgba(11,38,48,.98), rgba(3,20,27,.98));
       box-shadow: 0 0 54px rgba(105,245,230,.28), inset 0 0 28px rgba(105,245,230,.08);
     }
-    .core::before { content: "◎"; color: var(--mint); font-size: clamp(28px, 4.2vw, 76px); line-height: .8; }
-    .core b { margin-top: .4em; font: 850 clamp(18px, 2.8vw, 50px)/1 "DejaVu Sans Mono", monospace; }
-    .core small { margin-top: .6em; color: var(--muted); font: 700 clamp(8px, .85vw, 15px)/1 monospace; }
-    .orbit-node { position: absolute; display: flex; align-items: center; gap: .9em; width: 25%; font-size: clamp(11px, 1.25vw, 22px); font-weight: 780; }
+    .core::before { content: "◎"; color: var(--mint); font-size: clamp(28px, 80.64px, 76px); line-height: .8; }
+    .core b { margin-top: .4em; font: 850 clamp(18px, 53.76px, 50px)/1 "DejaVu Sans Mono", monospace; }
+    .core small { margin-top: .6em; color: var(--muted); font: 700 clamp(8px, 16.32px, 15px)/1 monospace; }
+    .orbit-node { position: absolute; display: flex; align-items: center; gap: .9em; width: 25%; font-size: clamp(11px, 24px, 22px); font-weight: 780; }
     .orbit-node i { flex: none; display: grid; place-items: center; width: 3.3em; aspect-ratio: 1; border: 1.5px solid var(--c, var(--mint)); border-radius: 50%; color: var(--c, var(--mint)); font: 800 1.2em/1 "DejaVu Sans Mono", monospace; background: rgba(3,20,27,.95); box-shadow: 0 0 18px color-mix(in srgb, var(--c, var(--mint)) 22%, transparent); }
     .n1 { left: 3%; top: 27%; } .n2 { right: 1%; top: 27%; } .n3 { right: 3%; bottom: 9%; --c: var(--gold); }
     .n4 { left: 40%; top: 0; --c: var(--red); } .n5 { left: 5%; bottom: 9%; }
-    .proof-strip { position: absolute; left: 10%; right: 10%; bottom: 13.5%; text-align: center; color: var(--muted); font: 650 clamp(9px, 1vw, 18px)/1.3 "DejaVu Sans Mono", monospace; }
-    .closing { position: absolute; left: 0; right: 0; bottom: 6.8%; text-align: center; font: 850 clamp(20px, 2.8vw, 52px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .02em; }
+    .proof-strip { position: absolute; left: 10%; right: 10%; bottom: 13.5%; text-align: center; color: var(--muted); font: 650 clamp(9px, 19.2px, 18px)/1.3 "DejaVu Sans Mono", monospace; }
+    .closing { position: absolute; left: 0; right: 0; bottom: 6.8%; text-align: center; font: 850 clamp(20px, 53.76px, 52px)/1 "DejaVu Sans Mono", monospace; letter-spacing: .02em; }
 
     /* Skill design, provenance, profile and iteration loop */
     .compat-strip {
       position: absolute; left: 4%; right: 4%; top: 19%; min-height: 8%;
       display: grid; grid-template-columns: 1.15fr 1.35fr 1.2fr; align-items: stretch;
-      border: 1px solid rgba(105,245,230,.45); border-radius: .8vw;
+      border: 1px solid rgba(105,245,230,.45); border-radius: 15.36px;
       background: rgba(3,20,27,.86); overflow: hidden;
     }
     .compat-item { padding: .8em 1.2em; border-right: 1px solid rgba(105,245,230,.18); }
     .compat-item:last-child { border-right: 0; }
-    .compat-item b { display: block; color: var(--mint); font: 780 clamp(10px,1.05vw,19px)/1.2 "DejaVu Sans Mono",monospace; }
-    .compat-item span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,1.08vw,20px); }
+    .compat-item b { display: block; color: var(--mint); font: 780 clamp(10px,20.16px,19px)/1.2 "DejaVu Sans Mono",monospace; }
+    .compat-item span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,20.74px,20px); }
     .design-grid { position: absolute; left: 4%; right: 4%; top: 32%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.35%; }
     .design-card {
       position: relative;
-      min-height: 44vh; padding: 1.45em 1.5em; border: 1px solid var(--card,var(--mint)); border-radius: .9vw;
+      min-height: 475.2px; padding: 1.45em 1.5em; border: 1px solid var(--card,var(--mint)); border-radius: 17.28px;
       background: linear-gradient(150deg,rgba(11,38,48,.94),rgba(3,20,27,.9));
       box-shadow: inset 0 0 26px color-mix(in srgb,var(--card,var(--mint)) 5%,transparent);
     }
-    .design-card .layer { position: absolute; right: 1em; top: 1.1em; color: var(--card,var(--mint)); opacity: .6; font: 800 clamp(10px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
-    .design-card code { display: block; padding-right: 4.6em; color: var(--card,var(--mint)); font: 800 clamp(13px,1.4vw,25px)/1.2 "DejaVu Sans Mono",monospace; }
-    .design-card h3 { margin: .7em 0 .5em; font-size: clamp(17px,1.85vw,34px); }
-    .design-card p { margin: 0; color: var(--muted); font-size: clamp(11px,1.18vw,22px); line-height: 1.6; }
+    .design-card .layer { position: absolute; right: 1em; top: 1.1em; color: var(--card,var(--mint)); opacity: .6; font: 800 clamp(10px,20.16px,19px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .design-card code { display: block; padding-right: 4.6em; color: var(--card,var(--mint)); font: 800 clamp(13px,26.88px,25px)/1.2 "DejaVu Sans Mono",monospace; }
+    .design-card h3 { margin: .7em 0 .5em; font-size: clamp(17px,35.52px,34px); }
+    .design-card p { margin: 0; color: var(--muted); font-size: clamp(11px,22.66px,22px); line-height: 1.6; }
     .design-card strong { color: var(--ink); }
     .design-foot { position: absolute; left: 4%; right: 4%; bottom: 8.2%; display: flex; justify-content: center; gap: 1.1em; flex-wrap: wrap; }
-    .design-foot span { padding: .5em .9em; border: 1px solid rgba(105,245,230,.25); border-radius: 999px; color: var(--muted); font: 700 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; }
+    .design-foot span { padding: .5em .9em; border: 1px solid rgba(105,245,230,.25); border-radius: 999px; color: var(--muted); font: 700 clamp(9px,17.28px,16px)/1 "DejaVu Sans Mono",monospace; }
 
     .trace-rail, .profile-rail {
       position: absolute; z-index: 6; left: 3.2%; bottom: 9.8%; width: 43%; padding: 1.8% 2.1%;
-      border: 1px solid rgba(105,245,230,.65); border-radius: 1vw;
+      border: 1px solid rgba(105,245,230,.65); border-radius: 19.2px;
       background: linear-gradient(135deg,rgba(3,20,27,.98),rgba(11,38,48,.9));
       box-shadow: 0 18px 60px rgba(0,0,0,.4); backdrop-filter: blur(8px);
     }
-    .trace-head, .profile-head { color: var(--mint); font: 800 clamp(12px,1.25vw,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .trace-head, .profile-head { color: var(--mint); font: 800 clamp(12px,24px,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
     .trace-chain { margin-top: 1.1em; display: grid; grid-template-columns: repeat(3,1fr); gap: .75em; }
-    .trace-step { position: relative; min-height: 4.3em; padding: .75em .75em .65em; border: 1px solid rgba(105,245,230,.18); border-radius: .55vw; background: rgba(3,20,27,.62); }
-    .trace-step b { display: block; color: var(--ink); font: 760 clamp(9px,.95vw,17px)/1.2 "DejaVu Sans Mono",monospace; }
-    .trace-step span { display: block; margin-top: .4em; color: var(--muted); font-size: clamp(8px,.8vw,14px); line-height: 1.35; }
+    .trace-step { position: relative; min-height: 4.3em; padding: .75em .75em .65em; border: 1px solid rgba(105,245,230,.18); border-radius: 10.56px; background: rgba(3,20,27,.62); }
+    .trace-step b { display: block; color: var(--ink); font: 760 clamp(9px,18.24px,17px)/1.2 "DejaVu Sans Mono",monospace; }
+    .trace-step span { display: block; margin-top: .4em; color: var(--muted); font-size: clamp(8px,15.36px,14px); line-height: 1.35; }
     .trace-step::after { content: "→"; position: absolute; right: -.72em; top: 40%; color: var(--mint); font-weight: 800; }
     .trace-step:nth-child(3)::after, .trace-step:last-child::after { display: none; }
-    .trace-note { margin-top: 1em; color: var(--muted); font-size: clamp(9px,.92vw,16px); }
+    .trace-note { margin-top: 1em; color: var(--muted); font-size: clamp(9px,17.66px,16px); }
     .trace-note strong { color: var(--gold); }
 
     .profile-rail { border-color: rgba(246,195,68,.7); }
     .profile-head { color: var(--gold); }
-    .profile-fields { margin: 1em 0 0; display: grid; grid-template-columns: auto 1fr; gap: .55em 1em; font-size: clamp(9px,.95vw,17px); }
+    .profile-fields { margin: 1em 0 0; display: grid; grid-template-columns: auto 1fr; gap: .55em 1em; font-size: clamp(9px,18.24px,17px); }
     .profile-fields dt { color: var(--gold); font-family: "DejaVu Sans Mono",monospace; }
     .profile-fields dd { margin: 0; color: var(--ink); }
     .story-cloud { position: absolute; z-index: 6; right: 3.5%; top: 35%; width: 45%; display: grid; grid-template-columns: repeat(3,1fr); gap: .6em; }
-    .story-cloud span { padding: .72em .45em; text-align: center; border: 1px solid rgba(246,195,68,.28); border-radius: .55vw; background: rgba(3,20,27,.9); color: var(--ink); font: 720 clamp(9px,.92vw,16px)/1.2 "DejaVu Sans Mono",monospace; }
+    .story-cloud span { padding: .72em .45em; text-align: center; border: 1px solid rgba(246,195,68,.28); border-radius: 10.56px; background: rgba(3,20,27,.9); color: var(--ink); font: 720 clamp(9px,17.66px,16px)/1.2 "DejaVu Sans Mono",monospace; }
 
     .loop-stage { position: absolute; left: 4%; right: 4%; top: 30%; height: 28%; display: grid; grid-template-columns: 1fr .26fr 1fr .26fr 1fr .26fr 1fr; align-items: center; }
-    .loop-node { min-height: 8.7em; display: grid; align-content: center; justify-items: center; text-align: center; padding: 1em; border: 1.5px solid var(--loop,var(--mint)); border-radius: 1vw; background: rgba(3,20,27,.9); }
-    .loop-node b { color: var(--loop,var(--mint)); font: 800 clamp(11px,1.15vw,21px)/1.2 "DejaVu Sans Mono",monospace; }
-    .loop-node strong { margin-top: .55em; font-size: clamp(14px,1.45vw,26px); }
-    .loop-node small { margin-top: .65em; color: var(--muted); font-size: clamp(9px,.88vw,16px); line-height: 1.35; }
+    .loop-node { min-height: 8.7em; display: grid; align-content: center; justify-items: center; text-align: center; padding: 1em; border: 1.5px solid var(--loop,var(--mint)); border-radius: 19.2px; background: rgba(3,20,27,.9); }
+    .loop-node b { color: var(--loop,var(--mint)); font: 800 clamp(11px,22.08px,21px)/1.2 "DejaVu Sans Mono",monospace; }
+    .loop-node strong { margin-top: .55em; font-size: clamp(14px,27.84px,26px); }
+    .loop-node small { margin-top: .65em; color: var(--muted); font-size: clamp(9px,16.9px,16px); line-height: 1.35; }
     .loop-arrow { height: 2px; background: linear-gradient(90deg,var(--mint),var(--gold)); position: relative; }
     .loop-arrow::after { content:""; position:absolute; right:-2px; top:50%; border:.45em solid transparent; border-left-color:var(--gold); transform:translate(80%,-50%); }
     .loop-return { position: absolute; left: 12%; right: 12%; top: 57%; height: 7%; border: 1px solid rgba(105,245,230,.5); border-top: 0; border-radius: 0 0 50% 50%; }
-    .loop-return::after { content: "重新运行并比较 · 最多 2 轮"; position: absolute; left: 50%; bottom: -1.5em; transform: translateX(-50%); color: var(--mint); font: 700 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; background: var(--bg); padding: 0 .8em; white-space: nowrap; }
+    .loop-return::after { content: "重新运行并比较 · 最多 2 轮"; position: absolute; left: 50%; bottom: -1.5em; transform: translateX(-50%); color: var(--mint); font: 700 clamp(9px,17.28px,16px)/1 "DejaVu Sans Mono",monospace; background: var(--bg); padding: 0 .8em; white-space: nowrap; }
     .loop-states { position: absolute; left: 4%; right: 4%; top: 72%; display: grid; grid-template-columns: repeat(3,1fr); gap: 3%; }
     .loop-state { border-top: 3px solid var(--state,var(--mint)); padding-top: 1em; }
-    .loop-state code { color: var(--state,var(--mint)); font: 800 clamp(11px,1.12vw,20px)/1 "DejaVu Sans Mono",monospace; }
-    .loop-state p { margin: .65em 0 0; color: var(--muted); font-size: clamp(9px,.98vw,17px); line-height: 1.5; }
+    .loop-state code { color: var(--state,var(--mint)); font: 800 20px/1 "DejaVu Sans Mono",monospace; }
+    .loop-state p { margin: .65em 0 0; color: var(--muted); font-size: 17px; line-height: 1.5; }
 
     .outcome-grid { position: absolute; left: 4%; right: 4%; top: 21%; bottom: 17.5%; display: grid; grid-template-columns: 1fr 1fr; gap: 2%; }
-    .outcome-card { position: relative; overflow: hidden; border: 1px solid var(--edge,var(--mint)); border-radius: 1vw; background: var(--shot) center/cover no-repeat; box-shadow: 0 18px 60px rgba(0,0,0,.38); transition: transform .35s var(--ease), box-shadow .35s; }
+    .outcome-card { position: relative; overflow: hidden; border: 1px solid var(--edge,var(--mint)); border-radius: 19.2px; background: var(--shot) center/cover no-repeat; box-shadow: 0 18px 60px rgba(0,0,0,.38); transition: transform .35s var(--ease), box-shadow .35s; }
     .outcome-card:hover { transform: translateY(-6px); box-shadow: 0 28px 76px rgba(0,0,0,.52), 0 0 34px color-mix(in srgb, var(--edge,var(--mint)) 22%, transparent); }
     .outcome-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(3,20,27,.96) 0%,rgba(3,20,27,.9) 9%,rgba(3,20,27,.32) 19%,rgba(3,20,27,.08) 28%,rgba(3,20,27,.96) 82%); }
-    .outcome-label { position: absolute; z-index: 2; left: 1.1em; top: 1em; padding: .48em .8em; border: 1px solid var(--edge,var(--mint)); border-radius: 999px; background: rgba(3,20,27,.9); color: var(--edge,var(--mint)); font: 800 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; }
+    .outcome-label { position: absolute; z-index: 2; left: 1.1em; top: 1em; padding: .48em .8em; border: 1px solid var(--edge,var(--mint)); border-radius: 999px; background: rgba(3,20,27,.9); color: var(--edge,var(--mint)); font: 800 clamp(9px,17.28px,16px)/1 "DejaVu Sans Mono",monospace; }
     .outcome-copy { position: absolute; z-index: 2; left: 1.4em; right: 1.4em; bottom: 1.25em; }
-    .outcome-copy h3 { margin: 0; font-size: clamp(20px,2.2vw,40px); line-height: 1.15; }
-    .outcome-copy p { margin: .5em 0 .75em; color: var(--muted); font-size: clamp(10px,1vw,18px); }
+    .outcome-copy h3 { margin: 0; font-size: clamp(20px,42.24px,40px); line-height: 1.15; }
+    .outcome-copy p { margin: .5em 0 .75em; color: var(--muted); font-size: clamp(10px,19.2px,18px); }
     .outcome-features { display: flex; flex-wrap: wrap; gap: .45em; }
-    .outcome-features span { padding: .38em .65em; border: 1px solid rgba(105,245,230,.28); border-radius: 999px; background: rgba(3,20,27,.72); color: var(--ink); font-size: clamp(8px,.78vw,14px); }
-    .outcome-open { position: absolute; z-index: 3; right: 1em; top: 1em; color: var(--ink); text-decoration: none; font: 760 clamp(9px,.9vw,16px)/1 "DejaVu Sans Mono",monospace; padding: .55em .7em; border-radius: 999px; background: rgba(3,20,27,.9); border: 1px solid rgba(255,255,255,.32); }
+    .outcome-features span { padding: .38em .65em; border: 1px solid rgba(105,245,230,.28); border-radius: 999px; background: rgba(3,20,27,.72); color: var(--ink); font-size: clamp(8px,14.98px,14px); }
+    .outcome-open { position: absolute; z-index: 3; right: 1em; top: 1em; color: var(--ink); text-decoration: none; font: 760 clamp(9px,17.28px,16px)/1 "DejaVu Sans Mono",monospace; padding: .55em .7em; border-radius: 999px; background: rgba(3,20,27,.9); border: 1px solid rgba(255,255,255,.32); }
     .outcome-dock { position: absolute; left: 6%; right: 6%; bottom: 7.6%; display: grid; grid-template-columns: repeat(4,1fr); gap: 1%; }
-    .outcome-dock span { padding: .72em .5em; text-align: center; border-top: 2px solid var(--dock,var(--mint)); color: var(--ink); font-size: clamp(10px,1.05vw,19px); font-weight: 760; }
+    .outcome-dock span { padding: .72em .5em; text-align: center; border-top: 2px solid var(--dock,var(--mint)); color: var(--ink); font-size: clamp(10px,20.16px,19px); font-weight: 760; }
 
     /* Mechanism figure slides */
     .figwrap { position: absolute; left: 4%; right: 4%; top: 19%; bottom: 9.2%; display: flex; align-items: center; justify-content: center; }
-    .figwrap img { max-width: 100%; max-height: 100%; border-radius: .8vw; border: 1px solid rgba(105,245,230,.28); box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+    .figwrap img { max-width: 100%; max-height: 100%; border-radius: 15.36px; border: 1px solid rgba(105,245,230,.28); box-shadow: 0 24px 80px rgba(0,0,0,.55); }
 
     /* Regional replication grid */
     .region-grid { position: absolute; left: 4%; right: 4%; top: 19.5%; bottom: 9.2%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.2%; }
-    .region-card { position: relative; border: 1px solid rgba(105,245,230,.3); border-radius: .8vw; overflow: hidden; background: #061820; display: flex; flex-direction: column; min-height: 0; }
+    .region-card { position: relative; border: 1px solid rgba(105,245,230,.3); border-radius: 15.36px; overflow: hidden; background: #061820; display: flex; flex-direction: column; min-height: 0; }
     .region-card img { width: 100%; flex: 1; min-height: 0; object-fit: cover; display: block; }
     .region-card .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; padding: .5em .95em; background: rgba(3,20,27,.94); border-top: 1px solid rgba(105,245,230,.15); }
-    .region-card .meta b { font-size: clamp(12px,1.2vw,22px); }
-    .region-card .meta span { color: var(--muted); font: 650 clamp(9px,.85vw,15px)/1.35 "DejaVu Sans Mono",monospace; text-align: right; }
+    .region-card .meta b { font-size: clamp(12px,23.04px,22px); }
+    .region-card .meta span { color: var(--muted); font: 650 clamp(9px,16.32px,15px)/1.35 "DejaVu Sans Mono",monospace; text-align: right; }
     .region-card.pending { border-style: dashed; border-color: rgba(246,195,68,.55); align-items: center; justify-content: center; text-align: center; padding: 3%; }
-    .region-card.pending h3 { margin: 0; color: var(--gold); font-size: clamp(18px,1.9vw,34px); }
-    .region-card.pending p { margin: .85em 0 0; color: var(--muted); font-size: clamp(11px,1.05vw,18px); line-height: 1.6; }
+    .region-card.pending h3 { margin: 0; color: var(--gold); font-size: clamp(18px,36.48px,34px); }
+    .region-card.pending p { margin: .85em 0 0; color: var(--muted); font-size: clamp(11px,20.16px,18px); line-height: 1.6; }
 
     /* Temporal atlas slide */
-    .sub-line { margin: 1.1% 0 0; max-width: 88%; color: var(--muted); font-size: clamp(12px,1.25vw,22px); line-height: 1.6; }
+    .sub-line { margin: 1.1% 0 0; max-width: 88%; color: var(--muted); font-size: clamp(12px,24px,22px); line-height: 1.6; }
     .sub-line b { color: var(--ink); }
     .temp-wrap { position: absolute; left: 4%; right: 4%; top: 31%; bottom: 9.2%; display: grid; grid-template-columns: 1.6fr .85fr; gap: 1.8%; }
-    .temp-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: .8vw; border: 1px solid rgba(105,245,230,.3); }
+    .temp-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 15.36px; border: 1px solid rgba(105,245,230,.3); }
     .cause-stack { display: grid; gap: .55em; align-content: stretch; grid-auto-rows: 1fr; min-height: 0; }
-    .cause-stack > div { border: 1px solid rgba(105,245,230,.18); border-left: 3px solid var(--cc,var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.9); padding: .5em 1em; display: flex; align-items: center; gap: 1em; }
-    .cause-stack b { font: 850 clamp(15px,1.7vw,30px)/1 "DejaVu Sans Mono",monospace; color: var(--cc,var(--mint)); min-width: 3.2em; }
-    .cause-stack span { color: var(--muted); font-size: clamp(10px,1vw,18px); line-height: 1.45; }
+    .cause-stack > div { border: 1px solid rgba(105,245,230,.18); border-left: 3px solid var(--cc,var(--mint)); border-radius: 9.6px; background: rgba(3,20,27,.9); padding: .5em 1em; display: flex; align-items: center; gap: 1em; }
+    .cause-stack b { font: 850 clamp(15px,32.64px,30px)/1 "DejaVu Sans Mono",monospace; color: var(--cc,var(--mint)); min-width: 3.2em; }
+    .cause-stack span { color: var(--muted); font-size: clamp(10px,19.2px,18px); line-height: 1.45; }
 
     /* Figure + side panel rows */
     .figrow { position: absolute; left: 4%; right: 4%; top: 19%; bottom: 9.2%; display: flex; gap: 1.6%; align-items: center; }
+    .figrow.top { align-items: flex-start; }
+    .figrow.top .figbox { align-items: flex-start; }
+    .figrow.top .fig-side { align-content: start; }
+    .figrow.duel { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 1.2em; align-items: stretch; }
+    .figrow.duel .figbox { width: 100%; height: auto; align-items: center; }
+    .figrow.duel .figbox img { width: min(84%, 1480px); max-height: 100%; object-fit: contain; }
+    .figrow.duel .fig-side { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7em 1em; align-content: end; }
+    .figrow.duel .fig-side .fs-card { padding: .7em 1em; }
+    .figrow.duel .fig-side .fs-card span { margin-top: .3em; font-size: 17px; line-height: 1.42; }
     .figrow .figbox { flex: 1 1 68%; height: 100%; display: flex; align-items: center; justify-content: center; min-width: 0; }
-    .figrow .figbox img { max-width: 100%; max-height: 100%; border-radius: .8vw; border: 1px solid rgba(105,245,230,.28); box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+    .figrow .figbox img { max-width: 100%; max-height: 100%; border-radius: 15.36px; border: 1px solid rgba(105,245,230,.28); box-shadow: 0 24px 80px rgba(0,0,0,.55); }
     .fig-side { flex: 0 0 27%; display: grid; gap: .7em; align-content: center; }
-    .fig-side .fs-card { padding: .85em 1.05em; border: 1px solid rgba(105,245,230,.26); border-left: 3px solid var(--fc, var(--mint)); border-radius: .6vw; background: rgba(3,20,27,.92); }
-    .fig-side .fs-card b { display: block; color: var(--fc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
-    .fig-side .fs-card span { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.5; }
+    .fig-side .fs-card { padding: .85em 1.05em; border: 1px solid rgba(105,245,230,.26); border-left: 3px solid var(--fc, var(--mint)); border-radius: 11.52px; background: rgba(3,20,27,.92); }
+    .fig-side .fs-card b { display: block; color: var(--fc, var(--mint)); font: 800 clamp(10px,19.2px,18px)/1.25 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+    .fig-side .fs-card span { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(9px,18.24px,17px); line-height: 1.5; }
     .fig-side .fs-card span strong { color: var(--ink); font-weight: 760; }
     .fig-side.five { gap: .52em; }
     .fig-side.five .fs-card { padding: .62em .9em; }
-    .fig-side.five .fs-card span { margin-top: .3em; font-size: clamp(8.5px,.86vw,15px); line-height: 1.42; }
+    .fig-side.five .fs-card span { margin-top: .3em; font-size: clamp(8.5px,16.51px,15px); line-height: 1.42; }
 
     /* 断言台账 · 原生套筛图 */
     .ledger-board { position: absolute; left: 5.5%; right: 5.5%; top: 20%; bottom: 9.2%; display: grid; grid-template-columns: .9fr 1.1fr; gap: 2.6%; }
     .lb-left { display: flex; flex-direction: column; justify-content: center; gap: .8em; }
-    .lb-cap { text-align: center; color: var(--muted); font: 750 clamp(10px,.98vw,17px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
+    .lb-cap { text-align: center; color: var(--muted); font: 750 clamp(10px,18.82px,17px)/1.3 "DejaVu Sans Mono",monospace; letter-spacing: .12em; }
     .sv-tray { padding: 1.3em 1.6em 1.35em; border: 2px solid rgba(235,246,247,.35); border-radius: 999px; text-align: center; background-color: rgba(11,38,48,.85); background-image: repeating-linear-gradient(45deg, rgba(235,246,247,.055) 0 2px, transparent 2px 9px), repeating-linear-gradient(-45deg, rgba(235,246,247,.055) 0 2px, transparent 2px 9px); }
-    .sv-tray b { display: block; color: var(--ink); font-size: clamp(14px,1.5vw,28px); font-weight: 860; }
+    .sv-tray b { display: block; color: var(--ink); font-size: clamp(14px,28.8px,28px); font-weight: 860; }
     .sv-tray b em { color: var(--gold); font-style: normal; font-family: "DejaVu Sans Mono",monospace; font-size: 1.3em; padding: 0 .12em; }
     .sv-tray.out b em { color: var(--mint); }
-    .sv-tray small { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(10px,.98vw,17px); line-height: 1.45; }
-    .sv-drop { text-align: center; color: var(--mint); font-weight: 800; font-size: clamp(14px,1.35vw,25px); line-height: 1; }
+    .sv-tray small { display: block; margin-top: .45em; color: var(--muted); font-size: clamp(10px,18.82px,17px); line-height: 1.45; }
+    .sv-drop { text-align: center; color: var(--mint); font-weight: 800; font-size: clamp(14px,25.92px,25px); line-height: 1; }
     .lb-right { display: flex; flex-direction: column; justify-content: center; gap: .85em; }
-    .lb-callout { padding: 1.05em 1.25em; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); border-left: 4px solid var(--gold); border-radius: .7vw; background: rgba(11,38,48,.85); }
-    .lb-callout b { display: block; color: var(--gold); font-size: clamp(14px,1.5vw,28px); font-weight: 870; }
-    .lb-callout span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,1.05vw,19px); font-weight: 740; }
-    .lb-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1em; padding: .8em 1.15em .85em; border: 1px solid rgba(235,246,247,.22); border-left: 3px solid var(--lc, var(--mint)); border-radius: .55vw; background: rgba(3,20,27,.92); }
+    .lb-callout { padding: 1.05em 1.25em; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); border-left: 4px solid var(--gold); border-radius: 13.44px; background: rgba(11,38,48,.85); }
+    .lb-callout b { display: block; color: var(--gold); font-size: clamp(14px,28.8px,28px); font-weight: 870; }
+    .lb-callout span { display: block; margin-top: .35em; color: var(--ink); font-size: clamp(10px,20.16px,19px); font-weight: 740; }
+    .lb-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1em; padding: .8em 1.15em .85em; border: 1px solid rgba(235,246,247,.22); border-left: 3px solid var(--lc, var(--mint)); border-radius: 10.56px; background: rgba(3,20,27,.92); }
     .lb-row.warn { --lc: var(--gold); } .lb-row.fail { --lc: var(--red); }
-    .lb-row b { display: block; color: var(--ink); font-size: clamp(12px,1.18vw,22px); font-weight: 800; }
+    .lb-row b { display: block; color: var(--ink); font-size: clamp(12px,22.66px,22px); font-weight: 800; }
     .lb-row b i { font-style: normal; color: var(--lc, var(--mint)); font-family: "DejaVu Sans Mono",monospace; }
-    .lb-row small { display: block; margin-top: .25em; color: var(--muted); font-size: clamp(9px,.88vw,15px); line-height: 1.4; }
-    .lb-row em { font-style: normal; color: var(--lc, var(--mint)); font: 800 clamp(10px,1vw,18px)/1.35 "DejaVu Sans Mono",monospace; white-space: nowrap; text-align: right; }
-    .lb-note { padding: .75em 1.15em; border: 1px dashed rgba(235,246,247,.32); border-radius: .55vw; color: var(--muted); font-size: clamp(9px,.95vw,17px); line-height: 1.6; }
+    .lb-row small { display: block; margin-top: .25em; color: var(--muted); font-size: clamp(9px,16.9px,15px); line-height: 1.4; }
+    .lb-row em { font-style: normal; color: var(--lc, var(--mint)); font: 800 clamp(10px,19.2px,18px)/1.35 "DejaVu Sans Mono",monospace; white-space: nowrap; text-align: right; }
+    .lb-note { padding: .75em 1.15em; border: 1px dashed rgba(235,246,247,.32); border-radius: 10.56px; color: var(--muted); font-size: clamp(9px,18.24px,17px); line-height: 1.6; }
     .lb-note strong { color: var(--ink); }
+    /* Claim ledger: report-to-evidence reconciliation in three plain-language steps */
+    .audit-simple { position: absolute; left: 4%; right: 4%; top: 20%; bottom: 9.2%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 1em; }
+    .as-kicker { padding: .65em 1em; border: 1px solid rgba(105,245,230,.3); border-radius: 10.56px; background: rgba(3,20,27,.82); color: var(--ink); text-align: center; font-size: 20px; font-weight: 760; }
+    .as-kicker b { color: var(--mint); }
+    .as-flow { display: grid; grid-template-columns: 1.2fr 52px 1fr 52px .8fr; gap: .8em; min-height: 0; align-items: stretch; }
+    .as-arrow { display: grid; place-items: center; color: var(--gold); font: 850 40px/1 "DejaVu Sans Mono",monospace; }
+    .as-panel { padding: 1em 1.1em 1.1em; border: 1px solid rgba(105,245,230,.3); border-radius: 13.44px; background: rgba(3,20,27,.92); min-width: 0; display: flex; flex-direction: column; }
+    .as-panel h3 { margin: 0; color: var(--mint); font-size: 22px; line-height: 1.25; }
+    .as-panel > p { margin: .35em 0 .8em; color: var(--muted); font-size: 16px; }
+    .as-claims { flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: .55em; }
+    .as-claim { padding: .55em .7em; border: 1px solid rgba(235,246,247,.16); border-radius: 8.64px; background: rgba(11,38,48,.72); display: grid; align-content: center; }
+    .as-claim span { display: block; color: var(--muted); font-size: 15px; line-height: 1.2; }
+    .as-claim b { display: block; margin-top: .22em; color: var(--ink); font: 800 22px/1.2 "DejaVu Sans Mono",monospace; }
+    .as-checks { flex: 1; display: grid; grid-auto-rows: 1fr; gap: .65em; }
+    .as-check { padding: .72em .8em; border-left: 3px solid var(--cc, var(--mint)); border-radius: 0 8.64px 8.64px 0; background: rgba(11,38,48,.72); display: grid; align-content: center; }
+    .as-check b { display: block; color: var(--cc, var(--mint)); font-size: 19px; }
+    .as-check span { display: block; margin-top: .3em; color: var(--muted); font-size: 16px; line-height: 1.45; }
+    .as-results { flex: 1; display: grid; grid-auto-rows: 1fr; gap: .65em; }
+    .as-result { padding: .75em .8em; border: 1px solid color-mix(in srgb, var(--rc, var(--mint)) 42%, transparent); border-radius: 9.6px; background: color-mix(in srgb, var(--rc, var(--mint)) 7%, rgba(3,20,27,.94)); display: grid; align-content: center; }
+    .as-result b { color: var(--rc, var(--mint)); font: 850 34px/1 "DejaVu Sans Mono",monospace; }
+    .as-result span { display: block; margin-top: .35em; color: var(--ink); font-size: 17px; line-height: 1.35; }
+    .as-examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1em; }
+    .as-example { padding: .65em .85em; border-top: 3px solid var(--ec, var(--mint)); background: rgba(3,20,27,.72); }
+    .as-example b { display: block; color: var(--ec, var(--mint)); font-size: 17px; }
+    .as-example span { display: block; margin-top: .25em; color: var(--muted); font-size: 14px; line-height: 1.35; }
 
     /* Region result cards: image + meta side panel */
     .rgrid { position: absolute; left: 4%; right: 4%; top: 19.5%; bottom: 9.4%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.3%; }
-    .rcard { position: relative; display: flex; border: 1px solid rgba(105,245,230,.3); border-radius: .8vw; overflow: hidden; background: #04161d; min-height: 0; }
+    .rcard { position: relative; display: flex; border: 1px solid rgba(105,245,230,.3); border-radius: 15.36px; overflow: hidden; background: #04161d; min-height: 0; }
     .rcard img { width: 70%; height: 100%; object-fit: cover; display: block; border-right: 1px solid rgba(105,245,230,.16); }
     .rmeta { flex: 1; min-width: 0; padding: 3.5% 3.5%; display: flex; flex-direction: column; justify-content: center; gap: .5em; }
-    .rmeta h3 { margin: 0 0 .15em; font-size: clamp(15px,1.6vw,30px); }
-    .rmeta .rline { color: var(--muted); font: 650 clamp(8px,.84vw,15px)/1.4 "DejaVu Sans Mono",monospace; }
+    .rmeta h3 { margin: 0 0 .15em; font-size: clamp(15px,30.72px,30px); }
+    .rmeta .rline { color: var(--muted); font: 650 clamp(8px,16.13px,15px)/1.4 "DejaVu Sans Mono",monospace; }
     .rmeta .rline b { display: block; color: var(--ink); font-size: 1.18em; }
     .rmeta .rline small { display: block; font-size: 1em; }
-    .rmeta .ropen { margin-top: .35em; color: var(--mint); text-decoration: none; font: 750 clamp(8px,.84vw,15px)/1 "DejaVu Sans Mono",monospace; }
+    .rmeta .ropen { margin-top: .35em; color: var(--mint); text-decoration: none; font: 750 clamp(8px,16.13px,15px)/1 "DejaVu Sans Mono",monospace; }
     .rmeta .ropen:hover { text-decoration: underline; }
     .rcard.pending2 { border-style: dashed; border-color: rgba(246,195,68,.55); align-items: center; justify-content: center; text-align: center; padding: 3%; }
-    .rcard.pending2 h3 { margin: 0; color: var(--gold); font-size: clamp(18px,1.9vw,34px); }
-    .rcard.pending2 p { margin: .85em 0 0; color: var(--muted); font-size: clamp(11px,1.05vw,18px); line-height: 1.6; }
+    .rcard.pending2 h3 { margin: 0; color: var(--gold); font-size: clamp(18px,36.48px,34px); }
+    .rcard.pending2 p { margin: .85em 0 0; color: var(--muted); font-size: clamp(11px,20.16px,18px); line-height: 1.6; }
 
     /* Temporal attribution stack */
-    .attr-stack { position: absolute; z-index: 6; right: 3.5%; bottom: 10.2%; width: 24%; padding: 1.1em 1.3em; border: 1px solid rgba(105,245,230,.35); border-radius: .8vw; background: rgba(3,20,27,.93); }
-    .attr-stack .as-head { color: var(--mint); font: 800 clamp(10px,1vw,18px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
-    .attr-stack .as-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; margin-top: .55em; font-size: clamp(9px,.95vw,17px); }
+    .attr-stack { position: absolute; z-index: 6; right: 3.5%; bottom: 10.2%; width: 24%; padding: 1.1em 1.3em; border: 1px solid rgba(105,245,230,.35); border-radius: 15.36px; background: rgba(3,20,27,.93); }
+    .attr-stack .as-head { color: var(--mint); font: 800 clamp(10px,19.2px,18px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .08em; }
+    .attr-stack .as-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; margin-top: .55em; font-size: clamp(9px,18.24px,17px); }
     .attr-stack .as-row b { font-family: "DejaVu Sans Mono",monospace; color: var(--ac, var(--mint)); }
     .attr-stack .as-row span { color: var(--muted); }
 
     /* Papers grid */
     .research-line { position: absolute; left: 4%; right: 4%; top: 17.8%; display: flex; gap: .45em; align-items: stretch; }
-    .research-line .rl-stage { flex: 1 1 0; min-width: 0; padding: .55em .7em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--rlc, var(--mint)); border-radius: .5vw; background: rgba(3,20,27,.9); }
-    .research-line .rl-stage b { display: block; color: var(--rlc, var(--mint)); font: 800 clamp(9.5px,.95vw,17px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .research-line .rl-stage span { display: block; margin-top: .3em; color: var(--muted); font: 500 clamp(8px,.76vw,13.5px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
-    .research-line > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,1vw,18px); }
+    .research-line .rl-stage { flex: 1 1 0; min-width: 0; padding: .55em .7em .6em; border: 1px solid rgba(105,245,230,.3); border-top: 3px solid var(--rlc, var(--mint)); border-radius: 9.6px; background: rgba(3,20,27,.9); }
+    .research-line .rl-stage b { display: block; color: var(--rlc, var(--mint)); font: 800 clamp(9.5px,18.24px,17px)/1.25 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .research-line .rl-stage span { display: block; margin-top: .3em; color: var(--muted); font: 500 clamp(8px,14.59px,13.5px)/1.4 "Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .research-line > i { align-self: center; color: var(--mint); font-style: normal; font-weight: 800; font-size: clamp(10px,19.2px,18px); }
     .research-line .rl-stage.gold { --rlc: var(--gold); }
     .research-line .rl-stage.red { --rlc: var(--red); }
     .paper-grid { position: absolute; left: 4%; right: 4%; top: 31.5%; bottom: 14.5%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2%; }
-    .paper-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.25); border-radius: .7vw; background: rgba(3,20,27,.92); overflow: hidden; min-height: 0; }
+    .paper-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.25); border-radius: 13.44px; background: rgba(3,20,27,.92); overflow: hidden; min-height: 0; }
     .paper-card img { width: 100%; aspect-ratio: 16/8.4; object-fit: contain; background: #fff; flex: 0 0 auto; }
     .paper-card img.pc-method { border-bottom: 1px solid rgba(105,245,230,.14); }
     .paper-card img.pc-result { border-bottom: 1px solid rgba(105,245,230,.16); }
     .paper-card .pc-imgs { position: relative; }
-    .paper-card .pc-imgs::after { content: "方法 ↑ · 实测 ↓"; position: absolute; right: .55em; top: .5em; padding: .28em .6em; border-radius: 999px; background: rgba(3,20,27,.82); color: var(--mint); font: 750 clamp(7px,.68vw,12px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+    .paper-card .pc-imgs::after { content: "方法 ↑ · 实测 ↓"; position: absolute; right: .55em; top: .5em; padding: .28em .6em; border-radius: 999px; background: rgba(3,20,27,.82); color: var(--mint); font: 750 clamp(7px,13.06px,12px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
     .paper-card .pc-body { padding: .75em .95em .8em; display: flex; flex-direction: column; gap: .45em; min-height: 0; overflow: hidden; flex: 1; justify-content: flex-start; }
-    .paper-card .pc-body b { color: var(--mint); min-height: 2.6em; font: 800 clamp(9px,.9vw,16px)/1.3 "DejaVu Sans Mono",monospace; }
-    .paper-card .pc-body p { margin: 0; min-height: 2.8em; color: var(--ink); font-size: clamp(10px,1vw,18px); font-weight: 730; line-height: 1.4; }
-    .paper-card .pc-body small { color: var(--muted); font-size: clamp(8px,.8vw,14px); line-height: 1.5; }
-    .paper-strip { position: absolute; left: 4%; right: 4%; bottom: 9.6%; display: flex; justify-content: center; gap: 1.1em; flex-wrap: wrap; color: var(--ink); font: 750 clamp(10px,1.02vw,18px)/1 "DejaVu Sans Mono",monospace; }
+    .paper-card .pc-body b { color: var(--mint); min-height: 2.6em; font: 800 clamp(9px,17.28px,16px)/1.3 "DejaVu Sans Mono",monospace; }
+    .paper-card .pc-body p { margin: 0; min-height: 2.8em; color: var(--ink); font-size: clamp(10px,19.2px,18px); font-weight: 730; line-height: 1.4; }
+    .paper-card .pc-body small { color: var(--muted); font-size: clamp(8px,15.36px,14px); line-height: 1.5; }
+    .paper-strip { position: absolute; left: 4%; right: 4%; bottom: 9.6%; display: flex; justify-content: center; gap: 1.1em; flex-wrap: wrap; color: var(--ink); font: 750 clamp(10px,19.58px,18px)/1 "DejaVu Sans Mono",monospace; }
     .paper-strip b { color: var(--gold); }
 
     /* Thanks slide */
     .thanks-grid { position: absolute; left: 4%; right: 4%; top: 22.5%; bottom: 14.5%; display: grid; grid-template-columns: 1.18fr .92fr; gap: 3.5%; align-items: center; }
     .deliv-list { display: grid; gap: .5em; }
-    .deliv-item { display: grid; grid-template-columns: 2.2em 1fr; align-items: center; gap: .8em; padding: .5em .95em; border: 1px solid rgba(105,245,230,.24); border-left: 3px solid var(--dc, var(--mint)); border-radius: .55vw; background: rgba(3,20,27,.9); font-size: clamp(11px,1.1vw,20px); font-weight: 750; }
+    .deliv-item { display: grid; grid-template-columns: 2.2em 1fr; align-items: center; gap: .8em; padding: .5em .95em; border: 1px solid rgba(105,245,230,.24); border-left: 3px solid var(--dc, var(--mint)); border-radius: 10.56px; background: rgba(3,20,27,.9); font-size: clamp(11px,21.12px,20px); font-weight: 750; }
     .deliv-item i { display: grid; place-items: center; width: 2em; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--dc, var(--mint)); color: var(--dc, var(--mint)); font: 800 .78em/1 "DejaVu Sans Mono",monospace; font-style: normal; }
     .deliv-item small { display: block; color: var(--muted); font-weight: 650; font-size: .76em; margin-top: .2em; }
     .qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em 1.4em; }
     .qr-grid.six { gap: .7em 1.3em; }
-    .qr-grid.six .qr-card img { max-width: 7.6vw; padding: 3.5%; }
-    .qr-grid.six .qr-card b { margin-top: .35em; font-size: clamp(9px,.88vw,15px); }
+    .qr-grid.six .qr-card img { max-width: 145.92px; padding: 3.5%; }
+    .qr-grid.six .qr-card b { margin-top: .35em; font-size: clamp(9px,16.9px,15px); }
     .qr-card { text-align: center; }
-    .qr-card img { width: 100%; max-width: 10.5vw; display: block; margin: 0 auto; background: #fff; padding: 4.5%; border-radius: .6vw; border: 1px solid rgba(105,245,230,.35); }
-    .qr-card b { display: block; margin-top: .5em; color: var(--ink); font: 750 clamp(10px,.98vw,17px)/1.2 "DejaVu Sans Mono",monospace; }
-    .thanks-close { position: absolute; left: 0; right: 0; bottom: 5.4%; text-align: center; font: 850 clamp(15px,1.9vw,36px)/1.2 "DejaVu Sans Mono",monospace; }
-    .thanks-close small { display: block; margin-top: .5em; color: var(--muted); font: 700 clamp(9px,.95vw,17px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+    .qr-card img { width: 100%; max-width: 201.6px; display: block; margin: 0 auto; background: #fff; padding: 4.5%; border-radius: 11.52px; border: 1px solid rgba(105,245,230,.35); }
+    .qr-card b { display: block; margin-top: .5em; color: var(--ink); font: 750 clamp(10px,18.82px,17px)/1.2 "DejaVu Sans Mono",monospace; }
+    .thanks-close { position: absolute; left: 0; right: 0; bottom: 5.4%; text-align: center; font: 850 clamp(15px,36.48px,36px)/1.2 "DejaVu Sans Mono",monospace; }
+    .thanks-close small { display: block; margin-top: .5em; color: var(--muted); font: 700 clamp(9px,18.24px,17px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
     .thanks-close .thanks-team { color: var(--mint); margin-top: .55em; letter-spacing: .1em; }
 
     /* Innovation outputs on brief slide */
     .brief-outputs.seven { grid-template-columns: repeat(7, 1fr); }
 
     /* 目录页 */
-    .toc-mark { position: absolute; right: 2.5%; bottom: 5%; z-index: 0; color: rgba(105,245,230,.06); font-weight: 900; font-size: clamp(150px,17vw,330px); line-height: 1; letter-spacing: .04em; pointer-events: none; user-select: none; }
+    .toc-mark { position: absolute; right: 2.5%; bottom: 5%; z-index: 0; color: rgba(105,245,230,.06); font-weight: 900; font-size: clamp(150px,326.4px,330px); line-height: 1; letter-spacing: .04em; pointer-events: none; user-select: none; }
     .toc-rail { position: absolute; left: 5.5%; top: 23%; bottom: 10%; width: 37%; display: flex; flex-direction: column; justify-content: space-between; }
     .toc-rail::before { content: ""; position: absolute; left: 2.35em; top: -3%; bottom: 1.5%; width: 2px; background: linear-gradient(180deg, rgba(105,245,230,0), rgba(105,245,230,.42) 8%, rgba(105,245,230,.42) 94%, rgba(105,245,230,0)); }
-    .toc-tag { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.05em; padding: .8em 1.15em .8em .6em; border: 1px solid rgba(105,245,230,.24); border-left: 3px solid var(--tc, var(--mint)); border-radius: .7vw; background: rgba(3,20,27,.94); }
+    .toc-tag { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.05em; padding: .8em 1.15em .8em .6em; border: 1px solid rgba(105,245,230,.24); border-left: 3px solid var(--tc, var(--mint)); border-radius: 13.44px; background: rgba(3,20,27,.94); }
     .toc-tag:nth-child(odd) { transform: rotate(-.55deg); }
     .toc-tag:nth-child(even) { transform: rotate(.55deg); }
-    .toc-tag i { display: grid; place-items: center; width: 2.2em; aspect-ratio: 1; margin-left: .4em; border-radius: 50%; border: 1px solid var(--tc, var(--mint)); background: rgba(3,20,27,1); color: var(--tc, var(--mint)); font: 800 clamp(10px,.98vw,18px)/1 "DejaVu Sans Mono",monospace; font-style: normal; }
-    .toc-tag b { display: block; color: var(--ink); font-size: clamp(14px,1.42vw,28px); font-weight: 880; letter-spacing: .1em; }
-    .toc-tag small { display: block; margin-top: .32em; color: var(--muted); font-size: clamp(9px,.9vw,16px); font-weight: 700; }
-    .toc-tag em { color: var(--tc, var(--mint)); font: 750 clamp(9px,.86vw,15px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .08em; }
+    .toc-tag i { display: grid; place-items: center; width: 2.2em; aspect-ratio: 1; margin-left: .4em; border-radius: 50%; border: 1px solid var(--tc, var(--mint)); background: rgba(3,20,27,1); color: var(--tc, var(--mint)); font: 800 clamp(10px,18.82px,18px)/1 "DejaVu Sans Mono",monospace; font-style: normal; }
+    .toc-tag b { display: block; color: var(--ink); font-size: clamp(14px,27.26px,28px); font-weight: 880; letter-spacing: .1em; }
+    .toc-tag small { display: block; margin-top: .32em; color: var(--muted); font-size: clamp(9px,17.28px,16px); font-weight: 700; }
+    .toc-tag em { color: var(--tc, var(--mint)); font: 750 clamp(9px,16.51px,15px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .08em; }
     .toc-right { position: absolute; left: 49%; right: 4.5%; top: 31%; z-index: 1; }
     .toc-right .lead-bar { display: block; width: 3.4em; height: 3px; background: var(--mint); margin-bottom: 1.35em; }
-    .toc-slogan2 { color: var(--ink); font-weight: 870; font-size: clamp(20px,2.42vw,47px); line-height: 1.66; }
+    .toc-slogan2 { color: var(--ink); font-weight: 870; font-size: clamp(20px,46.46px,47px); line-height: 1.66; }
     .toc-slogan2 .mint { color: var(--mint); }
     .toc-slogan2 .gold { color: var(--gold); }
-    .toc-flowline { margin-top: 1.7em; color: var(--ink); font: 750 clamp(11px,1.12vw,20px)/1.7 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
+    .toc-flowline { margin-top: 1.7em; color: var(--ink); font: 750 clamp(11px,21.5px,20px)/1.7 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
     .toc-flowline i { color: var(--mint); font-style: normal; padding: 0 .4em; }
 
     /* 动机页 */
-    .motive-quote { position: absolute; left: 9%; right: 9%; top: 18.5%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(20px,2.55vw,49px); line-height: 1.46; }
+    .motive-quote { position: absolute; left: 9%; right: 9%; top: 18.5%; text-align: center; color: var(--ink); font-weight: 850; font-size: clamp(20px,48.96px,49px); line-height: 1.46; }
     .motive-quote .q-mark { color: var(--mint); }
     .motive-quote .q-who { display: block; margin-bottom: .5em; color: var(--muted); font-style: normal; font-weight: 750; font-size: .38em; letter-spacing: .22em; }
-    .motive-card .mc-tag { display: block; margin-top: auto; padding: .5em .8em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 62%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--mc, var(--mint)) 10%, transparent); color: var(--mc, var(--mint)); font: 800 clamp(11px,1.05vw,19px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .1em; text-align: center; }
+    .motive-card .mc-tag { display: block; margin-top: auto; padding: .5em .8em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 62%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--mc, var(--mint)) 10%, transparent); color: var(--mc, var(--mint)); font: 800 clamp(11px,20.16px,19px)/1 "DejaVu Sans Mono",monospace; font-style: normal; letter-spacing: .1em; text-align: center; }
     .motive-punch .gold { color: var(--gold); }
     .motive-punch .hl { color: #ff8b8b; font-weight: 870; padding: 0 .08em; }
-    .motive-sub { position: absolute; left: 10%; right: 10%; top: 35.5%; text-align: center; color: var(--muted); font-size: clamp(12px,1.3vw,24px); font-weight: 720; }
-    .motive-stack { position: absolute; left: 5.5%; right: 5.5%; top: 41.5%; bottom: 10%; display: flex; flex-direction: column; justify-content: space-between; gap: 1vh; min-height: 0; }
+    .motive-sub { position: absolute; left: 10%; right: 10%; top: 35.5%; text-align: center; color: var(--muted); font-size: clamp(12px,24.96px,24px); font-weight: 720; }
+    .motive-stack { position: absolute; left: 5.5%; right: 5.5%; top: 41.5%; bottom: 10%; display: flex; flex-direction: column; justify-content: space-between; gap: 10.8px; min-height: 0; }
     .motive-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.7%; }
-    .motive-card { display: flex; flex-direction: column; padding: 1.25em 1.3em 1.2em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: .9vw; background: rgba(3,20,27,.88); }
-    .motive-card b { display: block; color: var(--mc, var(--mint)); font: 800 clamp(12px,1.16vw,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
-    .motive-card p { margin: .8em 0 .95em; color: var(--ink); font-size: clamp(11px,1.12vw,20px); font-weight: 730; line-height: 1.66; }
-    .motive-conv { padding: .4em 0; text-align: center; color: var(--muted); font: 750 clamp(11px,1.05vw,19px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .14em; }
+    .motive-card { display: flex; flex-direction: column; padding: 1.25em 1.3em 1.2em; border: 1px solid color-mix(in srgb, var(--mc, var(--mint)) 42%, transparent); border-radius: 17.28px; background: rgba(3,20,27,.88); }
+    .motive-card b { display: block; color: var(--mc, var(--mint)); font: 800 clamp(12px,22.27px,22px)/1.2 "DejaVu Sans Mono",monospace; letter-spacing: .05em; }
+    .motive-card p { margin: .8em 0 .95em; color: var(--ink); font-size: clamp(11px,21.5px,20px); font-weight: 730; line-height: 1.66; }
+    .motive-conv { padding: .4em 0; text-align: center; color: var(--muted); font: 750 clamp(11px,20.16px,19px)/1.4 "DejaVu Sans Mono",monospace; letter-spacing: .14em; }
     .motive-conv i { display: block; margin-top: .25em; color: var(--mint); font-style: normal; }
-    .motive-punch { margin: 0 6.8%; padding: 1.1em 1.6em; border: 1px solid rgba(105,245,230,.38); border-radius: .9vw; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(14px,1.42vw,28px); line-height: 1.6; }
+    .motive-punch { margin: 0 6.8%; padding: 1.1em 1.6em; border: 1px solid rgba(105,245,230,.38); border-radius: 17.28px; background: rgba(11,38,48,.8); text-align: center; color: var(--ink); font-weight: 790; font-size: clamp(14px,27.26px,28px); line-height: 1.6; }
     .motive-punch .mint { color: var(--mint); }
 
     /* 团队页 */
     .team-grid { position: absolute; left: 4.5%; right: 4.5%; top: 23.5%; display: grid; grid-template-columns: repeat(5,1fr); gap: 1.5%; }
-    .team-card { border: 1px solid rgba(105,245,230,.25); border-radius: .9vw; background: rgba(3,20,27,.9); overflow: hidden; text-align: center; padding-bottom: 1.1em; }
+    .team-card { border: 1px solid rgba(105,245,230,.25); border-radius: 17.28px; background: rgba(3,20,27,.9); overflow: hidden; text-align: center; padding-bottom: 1.1em; }
     .team-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center top; border-bottom: 1px solid rgba(105,245,230,.16); background: #0b2630; }
-    .team-card b { display: block; margin-top: .8em; color: var(--ink); font-size: clamp(13px,1.32vw,25px); font-weight: 860; }
-    .team-card .en { display: block; margin-top: .4em; color: var(--mint); font: 750 clamp(8px,.8vw,14px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
-    .team-card .aff { display: block; margin: .65em .8em 0; color: var(--ink); font-size: clamp(10px,.98vw,17px); font-weight: 760; line-height: 1.45; }
-    .team-card .foc { display: block; margin: .5em .95em 0; color: var(--muted); font-size: clamp(9px,.88vw,15px); line-height: 1.55; }
-    .team-foot { position: absolute; left: 0; right: 0; bottom: 9.8%; text-align: center; color: var(--muted); font: 720 clamp(10px,1vw,18px)/1.5 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
+    .team-card b { display: block; margin-top: .8em; color: var(--ink); font-size: clamp(13px,25.34px,25px); font-weight: 860; }
+    .team-card .en { display: block; margin-top: .4em; color: var(--mint); font: 750 clamp(8px,15.36px,14px)/1 "DejaVu Sans Mono",monospace; letter-spacing: .1em; }
+    .team-card .aff { display: block; margin: .65em .8em 0; color: var(--ink); font-size: clamp(10px,18.82px,17px); font-weight: 760; line-height: 1.45; }
+    .team-card .foc { display: block; margin: .5em .95em 0; color: var(--muted); font-size: clamp(9px,16.9px,15px); line-height: 1.55; }
+    .team-foot { position: absolute; left: 0; right: 0; bottom: 9.8%; text-align: center; color: var(--muted); font: 720 clamp(10px,19.2px,18px)/1.5 "DejaVu Sans Mono",monospace; letter-spacing: .06em; }
     .team-foot b { color: var(--mint); }
     .brief-output.innov { border-top-color: var(--gold); background: linear-gradient(180deg, rgba(246,195,68,.14), rgba(11,38,48,0)); }
     .brief-output.innov b { color: var(--gold); }
@@ -1005,7 +1044,6 @@
 
     @media (max-aspect-ratio: 4/3) {
       .controls { transform: scale(.9); transform-origin: right bottom; }
-      .map-actions { top: 3%; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -1054,7 +1092,7 @@
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="toc-mark" aria-hidden="true">证据</div>
       <div class="eyebrow reveal" style="--d:.08s">00 · CONTENTS</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">目录</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">目录</h2>
       <div class="toc-rail">
         <div class="toc-tag reveal" style="--d:.3s"><i>01</i><div><b>研究问题</b><small>一句提问，四个角色的证据难题</small></div><em>01–02</em></div>
         <div class="toc-tag reveal" style="--d:.38s;--tc:var(--gold)"><i>02</i><div><b>输出产物</b><small>五项赛题交付，逐项实测演示</small></div><em>03–07</em></div>
@@ -1074,7 +1112,7 @@
     <section class="slide" data-title="一句听起来很简单的提问">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">01 · WHY THIS SKILL / FROM A QUESTION TO AN EVIDENCE CHAIN</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">一句听起来很简单的提问</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">一句听起来很简单的提问</h2>
       <div class="motive-quote reveal" style="--d:.32s"><em class="q-who">一位地球化学研究者的提问</em><span class="q-mark">“</span>帮我画一张全球土壤砷元素的分布图谱，<br>整理成可交互的数据库，并告诉我哪里异常。<span class="q-mark">”</span></div>
       <div class="motive-sub reveal" style="--d:.44s">这听起来像一个检索问题。但放进真实的研究团队，它马上变成四个更难的问题：</div>
       <div class="motive-stack">
@@ -1094,7 +1132,7 @@
     <section class="slide" data-title="赛题要求，逐条落地">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">02 · TASK BREAKDOWN / DATA SOURCES</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">赛题要求，逐条落地</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">赛题要求，逐条落地</h2>
       <div class="brief-rows">
         <div class="brief-row reveal" style="--d:.3s">
           <div class="brief-step"><b>自动采集</b><small>ACQUIRE</small></div>
@@ -1135,7 +1173,7 @@
     <section class="slide map-slide" data-title="交付 1 · 可交互元素分布地图">
       <div class="map-shell" style="--fallback:url('assets/world-atlas-map-1920x1080.png')"><iframe data-src="live/world-atlas.html" title="全球地球化学交互地图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">03 · DELIVERABLE 1 / INTERACTIVE ATLAS</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 1 · 可交互元素分布地图</h2></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">03 · DELIVERABLE 1 / INTERACTIVE ATLAS</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,67.2px,64px)">交付 1 · 可交互元素分布地图</h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/world-atlas.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">分布地图</span><span>数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
       <a class="pip pip-globe reveal" style="--d:.5s" href="live/globe-3d.html" target="_blank" rel="noopener">
@@ -1162,7 +1200,7 @@
     <section class="slide map-slide" data-title="交付 2 · 标准化地球化学数据库">
       <div class="map-shell" style="--fallback:url('assets/world-atlas-db-1920x1080.png')"><iframe data-src="live/world-atlas.html?tab=database" title="标准化地球化学数据库视图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow gold reveal" style="--d:.08s">04 · DELIVERABLE 2 / STANDARDIZED DATABASE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 2 · 标准化地球化学数据库</h2></div>
+      <div class="map-title"><div class="eyebrow gold reveal" style="--d:.08s">04 · DELIVERABLE 2 / STANDARDIZED DATABASE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,67.2px,64px)">交付 2 · 标准化地球化学数据库</h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/world-atlas.html?tab=database" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span class="active-tab">数据库</span><span>组合对比</span><span>来源置信</span><span>异常识别</span></div>
       <div class="schema-cloud reveal" style="--d:.5s">
@@ -1193,7 +1231,7 @@
     <section class="slide map-slide" data-title="交付 3 · 数据来源与置信度说明">
       <div class="map-shell" style="--fallback:url('assets/world-atlas-source-1920x1080.png')"><iframe data-src="live/world-atlas.html?tab=source" title="数据来源与置信度视图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">05 · DELIVERABLE 3 / SOURCE &amp; CONFIDENCE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 3 · 数据来源与置信度说明</h2></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">05 · DELIVERABLE 3 / SOURCE &amp; CONFIDENCE</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,67.2px,64px)">交付 3 · 数据来源与置信度说明</h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/world-atlas.html?tab=source" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span>数据库</span><span>组合对比</span><span class="active-tab">来源置信</span><span>异常识别</span></div>
       <div class="stat-cloud">
@@ -1223,7 +1261,7 @@
     <section class="slide map-slide" data-title="交付 4 · 异常区域识别结果">
       <div class="map-shell" style="--fallback:url('assets/china-atlas-anomaly-1920x1080.png')"><iframe data-src="live/china-atlas.html?tab=anomaly" title="区域异常识别视图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">06 · DELIVERABLE 4 / ANOMALY DETECTION</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.5vw,64px)">交付 4 · 异常区域识别结果</h2></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">06 · DELIVERABLE 4 / ANOMALY DETECTION</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,67.2px,64px)">交付 4 · 异常区域识别结果</h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">启用交互</button><a class="open-map" href="live/china-atlas.html?tab=anomaly" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span>分布地图</span><span>数据库</span><span>组合对比</span><span>来源置信</span><span class="active-tab">异常识别</span></div>
       <a class="pip pip-rect reveal" style="--d:.5s" href="live/china-atlas.html?tab=anomaly" target="_blank" rel="noopener">
@@ -1250,7 +1288,7 @@
     <section class="slide" data-title="交付 5 · 可复用 Skill 文档：四层设计">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">07 · DELIVERABLE 5 / REUSABLE SKILL</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">交付 5 · 可复用 Skill 文档：四层设计</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">交付 5 · 可复用 Skill 文档：四层设计</h2>
       <div class="compat-strip reveal" style="--d:.28s">
         <div class="compat-item"><b>SKILL 格式</b><span>Agent Skills 公共子集，一份 Skill 多平台复用</span></div>
         <div class="compat-item"><b>OPENCODE</b><span>隔离评测与 Skill 挂载，已实测验证</span></div>
@@ -1269,7 +1307,7 @@
     <section class="slide" data-title="机制总图：模型提案，代码裁决">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">08 · MECHANISM OVERVIEW / MODEL PROPOSES, CODE DECIDES</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(24px,3vw,56px)">Global Geochemical Atlas · Skill 机制图</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(24px,57.6px,56px)">Global Geochemical Atlas · Skill 机制图</h2>
       <div class="figrow">
         <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig6-green-overview-v2.png" alt="Skill 机制总图：输入与准入、确定性处理与验证循环、出版审计与模块化交付"></div>
         <div class="fig-side five">
@@ -1284,10 +1322,10 @@
       <template class="notes-template">这是整个 Skill 的机制图，五个模块。第一，数据采集：36 个来源全部在文档里登记编号、许可和版本，任务请求先做 SHA-256 冻结，来源过许可、版本、哈希三道检查才允许采集。第二，数据处理：标准化、质量控制、地质匹配、置信度与异常识别按固定顺序执行，产物对照十六项文件要求逐项核对。第三，Loop 与跨次记忆：核对不过就修复重跑，每个来源的成败记录写入记忆文件，下次运行优先用可靠来源、跳过屡次失败的来源——运行越多，采集越准。第四，对抗审计：侦察、质疑、裁判三个角色互相独立，提候选的不管裁决，裁决只看明文规则。第五，任务与检验分离：模型只提案，采不采用由脚本判定。这条原则贯穿全部模块，下一页展开中间的执行内核。</template>
     </section>
 
-    <section class="slide" data-title="Skill 内核：按研究步骤往前走，发现问题就回头修">
+    <section class="slide" data-title="Skill 的 Loop 状态机">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">09 · SKILL INTERNALS / STATE MACHINE × ITERATION LOOP</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">Skill 内核：按研究步骤往前走，发现问题就回头修</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,64.32px,62px)">Skill 的 Loop 状态机</h2>
       <div class="core-split">
         <div class="core-left">
           <div class="panel-label reveal" style="--d:.28s">往前走：九个步骤，三道门 · 一步也不跳</div>
@@ -1307,7 +1345,6 @@
             <div class="stage-node sp3 reveal" style="--d:.62s"><b>08</b><strong>产出 16 项文件</strong><small>build</small></div>
             <div class="stage-node sp3 gate reveal" style="--d:.66s"><b>09</b><strong>逐项验收</strong><small>gate·验证</small></div>
           </div>
-          <div class="gate-line reveal" style="--d:.74s">三道门：<code>来源准入</code><code>背景组 n ≥ 20</code><code>出图验证</code>有一道不过就停，不硬算。</div>
         </div>
         <div class="core-right">
           <div class="panel-label gold reveal" style="--d:.3s">回头修：第 09 步验收不过，怎么办？</div>
@@ -1320,14 +1357,12 @@
             <div class="lf-step gold"><b>③ 对症修<small style="opacity:.55;font-weight:700"> · route</small></b><span>缺证据就补证据，缺规则就补规则；没登记的，一律不碰</span></div>
             <div class="lf-arrow">修完重跑</div>
             <div class="lf-step"><b>④ 再验收<small style="opacity:.55;font-weight:700"> · rerun+diff</small></b><span>重跑一遍，按 item_id 核对老问题有没有消失</span></div>
-            <div class="lf-return">仍有问题 → 沿红色虚线再进 ①；修干净了 → 回到左栏 09 交付</div>
-            <div class="lf-stop">最多 2 轮 · 问题没变少，就承认修不动——标记 <code>needs_human_review</code>，交给人</div>
+            <div class="lf-mem"><b>⑤ 沉淀进跨轮记忆库<small style="opacity:.6;font-weight:700"> · memory</small></b><span>缺某类证据、介质或元素数据量不平衡这类一轮修不完的缺口，写入机制总图里的 memory；下一轮运行先读记忆，优先补齐</span></div>
           </div>
         </div>
       </div>
-      <div class="fail-line reveal" style="--d:.84s"><span class="fl-label">停下来时会说清楚为什么停 · 8 种失败状态</span><code>invalid_input</code><code>unsupported_scope</code><code>network_unavailable</code><code>source_not_accessible</code><code>incomplete_retrieval</code><code>conflicting_evidence</code><code>insufficient_background</code><code>needs_human_review</code></div>
       <div class="footer-line"><span>09 验收不过 → 回头修 → 回到 09 再验</span><span>每次修复另开新运行 · 原始证据不改</span></div>
-      <template class="notes-template">左边是 Skill 往前走的路线：锁定问题、审来源、取数据，再筛选、质检、对地质底图，打分、出文件、逐项验收。三道门都得过：来源准入、背景组 n ≥ 20、出图验证；少一道就停，不硬算。那第 09 步验收不过怎么办？问题先记进 iteration_backlog，按登记的方法修，修完回到 09 重验。最多 2 轮；问题没变少，就标记 needs_human_review，交给人。我们允许失败，但不允许悄悄失败。下一页看 loop 真实留下的台账。</template>
+      <template class="notes-template">Skill 先沿九步向前走：锁定问题、审查数据来源、取数并留证据；再筛掉不合格记录、校单位查坐标、对上地质底图；最后打分找异常、产出 16 项文件、逐项验收。真正的转折点在第 09 步：验收不过，就进入四步循环——列清问题、记在案、对症修、再验收；修完不是继续往后走，而是回到 09 重新过关。底层仍有三道科学门：来源准入、背景组 n ≥ 20、出图验证。循环最多 2 轮，仍不过就标记 needs_human_review。更关键的是第五步：一轮修不完的缺口——缺某类证据、介质或元素数据量不平衡——会沉淀进跨轮记忆库 memory，下一轮运行先读记忆、优先补齐。它允许失败，但不允许悄悄失败，也不会白白失败。</template>
     </section>
 
     <section class="slide" data-title="高质量数据的 Loop 自动修复机制">
@@ -1336,7 +1371,7 @@
       <h2 class="title reveal" style="--d:.18s">高质量数据的 Loop 自动修复机制</h2>
       <div class="artifact-strip reveal" style="--d:.26s">
         <span class="strip-label">为什么要记账</span>
-        <span class="strip-note">自动清洗数据最怕两件事：<b>悄悄丢数据</b>、<b>悄悄改数值</b>。我们的规矩是——发现的每个问题都记进 <code class="gold">iteration_backlog.csv</code>，按性质分三路处置：能修的自动修、要判断的转人工、属于科学事实的原样保留，<b>既不遗漏，也不歪曲</b>。</span>
+        <span class="strip-note">自动清洗最怕<b>悄悄丢数据</b>、<b>悄悄改数值</b>。所以每个问题都记进 <code class="gold">iteration_backlog.csv</code>，分三路处置：能修的自动修、要判断的转人工、科学事实原样保留——<b>不遗漏，不歪曲</b>。</span>
       </div>
       <div class="backlog-wrap reveal" style="--d:.4s">
         <div class="backlog-head">
@@ -1364,49 +1399,76 @@
     <section class="slide" data-title="数据的对抗审计机制">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">11 · MECHANISM / ADVERSARIAL SOURCE AUDIT</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">数据的对抗审计机制</h2>
-      <div class="figrow">
-        <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig5-white-duel.png" alt="新数据来源的对抗审计：侦察提名、质疑挑刺、裁判打分"></div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,64.32px,62px)">数据的对抗审计机制</h2>
+      <div class="figrow duel">
+        <div class="figbox reveal" style="--d:.3s"><img src="assets/figures/fig5-white-duel-cut.png" alt="新数据来源的对抗审计：侦察提名、质疑挑刺、裁判打分"></div>
         <div class="fig-side">
-          <div class="fs-card reveal" style="--d:.42s"><b>第一层 · 侦察员只管提候选</b><span>针对账本中的数据空白区域尽量多提名新来源，<strong>宁可多报，不可漏报</strong>。</span></div>
-          <div class="fs-card reveal" style="--d:.52s;--fc:var(--gold)"><b>第二层 · 质疑员只管挑问题</b><span>按<strong>许可、介质、区域</strong>逐条质询候选来源；答不上来的记为反对意见，直接计入扣分。</span></div>
-          <div class="fs-card reveal" style="--d:.62s;--fc:var(--red)"><b>第三层 · 裁判只按明文规则打分</b><span>开放许可 <strong>+3</strong> · DOI 可访问 <strong>+2</strong> · 补稀缺样品 <strong>+2</strong> · 填数据空白 <strong>+2</strong> · 质疑未答复 <strong>−3</strong>；≥7 分起草接入，4–6 分补材料，&lt;4 分淘汰。实例：某候选缺许可证明得 4 分，补上 CC0 证明后 10 分过关。</span></div>
-          <div class="fs-card reveal" style="--d:.72s"><b>三层独立 + 人工终审</b><span>提名、质疑、裁决<strong>三个角色互不隶属</strong>，谁也不能替对方做决定；评分通过只是起草资格，正式入库仍须负责人确认。</span></div>
+          <div class="fs-card reveal" style="--d:.42s"><b>第一层 · 侦察员提候选</b><span>根据缺口账本，面向空白区域广泛提名新来源；<strong>只提名，不审批</strong>。</span></div>
+          <div class="fs-card reveal" style="--d:.52s;--fc:var(--gold)"><b>第二层 · 质疑员提反对意见</b><span>独立模型逐条检查<strong>许可、介质、区域</strong>；只指出问题，不打分、不决定。</span></div>
+          <div class="fs-card reveal" style="--d:.62s;--fc:var(--red)"><b>第三层 · 裁判按规则算分</b><span>确定性代码不生成意见，只执行明文计分牌：<strong>≥7</strong> 起草接入，<strong>4–6</strong> 补材料，<strong>&lt;4</strong> 淘汰。</span></div>
+          <div class="fs-card reveal" style="--d:.72s"><b>三层独立 · 人工终审</b><span>三种角色互不替代；评分通过只取得起草资格，正式入库仍须负责人确认。</span></div>
         </div>
       </div>
       <div class="footer-line"><span>一方提候选、一方挑问题、裁判按明文规则打分 · 三层相互制衡</span><span>评分通过后仍不能直接入库，还要由负责人审核确认</span></div>
-      <template class="notes-template">上一页账本里最难修的问题是“这个区域根本没数据”——这一页就是解法，也是我们治“数据挤在欧洲”的办法。新来源的可信度靠对抗审计保证，三层角色互相独立：第一层侦察员只管提候选，面向数据空白区尽量多提名，宁多勿漏；第二层质疑员只管挑问题，按许可、介质、区域逐条质询，答不上来的记为反对意见；第三层裁判不是人、是一段代码，只按明文计分牌裁决——开放许可加三，DOI 可访问加二，稀缺样品加二，填补空白加二，质疑未答复减三。七分以上起草接入方案，四到六分回去补材料，不到四分淘汰。右边有场真实的：一个候选拿不出许可证据被四分打回，补上 CC0 证明后十分过关。三层谁也不能替对方做决定，而且赢了也进不了库——只拿到起草资格，正式接入必须负责人签字，这道门机器过不去。</template>
+      <template class="notes-template">遇到数据空白，侦察模型负责尽量多提候选。第二个模型是质疑员：它只围绕许可、介质和区域提出反对意见，不打分，也不做决定。真正拍板的裁判不是模型，而是一段确定性代码；它不生成新意见，只把双方材料代入明文计分牌，算出接入、补材料还是淘汰——开放许可加三，DOI 可访问加二，稀缺样品加二，填补空白加二，质疑未答复减三。达到 7 分也只够起草接入方案，正式入库仍要负责人签字。这一页，就是“模型提案，代码裁决”的缩影。</template>
     </section>
 
-    <section class="slide" data-title="最后一层门禁：报告里的每个数字，先对账">
+    <section class="slide" data-title="最后一层检查：数据非可信不可用">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">12 · MECHANISM / CLAIM LEDGER</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">最后一层门禁：报告里的每个数字，先对账</h2>
-      <div class="ledger-board reveal" style="--d:.32s">
-        <div class="lb-left">
-          <div class="lb-cap">断言台账 · 出版前逐条核验</div>
-          <div class="sv-tray"><b>报告草稿</b><small>正文中出现的全部待核数字</small></div>
-          <div class="sv-drop">▼</div>
-          <div class="sv-tray"><b><em>8</em> 条断言 · 逐条溯源复算</b><small>每条断言都是一项可核验的判断指标：数值、出处、证据链缺一不可，全部追溯到运行产物并独立重算</small></div>
-          <div class="sv-drop">▼</div>
-          <div class="sv-tray out"><b><em>0</em> 条无据数字流出</b><small>产物中无法复算的数字，一律拦下</small></div>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,64.32px,62px)">最后一层检查：数据非可信不可用</h2>
+      <div class="audit-simple reveal" style="--d:.32s">
+        <div class="as-kicker">它不是再分析一遍数据，而是给<b>报告做对账</b>：写进报告的每个数字，都必须回到运行产物中找到证据。</div>
+        <div class="as-flow">
+          <section class="as-panel">
+            <h3>① 报告准备写什么？</h3>
+            <p>本次固定审计运行自动抽取 8 项可核验事实</p>
+            <div class="as-claims">
+              <div class="as-claim"><span>标准化记录</span><b>1,422 条</b></div>
+              <div class="as-claim"><span>覆盖元素</span><b>Cu · Pb · Zn</b></div>
+              <div class="as-claim"><span>覆盖介质</span><b>土壤</b></div>
+              <div class="as-claim"><span>有效坐标比例</span><b>0%</b></div>
+              <div class="as-claim"><span>工作流可用性</span><b>0.59</b></div>
+              <div class="as-claim"><span>候选异常</span><b>16 条</b></div>
+              <div class="as-claim"><span>删失记录</span><b>0 条</b></div>
+              <div class="as-claim"><span>正式采用来源</span><b>1 个</b></div>
+            </div>
+          </section>
+          <div class="as-arrow">→</div>
+          <section class="as-panel">
+            <h3>② 代码逐项核对</h3>
+            <p>每一项都执行同样的三步检查</p>
+            <div class="as-checks">
+              <div class="as-check"><b>找出处</b><span>定位到具体产物、字段路径和文件 SHA-256</span></div>
+              <div class="as-check" style="--cc:var(--gold)"><b>重新计算</b><span>回到 CSV / JSON 独立重数、重算，不能照抄报告</span></div>
+              <div class="as-check" style="--cc:var(--red)"><b>检查有没有说过头</b><span>“异常”必须写成“候选异常”；可用性不能写成正确概率</span></div>
+            </div>
+          </section>
+          <div class="as-arrow">→</div>
+          <section class="as-panel">
+            <h3>③ 本次对账结果</h3>
+            <p>只有通过或收窄口径后，才能写进报告</p>
+            <div class="as-results">
+              <div class="as-result"><b>6</b><span>项数字一致，直接通过</span></div>
+              <div class="as-result" style="--rc:var(--gold)"><b>2</b><span>项数字没错，但必须限定表述</span></div>
+              <div class="as-result" style="--rc:var(--red)"><b>0</b><span>项无证据流出</span></div>
+            </div>
+          </section>
         </div>
-        <div class="lb-right">
-          <div class="lb-callout"><b>置信度 0.87 ≠ 正确概率</b><span>它度量的是这批数据证据链的完备程度</span></div>
-          <div class="lb-row"><span><b>「共 <i>1,422</i> 条标准化记录」</b><small>溯源复算，数值一致</small></span><em>✓ 核验通过</em></div>
-          <div class="lb-row warn"><span><b>「发现 <i>16</i> 个异常」</b><small>须限定为「候选异常」，不得表述为污染定论</small></span><em>◐ 限定口径后通过</em></div>
-          <div class="lb-row fail"><span><b>「获取 <i>25,000</i> 条高质量记录」</b><small>运行产物中无对应数据，判为无据断言</small></span><em>✕ 驳回 · 整稿重写</em></div>
-          <div class="lb-note"><strong>数值一致只是底线：</strong>表述超出证据边界——把候选写成定论、把置信度当作概率——同样无法通过出版核验。</div>
+        <div class="as-examples">
+          <div class="as-example"><b>✓ 数字核对一致</b><span>报告写 1,422 条，CSV 重数也是 1,422 条。</span></div>
+          <div class="as-example" style="--ec:var(--gold)"><b>◐ 数字对，表述要收窄</b><span>16 条只能写“候选异常”，不能写成污染定论。</span></div>
+          <div class="as-example" style="--ec:var(--red)"><b>✕ 假数字会被拦下</b><span>校准时故意插入 25,000；产物查无此数，立即驳回。</span></div>
         </div>
       </div>
-      <div class="footer-line"><span>报告中的每个数字都要回到计算结果中核对，确认一致后才能使用</span><span>发现无法核实来源的数字，整份报告退回核查并重写</span></div>
-      <template class="notes-template">问题登记了、缺口补上了，出版前还有最后一层门禁：断言台账。报告里的八条断言，每一条都是一项可核验的判断指标——数值、出处、证据链缺一不可。前面数据库那页说过，一个数字要绑定介质、方法、检出限和来源才算科研数据——这条规矩在出口处也要执行一遍：报告里的每一个数字，都拿回产物里重算，对上了才放行。台账还管两句容易说过头的话：异常不能说成污染，只能说候选异常；置信度不是“测得对的概率”，是这批数据的证据有多硬。只要报告里出现一个产物里查不到的数字，整份作废重写。数字对上还不够，话也不能说过头——审图不过，就不出版。</template>
+      <div class="footer-line"><span>这层检查的对象不是原始数据，而是 Agent 准备写进报告的数字与结论</span><span>数字要对得上，措辞也不能越过证据边界</span></div>
+      <template class="notes-template">这一页不是再分析一次数据，而是给报告做出门前对账。先看左边：固定审计运行准备写八项事实，包括一千四百二十二条记录、三种元素、土壤介质、坐标比例、工作流可用性、十六条候选异常、删失记录和来源数。中间的代码对每一项做三件事：找到具体产物和哈希，回到 CSV 或 JSON 独立重算，再检查措辞有没有超过证据。结果在右边：六项直接通过，两项数字没错但必须收窄说法——可用性不是正确概率，异常只是候选；零项无证据数字流出。底下三个例子对应这三种出口。校准时我们故意塞入二万五千这个假数字，产物里查不到，系统会立即驳回。</template>
     </section>
 
     <section class="slide" data-title="同一套方法在四个地区的实际运行结果">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">13 · RESULTS / WORLD · CHINA · EUROPE · US</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">同一套方法在四个地区的实际运行结果</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,64.32px,62px)">同一套方法在四个地区的实际运行结果</h2>
       <div class="rgrid">
         <div class="rcard reveal" style="--d:.3s">
           <img src="assets/region-maps/world-card.png" alt="世界图谱实测界面">
@@ -1432,7 +1494,7 @@
     <section class="slide" data-title="运行实况：Qwen3.8-Max 挂载 Skill 干活">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">14 · SKILL IN ACTION / QWEN3.8-MAX × OPENCODE</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">运行实况：Qwen3.8-Max 挂载 Skill 干活</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,65.28px,62px)">运行实况：Qwen3.8-Max 挂载 Skill 干活</h2>
       <div class="run-layout">
         <div class="run-stages">
           <div class="run-step reveal" style="--d:.4s"><i>1</i><span>读 SKILL.md · 冻结请求<small>freeze request</small></span></div>
@@ -1473,7 +1535,7 @@
     <section class="slide map-slide" data-title="时序演化图谱：地质富集，还是工业活动？">
       <div class="map-shell" data-auto="1" style="--fallback:url('assets/world-temporal-1920x1080.png')"><iframe data-src="live/world-temporal.html?autoplay=1" title="全球时序演化可交互地图"></iframe></div>
       <div class="map-shade"></div>
-      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">15 · TEMPORAL ATLAS / GEOGENIC VS ANTHROPOGENIC</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.35vw,62px)">时序演化图谱：地质富集，还是工业活动？<span class="live-badge">● 1986–2024 自动播放中</span></h2></div>
+      <div class="map-title"><div class="eyebrow reveal" style="--d:.08s">15 · TEMPORAL ATLAS / GEOGENIC VS ANTHROPOGENIC</div><h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,64.32px,62px)">时序演化图谱：地质富集，还是工业活动？<span class="live-badge">● 1986–2024 自动播放中</span></h2></div>
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">退出交互</button><a class="open-map" href="live/world-temporal.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">区域对比</span><span>异常成因</span><span>采样史回放</span><span>站点演变</span></div>
       <div class="trace-rail reveal" style="--d:.46s">
@@ -1500,7 +1562,7 @@
     <section class="slide" data-title="从图谱、发现到论文：一条完整的科研流程">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">16 · FROM ATLAS TO PAPERS / FULL RESEARCH WORKFLOW</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">从图谱、发现到论文：一条完整的科研流程</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,65.28px,62px)">从图谱、发现到论文：一条完整的科研流程</h2>
       <div class="research-line reveal" style="--d:.28s">
         <div class="rl-stage"><b>① 图谱扫描 · 发现现象</b><span>在冻结数据上扫遍元素 × 介质 × 区域，让反常信号自己冒出来</span></div><i>→</i>
         <div class="rl-stage"><b>② 提出选题 · 31 个候选</b><span>把现象写成可检验的问题，按证据排队，不靠人工点题</span></div><i>→</i>
@@ -1538,7 +1600,7 @@
     <section class="slide" data-title="相比同类数据库，我们的优势在哪里">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">17 · POSITIONING / DATABASE LANDSCAPE</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,3.4vw,62px)">相比同类数据库，我们的优势在哪里</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(26px,65.28px,62px)">相比同类数据库，我们的优势在哪里</h2>
       <div class="backlog-wrap reveal" style="--d:.3s;top:26.5%">
         <div class="backlog-head">
           <h3>诚实前提：不与机构级规模竞争，补的是「统一层」空位</h3>
@@ -1566,7 +1628,7 @@
     <section class="slide" data-title="作品展示">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">18 · SHOWCASE / ALL DELIVERABLES AT A GLANCE</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">作品展示</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">作品展示</h2>
       <div class="showcase-grid">
         <a class="show-card poster reveal" style="--d:.32s" href="finals/Global-Geochemical-Atlas-Poster.pdf" target="_blank" rel="noopener">
           <img src="assets/showcase/poster-thumb.png" alt="决赛海报">
@@ -1576,9 +1638,9 @@
           <img src="assets/showcase/repo-shot.png" alt="开源代码仓库">
           <span><b>开源代码仓库</b><small>SKILL.md · 契约 · 脚本 · 评测全部在库</small></span>
         </a>
-        <a class="show-card reveal" style="--d:.5s" href="https://chembot.zgca.com/" target="_blank" rel="noopener">
-          <img src="assets/showcase/site-shot.png" alt="团队官网">
-          <span><b>团队官网</b><small>chembot.zgca.com · 项目与团队主页</small></span>
+        <a class="show-card reveal" style="--d:.5s" href="https://asimfish.github.io/global-geochemical-atlas-demo" target="_blank" rel="noopener">
+          <img src="assets/showcase/project-home-shot.png" alt="项目主页">
+          <span><b>项目主页</b><small>赛题 · 效果展示 · 真实运行 · 材料下载</small></span>
         </a>
         <a class="show-card reveal" style="--d:.58s" href="live/world-atlas.html" target="_blank" rel="noopener">
           <img src="assets/global-overview-1920x1080.png" alt="全球交互图谱">
@@ -1590,13 +1652,13 @@
         </a>
       </div>
       <div class="footer-line"><span>五件作品全部在线可访问，点击任意卡片即可打开</span><span>压缩包内含全部文件，可离线查看</span></div>
-      <template class="notes-template">这一页把全部作品放在一起：决赛海报一页总览方案与结果；演示仓库完全开源，幻灯片、四域图谱和五篇论文成果都在里面；团队官网有项目和成员介绍；最右是两件实测产物——全球交互图谱和时序演化图谱，都可以现场点开操作。所有内容在线可访问，也打包了离线版本。</template>
+      <template class="notes-template">这一页把全部作品放在一起：决赛海报一页总览方案与结果；演示仓库完全开源，幻灯片、四域图谱和五篇论文成果都在里面；项目主页汇总了赛题、效果展示、真实运行和全部材料下载；最右是两件实测产物——全球交互图谱和时序演化图谱，都可以现场点开操作。所有内容在线可访问，也打包了离线版本。</template>
     </section>
 
     <section class="slide" data-title="团队 · 词元代理人队">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">19 · TEAM / TOKEN AGENTS</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">团队 · 词元代理人队</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">团队 · 词元代理人队</h2>
       <div class="team-grid">
         <article class="team-card reveal" style="--d:.32s"><img src="assets/team/bio_lyf.png" alt="李雨峰"><b>李雨峰</b><span class="en">YUFENG LI</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">师从严骏驰教授；研究方向为图机器学习、具身智能与最优传输理论</span></article>
         <article class="team-card reveal" style="--d:.4s"><img src="assets/team/bio_wps.png" alt="王培朔"><b>王培朔</b><span class="en">PEISHUO WANG</span><span class="aff">上海交通大学 · 博士生</span><span class="foc">师从吴帆教授；研究方向为视觉-语言-动作（VLA）模型与化学实验室自动化</span></article>
@@ -1612,7 +1674,7 @@
     <section class="slide" data-title="感谢各位评委，请批评指正">
       <div class="bg-field"></div><div class="grid-field"></div>
       <div class="eyebrow reveal" style="--d:.08s">20 · THANK YOU / FIVE DELIVERABLES + TWO INNOVATIONS</div>
-      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,3.8vw,70px)">感谢各位评委，请批评指正</h2>
+      <h2 class="title reveal" style="--d:.18s;font-size:clamp(28px,72.96px,70px)">感谢各位评委，请批评指正</h2>
       <div class="thanks-grid">
         <div class="deliv-list">
           <div class="deliv-item reveal" style="--d:.32s"><i>1</i><span>可交互元素分布地图<small>世界 · 中国 · 欧洲 · 美国全部交付</small></span></div>
@@ -1653,6 +1715,12 @@
   <script>
     (() => {
       if (new URLSearchParams(location.search).has('static')) document.documentElement.classList.add('static');
+      const fitStage = () => {
+        const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+        document.documentElement.style.setProperty('--stage-scale', s.toFixed(5));
+      };
+      fitStage();
+      window.addEventListener('resize', fitStage);
       const slides = [...document.querySelectorAll('.slide')];
       const count = document.getElementById('slideCount');
       const progress = document.getElementById('progress');
