@@ -75,6 +75,15 @@
     nav.top-nav a.gh { padding: 4px 9px; font-size: 12px; }
   }
 
+  /* ===== orgs bar ===== */
+  .orgs-bar { padding: 4px 0 30px; }
+  .orgs-bar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 18px; }
+  .orgs-bar .org-label { flex-basis: 100%; text-align: center; margin-bottom: 6px; font: 700 11px/1.4 var(--mono); letter-spacing: .24em; color: var(--muted); text-transform: uppercase; }
+  .orgs-bar .org { display: flex; align-items: center; justify-content: center; height: 60px; padding: 10px 22px; background: #fff; border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,.28); }
+  .orgs-bar .org img { height: 34px; width: auto; display: block; }
+  .orgs-bar .org img.slim { height: 26px; }
+  @media (max-width: 720px) { .orgs-bar .org { height: 48px; padding: 8px 14px; } .orgs-bar .org img { height: 26px; } .orgs-bar .org img.slim { height: 20px; } }
+
   /* ===== champion bar ===== */
   .champ-bar {
     display: block;
@@ -411,6 +420,16 @@
     </a>
   </div>
 </section>
+
+<div class="orgs-bar fx">
+  <div class="wrap">
+    <div class="org-label">Team Affiliations · 参与组织</div>
+    <div class="org"><img src="assets/orgs/sjtu.png" alt="上海交通大学"></div>
+    <div class="org"><img class="slim" src="assets/orgs/zgca.png" alt="北京中关村学院 × 中关村人工智能研究院"></div>
+    <div class="org"><img src="assets/orgs/buaa.png" alt="北京航空航天大学"></div>
+    <div class="org"><img src="assets/orgs/zju.png" alt="浙江大学"></div>
+  </div>
+</div>
 
 <div class="stats">
   <div class="wrap fx">
