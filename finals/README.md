@@ -9,7 +9,7 @@
 ## 交付物
 
 - `demo-video.html`：10 幕、3 分钟录屏版 HTML 演示，两段式结构：前半段（0:00–1:12）讲计划与设计，后半段（1:12–3:00）为 Agent 真实运行记录（真实命令、逐行日志、commit、耗时）与实际使用（真实地图、证据追溯、候选解读、运行验收）。
-- `Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4`：严格 180 秒的 1080p 静音视觉预览，可直接替换为团队旁白。
+- `Global-Geochemical-Atlas-Final-Demo.mp4`：172 秒 1080p 完整演示视频，含中文配音与字幕；前半结合决赛幻灯片讲方案与机制，后半为四域图谱与时序演化实测运行。
 - `speaker-script.md`：逐幕时间、口播和录屏动作。
 - `recording-guide.md`：正式录制与导出参数。
 - `poster.html`：A1 横版 Poster 可编辑源文件。

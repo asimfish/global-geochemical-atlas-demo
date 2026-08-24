@@ -110,23 +110,26 @@
   @media (max-width: 960px) { .hero h1, .hero h1 .h1-sub { white-space: normal; } }
   .hero .sub { margin-top: 18px; color: var(--muted); font-size: clamp(15px, 1.3vw, 17px); max-width: 520px; }
   .hero .sub b { color: var(--ink); font-weight: 700; }
-  .pain-list { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
-  .pain-list li { display: flex; gap: 9px; align-items: baseline; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
-  .pain-list .role { flex: none; font: 700 10.5px/1.7 var(--mono); color: var(--mint); letter-spacing: .04em; border: 1px solid rgba(105,245,230,.3); border-radius: 6px; padding: 0 7px; }
-  .pain-list .pl-tag { font: 700 11px/1.5 var(--mono); color: var(--gold); margin-left: 6px; white-space: nowrap; }
   .hero-quote { margin-top: 18px; padding: 14px 18px; border-left: 3px solid var(--mint); border-radius: 0 12px 12px 0; background: rgba(105,245,230,.06); max-width: 540px; }
   .hero-quote .q-who { display: block; font: 700 11px/1.5 var(--mono); color: var(--mint); letter-spacing: .06em; margin-bottom: 6px; font-style: normal; }
   .hero-quote p { margin: 0; color: var(--ink); font-size: clamp(15px, 1.35vw, 17.5px); font-weight: 700; line-height: 1.65; }
-  .hero-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 22px; max-width: 560px; }
-  .hero-flow i { font-style: normal; color: var(--muted); font: 700 12px/1 var(--mono); opacity: .7; }
-  .hf-step { --fc: var(--mint); display: inline-flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.02); }
-  .hf-step b { font-size: 12.5px; font-weight: 780; color: var(--ink); white-space: nowrap; }
-  .hf-step small { font: 650 8.5px/1.3 var(--mono); color: var(--fc); letter-spacing: .04em; white-space: nowrap; }
+  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; max-width: 560px; }
+  .pain-card { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: rgba(255,255,255,.02); display: flex; flex-direction: column; }
+  .pain-card .role { align-self: flex-start; font: 700 10.5px/1.7 var(--mono); color: var(--mint); letter-spacing: .04em; border: 1px solid rgba(105,245,230,.3); border-radius: 6px; padding: 0 7px; }
+  .pain-card p { margin: 7px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.55; flex: 1; }
+  .pain-card .pl-tag { display: block; margin-top: 7px; font: 700 11px/1.4 var(--mono); color: var(--gold); }
+  @media (max-width: 520px) { .pain-grid { grid-template-columns: 1fr; } }
+  .hero-band { grid-column: 1 / -1; margin-top: 8px; padding: 16px 22px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.02); display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .hero-flow { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 8px; }
+  .hero-flow i { font-style: normal; color: var(--muted); font: 700 13px/1 var(--mono); opacity: .7; align-self: center; }
+  .hf-step { --fc: var(--mint); display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.02); }
+  .hf-step b { font-size: 13.5px; font-weight: 780; color: var(--ink); white-space: nowrap; }
+  .hf-step small { font: 650 9.5px/1.3 var(--mono); color: var(--fc); letter-spacing: .05em; white-space: nowrap; }
   .hf-step.gold { --fc: var(--gold); border-color: rgba(246,195,68,.35); }
   .hf-step.red { --fc: var(--red); border-color: rgba(255,92,120,.35); }
   a.hf-step { transition: border-color .2s, transform .2s; }
   a.hf-step:hover { border-color: var(--fc); transform: translateY(-2px); }
-  .hero-formula { margin: 12px 0 0; font: 650 12.5px/1.6 var(--mono); color: var(--muted); letter-spacing: .02em; }
+  .hero-formula { margin: 0; font: 650 13px/1.6 var(--mono); color: var(--muted); letter-spacing: .02em; text-align: center; }
   .hero-formula b { color: var(--gold); font-weight: 750; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
   .chip { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: 650 12px/1.4 var(--mono); }
@@ -408,22 +411,13 @@
         <p>“帮我画一张全球土壤砷元素的分布图谱，整理成可交互的数据库，并告诉我哪里异常。”</p>
       </div>
       <p class="sub" style="margin-top:12px">这听起来像一个检索问题。但放进真实的研究团队，它马上变成四个更难的问题：</p>
-      <ul class="pain-list">
-        <li><span class="role">🧪 地球化学家</span><span>几十个调查、三种单位、五种消解方法——这些数字能放进同一张图里比吗？<em class="pl-tag">→ 统一指标</em></span></li>
-        <li><span class="role">🏛️ 环境监管</span><span>西南的砷比全国中位数高好几倍，是污染超标，还是地质本底就这么高？<em class="pl-tag">→ 动态时序</em></span></li>
-        <li><span class="role">🗂️ 数据管理员</span><span>这条 1978 年的老记录，检出限、坐标系、许可证，现在还查得到吗？<em class="pl-tag">→ 质量控制</em></span></li>
-        <li><span class="role">⚖️ 评审专家</span><span>AI 给出的每一个数字，出处在哪一页哪一行？敢直接引用吗？<em class="pl-tag">→ 来源可回溯</em></span></li>
-      </ul>
-      <p class="sub" style="margin-top:14px">如何一句话，让 Agent 帮我生成<b>可信、可回溯、可交互</b>的时序演进全球化学元素分布图谱？Global Geochemical Atlas Skill 把来自不同科研工作者的不同需求，转化成一套 <b>Agentic-Native</b> 的可信、可交互、可回溯、统一的<b>动态时序地球化学元素研究流程</b>。</p>
-      <div class="hero-flow">
-        <span class="hf-step"><b>多源采集</b><small>36 SOURCES</small></span><i>→</i>
-        <span class="hf-step"><b>标准化</b><small>mg/kg · WGS84</small></span><i>→</i>
-        <span class="hf-step gold"><b>质控修复</b><small>ITERATION LOOP</small></span><i>→</i>
-        <span class="hf-step red"><b>异常识别</b><small>ROBUST-Z · FDR</small></span><i>→</i>
-        <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>时序归因</b><small>GEOGENIC / INPUT</small></a><i>→</i>
-        <span class="hf-step"><b>成稿论文</b><small>5 个科学问题</small></span>
+      <div class="pain-grid">
+        <div class="pain-card"><span class="role">🧪 地球化学家</span><p>几十个调查、三种单位、五种消解方法——这些数字能放进同一张图里比吗？</p><em class="pl-tag">→ 统一指标</em></div>
+        <div class="pain-card"><span class="role">🏛️ 环境监管</span><p>西南的砷比全国中位数高好几倍，是污染超标，还是地质本底就这么高？</p><em class="pl-tag">→ 动态时序</em></div>
+        <div class="pain-card"><span class="role">🗂️ 数据管理员</span><p>这条 1978 年的老记录，检出限、坐标系、许可证，现在还查得到吗？</p><em class="pl-tag">→ 质量控制</em></div>
+        <div class="pain-card"><span class="role">⚖️ 评审专家</span><p>AI 给出的每一个数字，出处在哪一页哪一行？敢直接引用吗？</p><em class="pl-tag">→ 来源可回溯</em></div>
       </div>
-      <p class="hero-formula">多源采集 + 标准化门禁 + 质控修复 Loop = <b>可信的全球元素图谱与论文</b></p>
+      <p class="sub" style="margin-top:14px">如何一句话，让 Agent 帮我生成<b>可信、可回溯、可交互</b>的时序演进全球化学元素分布图谱？Global Geochemical Atlas Skill 把来自不同科研工作者的不同需求，转化成一套 <b>Agentic-Native</b> 的可信、可交互、可回溯、统一的<b>动态时序地球化学元素研究流程</b>。</p>
       <div class="cta-row">
         <a class="btn primary" href="live/world-atlas.html">进入交互图谱 →</a>
         <a class="btn ghost" href="#video">看 3 分钟演示</a>
@@ -437,6 +431,17 @@
         <div class="shot-caption"><b>真实运行产物界面实拍</b><span>MAP / DATABASE / EVIDENCE</span></div>
       </div>
     </a>
+    <div class="hero-band fx">
+      <div class="hero-flow">
+        <span class="hf-step"><b>多源采集</b><small>36 SOURCES</small></span><i>→</i>
+        <span class="hf-step"><b>标准化</b><small>mg/kg · WGS84</small></span><i>→</i>
+        <span class="hf-step gold"><b>质控修复</b><small>ITERATION LOOP</small></span><i>→</i>
+        <span class="hf-step red"><b>异常识别</b><small>ROBUST-Z · FDR</small></span><i>→</i>
+        <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>时序归因</b><small>GEOGENIC / INPUT</small></a><i>→</i>
+        <span class="hf-step"><b>成稿论文</b><small>5 个科学问题</small></span>
+      </div>
+      <p class="hero-formula">多源采集 + 标准化门禁 + 质控修复 Loop = <b>可信的全球元素图谱与论文</b></p>
+    </div>
   </div>
 </section>
 
@@ -837,13 +842,13 @@
     <div class="fx">
       <div class="eyebrow">Watch · 3 Minutes</div>
       <h2 class="section-title">3 分钟演示视频：<span class="gradient">前半讲方案与机制，后半实测运行</span></h2>
-      <p class="section-sub">00:00–01:22 结合决赛幻灯片讲解研究问题、机制总图、Loop 状态机、对抗审计与 Agent 运行实况；01:22–02:52 实测运行——世界 / 中国 / 欧洲 / 美国四域图谱的实际操作，以及 1986–2024 时序演化图谱自动播放。</p>
+      <p class="section-sub">含中文配音与字幕。00:00–01:22 结合决赛幻灯片讲解研究问题、机制总图、Loop 状态机、对抗审计与 Agent 运行实况；01:22–02:52 实测运行——世界 / 中国 / 欧洲 / 美国四域图谱的实际操作，以及 1986–2024 时序演化图谱自动播放。</p>
     </div>
     <div class="media-grid">
       <div class="fx">
         <div class="video-shell">
           <video controls preload="metadata" poster="finals/assets/global-run-map-1920x1080.png">
-            <source src="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" type="video/mp4">
+            <source src="finals/Global-Geochemical-Atlas-Final-Demo.mp4" type="video/mp4">
             您的浏览器不支持视频播放，可直接下载观看。
           </video>
         </div>
@@ -877,7 +882,7 @@
       <a class="mat fx" href="slides.html"><span class="kind">HTML · 决赛主讲</span><b>主讲幻灯片（HTML）</b><span>决赛现场即用此 HTML 幻灯片主讲，滚轮 / 方向键翻页</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 14 页</span><b>主讲幻灯片 PDF 版</b><span>主讲内容的 PDF 版：11 页主讲 + 3 页备份，含演讲者备注</span></a>
       <a class="mat fx" href="finals/Global-Geochemical-Atlas-Poster.pdf" style="--c:var(--gold)"><span class="kind">PDF · A1 横版</span><b>决赛 Poster</b><span>上方网页版海报的 PDF 版本</span></a>
-      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo-Silent-Preview.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p · 172 秒</span><b>演示视频</b><span>前半结合决赛幻灯片讲方案与机制，后半四域图谱与时序演化实测运行</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p · 172 秒 · 配音+字幕</span><b>演示视频</b><span>前半结合决赛幻灯片讲方案与机制，后半四域图谱与时序演化实测运行，含中文配音与字幕</span></a>
       <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 页</span><b>项目介绍文档</b><span>方案、产物、创新点与应用场景</span></a>
       <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>作品简介（文字版）</b><span>项目背景、方案与运行产物的完整文字介绍</span></a>
       <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 页 · 技术附件</span><b>Skill 架构讲解 PPT</b><span>面向技术评审的架构、证据链、四类运行结果与可复用文档详解，独立于主讲幻灯片</span></a>
