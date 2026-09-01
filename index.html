@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill · 决赛08_词元代理人队</title>
 <meta name="description" content="全球地球化学元素分布图谱：面向 AI Agent 的可复用科研 Skill。Agent 全自动接管公开地球化学数据的采集、质控、制图与存档，每一个数字都可追溯、可复核。AI4S Future ScienceSkills Hackathon · 决赛08_词元代理人队。">
+<meta name="theme-color" content="#03141b">
+<link rel="canonical" href="https://asimfish.github.io/global-geochemical-atlas-demo/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2303141b'/%3E%3Ccircle cx='32' cy='32' r='23' fill='none' stroke='%2369f5e6' stroke-width='2.6'/%3E%3Cellipse cx='32' cy='32' rx='23' ry='9' fill='none' stroke='%2369f5e6' stroke-opacity='.5' stroke-width='1.4'/%3E%3Ccircle cx='46' cy='18' r='4.6' fill='%23f6c344'/%3E%3Ccircle cx='15' cy='38' r='3.9' fill='%23ff5c78'/%3E%3Ccircle cx='39' cy='48' r='3.4' fill='%2369f5e6'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Global Geochemical Atlas Skill">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:url" content="https://asimfish.github.io/global-geochemical-atlas-demo/">
+<meta property="og:title" content="Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill">
+<meta property="og:description" content="面向 AI Agent 的可复用科研 Skill：自动采集公开地球化学数据，完成单位统一、质量控制与来源追溯，生成可交互元素分布图谱并识别异常区域——每个数字都带 SHA-256 指纹。AI4S Future ScienceSkills Hackathon 冠军作品。">
+<meta property="og:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="全球元素分布图谱交互界面截图">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill">
+<meta name="twitter:description" content="面向 AI Agent 的可复用科研 Skill：自动采集、质控、制图与异常识别，每个数字都带 SHA-256 指纹。">
+<meta name="twitter:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
 <style>
   :root {
     --bg: #03141b;
@@ -213,6 +230,65 @@
   .term-mini .ok { color: #6ef0a8; }
   .term-mini b { color: var(--mint); font-weight: 700; }
 
+  /* ===== how it works: six design commitments ===== */
+  .how { background: rgba(6,32,43,.35); border-top: 1px solid rgba(105,245,230,.12); }
+  .principle { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 14px 20px; border: 1px solid rgba(246,195,68,.4); border-radius: 12px; background: rgba(246,195,68,.05); }
+  .principle b { color: var(--gold); font: 800 15px/1.4 var(--sans); letter-spacing: .02em; }
+  .principle span { color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .principle span em { color: var(--ink); font-style: normal; font-weight: 700; }
+  .loop-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
+  .loop-steps span { padding: 4px 9px; border: 1px solid rgba(246,195,68,.4); border-radius: 8px; color: var(--ink); font: 650 11px/1.4 var(--mono); }
+  .loop-steps i { color: var(--muted); font-style: normal; font: 700 11px/1 var(--mono); }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 22px; }
+  @media (max-width: 1000px) { .how-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .how-grid { grid-template-columns: 1fr; } }
+  .how-card { display: flex; flex-direction: column; border: 1px solid rgba(105,245,230,.2); border-radius: 14px; background: var(--panel); padding: 20px 20px 18px; transition: border-color .25s, transform .25s; }
+  .how-card:hover { border-color: var(--c, rgba(105,245,230,.55)); transform: translateY(-4px); }
+  .how-head { display: flex; align-items: center; gap: 12px; }
+  .how-no { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--c, var(--mint)); border-radius: 10px; color: var(--c, var(--mint)); font: 800 13px/1 var(--mono); }
+  .how-head b { font-size: 16px; line-height: 1.35; }
+  .how-card .promise { margin-top: 12px; color: var(--ink); font-size: 13.5px; line-height: 1.7; font-weight: 600; }
+  .how-card .detail { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.7; flex: 1; }
+  .how-card .detail b { color: var(--ink); font-weight: 700; }
+  .how-card .detail code { font: 650 11.5px/1.6 var(--mono); color: var(--c, var(--mint)); }
+  .how-foot { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(105,245,230,.12); display: flex; flex-direction: column; gap: 6px; }
+  .how-foot .row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+  .how-foot .lbl { font: 700 10px/1.4 var(--mono); letter-spacing: .14em; color: var(--muted); }
+  .how-foot a { font: 700 12.5px/1.6 var(--mono); color: var(--c, var(--mint)); }
+  .how-foot a:hover { text-decoration: underline; }
+  .how-foot a.site { color: var(--ink); font-family: var(--sans); font-size: 12.5px; }
+
+  /* ===== quick start ===== */
+  .qs-grid { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 22px; margin-top: 34px; align-items: stretch; }
+  @media (max-width: 960px) { .qs-grid { grid-template-columns: 1fr; gap: 16px; } .qs-grid .qs-col { display: contents; } .qs-grid .qs-box { order: var(--o, 0); } }
+  .qs-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .qs-box { border: 1px solid rgba(105,245,230,.22); border-radius: 14px; background: var(--panel); padding: 18px 20px 20px; min-width: 0; }
+  .qs-box.hot { border-color: rgba(246,195,68,.45); }
+  .qs-box .step { display: flex; align-items: center; gap: 10px; }
+  .qs-box .step i { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--c, var(--mint)); color: #04222b; font: 800 12px/1 var(--mono); font-style: normal; }
+  .qs-box .step b { font-size: 15.5px; }
+  .qs-box p { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .qs-box p b { color: var(--ink); }
+  .qs-box p code, .qs-more code { font: 650 12px/1.6 var(--mono); color: var(--mint); }
+  .code { position: relative; margin-top: 12px; border: 1px solid rgba(105,245,230,.25); border-radius: 10px; background: #02141b; padding: 34px 14px 12px; overflow-x: auto; }
+  .code pre { margin: 0; font: 600 12px/1.75 var(--mono); color: var(--ink); white-space: pre; }
+  .code pre .c { color: var(--muted); }
+  .code pre .k { color: var(--mint); }
+  .copy-btn { position: absolute; top: 7px; right: 8px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(3,20,27,.9); color: var(--muted); font: 700 10.5px/1.4 var(--mono); letter-spacing: .06em; cursor: pointer; transition: color .2s, border-color .2s; }
+  .copy-btn:hover { color: var(--mint); border-color: var(--mint); }
+  .copy-btn.done { color: #6ef0a8; border-color: #6ef0a8; }
+  .prompt-box { position: relative; margin-top: 12px; border: 1px solid rgba(246,195,68,.35); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; background: rgba(246,195,68,.05); padding: 16px 18px 16px 18px; }
+  .prompt-box p { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.85; font-weight: 500; padding-right: 56px; }
+  .prompt-box .slot { padding: 1px 7px; border-radius: 6px; background: rgba(246,195,68,.18); border: 1px solid rgba(246,195,68,.55); color: var(--gold); font-weight: 800; white-space: nowrap; }
+  .slot-table { width: 100%; margin-top: 12px; border-collapse: collapse; font-size: 12.5px; }
+  .slot-table th, .slot-table td { padding: 7px 10px; text-align: left; border-bottom: 1px solid rgba(105,245,230,.1); vertical-align: top; }
+  .slot-table th { font: 750 10.5px/1.5 var(--mono); letter-spacing: .1em; color: var(--muted); }
+  .slot-table td:first-child { color: var(--gold); font-weight: 800; white-space: nowrap; }
+  .slot-table td:last-child { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+  .slot-table tr:last-child td { border-bottom: none; }
+  .qs-more { margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height: 1.7; }
+  .qs-more a { font-weight: 700; }
+
   /* ===== evidence (two runs) ===== */
   .evidence { background: rgba(6,32,43,.45); border-top: 1px solid rgba(105,245,230,.12); border-bottom: 1px solid rgba(105,245,230,.12); }
   .run-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
@@ -382,6 +458,8 @@
       <a href="finals/Global-Geochemical-Atlas-Poster.pdf" target="_blank" rel="noopener">海报</a>
       <a href="live/world-atlas.html" target="_blank" rel="noopener">效果展示</a>
       <a href="#deliverables">运行产物</a>
+      <a href="#how">工作原理</a>
+      <a href="#quickstart">快速上手</a>
       <a href="#research">科学发现</a>
       <a href="slides.html">幻灯片</a>
       <a class="ext" href="https://xhslink.cn/o/7EMuFyOOsO5" target="_blank" rel="noopener">小红书</a>
@@ -469,7 +547,7 @@
       <div class="stat"><b data-n="3721">3,721</b><span>个异常筛查候选<br>robust-z 门禁 · 19 个候选区域</span></div>
       <div class="stat warn"><b data-n="393">393</b><span>条未过标准化门禁<br>如实保留，不静默丢弃</span></div>
     </div>
-    <p class="stats-caveat"><b>如实报告：</b>以上数字取自 2026-08-19 最新全球生产运行产物内嵌的结构化报告，可逐条核对；俄罗斯、南美等区域覆盖仍不足，如实保留为缺口，该广度不代表全球统计分布。下方「真实运行」章节中的 RUN A 为 2026-08-15 运行的独立口径，不与本轮混算。</p>
+    <p class="stats-caveat"><b>如实报告：</b>以上数字取自 2026-08-19 最新全球生产运行产物内嵌的结构化报告，可逐条核对；俄罗斯、南美等区域覆盖仍不足，如实保留为缺口，该广度不代表全球统计分布。下方「真实运行」章节中的 RUN A 为 2026-08-15 运行的独立口径，不与本轮混算；线上世界图谱文件自带的统计为 <b>36 源 / 199,723 条</b>可制图记录，与本栏运行报告口径的差异来自统计对象不同，两套数字均可在各自文件内逐条核对。</p>
   </div>
 </div>
 
@@ -556,7 +634,7 @@
           <div class="term-mini">
             <div class="cmd">$ opencode run "全球 Cr·Cu·Ni·Pb·Zn 图谱与异常筛查"</div>
             <div>[agent] 读取 <b>SKILL.md</b> → 九阶段状态机</div>
-            <div>[agent] validate_outputs <span class="ok">PASS</span> · 15/15 产物 <span class="ok">✓</span></div>
+            <div>[agent] validate_outputs <span class="ok">PASS</span> · 16/16 产物 <span class="ok">✓</span></div>
           </div>
         </div>
         <div class="body">
@@ -565,7 +643,149 @@
           <div class="links">
             <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">Skill 仓库 ↗</a>
             <a class="minor" href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/SKILL.md" target="_blank" rel="noopener">直达 SKILL.md ↗</a>
+            <a class="minor" href="#quickstart">挂载与启动 Prompt ↓</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">How It Works · Six Design Commitments</div>
+      <h2 class="section-title">工作原理：<span class="gradient">六条设计承诺</span></h2>
+      <p class="section-sub">答辩时讲的每一条机制，都对应仓库里可运行的脚本与回归测试，并在本页「真实运行验证」中留下证据。每张卡片底部给出实现位置与现场证据入口，可逐条核对。</p>
+      <div class="principle"><b>模型提案，代码裁决</b><span>模型负责<em>提名、质疑与撰写</em>；所有<em>数值计算、门禁判定与哈希校验</em>由确定性脚本完成，模型不经手——审计器可以驱动修复，但永远不能为执行者开脱。</span></div>
+    </div>
+    <div class="how-grid">
+      <article class="how-card fx">
+        <div class="how-head"><span class="how-no">01</span><b>完整的 Loop 机制</b></div>
+        <p class="promise">九个研究步骤、三道门禁（来源准入 · 单位坐标 QC · 逐项验收），一步不跳；验收不过即进入修复循环，修不动的缺口标记 <code>needs_human_review</code> 交人处理，绝不硬凑。</p>
+        <p class="detail">每次修复另开新运行、原始证据不可变。<code>autopilot.py</code> 一条命令串起冻结请求 → 路由 → 修复循环 → 全部校验 → 对抗审计 → 合规报告，终态机读：<code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>。</p>
+        <div class="loop-steps"><span>列清问题</span><i>→</i><span>记入 backlog</span><i>→</i><span>对症修</span><i>→</i><span>重跑再验收</span><i>→</i><span>沉淀跨轮记忆</span></div>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">实现</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/run_self_correction_loop.py" target="_blank" rel="noopener">run_self_correction_loop.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/autopilot.py" target="_blank" rel="noopener">autopilot.py</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN A：238 项修复队列 → needs_human_review ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--red)">
+        <div class="how-head"><span class="how-no">02</span><b>三层 Agent 对抗机制</b></div>
+        <p class="promise">数据入口与产物出口各设一层对抗，再加一层分级裁决——三层里没有任何一层允许模型给自己打分。</p>
+        <p class="detail"><b>入口</b>：侦察员提名候选来源、质疑员只挑问题、确定性裁判按明文计分牌裁决（≥7 放行 · 4–6 打回 · &lt;4 出局）。<b>出口</b>：审计器先在影子副本上通过 10 类植入缺陷的「金丝雀考试」，recall = 1.0 才有资格裁决真实产物。<b>裁决</b>三级 <code>pass / pass_scope_narrowed / fail</code>：warning 不杀稿，但强制收窄引用口径。</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">实现</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/discovery_duel.py" target="_blank" rel="noopener">discovery_duel.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/adversarial_audit.py" target="_blank" rel="noopener">adversarial_audit.py</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN C：10 类缺陷 10/10 捕获 ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--gold)">
+        <div class="how-head"><span class="how-no">03</span><b>每轮评测相对独立</b></div>
+        <p class="promise">任何一轮都不继承上一轮的结论——审计独立性靠机读契约保证，不靠信任。</p>
+        <p class="detail">质疑员必须来自与执行者<b>不同的模型家族</b>、在<b>全新线程</b>中工作、不接收 Builder 的任何叙述、只读产物字节，路径或 SHA-256 校验不符时必须拒审。跨次记忆 <code>memory.json</code> 只重排技能已路由的来源、永不新增，种子只影响第 1 轮调度；运行内的证据永远压过运行间的记忆。</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">实现</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/acquisition_memory.py" target="_blank" rel="noopener">acquisition_memory.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/adversarial-audit.md" target="_blank" rel="noopener">reviewer_contract 协议</a></div>
+        </div>
+      </article>
+      <article class="how-card fx">
+        <div class="how-head"><span class="how-no">04</span><b>SHA-256 指纹与结果一一对应</b></div>
+        <p class="promise">四个环节锚定哈希：冻结的请求、每个来源文件、全部 16 个产物、每一条可报告的断言。</p>
+        <p class="detail"><code>claim_ledger.py</code> 从产物推导全部可报告断言，每条绑定「文件 + JSON 指针 + SHA-256」，且每次调用都从证据重新计算——执行者能构建台账，却改写不了完整性判定。回复草稿再经 <code>--check-answer</code> 交叉核对：追溯不到台账的承重数字判为幻数。图谱内任意点位可下钻 DOI → 表 / 行 → SHA-256。</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">实现</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json：幻数「25000」判为 answer_unbound ↗</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:#9af7b0">
+        <div class="how-head"><span class="how-no">05</span><b>时序演化是图谱内的视图选项</b></div>
+        <p class="promise">不是独立交付物——由同一份标准化数据库驱动，在图谱文件里切换即可。</p>
+        <p class="detail">对具备可靠时间字段的来源，同一图谱可切到 1986–2024 的时序演化视图，用于区分<b>地质本底</b>与<b>外源输入</b>；全部数据、证据链与科学边界与主视图共享，不另建一套口径。</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">现场</span>
+          <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">打开在线时序视图 ↗</a>
+          <a class="site" href="#video">演示视频 01:22 起自动播放 ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--gold)">
+        <div class="how-head"><span class="how-no">06</span><b>Auto-research 真实接入</b></div>
+        <p class="promise">图谱是检查点，不是终点——运行通过校验后，用户可选择一条命令继续进入研究层。</p>
+        <p class="detail"><code>build_research_products.py</code> 不采新数据、不改任何核心产物，只把已有证据确定性重组为<b>分析队列、环境背景、采样优先级</b>三类产品，外加含输入哈希的收据；研究模式在此之上继续走完统计检验、撰写与排版——下方五篇论文就是这条续跑路径的产物。</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">实现</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/build_research_products.py" target="_blank" rel="noopener">build_research_products.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/research-mode.md" target="_blank" rel="noopener">research-mode 契约</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="#research">五篇论文初稿 ↓</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="quickstart">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
+      <h2 class="section-title">快速上手：<span class="gradient">在你的 Agent 里跑起来</span></h2>
+      <p class="section-sub">默认 Prompt 就是比赛给出的完整任务；把它变成你自己的任务只需要换三个词。运行不需要网络、API Key、GPU 或任何第三方包——Python 3.11+ 即可。</p>
+    </div>
+    <div class="qs-grid">
+      <div class="qs-col">
+        <div class="qs-box fx" style="--o:1">
+          <div class="step"><i>1</i><b>挂载 Skill</b></div>
+          <p>遵循 Agent Skills 公开子集（<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>，纯标准库），复制到兼容运行时的技能目录即可。</p>
+          <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/">复制</button><pre>git clone https://github.com/asimfish/global-geochemical-atlas-skill
+<span class="c"># Claude Code</span>
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/
+<span class="c"># Codex CLI</span>
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
+<span class="c"># OpenCode 等兼容运行时：复制 / 挂载到其 skills 目录</span></pre></div>
+        </div>
+        <div class="qs-box fx" style="--c:#9af7b0;--o:3">
+          <div class="step"><i>3</i><b>或者不经 Agent：90 秒本地复现</b></div>
+          <p>在仓库根目录用 996 条 hash 固定的 USGS 真实土壤测定跑一遍生产阈值演示，再校验 <b>16 文件产物契约</b>——两条命令应分别返回 <code>partial_success</code> 与 <code>valid</code>。</p>
+          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
+  --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
+  --demo production-usgs --analysis-profile production \
+  --generated-at 2026-08-07T00:00:00Z --output-dir /tmp/geochemical-production-demo
+python skills/global-geochemical-atlas/scripts/validate_outputs.py \
+  --output-dir /tmp/geochemical-production-demo</pre></div>
+          <p style="margin-top:10px">想让指挥官一条命令跑完全程（冻结 Prompt → 路由 → 修复循环 → 校验 → 对抗审计）：</p>
+          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
+  --prompt-file TASK_PROMPT.txt --output-dir /tmp/atlas-run</pre></div>
+        </div>
+      </div>
+      <div class="qs-col">
+        <div class="qs-box hot fx" style="--c:var(--gold);--o:2">
+          <div class="step"><i>2</i><b>把默认 Prompt 发给 Agent——只改三个槽位</b></div>
+          <p>这段 Prompt 逐词覆盖赛题任务描述的每个环节；把高亮的<b>介质 / 元素 / 区域</b>换成你的，比如「西欧」换成「中国」，就是你的任务。</p>
+          <div class="prompt-box">
+            <button class="copy-btn" type="button">复制</button>
+            <p id="default-prompt">只基于公开文献与开源数据平台，为<span class="slot">西欧</span>构建<span class="slot">土壤</span>中<span class="slot">砷（As）</span>元素的分布图谱：自动采集元素含量、采样坐标、地质背景与分析方法信息；完成单位统一、空间匹配、质量控制与来源追溯；生成可按元素、区域、地质单元和样品类型筛选的分布图、热力图与元素组合对比；识别候选的异常富集与亏损区域；并交付可交互元素分布地图、标准化地球化学数据库、数据来源与置信度说明及异常区域识别结果。</p>
+          </div>
+          <table class="slot-table">
+            <thead><tr><th>槽位</th><th>填什么</th><th>示例</th></tr></thead>
+            <tbody>
+              <tr><td>区域</td><td>global、命名区域或 WGS84 边界框</td><td>西欧 · 中国 · 纬度 30–45，经度 –10–30</td></tr>
+              <tr><td>介质</td><td>四种介质中的一种或多种</td><td>土壤 · 沉积物 · 水体 · 岩石</td></tr>
+              <tr><td>元素</td><td>元素符号或分析物名称</td><td>砷（As）· Cu · Pb · Hg</td></tr>
+            </tbody>
+          </table>
+          <p class="qs-more">更短的说法同样能触发，例如「只用公开数据，为西欧构建土壤砷图谱：统一单位、标出候选富集区，并给每条记录附上来源、许可与置信度」。完整教程（自带数据 / 在线采集 / 离线四介质样例三种运行方式、<code>request.json</code> 写法与 FAQ）见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>（<a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文版 ↗</a>）。</p>
+        </div>
+        <div class="qs-box fx" style="--c:var(--gold);--o:4">
+          <div class="step"><i>4</i><b>图谱之后：可选继续进入研究层</b></div>
+          <p>任何一次<b>已完成并通过校验</b>的运行之上，一条命令把已有证据确定性重组为分析队列、环境背景与采样优先级三类研究者产品（不采新数据、不改核心产物），并附带含输入哈希的收据——这就是<a href="#research">下方五篇论文</a>的起点。</p>
+          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
+  --output-dir /tmp/atlas-run --research-dir /tmp/atlas-run/research \
+  --minimum-confidence medium</pre></div>
         </div>
       </div>
     </div>
@@ -598,7 +818,7 @@
         <h3>全新克隆环境 0.714 秒完成回归：核心产物逐字节一致</h3>
         <ul>
           <li><b>996</b> 条测定 · <b>996/996</b> 地质匹配 · <b>6</b> 个候选</li>
-          <li>15 项核心产物全部通过独立校验，<b>0</b> 错误 / <b>0</b> 警告</li>
+          <li>15 项核心产物全部通过独立校验（该版本契约为 15 项，现为 16 项），<b>0</b> 错误 / <b>0</b> 警告</li>
           <li>hash-bound 实源 fixture，跨环境重跑结果逐字节一致</li>
           <li>用于证明工程可执行性与科学门禁，不代表区域分布</li>
         </ul>
@@ -902,6 +1122,9 @@
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">Skill 仓库</a>
           <a href="https://github.com/asimfish/global-geochemical-atlas-demo" target="_blank" rel="noopener">Demo 仓库</a>
           <a href="live/world-atlas.html">交互图谱</a>
+          <a href="#how">工作原理</a>
+          <a href="#quickstart">快速上手</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">使用教程（README）</a>
           <a href="slides.html">幻灯片</a>
           <a href="finals/demo-video.html">录屏版演示</a>
           <a href="finals/README.md">决赛材料说明</a>
@@ -912,8 +1135,8 @@
         </div>
       </div>
       <div class="qr-row">
-        <div class="qr"><img src="finals/assets/demo-qr.png" alt="在线 Demo 二维码"><span>体验在线产品</span></div>
-        <div class="qr"><img src="finals/assets/repo-qr.png" alt="Skill 仓库二维码"><span>检查代码与证据</span></div>
+        <div class="qr"><img src="finals/assets/demo-qr.png" alt="在线 Demo 二维码" loading="lazy"><span>体验在线产品</span></div>
+        <div class="qr"><img src="finals/assets/repo-qr.png" alt="Skill 仓库二维码" loading="lazy"><span>检查代码与证据</span></div>
       </div>
     </div>
     <p class="foot-fine">让每个点可追溯、可验证、可重新计算。Global Geochemical Atlas 把分散的公开地球化学数据，整编为 Agent 可执行、研究者可复核的科研基础设施。<br>数据来自公开学术与政府来源（FOREGS、GEMAS、AfSIS、PANGAEA、TPDC、GSJ、NGSA、GEOROC、GEMStat 等），仅用于方法演示；异常均为筛查候选，不构成污染、矿床或成因结论。</p>
@@ -949,6 +1172,28 @@
       }, { threshold: .5 });
       document.querySelectorAll('.stat b[data-n]').forEach(el => cio.observe(el));
     }
+  }
+
+  // copy buttons for quick-start snippets (falls back to a hidden textarea when Clipboard API is unavailable)
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.parentElement;
+      const src = box.querySelector('pre, p');
+      const text = btn.dataset.copy || (src ? src.textContent.trim() : '');
+      const done = () => { btn.textContent = '已复制'; btn.classList.add('done'); setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('done'); }, 1600); };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, () => legacy(text, done));
+      } else {
+        legacy(text, done);
+      }
+    });
+  });
+  function legacy(text, done) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
   }
 </script>
 </body>
