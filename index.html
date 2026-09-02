@@ -273,57 +273,57 @@
     <div class="fx">
       <div class="eyebrow">How It Works · Six Design Commitments</div>
       <h2 class="section-title">工作原理：<span class="gradient">六条设计承诺</span></h2>
-      <p class="section-sub">答辩时讲的每一条机制，都对应仓库里可运行的脚本与回归测试，并在本页「真实运行验证」中留下证据。每张卡片底部给出实现位置与现场证据入口，可逐条核对。</p>
-      <div class="principle"><b>模型提案，代码裁决</b><span>模型负责<em>提名、质疑与撰写</em>；所有<em>数值计算、门禁判定与哈希校验</em>由确定性脚本完成，模型不经手——审计器可以驱动修复，但永远不能为执行者开脱。</span></div>
+      <p class="section-sub">决赛答辩里讲过六条机制。这里逐条说明它们在代码里是怎么做的：每张卡片末尾标出对应的脚本，以及本页上可以点开核对的运行证据。</p>
+      <div class="principle"><b>模型提案，代码裁决</b><span>模型只负责提候选、挑毛病、写文字。算数、过门禁、核哈希这些事全部交给确定性脚本，模型碰不到结果。这样任何一个环节出了问题，都能回放到具体的某一行代码，而不是某一次对话。</span></div>
     </div>
     <div class="how-grid">
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">01</span><b>完整的 Loop 机制</b></div>
-        <p class="promise">九个研究步骤、三道门禁（来源准入 · 单位坐标 QC · 逐项验收），一步不跳；验收不过即进入修复循环，修不动的缺口标记 <code>needs_human_review</code> 交人处理，绝不硬凑。</p>
-        <p class="detail">每次修复另开新运行、原始证据不可变。<code>autopilot.py</code> 一条命令串起冻结请求 → 路由 → 修复循环 → 全部校验 → 对抗审计 → 合规报告，终态机读：<code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>。</p>
-        <div class="loop-steps"><span>列清问题</span><i>→</i><span>记入 backlog</span><i>→</i><span>对症修</span><i>→</i><span>重跑再验收</span><i>→</i><span>沉淀跨轮记忆</span></div>
+        <p class="promise">主线是九个步骤、三道门：来源能不能进，单位和坐标过不过 QC，最后逐项验收。哪一项没过，就进修复循环，而不是降低标准让它过。</p>
+        <p class="detail">修复循环分五步，见下方。每一次修复都是一次新的运行，之前的证据文件不会被改写。确实修不动的问题，标成 <code>needs_human_review</code> 交给人，不会硬凑一个数字出来。整条链可以由 <code>autopilot.py</code> 一条命令跑完，结束时给出四种机器可读终态之一：<code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>。</p>
+        <div class="loop-steps"><span>列清问题</span><i>→</i><span>记入 backlog</span><i>→</i><span>按登记方法修</span><i>→</i><span>重跑再验收</span><i>→</i><span>写进跨轮记忆</span></div>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/run_self_correction_loop.py" target="_blank" rel="noopener">run_self_correction_loop.py</a>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/autopilot.py" target="_blank" rel="noopener">autopilot.py</a></div>
-          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN A：238 项修复队列 → needs_human_review ↓</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN A：238 项修复队列，终态 needs_human_review ↓</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:var(--red)">
         <div class="how-head"><span class="how-no">02</span><b>三层 Agent 对抗机制</b></div>
-        <p class="promise">数据入口与产物出口各设一层对抗，再加一层分级裁决——三层里没有任何一层允许模型给自己打分。</p>
-        <p class="detail"><b>入口</b>：侦察员提名候选来源、质疑员只挑问题、确定性裁判按明文计分牌裁决（≥7 放行 · 4–6 打回 · &lt;4 出局）。<b>出口</b>：审计器先在影子副本上通过 10 类植入缺陷的「金丝雀考试」，recall = 1.0 才有资格裁决真实产物。<b>裁决</b>三级 <code>pass / pass_scope_narrowed / fail</code>：warning 不杀稿，但强制收窄引用口径。</p>
+        <p class="promise">对抗设在两个位置：数据进来的时候，和结果出去的时候。第三层是分级裁决，决定一个问题是打回、收窄口径，还是放行。</p>
+        <p class="detail"><b>入口</b>是一场三方对决：一个模型当侦察员，负责提名新的数据来源；另一个模型当质疑员，只准挑问题，不准打分；打分的是一段代码，按写死的计分表给分——7 分以上进入接入流程，4 到 6 分打回重报，4 分以下淘汰。<b>出口</b>是产物审计：审计脚本先复制一份影子副本，往里面植入 10 类已知缺陷（改数值、翻单位、伪造来源、破坏哈希等），自己先考一遍。10 个全抓到，它对真实产物的判决才算数；漏一个，判决作废。<b>裁决</b>分 <code>pass / pass_scope_narrowed / fail</code> 三级：出现 warning 不等于稿子作废，而是受影响的数字只能连同适用范围一起引用。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/discovery_duel.py" target="_blank" rel="noopener">discovery_duel.py</a>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/adversarial_audit.py" target="_blank" rel="noopener">adversarial_audit.py</a></div>
-          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN C：10 类缺陷 10/10 捕获 ↓</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="#runs">RUN C：植入 10 类缺陷，10/10 抓到 ↓</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:var(--gold)">
         <div class="how-head"><span class="how-no">03</span><b>每轮评测相对独立</b></div>
-        <p class="promise">任何一轮都不继承上一轮的结论——审计独立性靠机读契约保证，不靠信任。</p>
-        <p class="detail">质疑员必须来自与执行者<b>不同的模型家族</b>、在<b>全新线程</b>中工作、不接收 Builder 的任何叙述、只读产物字节，路径或 SHA-256 校验不符时必须拒审。跨次记忆 <code>memory.json</code> 只重排技能已路由的来源、永不新增，种子只影响第 1 轮调度；运行内的证据永远压过运行间的记忆。</p>
+        <p class="promise">评审这一轮的时候，不能受上一轮结论的影响。这一点写进了机器可读的评审契约里，而不是靠口头约定。</p>
+        <p class="detail">契约要求质疑员和执行者来自不同的模型家族，在一个全新的线程里工作，看不到执行者写的任何说明，只能读产物文件本身；简报里的路径或 SHA-256 对不上，就必须拒审。至于跨次运行的记忆（<code>memory.json</code>），它记的只是每个来源过去成功或失败过几次，作用仅限于给第 1 轮的采集排个先后：不能新增来源，也不参与任何判定。本次运行里拿到的证据，永远优先于上一次的记忆。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/acquisition_memory.py" target="_blank" rel="noopener">acquisition_memory.py</a>
-          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/adversarial-audit.md" target="_blank" rel="noopener">reviewer_contract 协议</a></div>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/adversarial-audit.md" target="_blank" rel="noopener">评审契约 reviewer_contract</a></div>
         </div>
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 指纹与结果一一对应</b></div>
-        <p class="promise">四个环节锚定哈希：冻结的请求、每个来源文件、全部 16 个产物、每一条可报告的断言。</p>
-        <p class="detail"><code>claim_ledger.py</code> 从产物推导全部可报告断言，每条绑定「文件 + JSON 指针 + SHA-256」，且每次调用都从证据重新计算——执行者能构建台账，却改写不了完整性判定。回复草稿再经 <code>--check-answer</code> 交叉核对：追溯不到台账的承重数字判为幻数。图谱内任意点位可下钻 DOI → 表 / 行 → SHA-256。</p>
+        <p class="promise">哈希打在四个地方：任务请求本身、每一个下载下来的源文件、16 个产物文件，以及最终答复里的每一个数字。</p>
+        <p class="detail">任务开始前先给请求算一次哈希，中途目标变了能看出来；源文件入库前要过登记在案的哈希校验；<code>run_summary.json</code> 里记着 16 个产物各自的哈希。最后一层是断言台账：<code>claim_ledger.py</code> 把产物里所有能写进答复的数字列出来，每一条绑定到「哪个文件、哪个 JSON 指针、什么哈希」，而且每次调用都重新算，执行者改不了。答复草稿写好后再用 <code>--check-answer</code> 对一遍台账，对不上的数字按幻数处理，不许出稿。在图谱里点任何一个点，也能一直下钻到 DOI、原始表格的行和哈希。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
-          <div class="row"><span class="lbl">证据</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json：幻数「25000」判为 answer_unbound ↗</a></div>
+          <div class="row"><span class="lbl">证据</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json：植入的「25000」被判 answer_unbound ↗</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:#9af7b0">
         <div class="how-head"><span class="how-no">05</span><b>时序演化是图谱内的视图选项</b></div>
-        <p class="promise">不是独立交付物——由同一份标准化数据库驱动，在图谱文件里切换即可。</p>
-        <p class="detail">对具备可靠时间字段的来源，同一图谱可切到 1986–2024 的时序演化视图，用于区分<b>地质本底</b>与<b>外源输入</b>；全部数据、证据链与科学边界与主视图共享，不另建一套口径。</p>
+        <p class="promise">时序演化不是另外做的一份交付物，而是图谱里的一个视图：切换过去就能看，数据还是同一份标准化数据库。</p>
+        <p class="detail">对带有可靠采样时间的来源，图谱可以按 1986–2024 逐年播放，用来判断一处高值是地质本底一直如此，还是后来才出现的外源输入。因为用的是同一份数据，主视图里的证据链和科学边界在时序视图里同样成立，不需要再维护一套口径。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">现场</span>
           <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">打开在线时序视图 ↗</a>
@@ -332,8 +332,8 @@
       </article>
       <article class="how-card fx" style="--c:var(--gold)">
         <div class="how-head"><span class="how-no">06</span><b>Auto-research 真实接入</b></div>
-        <p class="promise">图谱是检查点，不是终点——运行通过校验后，用户可选择一条命令继续进入研究层。</p>
-        <p class="detail"><code>build_research_products.py</code> 不采新数据、不改任何核心产物，只把已有证据确定性重组为<b>分析队列、环境背景、采样优先级</b>三类产品，外加含输入哈希的收据；研究模式在此之上继续走完统计检验、撰写与排版——下方五篇论文就是这条续跑路径的产物。</p>
+        <p class="promise">图谱做完、校验通过之后，可以选择再往前走一步，进入研究模式。这一步是可选的，也是真的接上了，不是文档里的一句话。</p>
+        <p class="detail"><code>build_research_products.py</code> 不采集新数据，也不改动任何核心产物，只是把已有证据整理成研究者直接能用的三样东西：哪些记录可以放在一起比较（分析队列）、每个样品的岩性和沉积环境等背景（环境背景）、下一步该去哪里补采（采样优先级），并附一份写明输入哈希和参数的收据。研究模式在这三样东西之上继续做统计检验、写作和排版。本页下面的五篇论文，就是这么跑出来的。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/build_research_products.py" target="_blank" rel="noopener">build_research_products.py</a>
@@ -350,60 +350,68 @@
     <div class="fx">
       <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
       <h2 class="section-title">快速上手：<span class="gradient">在你的 Agent 里跑起来</span></h2>
-      <p class="section-sub">默认 Prompt 就是比赛给出的完整任务；把它变成你自己的任务只需要换三个词。运行不需要网络、API Key、GPU 或任何第三方包——Python 3.11+ 即可。</p>
+      <p class="section-sub">默认 Prompt 就是比赛给出的完整任务，换三个词就是你自己的任务。运行不需要网络、API Key、GPU 或任何第三方包，有 Python 3.11+ 就够。</p>
     </div>
     <div class="qs-grid">
-      <div class="qs-col">
-        <div class="qs-box fx" style="--o:1">
-          <div class="step"><i>1</i><b>挂载 Skill</b></div>
-          <p>遵循 Agent Skills 公开子集（<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>，纯标准库），复制到兼容运行时的技能目录即可。</p>
-          <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
+      <div class="qs-box s1 fx">
+        <div class="step"><i>1</i><b>挂载 Skill</b></div>
+        <p>技能目录遵循 Agent Skills 公开子集（<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>，纯标准库），复制到兼容运行时的技能目录即可。</p>
+        <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/">复制</button><pre>git clone https://github.com/asimfish/global-geochemical-atlas-skill
 <span class="c"># Claude Code</span>
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/
 <span class="c"># Codex CLI</span>
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
 <span class="c"># OpenCode 等兼容运行时：复制 / 挂载到其 skills 目录</span></pre></div>
+        <div class="grow"></div>
+        <p style="margin-top:12px">挂载后，Agent 收到相关请求时会自动读取 <code>SKILL.md</code> 里的九阶段状态机；哪些请求会触发、哪些不会，见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> 里的 4 组正反例。</p>
+        <div class="qs-chips"><span>Python 3.11+</span><span>无网络</span><span>无 API Key</span><span>无 GPU</span><span>无第三方包</span></div>
+      </div>
+      <div class="qs-box s2 hot fx" style="--c:var(--gold)">
+        <div class="step"><i>2</i><b>把默认 Prompt 发给 Agent，只改三个槽位</b></div>
+        <p>这段 Prompt 逐词覆盖赛题任务描述的每个环节。把高亮的<b>区域 / 介质 / 元素</b>换成你的，比如「西欧」换成「中国」，就是你的任务。</p>
+        <div class="prompt-box">
+          <button class="copy-btn" type="button">复制</button>
+          <p id="default-prompt">只基于公开文献与开源数据平台，为<span class="slot">西欧</span>构建<span class="slot">土壤</span>中<span class="slot">砷（As）</span>元素的分布图谱：自动采集元素含量、采样坐标、地质背景与分析方法信息；完成单位统一、空间匹配、质量控制与来源追溯；生成可按元素、区域、地质单元和样品类型筛选的分布图、热力图与元素组合对比；识别候选的异常富集与亏损区域；并交付可交互元素分布地图、标准化地球化学数据库、数据来源与置信度说明及异常区域识别结果。</p>
         </div>
-        <div class="qs-box fx" style="--c:#9af7b0;--o:3">
-          <div class="step"><i>3</i><b>或者不经 Agent：90 秒本地复现</b></div>
-          <p>在仓库根目录用 996 条 hash 固定的 USGS 真实土壤测定跑一遍生产阈值演示，再校验 <b>16 文件产物契约</b>——两条命令应分别返回 <code>partial_success</code> 与 <code>valid</code>。</p>
-          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
+        <table class="slot-table">
+          <thead><tr><th>槽位</th><th>填什么</th><th>示例</th></tr></thead>
+          <tbody>
+            <tr><td>区域</td><td>global、命名区域或 WGS84 边界框</td><td>西欧 · 中国 · 纬度 30–45，经度 –10–30</td></tr>
+            <tr><td>介质</td><td>四种介质中的一种或多种</td><td>土壤 · 沉积物 · 水体 · 岩石</td></tr>
+            <tr><td>元素</td><td>元素符号或分析物名称</td><td>砷（As）· Cu · Pb · Hg</td></tr>
+          </tbody>
+        </table>
+        <div class="grow"></div>
+        <p class="qs-more">更短的说法同样能触发，例如「只用公开数据，为西欧构建土壤砷图谱：统一单位、标出候选富集区，并给每条记录附上来源、许可与置信度」。完整教程（自带数据 / 在线采集 / 离线四介质样例三种运行方式、<code>request.json</code> 写法与 FAQ）见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>（<a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文版 ↗</a>）。</p>
+      </div>
+      <div class="qs-box s3 fx" style="--c:#9af7b0">
+        <div class="step"><i>3</i><b>或者不经 Agent：90 秒本地复现</b></div>
+        <p>在仓库根目录用 996 条 hash 固定的 USGS 真实土壤测定跑一遍生产阈值演示，再校验 <b>16 文件产物契约</b>。两条命令应分别返回 <code>partial_success</code> 与 <code>valid</code>。</p>
+        <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
   --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
   --demo production-usgs --analysis-profile production \
   --generated-at 2026-08-07T00:00:00Z --output-dir /tmp/geochemical-production-demo
 python skills/global-geochemical-atlas/scripts/validate_outputs.py \
   --output-dir /tmp/geochemical-production-demo</pre></div>
-          <p style="margin-top:10px">想让指挥官一条命令跑完全程（冻结 Prompt → 路由 → 修复循环 → 校验 → 对抗审计）：</p>
-          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
+        <div class="grow"></div>
+        <p style="margin-top:12px">想让指挥官一条命令跑完全程（冻结 Prompt → 路由 → 修复循环 → 校验 → 对抗审计）：</p>
+        <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
   --prompt-file TASK_PROMPT.txt --output-dir /tmp/atlas-run</pre></div>
-        </div>
       </div>
-      <div class="qs-col">
-        <div class="qs-box hot fx" style="--c:var(--gold);--o:2">
-          <div class="step"><i>2</i><b>把默认 Prompt 发给 Agent——只改三个槽位</b></div>
-          <p>这段 Prompt 逐词覆盖赛题任务描述的每个环节；把高亮的<b>介质 / 元素 / 区域</b>换成你的，比如「西欧」换成「中国」，就是你的任务。</p>
-          <div class="prompt-box">
-            <button class="copy-btn" type="button">复制</button>
-            <p id="default-prompt">只基于公开文献与开源数据平台，为<span class="slot">西欧</span>构建<span class="slot">土壤</span>中<span class="slot">砷（As）</span>元素的分布图谱：自动采集元素含量、采样坐标、地质背景与分析方法信息；完成单位统一、空间匹配、质量控制与来源追溯；生成可按元素、区域、地质单元和样品类型筛选的分布图、热力图与元素组合对比；识别候选的异常富集与亏损区域；并交付可交互元素分布地图、标准化地球化学数据库、数据来源与置信度说明及异常区域识别结果。</p>
-          </div>
-          <table class="slot-table">
-            <thead><tr><th>槽位</th><th>填什么</th><th>示例</th></tr></thead>
-            <tbody>
-              <tr><td>区域</td><td>global、命名区域或 WGS84 边界框</td><td>西欧 · 中国 · 纬度 30–45，经度 –10–30</td></tr>
-              <tr><td>介质</td><td>四种介质中的一种或多种</td><td>土壤 · 沉积物 · 水体 · 岩石</td></tr>
-              <tr><td>元素</td><td>元素符号或分析物名称</td><td>砷（As）· Cu · Pb · Hg</td></tr>
-            </tbody>
-          </table>
-          <p class="qs-more">更短的说法同样能触发，例如「只用公开数据，为西欧构建土壤砷图谱：统一单位、标出候选富集区，并给每条记录附上来源、许可与置信度」。完整教程（自带数据 / 在线采集 / 离线四介质样例三种运行方式、<code>request.json</code> 写法与 FAQ）见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>（<a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文版 ↗</a>）。</p>
-        </div>
-        <div class="qs-box fx" style="--c:var(--gold);--o:4">
-          <div class="step"><i>4</i><b>图谱之后：可选继续进入研究层</b></div>
-          <p>任何一次<b>已完成并通过校验</b>的运行之上，一条命令把已有证据确定性重组为分析队列、环境背景与采样优先级三类研究者产品（不采新数据、不改核心产物），并附带含输入哈希的收据——这就是<a href="#research">下方五篇论文</a>的起点。</p>
-          <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
+      <div class="qs-box s4 fx" style="--c:var(--gold)">
+        <div class="step"><i>4</i><b>图谱之后：可选继续进入研究层</b></div>
+        <p>在任何一次<b>已完成并通过校验</b>的运行之上，一条命令把已有证据整理成三份研究者产品（不采新数据、不改核心产物），并附一份写明输入哈希的收据。<a href="#research">下方五篇论文</a>就是从这一步开始的。</p>
+        <ul class="qs-list">
+          <li><code>analysis_cohorts.csv</code> 分析队列：哪些记录可以放在一起比较，哪些不能，为什么</li>
+          <li><code>research_context.csv</code> 环境背景：逐样品的岩性、地质单元、沉积环境、深度、粒级与采样时间</li>
+          <li><code>sampling_priority.geojson</code> 采样优先级：把数据缺口排成下一批采集队列</li>
+          <li><code>research_products_receipt.json</code> 收据：输入哈希、参数，以及明确写出的不可宣称事项</li>
+        </ul>
+        <div class="grow"></div>
+        <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
   --output-dir /tmp/atlas-run --research-dir /tmp/atlas-run/research \
   --minimum-confidence medium</pre></div>
-        </div>
       </div>
     </div>
   </div>

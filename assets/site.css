@@ -262,11 +262,18 @@
   .how-foot a.site { color: var(--ink); font-family: var(--sans); font-size: 12.5px; }
 
   /* ===== quick start ===== */
-  .qs-grid { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 22px; margin-top: 34px; align-items: stretch; }
-  @media (max-width: 960px) { .qs-grid { grid-template-columns: 1fr; gap: 16px; } .qs-grid .qs-col { display: contents; } .qs-grid .qs-box { order: var(--o, 0); } }
-  .qs-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-  .qs-box { border: 1px solid rgba(105,245,230,.22); border-radius: 14px; background: var(--panel); padding: 18px 20px 20px; min-width: 0; }
+  .qs-grid { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); grid-template-areas: "s1 s2" "s3 s4"; gap: 18px 22px; margin-top: 34px; align-items: stretch; }
+  .qs-box { display: flex; flex-direction: column; min-width: 0; border: 1px solid rgba(105,245,230,.22); border-radius: 14px; background: var(--panel); padding: 18px 20px 20px; }
+  .qs-box.s1 { grid-area: s1; } .qs-box.s2 { grid-area: s2; } .qs-box.s3 { grid-area: s3; } .qs-box.s4 { grid-area: s4; }
   .qs-box.hot { border-color: rgba(246,195,68,.45); }
+  .qs-box .grow { flex: 1; }
+  .qs-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .qs-chips span { padding: 4px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: 650 11px/1.4 var(--mono); }
+  .qs-list { margin: 10px 0 0; padding: 0; list-style: none; }
+  .qs-list li { position: relative; padding-left: 16px; margin-top: 6px; color: var(--muted); font-size: 12.8px; line-height: 1.6; }
+  .qs-list li::before { content: "▸"; position: absolute; left: 0; color: var(--c, var(--mint)); }
+  .qs-list li code { font: 650 11.5px/1.6 var(--mono); color: var(--ink); }
+  @media (max-width: 960px) { .qs-grid { grid-template-columns: 1fr; grid-template-areas: "s1" "s2" "s3" "s4"; gap: 16px; } }
   .qs-box .step { display: flex; align-items: center; gap: 10px; }
   .qs-box .step i { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--c, var(--mint)); color: #04222b; font: 800 12px/1 var(--mono); font-style: normal; }
   .qs-box .step b { font-size: 15.5px; }

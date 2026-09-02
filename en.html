@@ -273,37 +273,37 @@
     <div class="fx">
       <div class="eyebrow">How It Works · Six Design Commitments</div>
       <h2 class="section-title">How it works: <span class="gradient">six design commitments</span></h2>
-      <p class="section-sub">Every mechanism presented at the final maps to a runnable script with regression tests in the repository, and leaves evidence in the “Real-run evidence” section of this page. The foot of each card names the implementation and the on-site evidence, so each commitment can be checked one by one.</p>
-      <div class="principle"><b>Models propose, code decides</b><span>Models <em>nominate, object and write</em>; every <em>numerical computation, gate verdict and hash check</em> is performed by deterministic scripts the model never touches — the auditor can drive repairs, but it can never acquit the executor.</span></div>
+      <p class="section-sub">Six mechanisms were presented at the final. This section explains, one by one, how each is actually done in code: the foot of every card names the script that implements it and the run evidence on this page you can open to check it.</p>
+      <div class="principle"><b>Models propose, code decides</b><span>Models only nominate candidates, raise objections and write prose. Arithmetic, gate decisions and hash checks are all done by deterministic scripts; the model never touches the result. When something goes wrong, it can be traced back to a specific line of code rather than to a conversation.</span></div>
     </div>
     <div class="how-grid">
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">01</span><b>A complete iteration loop</b></div>
-        <p class="promise">Nine research steps behind three gates (source admission · unit &amp; coordinate QC · item-by-item acceptance), none skipped; failed acceptance enters the repair loop, and gaps that cannot be fixed are flagged <code>needs_human_review</code> for a human — never papered over.</p>
-        <p class="detail">Every repair starts a fresh run; original evidence is immutable. <code>autopilot.py</code> chains the whole contract into one command — freeze the request → route → repair loop → all validators → adversarial audit → compliance report — with machine-readable terminal states: <code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>.</p>
-        <div class="loop-steps"><span>list the problems</span><i>→</i><span>log to backlog</span><i>→</i><span>fix by registered method</span><i>→</i><span>re-run &amp; re-accept</span><i>→</i><span>persist to cross-run memory</span></div>
+        <p class="promise">The main line is nine steps and three gates: can a source come in, do units and coordinates pass QC, and does every item pass acceptance. Whatever fails goes into the repair loop; the bar is never lowered to let it through.</p>
+        <p class="detail">The repair loop has five steps, shown below. Every repair is a new run, and earlier evidence files are never rewritten. Problems that genuinely cannot be fixed are flagged <code>needs_human_review</code> and handed to a person instead of being patched with a made-up number. The whole chain can be driven by <code>autopilot.py</code> in one command, which ends in one of four machine-readable states: <code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>.</p>
+        <div class="loop-steps"><span>list the problems</span><i>→</i><span>log to backlog</span><i>→</i><span>fix by registered method</span><i>→</i><span>re-run &amp; re-accept</span><i>→</i><span>write to cross-run memory</span></div>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/run_self_correction_loop.py" target="_blank" rel="noopener">run_self_correction_loop.py</a>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/autopilot.py" target="_blank" rel="noopener">autopilot.py</a></div>
-          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN A: 238-item repair queue → needs_human_review ↓</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN A: 238-item repair queue, terminal state needs_human_review ↓</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:var(--red)">
         <div class="how-head"><span class="how-no">02</span><b>Three-layer adversarial mechanism</b></div>
-        <p class="promise">One adversarial layer at the data entrance, one at the output exit, and a graded verdict on top — no layer lets a model grade itself.</p>
-        <p class="detail"><b>Entrance</b>: a Scout nominates candidate sources, a Skeptic only raises objections, and a deterministic Referee scores against a published scoreboard (≥7 proceed · 4–6 revise · &lt;4 out). <b>Exit</b>: the auditor must first pass a “canary exam” — 10 defect types planted in a shadow copy — with recall = 1.0 before it may judge the real outputs. <b>Verdict</b> in three grades, <code>pass / pass_scope_narrowed / fail</code>: a warning does not kill the draft, but it forces the citation scope to narrow.</p>
+        <p class="promise">Adversaries sit at two points: where data comes in, and where results go out. The third layer is a graded verdict that decides whether a problem sends the work back, narrows its scope, or lets it through.</p>
+        <p class="detail"><b>At the entrance</b> there is a three-party duel: one model acts as the scout and nominates new data sources; a second model acts as the skeptic and may only raise problems, never score; the scoring is done by code against a fixed scoreboard — 7 points or more proceeds to onboarding, 4 to 6 is sent back for revision, below 4 is out. <b>At the exit</b> there is an output audit: the audit script first copies the outputs into a shadow copy, plants 10 known defect types in it (altered values, flipped units, fabricated sources, corrupted hashes and so on) and sits the exam itself. Only if it catches all 10 does its verdict on the real outputs count; miss one and the verdict is void. <b>The verdict</b> has three grades, <code>pass / pass_scope_narrowed / fail</code>: a warning does not kill the draft, but the affected numbers may only be quoted together with their scope.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/discovery_duel.py" target="_blank" rel="noopener">discovery_duel.py</a>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/adversarial_audit.py" target="_blank" rel="noopener">adversarial_audit.py</a></div>
-          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN C: 10 defect types, 10/10 caught ↓</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN C: 10 defect types planted, 10/10 caught ↓</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:var(--gold)">
         <div class="how-head"><span class="how-no">03</span><b>Each evaluation round stays independent</b></div>
-        <p class="promise">No round inherits another round’s conclusions — reviewer independence is guaranteed by a machine-readable contract, not by trust.</p>
-        <p class="detail">The Skeptic must come from a <b>different model family</b> than the executor, work in a <b>fresh thread</b>, receive none of the Builder’s narrative, read only the output bytes, and refuse to review whenever a path or SHA-256 check fails. Cross-run memory (<code>memory.json</code>) only re-orders sources the skill has already routed — it never adds one — and seeds only round-1 scheduling; in-run evidence always outranks cross-run memory.</p>
+        <p class="promise">A round must be reviewed without being influenced by the previous round’s conclusions. This is written into a machine-readable reviewer contract, not left to convention.</p>
+        <p class="detail">The contract requires the skeptic to come from a different model family than the executor, to work in a brand-new thread, to see none of the executor’s explanations, and to read only the output files themselves; if a path or SHA-256 in the briefing does not match, it must refuse to review. As for cross-run memory (<code>memory.json</code>), it records only how often each source has succeeded or failed before, and its sole effect is the order in which round 1 tries sources: it cannot add a source and takes part in no decision. Evidence gathered in the current run always outranks memory from earlier ones.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/acquisition_memory.py" target="_blank" rel="noopener">acquisition_memory.py</a>
@@ -312,18 +312,18 @@
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 fingerprints, one per result</b></div>
-        <p class="promise">Hashes anchor four links: the frozen request, every source file, all 16 artifacts, and every reportable claim.</p>
-        <p class="detail"><code>claim_ledger.py</code> derives every reportable claim from the outputs, binds each one to “file + JSON pointer + SHA-256”, and recomputes from evidence on every call — the executor can build the ledger, but can never rewrite the integrity verdict. Draft answers are then cross-checked with <code>--check-answer</code>: any load-bearing number that cannot be traced to the ledger is ruled a phantom. Inside the atlas, any point drills down DOI → table / row → SHA-256.</p>
+        <p class="promise">Hashes are taken in four places: the task request itself, every downloaded source file, the 16 output files, and every number in the final answer.</p>
+        <p class="detail">The request is hashed before work starts, so a goal that drifts midway shows up; source files must pass a registered hash check before ingestion; <code>run_summary.json</code> records the hash of each of the 16 outputs. The last layer is the claim ledger: <code>claim_ledger.py</code> lists every number in the outputs that could be quoted in an answer and binds each one to a file, a JSON pointer and a hash, recomputing all of it on every call so the executor cannot edit it. Once the answer is drafted, <code>--check-answer</code> compares it against the ledger; a number that does not match is treated as a phantom and may not be published. Inside the atlas, any point can likewise be followed down to its DOI, the row of the original table and the hash.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
-          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json: the phantom “25000” ruled answer_unbound ↗</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json: the planted “25000” ruled answer_unbound ↗</a></div>
         </div>
       </article>
       <article class="how-card fx" style="--c:#9af7b0">
         <div class="how-head"><span class="how-no">05</span><b>Temporal evolution lives inside the atlas</b></div>
-        <p class="promise">Not a separate deliverable — it is one view option of the atlas, driven by the same standardized database.</p>
-        <p class="detail">For sources with reliable time fields, the same atlas switches to a 1986–2024 temporal evolution view used to separate <b>geogenic background</b> from <b>external input</b>; all data, the evidence chain and the scientific boundaries are shared with the main view — no second set of accounting.</p>
+        <p class="promise">Temporal evolution is not a separate deliverable. It is a view inside the atlas: switch to it and it is there, running on the same standardized database.</p>
+        <p class="detail">For sources with reliable sampling dates, the atlas can play year by year from 1986 to 2024, which helps tell whether a high value has always been the geological background or appeared later as an external input. Because it uses the same data, the evidence chain and the scientific boundaries of the main view hold in the temporal view too; there is no second set of accounting to maintain.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">LIVE</span>
           <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">Open the online temporal view ↗</a>
@@ -332,8 +332,8 @@
       </article>
       <article class="how-card fx" style="--c:var(--gold)">
         <div class="how-head"><span class="how-no">06</span><b>Auto-research genuinely wired in</b></div>
-        <p class="promise">The atlas is a checkpoint, not the finish line — once a run passes validation, the user can choose to continue into the research layer with one command.</p>
-        <p class="detail"><code>build_research_products.py</code> acquires no new data and modifies no core artifact; it deterministically recombines existing evidence into three researcher products — <b>analysis cohorts, environmental context and sampling priorities</b> — plus a receipt carrying the input hashes. Research mode then continues through statistical testing, writing and typesetting; the five papers below are the products of exactly this continuation.</p>
+        <p class="promise">Once the atlas is built and has passed validation, you can choose to take one more step into research mode. The step is optional, and it is really connected — not a sentence in the documentation.</p>
+        <p class="detail"><code>build_research_products.py</code> collects no new data and changes no core output. It only reorganizes the existing evidence into three things a researcher can use directly: which records may be compared with one another (analysis cohorts), the lithology, depositional setting and other context of every sample (research context), and where to sample next (sampling priorities), with a receipt stating the input hashes and parameters. Research mode then continues on top of these three with statistical tests, writing and typesetting. The five papers further down this page were produced exactly this way.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/build_research_products.py" target="_blank" rel="noopener">build_research_products.py</a>
@@ -350,60 +350,68 @@
     <div class="fx">
       <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
       <h2 class="section-title">Quick start: <span class="gradient">run it inside your own agent</span></h2>
-      <p class="section-sub">The default prompt is the complete hackathon task; making it your own means changing three words. Running it needs no network, API key, GPU or third-party package — Python 3.11+ is enough.</p>
+      <p class="section-sub">The default prompt is the complete hackathon task; change three words and it is your task. Running it needs no network, API key, GPU or third-party package — Python 3.11+ is enough.</p>
     </div>
     <div class="qs-grid">
-      <div class="qs-col">
-        <div class="qs-box fx" style="--o:1">
-          <div class="step"><i>1</i><b>Mount the skill</b></div>
-          <p>It follows the Agent Skills public subset (<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>, pure standard library), so copying it into a compatible runtime’s skills directory is all it takes.</p>
-          <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
+      <div class="qs-box s1 fx">
+        <div class="step"><i>1</i><b>Mount the skill</b></div>
+        <p>The skill folder follows the Agent Skills public subset (<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>, pure standard library); copy it into a compatible runtime’s skills directory and you are done.</p>
+        <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/">Copy</button><pre>git clone https://github.com/asimfish/global-geochemical-atlas-skill
 <span class="c"># Claude Code</span>
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/
 <span class="c"># Codex CLI</span>
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
 <span class="c"># OpenCode and other compatible runtimes: copy / mount into their skills folder</span></pre></div>
+        <div class="grow"></div>
+        <p style="margin-top:12px">Once mounted, the agent reads the nine-stage state machine in <code>SKILL.md</code> whenever a matching request arrives; the 4 should-activate / should-not-activate cases in <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> show where that boundary lies.</p>
+        <div class="qs-chips"><span>Python 3.11+</span><span>no network</span><span>no API key</span><span>no GPU</span><span>no third-party packages</span></div>
+      </div>
+      <div class="qs-box s2 hot fx" style="--c:var(--gold)">
+        <div class="step"><i>2</i><b>Send the default prompt to your agent and change only three slots</b></div>
+        <p>This prompt covers every step of the hackathon task description word for word. Replace the highlighted <b>medium / element / region</b> with yours — say, “Western Europe” with “China” — and it is your task.</p>
+        <div class="prompt-box">
+          <button class="copy-btn" type="button">Copy</button>
+          <p id="default-prompt">Using only public literature and open data platforms, build a <span class="slot">soil</span> <span class="slot">arsenic (As)</span> atlas for <span class="slot">Western Europe</span>: automatically collect element concentrations, sampling coordinates, geological background, and analytical-method information; unify units, spatially match records, run quality control, and trace every record to its source; render the distribution map, heatmap, and element-combination comparison, filterable by element, region, geological unit, and sample type; identify candidate enrichment and depletion areas; and deliver the interactive atlas, the standardized geochemical database, the source &amp; confidence documentation, and the anomaly identification results.</p>
         </div>
-        <div class="qs-box fx" style="--c:#9af7b0;--o:3">
-          <div class="step"><i>3</i><b>Or skip the agent: reproduce locally in 90 seconds</b></div>
-          <p>From the repository root, run the production-threshold demo on 996 hash-pinned real USGS soil measurements, then validate the <b>16-file output contract</b> — the two commands should return <code>partial_success</code> and <code>valid</code> respectively.</p>
-          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
+        <table class="slot-table">
+          <thead><tr><th>SLOT</th><th>WHAT TO PUT THERE</th><th>EXAMPLES</th></tr></thead>
+          <tbody>
+            <tr><td>region</td><td>global, a named region, or a WGS84 bounding box</td><td>Western Europe · China · lat 30–45, lon –10–30</td></tr>
+            <tr><td>medium</td><td>one or more of the four supported media</td><td>soil · sediment · water · rock</td></tr>
+            <tr><td>element</td><td>element symbol or analyte name</td><td>arsenic (As) · Cu · Pb · Hg</td></tr>
+          </tbody>
+        </table>
+        <div class="grow"></div>
+        <p class="qs-more">Shorter requests activate the skill just as well, e.g. “Using only public data, build a soil arsenic atlas for Western Europe: standardize the units, flag candidate enrichment areas, and attach per-record sources, licenses, and confidence scores.” The full tutorial — three ways to run (your own data / online acquisition / the offline four-media sample), how to write <code>request.json</code>, and the FAQ — is in the <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>.</p>
+      </div>
+      <div class="qs-box s3 fx" style="--c:#9af7b0">
+        <div class="step"><i>3</i><b>Or skip the agent: reproduce locally in 90 seconds</b></div>
+        <p>From the repository root, run the production-threshold demo on 996 hash-pinned real USGS soil measurements, then validate the <b>16-file output contract</b>. The two commands should return <code>partial_success</code> and <code>valid</code> respectively.</p>
+        <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
   --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
   --demo production-usgs --analysis-profile production \
   --generated-at 2026-08-07T00:00:00Z --output-dir /tmp/geochemical-production-demo
 python skills/global-geochemical-atlas/scripts/validate_outputs.py \
   --output-dir /tmp/geochemical-production-demo</pre></div>
-          <p style="margin-top:10px">To let the conductor drive everything in one command (freeze the prompt → route → repair loop → validate → adversarial audit):</p>
-          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
+        <div class="grow"></div>
+        <p style="margin-top:12px">To let the conductor drive everything in one command (freeze the prompt → route → repair loop → validate → adversarial audit):</p>
+        <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
   --prompt-file TASK_PROMPT.txt --output-dir /tmp/atlas-run</pre></div>
-        </div>
       </div>
-      <div class="qs-col">
-        <div class="qs-box hot fx" style="--c:var(--gold);--o:2">
-          <div class="step"><i>2</i><b>Send the default prompt to your agent — change only three slots</b></div>
-          <p>This prompt covers every step of the hackathon task description word for word; replace the highlighted <b>medium / element / region</b> with yours — say, “Western Europe” with “China” — and it is your task.</p>
-          <div class="prompt-box">
-            <button class="copy-btn" type="button">Copy</button>
-            <p id="default-prompt">Using only public literature and open data platforms, build a <span class="slot">soil</span> <span class="slot">arsenic (As)</span> atlas for <span class="slot">Western Europe</span>: automatically collect element concentrations, sampling coordinates, geological background, and analytical-method information; unify units, spatially match records, run quality control, and trace every record to its source; render the distribution map, heatmap, and element-combination comparison, filterable by element, region, geological unit, and sample type; identify candidate enrichment and depletion areas; and deliver the interactive atlas, the standardized geochemical database, the source &amp; confidence documentation, and the anomaly identification results.</p>
-          </div>
-          <table class="slot-table">
-            <thead><tr><th>SLOT</th><th>WHAT TO PUT THERE</th><th>EXAMPLES</th></tr></thead>
-            <tbody>
-              <tr><td>region</td><td>global, a named region, or a WGS84 bounding box</td><td>Western Europe · China · lat 30–45, lon –10–30</td></tr>
-              <tr><td>medium</td><td>one or more of the four supported media</td><td>soil · sediment · water · rock</td></tr>
-              <tr><td>element</td><td>element symbol or analyte name</td><td>arsenic (As) · Cu · Pb · Hg</td></tr>
-            </tbody>
-          </table>
-          <p class="qs-more">Shorter requests activate the skill just as well, e.g. “Using only public data, build a soil arsenic atlas for Western Europe: standardize the units, flag candidate enrichment areas, and attach per-record sources, licenses, and confidence scores.” The full tutorial — three ways to run (your own data / online acquisition / the offline four-media sample), how to write <code>request.json</code>, and the FAQ — is in the <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>.</p>
-        </div>
-        <div class="qs-box fx" style="--c:var(--gold);--o:4">
-          <div class="step"><i>4</i><b>After the atlas: optionally continue into the research layer</b></div>
-          <p>On top of any run that has <b>completed and passed validation</b>, one command deterministically recombines the existing evidence into three researcher products — analysis cohorts, environmental context and sampling priorities (no new data, no changes to core artifacts) — with a receipt carrying the input hashes. This is where the <a href="#research">five papers below</a> began.</p>
-          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
+      <div class="qs-box s4 fx" style="--c:var(--gold)">
+        <div class="step"><i>4</i><b>After the atlas: optionally continue into the research layer</b></div>
+        <p>On top of any run that has <b>completed and passed validation</b>, one command turns the existing evidence into three researcher products (no new data, no changes to core outputs) with a receipt stating the input hashes. The <a href="#research">five papers below</a> started from this step.</p>
+        <ul class="qs-list">
+          <li><code>analysis_cohorts.csv</code> analysis cohorts: which records may be compared with one another, which may not, and why</li>
+          <li><code>research_context.csv</code> research context: per-sample lithology, geological unit, depositional setting, depth, grain size and sampling date</li>
+          <li><code>sampling_priority.geojson</code> sampling priorities: data gaps ranked into the next acquisition queue</li>
+          <li><code>research_products_receipt.json</code> receipt: input hashes, parameters, and an explicit list of what may not be claimed</li>
+        </ul>
+        <div class="grow"></div>
+        <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
   --output-dir /tmp/atlas-run --research-dir /tmp/atlas-run/research \
   --minimum-confidence medium</pre></div>
-        </div>
       </div>
     </div>
   </div>
