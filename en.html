@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Global Geochemical Atlas Skill · A reusable research skill for AI agents · Team Token Agents</title>
+<meta name="description" content="Global Geochemical Atlas: a reusable, agent-native research skill. An AI agent autonomously acquires public geochemical data, runs unit and coordinate quality control, renders interactive element atlases, and archives every number with a SHA-256 fingerprint. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
+<meta name="theme-color" content="#03141b">
+<link rel="canonical" href="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2303141b'/%3E%3Ccircle cx='32' cy='32' r='23' fill='none' stroke='%2369f5e6' stroke-width='2.6'/%3E%3Cellipse cx='32' cy='32' rx='23' ry='9' fill='none' stroke='%2369f5e6' stroke-opacity='.5' stroke-width='1.4'/%3E%3Ccircle cx='46' cy='18' r='4.6' fill='%23f6c344'/%3E%3Ccircle cx='15' cy='38' r='3.9' fill='%23ff5c78'/%3E%3Ccircle cx='39' cy='48' r='3.4' fill='%2369f5e6'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Global Geochemical Atlas Skill">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
+<meta property="og:title" content="Global Geochemical Atlas Skill · A reusable research skill for AI agents">
+<meta property="og:description" content="An AI agent autonomously acquires public geochemical data, unifies units, runs quality control, traces every record to its source, renders interactive element atlases and flags anomaly candidates — every number carries a SHA-256 fingerprint. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
+<meta property="og:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Screenshot of the interactive global element distribution atlas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Geochemical Atlas Skill · A reusable research skill for AI agents">
+<meta name="twitter:description" content="Autonomous acquisition, quality control, mapping and anomaly screening of public geochemical data — every number carries a SHA-256 fingerprint.">
+<meta name="twitter:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
+<link rel="alternate" hreflang="zh-CN" href="https://asimfish.github.io/global-geochemical-atlas-demo/">
+<link rel="alternate" hreflang="en" href="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
+<link rel="alternate" hreflang="x-default" href="https://asimfish.github.io/global-geochemical-atlas-demo/">
+<link rel="stylesheet" href="assets/site.css">
+<script>
+  // Language routing before first paint: honour ?lang= first, then a remembered explicit choice.
+  (function () {
+    try {
+      var q = /[?&]lang=(zh|en)\b/.exec(location.search);
+      var pref = q ? q[1] : localStorage.getItem('gga-lang');
+      if (q) localStorage.setItem('gga-lang', q[1]);
+      if (pref === 'zh') location.replace('index.html' + location.hash);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><ellipse cx="32" cy="32" rx="10" ry="25" fill="none" stroke="rgba(105,245,230,.35)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/></svg>
+      <span><b>GLOBAL GEOCHEMICAL ATLAS</b><small>SKILL · global-geochemical-atlas</small></span>
+    </a>
+    <span class="team-badge">🏆 Champion</span>
+    <nav class="top-nav">
+      <a href="#challenge">Challenge</a>
+      <a href="#deliverables">Outputs</a>
+      <a href="#how">How it works</a>
+      <a href="#quickstart">Quick start</a>
+      <a href="#research">Discoveries</a>
+      <a href="live/world-atlas.html" target="_blank" rel="noopener">Atlas ↗</a>
+      <a href="slides.html">Slides</a>
+      <a class="ext" href="finals/Global-Geochemical-Atlas-Poster.pdf" target="_blank" rel="noopener">Poster</a>
+      <a class="ext" href="https://xhslink.cn/o/7EMuFyOOsO5" target="_blank" rel="noopener">Xiaohongshu</a>
+      <a class="ext" href="https://zhuanlan.zhihu.com/p/2073539526404879853" target="_blank" rel="noopener">Zhihu</a>
+      <a class="ext" href="https://chembot.zgca.com/" target="_blank" rel="noopener">Team site</a>
+      <a class="ext" href="https://synmatai.cn/hackathon" target="_blank" rel="noopener">Hackathon</a>
+      <a class="lang" href="index.html" hreflang="zh-CN" lang="zh-CN" data-lang="zh" title="切换到中文">中文</a>
+      <a class="gh" href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu" hidden aria-label="Site navigation">
+    <a href="#challenge">The challenge</a>
+    <a href="#deliverables">Run outputs</a>
+    <a href="#how">How it works</a>
+    <a href="#quickstart">Quick start</a>
+    <a href="#runs">Real-run evidence</a>
+    <a href="#research">Scientific discoveries</a>
+    <a href="#video">Demo video</a>
+    <a href="#materials">Downloads</a>
+    <span class="mm-label">Live outputs · External links</span>
+    <a href="live/world-atlas.html" target="_blank" rel="noopener">Interactive atlas<small>96 MB</small></a>
+    <a href="live/world-temporal.html" target="_blank" rel="noopener">Temporal evolution atlas</a>
+    <a href="slides.html">Slides (Chinese)</a>
+    <a href="finals/Global-Geochemical-Atlas-Poster.pdf" target="_blank" rel="noopener">Poster PDF (Chinese)</a>
+    <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">GitHub skill repository ↗</a>
+    <a href="https://xhslink.cn/o/7EMuFyOOsO5" target="_blank" rel="noopener">Xiaohongshu ↗</a>
+    <a href="https://zhuanlan.zhihu.com/p/2073539526404879853" target="_blank" rel="noopener">Zhihu ↗</a>
+    <a href="https://chembot.zgca.com/" target="_blank" rel="noopener">Team site ChemBot ↗</a>
+    <a href="https://synmatai.cn/hackathon" target="_blank" rel="noopener">Hackathon site ↗</a>
+    <a href="index.html" hreflang="zh-CN" lang="zh-CN" data-lang="zh">中文版 →</a>
+  </nav>
+</header>
+
+<a class="champ-bar" href="https://synmatai.cn/hackathon/" target="_blank" rel="noopener">
+  <div class="wrap">
+    <span class="cup">🏆</span>
+    <b>Champion · SynMatAI AI4S Future ScienceSkills Hackathon</b>
+    <small>CHAMPION · TEAM TOKEN AGENTS ↗</small>
+  </div>
+</a>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">AI4S Future ScienceSkills Hackathon · <span style="color:var(--gold)">🏆 Champion</span></div>
+      <h1>Global Geochemical Atlas<span class="h1-sub gradient">A reusable research skill for AI agents</span></h1>
+      <div class="hero-quote">
+        <em class="q-who">A question that sounds simple · from a geochemist</em>
+        <p>“Map global arsenic in soil, organize it into an interactive database, and tell me where it is anomalous.”</p>
+      </div>
+      <p class="sub" style="margin-top:12px">It sounds like a retrieval task. Inside a real research team it immediately becomes four harder questions:</p>
+      <div class="pain-grid">
+        <div class="pain-card"><span class="role">🧪 Geochemist</span><p>Dozens of surveys, three units, five digestion methods — can these numbers share one map at all?</p><em class="pl-tag">→ Unified metrics</em></div>
+        <div class="pain-card"><span class="role">🏛️ Regulator</span><p>Arsenic in the southwest is several times the national median — pollution, or simply the geological background?</p><em class="pl-tag">→ Temporal dynamics</em></div>
+        <div class="pain-card"><span class="role">🗂️ Data steward</span><p>This record is from 1978 — are its detection limit, coordinate system and license still traceable today?</p><em class="pl-tag">→ Quality control</em></div>
+        <div class="pain-card"><span class="role">⚖️ Reviewer</span><p>For every number the AI produces, which page and which row does it come from? Would you dare cite it?</p><em class="pl-tag">→ Provenance</em></div>
+      </div>
+      <p class="sub" style="margin-top:14px">How can one sentence make an agent deliver a <b>trustworthy, traceable, interactive</b> atlas of global element distribution that also evolves through time? The Global Geochemical Atlas Skill turns the different demands of different researchers into a single <b>agent-native</b> workflow: trustworthy, interactive, traceable, unified, and <b>dynamic in time</b>.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="live/world-atlas.html">Open the interactive atlas →</a>
+        <a class="btn ghost" href="#video">Watch the 3-minute demo</a>
+      </div>
+      <p class="hero-note">The world atlas is a self-contained 96 MB file; the first load takes a moment, and it keeps working offline once saved. Also available: <a href="live/europe-atlas.html" target="_blank" rel="noopener">Europe ↗</a> · <a href="live/china-atlas.html" target="_blank" rel="noopener">China ↗</a> · <a href="live/world-temporal.html" target="_blank" rel="noopener">temporal evolution map ↗</a>.</p>
+    </div>
+    <a class="browser-card fx" href="live/world-atlas.html" aria-label="Open the interactive world atlas">
+      <div class="browser-bar"><i></i><i></i><i></i><span>world-atlas.html · self-contained single file · click to open</span><em>● LIVE</em></div>
+      <div class="shot">
+        <img src="finals/assets/hero-map-1240x1400.png" alt="World atlas interface: global distribution of 198,445 measurements, anomaly candidate rings and the media coverage sidebar" loading="eager">
+        <div class="shot-caption"><b>Real run output — interface capture</b><span>MAP / DATABASE / EVIDENCE</span></div>
+      </div>
+    </a>
+    <div class="hero-band fx">
+      <div class="hero-flow">
+        <span class="hf-step"><b>Acquire</b><small>36 SOURCES</small></span><i>→</i>
+        <span class="hf-step"><b>Standardize</b><small>mg/kg · WGS84</small></span><i>→</i>
+        <span class="hf-step gold"><b>QC &amp; repair</b><small>ITERATION LOOP</small></span><i>→</i>
+        <span class="hf-step red"><b>Screen anomalies</b><small>ROBUST-Z · FDR</small></span><i>→</i>
+        <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>Attribute in time</b><small>GEOGENIC / INPUT</small></a><i>→</i>
+        <span class="hf-step"><b>Draft papers</b><small>5 SCIENTIFIC QUESTIONS</small></span>
+      </div>
+      <p class="hero-formula">Multi-source acquisition + standardization gates + QC repair loop = <b>a trustworthy global element atlas, and papers</b></p>
+    </div>
+  </div>
+</section>
+
+<div class="orgs-bar fx">
+  <div class="wrap">
+    <div class="org-label">Team Affiliations</div>
+    <div class="org"><img class="seal" src="assets/orgs/sjtu.png" alt="Shanghai Jiao Tong University"></div>
+    <div class="org"><img class="slim" src="assets/orgs/zgca.png" alt="Beijing Zhongguancun Academy"></div>
+    <div class="org"><img src="assets/orgs/buaa.png" alt="Beihang University"></div>
+    <div class="org"><img src="assets/orgs/zju.png" alt="Zhejiang University"></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="wrap fx">
+    <div class="stats-head">
+      <span class="eyebrow">Latest Production Run</span>
+      <span class="date">2026-08-19 · global online production run · fully autonomous</span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat"><b data-n="199730">199,730</b><span>measurements admitted<br>no double counting</span></div>
+      <div class="stat"><b data-n="45753">45,753</b><span>distinct physical samples<br>rock / soil / sediment / water</span></div>
+      <div class="stat"><b data-n="35">35</b><span>public sources admitted<br>31 further candidates audited and rejected</span></div>
+      <div class="stat"><b data-n="100" data-suffix="%">100%</b><span>record-level provenance<br>all 199,730 records trace to their origin</span></div>
+      <div class="stat"><b data-n="3721">3,721</b><span>anomaly screening candidates<br>robust-z gate · 19 candidate regions</span></div>
+      <div class="stat warn"><b data-n="393">393</b><span>records failed the standardization gate<br>kept honestly in place, never silently dropped</span></div>
+    </div>
+    <p class="stats-caveat"><b>Honest reporting:</b> the figures above come from the structured report embedded in the 2026-08-19 production outputs and can be checked item by item; coverage of Russia, South America and other regions is still thin and is kept as an explicit gap — this breadth is not a global statistical distribution. RUN A in the “Real-run evidence” section below is a separate 2026-08-15 run with its own accounting and is never mixed with this one; the online world atlas file carries its own tally of <b>36 sources / 199,723</b> plottable records — the difference from the run report reflects what each file counts, and both can be verified inside their respective files.</p>
+  </div>
+</div>
+
+<section id="challenge" style="padding-bottom:16px">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">The Challenge</div>
+      <h2 class="section-title">What the hackathon asked for</h2>
+      <p class="section-sub">Climate &amp; Earth Science track, task “Global Geochemical Element Distribution Atlas”: start from public data, complete the full chain of acquisition, processing, mapping and anomaly identification, and distil the workflow into a reusable Skill document.</p>
+    </div>
+    <div class="req-rows">
+      <div class="req-row fx">
+        <div class="req-head"><span class="req-no">01</span><span class="req-name"><b>Automatic acquisition</b><small>ACQUIRE</small></span></div>
+        <p>Collect element concentrations, sampling coordinates, geological background and analytical-method information for four media — <b>rock, soil, sediment and water</b> — from public literature and open data platforms.</p>
+      </div>
+      <div class="req-row fx" style="--c:var(--gold)">
+        <div class="req-head"><span class="req-no">02</span><span class="req-name"><b>Scientific processing</b><small>STANDARDIZE</small></span></div>
+        <p>Perform <b>unit unification, spatial matching, quality control and provenance tracing</b>. This project adds one rule of its own: original measured values are never overwritten — converted values are stored in separate columns.</p>
+      </div>
+      <div class="req-row fx" style="--c:var(--red)">
+        <div class="req-head"><span class="req-no">03</span><span class="req-name"><b>Research outputs</b><small>VISUALIZE</small></span></div>
+        <p>Render global or regional distribution maps, heatmaps and element-combination comparisons by <b>element / region / geological unit / sample type</b>, and identify <b>anomalous enrichment and depletion</b> areas.</p>
+      </div>
+      <div class="req-row fx" style="--c:#9af7b0">
+        <div class="req-head"><span class="req-no">04</span><span class="req-name"><b>Skill outputs</b><small>OUTPUTS</small></span></div>
+        <p>Produce an <b>interactive element distribution map, a standardized geochemical database, source and confidence documentation, anomaly identification results</b> and a reusable Skill document; the hackathon’s <b>final deliverable is a single complete, reusable Skill document</b>.</p>
+      </div>
+    </div>
+    <p class="req-bridge fx">This page keeps the two layers apart: one run produces four kinds of research results; the reusable Skill document defines and reproduces the workflow — and is the final submission → <a href="#deliverables">see the run outputs</a></p>
+  </div>
+</section>
+
+<section id="deliverables">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">Skill Outputs · Runtime + Reusable Asset</div>
+      <h2 class="section-title">Run outputs and the <span class="gradient">reusable Skill document</span></h2>
+      <p class="section-sub">A single run produces the interactive map, the standardized database, the source &amp; confidence documentation and the anomaly identification results; the reusable Skill document defines the workflow, the scientific gates and the output contract — it drives the run and is the final submission. All four results share one data foundation, one evidence chain and one set of scientific boundaries, and every one of them can be opened and verified here.</p>
+    </div>
+    <div class="cards">
+      <a class="card fx" href="live/world-atlas.html" target="_blank" rel="noopener">
+        <div class="thumb"><span class="tag">OUTPUT 1</span><img src="assets/global-overview-1920x1080.png" alt="Interactive element distribution map" loading="lazy"></div>
+        <div class="body">
+          <h3>Interactive element distribution map</h3>
+          <p>Enter any view by element, region, geological unit or sample type; sources with reliable time fields can be shown as a temporal evolution view; every point links straight to its original evidence.</p>
+          <div class="links"><span style="color:var(--mint);font-weight:700">Open the global overview ↗</span></div>
+        </div>
+      </a>
+      <a class="card fx" href="live/world-atlas.html" target="_blank" rel="noopener" style="--c:#9af7b0">
+        <div class="thumb"><span class="tag" style="--c:#9af7b0">OUTPUT 2</span><img src="assets/database-view-1920x1080.png" alt="Standardized geochemical database" loading="lazy"></div>
+        <div class="body">
+          <h3>Standardized geochemical database</h3>
+          <p>Long-table structure aligned with ODM2 semantics: units unified to mg/kg, coordinates to WGS84, original values never overwritten — the downloadable CSV is the standardized database itself.</p>
+          <div class="links"><span style="color:var(--mint);font-weight:700">Open the atlas · Database tab ↗</span></div>
+        </div>
+      </a>
+      <a class="card fx" href="live/world-atlas.html" target="_blank" rel="noopener" style="--c:var(--gold)">
+        <div class="thumb"><span class="tag" style="--c:var(--gold)">OUTPUT 3</span><img src="assets/source-view-1920x1080.png" alt="Source and confidence documentation" loading="lazy"></div>
+        <div class="body">
+          <h3>Source &amp; confidence documentation</h3>
+          <p>Every record carries a 0–1 usability score (five weighted components); every source carries its license, coverage and access notes; evidence drills down DOI → table / row → SHA-256.</p>
+          <div class="links"><span style="color:var(--mint);font-weight:700">Open the atlas · Sources &amp; confidence tab ↗</span></div>
+        </div>
+      </a>
+      <a class="card fx" href="live/china-atlas.html" target="_blank" rel="noopener" style="--c:var(--red)">
+        <div class="thumb"><span class="tag" style="--c:var(--red)">OUTPUT 4</span><img src="assets/china-anomaly-1920x1080.png" alt="Anomaly identification results" loading="lazy"></div>
+        <div class="body">
+          <h3>Anomaly identification results</h3>
+          <p>Enrichment and depletion are reported separately; every candidate carries its statistical criteria and a review entry point. A candidate is not a mineralization verdict — the review chain leads back to the original records.</p>
+          <div class="links"><span style="color:var(--mint);font-weight:700">Open the China anomaly view ↗</span></div>
+        </div>
+      </a>
+      <a class="card fx" href="live/globe-3d.html" target="_blank" rel="noopener">
+        <div class="thumb"><span class="tag">EXTRA</span><img src="assets/anomaly-view-1920x1080.png" alt="3D globe view" loading="lazy"></div>
+        <div class="body">
+          <h3>3D globe and anomaly perspective</h3>
+          <p>The same data on a three-dimensional globe: global sampling coverage and the pattern of anomalies at a glance.</p>
+          <div class="links"><span style="color:var(--mint);font-weight:700">Open the 3D globe ↗</span></div>
+        </div>
+      </a>
+      <div class="card skill-card fx">
+        <div class="thumb">
+          <span class="tag">SKILL DOCUMENT</span>
+          <div class="term-mini">
+            <div class="cmd">$ opencode run "global Cr·Cu·Ni·Pb·Zn atlas with anomaly screening"</div>
+            <div>[agent] reading <b>SKILL.md</b> → nine-stage state machine</div>
+            <div>[agent] validate_outputs <span class="ok">PASS</span> · 16/16 artifacts <span class="ok">✓</span></div>
+          </div>
+        </div>
+        <div class="body">
+          <h3>Reusable Skill document</h3>
+          <p>Four layers: the SKILL.md state machine + a scientific knowledge base + deterministic executors + reproducible tests. Any compatible agent mounts it and runs; all numerical work is done by scripts — the model never touches the numbers.</p>
+          <div class="links">
+            <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">Skill repository ↗</a>
+            <a class="minor" href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/SKILL.md" target="_blank" rel="noopener">Straight to SKILL.md ↗</a>
+            <a class="minor" href="#quickstart">Mount it &amp; the starter prompt ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">How It Works · Six Design Commitments</div>
+      <h2 class="section-title">How it works: <span class="gradient">six design commitments</span></h2>
+      <p class="section-sub">Every mechanism presented at the final maps to a runnable script with regression tests in the repository, and leaves evidence in the “Real-run evidence” section of this page. The foot of each card names the implementation and the on-site evidence, so each commitment can be checked one by one.</p>
+      <div class="principle"><b>Models propose, code decides</b><span>Models <em>nominate, object and write</em>; every <em>numerical computation, gate verdict and hash check</em> is performed by deterministic scripts the model never touches — the auditor can drive repairs, but it can never acquit the executor.</span></div>
+    </div>
+    <div class="how-grid">
+      <article class="how-card fx">
+        <div class="how-head"><span class="how-no">01</span><b>A complete iteration loop</b></div>
+        <p class="promise">Nine research steps behind three gates (source admission · unit &amp; coordinate QC · item-by-item acceptance), none skipped; failed acceptance enters the repair loop, and gaps that cannot be fixed are flagged <code>needs_human_review</code> for a human — never papered over.</p>
+        <p class="detail">Every repair starts a fresh run; original evidence is immutable. <code>autopilot.py</code> chains the whole contract into one command — freeze the request → route → repair loop → all validators → adversarial audit → compliance report — with machine-readable terminal states: <code>DONE / CONTINUE_REQUIRED / NEEDS_HUMAN_REVIEW / FAILED</code>.</p>
+        <div class="loop-steps"><span>list the problems</span><i>→</i><span>log to backlog</span><i>→</i><span>fix by registered method</span><i>→</i><span>re-run &amp; re-accept</span><i>→</i><span>persist to cross-run memory</span></div>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">CODE</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/run_self_correction_loop.py" target="_blank" rel="noopener">run_self_correction_loop.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/autopilot.py" target="_blank" rel="noopener">autopilot.py</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN A: 238-item repair queue → needs_human_review ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--red)">
+        <div class="how-head"><span class="how-no">02</span><b>Three-layer adversarial mechanism</b></div>
+        <p class="promise">One adversarial layer at the data entrance, one at the output exit, and a graded verdict on top — no layer lets a model grade itself.</p>
+        <p class="detail"><b>Entrance</b>: a Scout nominates candidate sources, a Skeptic only raises objections, and a deterministic Referee scores against a published scoreboard (≥7 proceed · 4–6 revise · &lt;4 out). <b>Exit</b>: the auditor must first pass a “canary exam” — 10 defect types planted in a shadow copy — with recall = 1.0 before it may judge the real outputs. <b>Verdict</b> in three grades, <code>pass / pass_scope_narrowed / fail</code>: a warning does not kill the draft, but it forces the citation scope to narrow.</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">CODE</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/discovery_duel.py" target="_blank" rel="noopener">discovery_duel.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/adversarial_audit.py" target="_blank" rel="noopener">adversarial_audit.py</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#runs">RUN C: 10 defect types, 10/10 caught ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--gold)">
+        <div class="how-head"><span class="how-no">03</span><b>Each evaluation round stays independent</b></div>
+        <p class="promise">No round inherits another round’s conclusions — reviewer independence is guaranteed by a machine-readable contract, not by trust.</p>
+        <p class="detail">The Skeptic must come from a <b>different model family</b> than the executor, work in a <b>fresh thread</b>, receive none of the Builder’s narrative, read only the output bytes, and refuse to review whenever a path or SHA-256 check fails. Cross-run memory (<code>memory.json</code>) only re-orders sources the skill has already routed — it never adds one — and seeds only round-1 scheduling; in-run evidence always outranks cross-run memory.</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">CODE</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/acquisition_memory.py" target="_blank" rel="noopener">acquisition_memory.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/adversarial-audit.md" target="_blank" rel="noopener">reviewer_contract protocol</a></div>
+        </div>
+      </article>
+      <article class="how-card fx">
+        <div class="how-head"><span class="how-no">04</span><b>SHA-256 fingerprints, one per result</b></div>
+        <p class="promise">Hashes anchor four links: the frozen request, every source file, all 16 artifacts, and every reportable claim.</p>
+        <p class="detail"><code>claim_ledger.py</code> derives every reportable claim from the outputs, binds each one to “file + JSON pointer + SHA-256”, and recomputes from evidence on every call — the executor can build the ledger, but can never rewrite the integrity verdict. Draft answers are then cross-checked with <code>--check-answer</code>: any load-bearing number that cannot be traced to the ledger is ruled a phantom. Inside the atlas, any point drills down DOI → table / row → SHA-256.</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">CODE</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json: the phantom “25000” ruled answer_unbound ↗</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:#9af7b0">
+        <div class="how-head"><span class="how-no">05</span><b>Temporal evolution lives inside the atlas</b></div>
+        <p class="promise">Not a separate deliverable — it is one view option of the atlas, driven by the same standardized database.</p>
+        <p class="detail">For sources with reliable time fields, the same atlas switches to a 1986–2024 temporal evolution view used to separate <b>geogenic background</b> from <b>external input</b>; all data, the evidence chain and the scientific boundaries are shared with the main view — no second set of accounting.</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">LIVE</span>
+          <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">Open the online temporal view ↗</a>
+          <a class="site" href="#video">Demo video: auto-play from 01:22 ↓</a></div>
+        </div>
+      </article>
+      <article class="how-card fx" style="--c:var(--gold)">
+        <div class="how-head"><span class="how-no">06</span><b>Auto-research genuinely wired in</b></div>
+        <p class="promise">The atlas is a checkpoint, not the finish line — once a run passes validation, the user can choose to continue into the research layer with one command.</p>
+        <p class="detail"><code>build_research_products.py</code> acquires no new data and modifies no core artifact; it deterministically recombines existing evidence into three researcher products — <b>analysis cohorts, environmental context and sampling priorities</b> — plus a receipt carrying the input hashes. Research mode then continues through statistical testing, writing and typesetting; the five papers below are the products of exactly this continuation.</p>
+        <div class="how-foot">
+          <div class="row"><span class="lbl">CODE</span>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/build_research_products.py" target="_blank" rel="noopener">build_research_products.py</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/references/research-mode.md" target="_blank" rel="noopener">research-mode contract</a></div>
+          <div class="row"><span class="lbl">EVIDENCE</span><a class="site" href="#research">five paper drafts ↓</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="quickstart">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
+      <h2 class="section-title">Quick start: <span class="gradient">run it inside your own agent</span></h2>
+      <p class="section-sub">The default prompt is the complete hackathon task; making it your own means changing three words. Running it needs no network, API key, GPU or third-party package — Python 3.11+ is enough.</p>
+    </div>
+    <div class="qs-grid">
+      <div class="qs-col">
+        <div class="qs-box fx" style="--o:1">
+          <div class="step"><i>1</i><b>Mount the skill</b></div>
+          <p>It follows the Agent Skills public subset (<code>SKILL.md</code> + <code>references/</code> + <code>scripts/</code> + <code>assets/</code>, pure standard library), so copying it into a compatible runtime’s skills directory is all it takes.</p>
+          <div class="code"><button class="copy-btn" type="button" data-copy="git clone https://github.com/asimfish/global-geochemical-atlas-skill
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/">Copy</button><pre>git clone https://github.com/asimfish/global-geochemical-atlas-skill
+<span class="c"># Claude Code</span>
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/skills/
+<span class="c"># Codex CLI</span>
+cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
+<span class="c"># OpenCode and other compatible runtimes: copy / mount into their skills folder</span></pre></div>
+        </div>
+        <div class="qs-box fx" style="--c:#9af7b0;--o:3">
+          <div class="step"><i>3</i><b>Or skip the agent: reproduce locally in 90 seconds</b></div>
+          <p>From the repository root, run the production-threshold demo on 996 hash-pinned real USGS soil measurements, then validate the <b>16-file output contract</b> — the two commands should return <code>partial_success</code> and <code>valid</code> respectively.</p>
+          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
+  --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
+  --demo production-usgs --analysis-profile production \
+  --generated-at 2026-08-07T00:00:00Z --output-dir /tmp/geochemical-production-demo
+python skills/global-geochemical-atlas/scripts/validate_outputs.py \
+  --output-dir /tmp/geochemical-production-demo</pre></div>
+          <p style="margin-top:10px">To let the conductor drive everything in one command (freeze the prompt → route → repair loop → validate → adversarial audit):</p>
+          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/autopilot.py \
+  --prompt-file TASK_PROMPT.txt --output-dir /tmp/atlas-run</pre></div>
+        </div>
+      </div>
+      <div class="qs-col">
+        <div class="qs-box hot fx" style="--c:var(--gold);--o:2">
+          <div class="step"><i>2</i><b>Send the default prompt to your agent — change only three slots</b></div>
+          <p>This prompt covers every step of the hackathon task description word for word; replace the highlighted <b>medium / element / region</b> with yours — say, “Western Europe” with “China” — and it is your task.</p>
+          <div class="prompt-box">
+            <button class="copy-btn" type="button">Copy</button>
+            <p id="default-prompt">Using only public literature and open data platforms, build a <span class="slot">soil</span> <span class="slot">arsenic (As)</span> atlas for <span class="slot">Western Europe</span>: automatically collect element concentrations, sampling coordinates, geological background, and analytical-method information; unify units, spatially match records, run quality control, and trace every record to its source; render the distribution map, heatmap, and element-combination comparison, filterable by element, region, geological unit, and sample type; identify candidate enrichment and depletion areas; and deliver the interactive atlas, the standardized geochemical database, the source &amp; confidence documentation, and the anomaly identification results.</p>
+          </div>
+          <table class="slot-table">
+            <thead><tr><th>SLOT</th><th>WHAT TO PUT THERE</th><th>EXAMPLES</th></tr></thead>
+            <tbody>
+              <tr><td>region</td><td>global, a named region, or a WGS84 bounding box</td><td>Western Europe · China · lat 30–45, lon –10–30</td></tr>
+              <tr><td>medium</td><td>one or more of the four supported media</td><td>soil · sediment · water · rock</td></tr>
+              <tr><td>element</td><td>element symbol or analyte name</td><td>arsenic (As) · Cu · Pb · Hg</td></tr>
+            </tbody>
+          </table>
+          <p class="qs-more">Shorter requests activate the skill just as well, e.g. “Using only public data, build a soil arsenic atlas for Western Europe: standardize the units, flag candidate enrichment areas, and attach per-record sources, licenses, and confidence scores.” The full tutorial — three ways to run (your own data / online acquisition / the offline four-media sample), how to write <code>request.json</code>, and the FAQ — is in the <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">GitHub README ↗</a>.</p>
+        </div>
+        <div class="qs-box fx" style="--c:var(--gold);--o:4">
+          <div class="step"><i>4</i><b>After the atlas: optionally continue into the research layer</b></div>
+          <p>On top of any run that has <b>completed and passed validation</b>, one command deterministically recombines the existing evidence into three researcher products — analysis cohorts, environmental context and sampling priorities (no new data, no changes to core artifacts) — with a receipt carrying the input hashes. This is where the <a href="#research">five papers below</a> began.</p>
+          <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/build_research_products.py \
+  --output-dir /tmp/atlas-run --research-dir /tmp/atlas-run/research \
+  --minimum-confidence medium</pre></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="evidence" id="runs">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow" style="color:var(--gold)">Reproducibility · Real-Run Evidence</div>
+      <h2 class="section-title">Validated in real runs: <span class="gradient">online acquisition, deterministic regression, adversarial audit</span></h2>
+      <p class="section-sub">Three kinds of validation cover different risk surfaces: an online production run tests autonomous acquisition, failure handling and gap reporting under real network conditions; a deterministic regression in a fresh clone tests whether the core outputs reproduce byte for byte across environments; and an adversarial audit plants 10 artificial defect types in a shadow copy of the outputs to calibrate the auditor’s detection power. The three results use separate accounting and are never mixed.</p>
+    </div>
+    <div class="run-grid">
+      <div class="run-card fx">
+        <div class="kicker">RUN A · GLOBAL ONLINE PRODUCTION RUN · 2026-08-15</div>
+        <h3>33 minutes online, worldwide: acquisition and consolidation completed autonomously, results and gaps reported honestly</h3>
+        <ul>
+          <li><b>63</b> source candidates audited → <b>31</b> formally routed → <b>29</b> actually ingested</li>
+          <li>9 acquisition rounds, 72,346 → 191,715 measurements; stopped on its own once increments reached zero</li>
+          <li>Two GEOROC endpoints kept returning HTTP 500 — failed closed round after round and recorded as such</li>
+          <li><b>238</b>-item repair queue retained; terminal state needs_human_review</li>
+        </ul>
+        <div class="links">
+          <a href="finals/demo-video.html#5">Watch the log replay (78× speed) ↗</a>
+        </div>
+      </div>
+      <div class="run-card gold fx">
+        <div class="kicker">RUN B · DETERMINISTIC REGRESSION · main@ed8249e</div>
+        <h3>Regression completed in 0.714 s in a fresh clone: core outputs identical byte for byte</h3>
+        <ul>
+          <li><b>996</b> measurements · <b>996/996</b> matched to geology · <b>6</b> candidates</li>
+          <li>All 15 core artifacts passed independent validation (that version’s contract had 15 files; it now has 16), <b>0</b> errors / <b>0</b> warnings</li>
+          <li>Hash-bound real-source fixture; re-runs across environments reproduce byte for byte</li>
+          <li>Proves engineering executability and the scientific gates — not a regional distribution</li>
+        </ul>
+        <div class="links">
+          <a href="finals/real-run/interactive_map.html" target="_blank" rel="noopener">Open the regression run’s atlas ↗</a>
+          <a href="finals/real-run/run_summary.json" target="_blank" rel="noopener">run_summary.json ↗</a>
+        </div>
+      </div>
+      <div class="run-card red fx">
+        <div class="kicker">RUN C · ADVERSARIAL AUDIT DRILL · 2026-08-20</div>
+        <h3>A red team planted 10 defect types, all caught: the audit layer is calibrated before it judges</h3>
+        <ul>
+          <li>Full chain with no human intervention: request freeze → pipeline run → output validation → adversarial audit → claim ledger (a fixed 1,422-record fixture built to exercise the audit layer)</li>
+          <li><b>10</b> defect types planted in a shadow copy (value tampering, unit flips, fabricated sources, corrupted hashes, …); the auditor caught <b>10/10</b></li>
+          <li><b>10</b> independent re-checks of the real outputs all passed (hash chain, unit recomputation, anomaly recomputation, …), <b>0</b> errors / <b>0</b> warnings</li>
+          <li>The claim ledger ruled the planted hallucinated number “25000” answer_unbound — numbers without an evidence binding may not appear in the answer; the executor can drive repairs, but cannot acquit itself</li>
+        </ul>
+        <div class="links">
+          <a href="finals/audit-run/audit_receipt.json" target="_blank" rel="noopener">audit_receipt.json ↗</a>
+          <a href="finals/audit-run/claim_ledger.json" target="_blank" rel="noopener">claim_ledger.json ↗</a>
+        </div>
+      </div>
+    </div>
+    <p class="honesty fx"><b>Scientific boundary:</b> every anomaly is a screening candidate — not a conclusion about pollution, mineralization or genesis; censored values keep their qualifier and are never imputed as 0; the manifest, record-level locators and SHA-256 hashes are the final authority for every conclusion.</p>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow" style="color:#9af7b0">Beyond Atlas · Data → Papers</div>
+      <h2 class="section-title">From atlas to discovery to papers: <span class="gradient">one continuous research workflow</span></h2>
+      <p class="section-sub">A distribution map answers “what is where, and how much”; research has to answer “why, and what it means”. This skill joins the two into one workflow: once the atlas is built, discovery mode starts from the same frozen data snapshot, identifies testable signals in the data, turns them into candidate scientific questions, and then carries them through statistical testing, writing and typesetting — from element atlas, to data insight, to a complete piece of research, without ever switching tools. The workflow has run end to end five times and delivered five genuine findings: a century of atmospheric mercury and lead deposition left a detectable vertical fingerprint in European soils; that enrichment is absent in Australia — it is a regional signature of Northern Hemisphere industry, not a global norm; the same soil sample measured by a different method can differ threefold, and the offset can be modelled and converted; two mutually unaware continental surveys agree to within 2% on arsenic at the same locations, giving the global arsenic risk map its first independent ground validation; and a statistical layer with no oceanographic prior recovers textbook ocean profiles with zero tuning. Every number can be recomputed from the frozen snapshot with fixed-seed scripts; each paper below shows one methods figure and one main result.</p>
+    </div>
+    <div class="pcards fx">
+      <article class="pcard">
+        <div class="pc-head">
+          <i>P1</i>
+          <div class="pc-title">
+            <b>Legacy mercury and lead enrichment in European soil profiles: a method-stratified test</b>
+            <span class="pc-q"><b>QUESTION</b>How strong a vertical signal has a century of atmospheric Hg/Pb deposition left in European soils? Does mixing analytical methods create artefacts?</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status">10 pages · 4 figures, 1 table</span>
+            <span class="venue">STOTEN / Applied Geochemistry</span>
+            <a href="research/P1-comparability-aware-screening-europe.pdf" target="_blank" rel="noopener">Read the PDF ↗</a>
+          </div>
+        </div>
+        <p class="pc-find"><b>Finding:</b> topsoil/subsoil concentration ratios are <em>1.36</em> for Hg and <em>1.24</em> for Pb — significant surface enrichment — while the geogenic reference elements Ni and Cr sit at ≈1, supporting an atmospheric-deposition origin rather than parent-rock differences. Hg in the humus layer reaches <em>5.3×</em>, consistent with vegetation-mediated deposition and surface retention. Because the same element can differ threefold across methods, all statistics are stratified by method family first; the independent LUCAS survey gives a European topsoil Hg median consistent with this study (43.9 vs 38.3 µg/kg).</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p1-methods-figure.png" alt="P1 methods figure" loading="lazy"><figcaption><b>METHODS</b>Atmospheric-deposition hypothesis → paired-site design → method-stratified statistics (three panels)</figcaption></figure>
+          <figure><img src="assets/research/p1-hg-map.png" alt="P1 results figure" loading="lazy"><figcaption><b>RESULT</b>Map of topsoil/subsoil Hg ratios at paired FOREGS sites: widespread red across Europe = surface enrichment</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:#9af7b0">
+        <div class="pc-head">
+          <i>P2</i>
+          <div class="pc-title">
+            <b>Surface legacy enrichment is not a global norm: the Australian test</b>
+            <span class="pc-q"><b>QUESTION</b>Is the surface Pb enrichment of European soils a worldwide phenomenon or a regional signal of Northern Hemisphere industry? What does the Southern Hemisphere show under identical accounting?</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:#9af7b0">9 pages · 5 figures, 1 table</span>
+            <span class="venue">Environmental Pollution</span>
+            <a href="research/P2-hemispheric-contrast-australia.pdf" target="_blank" rel="noopener">Read the PDF ↗</a>
+          </div>
+        </div>
+        <p class="pc-find"><b>Finding:</b> applying P1’s paired design unchanged to 1,064 NGSA sites in Australia gives a Pb top/bottom ratio of 0.982 — no European-style enrichment — while As shows surface depletion (0.886). The reference element Zn sits at ≈1 on both continents, so the contrast is not an artefact of the paired design. The result supports treating surface enrichment of legacy metals as a regional signature of Northern Hemisphere industry, and supplies the Southern Hemisphere baseline needed to evaluate the Minamata Convention.</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p2-methods.png" alt="P2 methods figure" loading="lazy"><figcaption><b>METHODS</b>Two media, one paired question: European soil profiles vs Australian catchment sediments, same design</figcaption></figure>
+          <figure><img src="assets/research/p2-au-map.png" alt="P2 results figure" loading="lazy"><figcaption><b>RESULT</b>Map of top/bottom Pb ratios at paired NGSA sites: Australia close to white = no enrichment, the counterpart to P1’s red Europe</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
+          <i>P3</i>
+          <div class="pc-title">
+            <b>Same soil sample, two methods, up to threefold apart: quantifying and converting cross-method offsets</b>
+            <span class="pc-q"><b>QUESTION</b>How far apart can total content by XRF and extractable content by acid-digestion ICP-MS be on the same sample? Can a validated transfer model merge the two kinds of data?</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 pages · 5 figures, 3 tables</span>
+            <span class="venue">ES&amp;T / Geostandards GGR</span>
+            <a href="research/P3-method-transfer-models.pdf" target="_blank" rel="noopener">Read the PDF ↗</a>
+          </div>
+        </div>
+        <p class="pc-find"><b>Finding:</b> 2,224 same-sample duplicate measurements in GEMAS show that the method offset depends on element and concentration: Cr differs by <em>2.94×</em>, while Cu shows a reverse offset (<em>0.86</em>). A log-log power-law transfer model validated on an 80/20 hold-out cuts the Pb prediction error from 18.2% to <em>11.0%</em>; the independent FOREGS survey reproduces the same kind of offset (Cr 2.54). The paper proposes five minimum method-metadata standards — above all, record the analytical method completely, or cross-source conversion and merging cannot be done reliably.</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p3-methods.png" alt="P3 methods figure" loading="lazy"><figcaption><b>METHODS</b>One sample, two analytical routes → same-sample pairing → transfer model and hold-out validation gate</figcaption></figure>
+          <figure><img src="assets/research/p3-scatter.png" alt="P3 results figure" loading="lazy"><figcaption><b>RESULT</b>Six-element scatter of 2,224 same-sample pairs: red line = power-law fit, Cr sits almost 3× off the 1:1 line</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
+          <i>P4</i>
+          <div class="pc-title">
+            <b>Do two independent surveys agree at the same location? Ground validation for the global arsenic map</b>
+            <span class="pc-q"><b>QUESTION</b>The Science 2020 global groundwater-arsenic risk map explicitly lacks independent ground validation. How far apart are the arsenic readings of two mutually independent continental surveys in the same grid cell?</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 pages · 5 figures, 3 tables</span>
+            <span class="venue">Environment International / Water Research</span>
+            <a href="research/P4-arsenic-validation.pdf" target="_blank" rel="noopener">Read the PDF ↗</a>
+          </div>
+        </div>
+        <p class="pc-find"><b>Finding:</b> across the 26 co-located 0.1° cells shared by GEMAS and FOREGS the median ratio is <em>0.982</em> — the two surveys agree to within 2% at the same sites — and <em>73%</em> of cells fall inside a factor-of-2 band. For the 7 discordant cells the pipeline automatically generated a re-sampling queue, led by Brittany with a 3.5× discrepancy; a scale scan shows 0.1° coincides with the peak of rank correlation, so the grid scale is data-driven. Such co-located validation is currently possible only in Europe — that “validation desert” is itself an explicit acquisition agenda.</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p4-methods.png" alt="P4 methods figure" loading="lazy"><figcaption><b>METHODS</b>Two independent surveys → co-located cell pairing → three machine-readable products</figcaption></figure>
+          <figure><img src="assets/research/p4-validation-map.png" alt="P4 results figure" loading="lazy"><figcaption><b>RESULT</b>Global validation map: grey = 8,979 georeferenced As records, coloured dots = 26 co-located cells (all in Europe = the validation desert)</figcaption></figure>
+        </div>
+      </article>
+      <article class="pcard" style="--c:var(--gold)">
+        <div class="pc-head">
+          <i>P5</i>
+          <div class="pc-title">
+            <b>Can zero tuning recover known oceanography? GEOTRACES profile extraction and method audit</b>
+            <span class="pc-q"><b>QUESTION</b>Can a generic statistical layer with no oceanographic assumptions automatically recover known ocean structure from 18,563 heterogeneous seawater records — and tell how heterogeneous the data can get before merging stops being appropriate?</span>
+          </div>
+          <div class="pc-side">
+            <span class="p-status" style="--c:var(--gold)">9 pages · 5 figures, 1 table</span>
+            <span class="venue">Marine Chemistry / ESSD</span>
+            <a href="research/P5-geotraces-audit.pdf" target="_blank" rel="noopener">Read the PDF ↗</a>
+          </div>
+        </div>
+        <p class="pc-find"><b>Finding:</b> with no oceanographic prior and no tuning, nutrient-type profiles are recovered: Zn deep/surface <em>5.57×</em>, basins ordered Pacific <em>24.5×</em> &gt; Atlantic 13×, consistent with water-mass age differences; the Arctic shows a river-influenced surface reversal; deep-water Zn–Ni correlation reaches <em>ρ=0.90</em>, consistent with remineralization coupling. The method audit shows that the best-covered of 33 resolvable method families accounts for only <em>10.5%</em> of records, another 37.7% lack method metadata altogether, and the number of multi-source combinations that can be pooled directly is <em>0</em> — the corresponding gap list has been compiled into a repair queue for the data custodians.</p>
+        <div class="pc-figs">
+          <figure><img src="assets/research/p5-methods.png" alt="P5 methods figure" loading="lazy"><figcaption><b>METHODS</b>Ocean section sampling → generic screening layer (the same statistics as the soil papers) → two products</figcaption></figure>
+          <figure><img src="assets/research/p5-nutrient-profiles.png" alt="P5 results figure" loading="lazy"><figcaption><b>RESULT</b>Zn/Cu/Ni depth profiles: black = global median, coloured lines = five ocean basins — the textbook structure emerges on its own</figcaption></figure>
+        </div>
+      </article>
+    </div>
+
+    <div class="cmp-block fx">
+      <h2 class="section-title" style="font-size:clamp(20px,2.6vw,30px)">Compared with existing databases, <span class="gradient">where is the advantage?</span></h2>
+      <p class="section-sub">Existing databases are positioned differently (all figures below verified on their official pages, accessed 2026-08-20): the large compilations win on coverage but mostly keep the format of the original publication; the thematic databases are well standardized but usually limited to one medium or one continent. GGA does not compete on volume — its point is the unified data layer that is missing between these resources.</p>
+      <div class="db-cards">
+        <div class="db-card">
+          <div class="db-head"><b>GEOROC / DIGIS</b><span class="db-tag">LITERATURE COMPILATION · ROCK</span></div>
+          <p>The global igneous/metamorphic rock literature compilation maintained by the DIGIS programme of the Göttingen Academy: <b>42.7 million</b> values / 707k samples / 23,520 publications. Strong in volume and literature coverage; numbers are compiled as published, with no cross-source unification of units or methods.</p>
+          <span class="db-links"><a href="https://georoc.eu/" target="_blank" rel="noopener">georoc.eu ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>EarthChem · PetDB · SESAR</b><span class="db-tag">DATA FEDERATION · SOLID EARTH</span></div>
+          <p>The NSF-funded solid-earth data federation operated by Columbia University’s LDEO: about <b>50 million</b> values / &gt;1 million samples; SESAR issues globally unique IGSN identifiers to &gt;5 million physical samples. Strong in sample registration and long-term archiving; each member database keeps its original published accounting.</p>
+          <span class="db-links"><a href="https://www.earthchem.org/" target="_blank" rel="noopener">earthchem.org ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>USGS NGDB</b><span class="db-tag">NATIONAL ARCHIVE · USA</span></div>
+          <p>The U.S. Geological Survey’s national geochemical archive since 1962: <b>1.524 million</b> samples / &gt;59 million determinations. Strong in sampling density and time span within the United States; <b>108</b> analytical methods and 25 laboratories coexist, with method names recorded but no unified comparable layer.</p>
+          <span class="db-links"><a href="https://mrdata.usgs.gov/" target="_blank" rel="noopener">mrdata.usgs.gov ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>GEOTRACES IDP2025</b><span class="db-tag">SCIENCE PROGRAMME · SEAWATER ONLY</span></div>
+          <p>The intermediate data product of the international marine trace-element and isotope programme: <b>123</b> cruises / 4,097 stations / 2.2 million values, value-level quality flags, cross-over calibration between cruises. The benchmark for “unification done well” — but seawater only, with method information at cruise level.</p>
+          <span class="db-links"><a href="https://www.geotraces.org/idp2025/" target="_blank" rel="noopener">geotraces.org/idp2025 ↗</a></span>
+        </div>
+        <div class="db-card">
+          <div class="db-head"><b>Continental surveys ×6</b><span class="db-tag">ONE CONTINENT · ONE CAMPAIGN</span></div>
+          <p>GEMAS (4,329 European agricultural and grazing-land soils), FOREGS (about 900 multi-medium stations across Europe), NGSA (1,315 Australian sediment stations), LUCAS (about 19k EU topsoil points), AfSIS (18,257 African samples), CGB (6,617 Chinese samples). Each is highly consistent internally (one method system + survey-level QC), but each covers one continent in one campaign, and they are not directly comparable with one another.</p>
+          <span class="db-links"><a href="https://www.bgs.ac.uk/geology-projects/applied-geochemistry/international-geochemistry/gemas/" target="_blank" rel="noopener">GEMAS ↗</a> · <a href="http://weppi.gtk.fi/publ/foregsatlas/" target="_blank" rel="noopener">FOREGS ↗</a> · <a href="https://www.ga.gov.au/about/projects/resources/national-geochemical-survey/atlas" target="_blank" rel="noopener">NGSA ↗</a> · <a href="https://esdac.jrc.ec.europa.eu/projects/lucas" target="_blank" rel="noopener">LUCAS ↗</a> · <a href="https://registry.opendata.aws/afsis/" target="_blank" rel="noopener">AfSIS ↗</a></span>
+        </div>
+        <div class="db-card us-card">
+          <div class="db-head"><b>GGA (this project)</b><span class="db-tag" style="--c:var(--mint)">UNIFIED LAYER · FOUR MEDIA · BOTH HEMISPHERES</span></div>
+          <p>Focused on cross-database unification rather than competing with anyone on size: <b>191,715</b> records from <b>29</b> sources and four media (soil / sediment / freshwater / seawater) organized into one auditable table of <b>129</b> fields, every record carrying a four-component confidence score; all five papers above were written directly from this table. It addresses exactly the gap named by the OneGeochemistry initiative — data fragmented across thousands of databases and almost impossible to reuse.</p>
+          <span class="db-links"><a href="research/database-comparison.md">Full comparison with all sources ↗</a></span>
+        </div>
+      </div>
+      <div class="glance-wrap fx">
+        <table class="glance">
+          <thead>
+            <tr><th>Capability</th><th>Large compilations<br>EarthChem · GEOROC · NGDB</th><th>Thematic surveys<br>GEMAS · FOREGS · GEOTRACES …</th><th>GGA (this project)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b class="cap">Unified units and coordinates out of the box</b></td><td class="dim2"><span class="mk no">—</span>compiled as published</td><td class="dim2"><span class="mk part">◐</span>unified within a survey, differs between surveys</td><td><span class="mk yes">✓</span>mg/kg + WGS84 across the whole database</td></tr>
+            <tr><td><b class="cap">One table across media</b></td><td class="dim2"><span class="mk part">◐</span>separate databases per medium</td><td class="dim2"><span class="mk no">—</span>mostly one medium / one continent</td><td><span class="mk yes">✓</span>soil · sediment · water · rock in one table</td></tr>
+            <tr><td><b class="cap">Method metadata and cross-method conversion</b></td><td class="dim2"><span class="mk no">—</span>method names only</td><td class="dim2"><span class="mk part">◐</span>consistent within one method system</td><td><span class="mk yes">✓</span>method-family labels + hold-out-validated transfer models</td></tr>
+            <tr><td><b class="cap">Record-level provenance</b></td><td class="dim2"><span class="mk no">—</span>to publication / dataset level</td><td class="dim2"><span class="mk no">—</span>to survey level</td><td><span class="mk yes">✓</span>100% row-level SHA-256 hash chain</td></tr>
+            <tr><td><b class="cap">Record-level license labels</b></td><td class="dim2"><span class="mk no">—</span>dataset or page level</td><td class="dim2"><span class="mk no">—</span>dataset level</td><td><span class="mk yes">✓</span>100% coverage, filter rows for redistribution</td></tr>
+            <tr><td><b class="cap">Record-level confidence score</b></td><td class="dim2"><span class="mk no">—</span></td><td class="dim2"><span class="mk part">◐</span>value-level QC flags (e.g. GEOTRACES)</td><td><span class="mk yes">✓</span>four-component score travels with every record into analysis</td></tr>
+            <tr><td><b class="cap">Gaps delivered as a product</b></td><td class="dim2"><span class="mk no">—</span></td><td class="dim2"><span class="mk no">—</span></td><td><span class="mk yes">✓</span>machine-readable acquisition priority queue</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="glance-note">✓ provided · ◐ partly · — not provided. This is a positioning table, not a ranking: compilations excel at volume and archiving, surveys at internal consistency; GGA supplies the unified layer missing between them. The comparison uses the frozen paper snapshot (191,715 records / 29 sources); the latest 2026-08-19 production run has reached 199,730 records / 35 sources — the two tallies are kept separate and never mixed. Sources for every item are in the capability matrix below and in <a href="research/database-comparison.md">database-comparison.md</a>.</p>
+      <p class="section-sub" style="margin-top:26px">What is the unified layer good for? Six questions researchers actually run into, compared one by one:</p>
+      <div class="q-rows">
+        <div class="q-row">
+          <div class="q"><b>Q1 Can the data be analysed as soon as it is downloaded?</b><span>Do units, coordinates and field formats still need cleaning source by source?</span></div>
+          <div class="them">Compilation databases usually keep the published format; units, detection-limit definitions and coordinate datums differ between sources, and analysis is typically preceded by weeks of per-source cleaning (OneGeochemistry’s summary: “almost impossible to reuse”)</div>
+          <div class="us2">Every record already unified to <b>mg/kg + WGS84</b> in one <b>129</b>-field table, four media queried together; new media and sources join under the same field specification. P2 reused the same script and finished a second continent the same day</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q2 Can results from different methods be merged directly?</b><span>XRF measures total content, acid-digestion ICP measures a partial extraction — mixing them blindly introduces systematic bias</span></div>
+          <div class="them">NGDB holds 108 methods but mostly keeps only their names; literature compilations often lack method information altogether — mixing the same element can be off by 3×, and the database itself gives no warning</div>
+          <div class="us2">Every record is labelled with its <b>method family</b>; the 36.3% lacking method information keep a per-record missing_reason; P3 adds hold-out-validated transfer models (measured Cr offset 2.94×)</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q3 Are the numbers trustworthy and traceable?</b><span>When a value looks suspicious, can you go back to the original source record by record?</span></div>
+          <div class="them">Usually traceable only to publication or dataset level: whether a single record changed between download and ingestion — and what changed — cannot be judged by an outside user</div>
+          <div class="us2">Row-level <b>SHA-256</b> hash chain with <b>100%</b> coverage; any number replays back to the original download; deterministic scripts replay the processing byte for byte; censored values are never guessed — 1,537 are kept explicitly</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q4 Can it be reused and republished legally?</b><span>When merging sources into a derived product, is the license boundary of every record clear?</span></div>
+          <div class="them">Licenses are usually stated at dataset or even page level: once several sources are mixed, the redistribution boundary of a derived product is often impossible to determine</div>
+          <div class="us2">Record-level license field with <b>100%</b> coverage: filter rows to a redistributable subset that satisfies any required license combination</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q5 Where are the gaps, and what should be measured next?</b><span>Can gap information support sampling plans directly?</span></div>
+          <div class="them">Gaps are usually not a product — users typically discover missing data only when their analysis runs into a blank region</div>
+          <div class="us2">Gaps are compiled into a machine-readable <b>acquisition priority queue</b> (geojson): the Hg gaps of P2 and the “validation desert” of P4 both became the next round of sampling points</div>
+        </div>
+        <div class="q-row">
+          <div class="q"><b>Q6 Is the reliability of each record visible?</b><span>Does the quality judgement travel with the record into analysis, or stay in the database documentation?</span></div>
+          <div class="them">Quality information mostly appears as dataset documentation, method codes or single quality flags, rarely as a composite score that accompanies individual records into analysis</div>
+          <div class="us2">Every record carries a <b>four-component confidence</b> score with <b>100%</b> coverage, usable directly for filtering, sensitivity analysis and result audits</div>
+        </div>
+      </div>
+      <p class="section-sub" style="margin-top:26px">Full capability matrix (every figure with an official source):</p>
+      <div class="cmp-scroll">
+        <table class="cmp" style="min-width:1100px">
+          <tr><th>System</th><th>Scale</th><th>Media</th><th>Unified units · schema</th><th>Record-level license</th><th>Provenance hash</th><th>Method metadata</th><th>Confidence · QC</th><th>Cross-validation</th><th>Gap queue</th></tr>
+          <tr><td>GGA (this project)</td><td class="us"><b>191,715</b> records / <b>29</b> sources / 7 metals</td><td class="us">Four media in one <b>129</b>-field schema (soil 80,709 · sediment 79,630 · water 31,376)</td><td class="us">✓ mg/kg + WGS84 + per-record lineage</td><td class="us">✓ <b>100%</b></td><td class="us">✓ <b>100%</b> row-level SHA-256</td><td class="us">✓ method families + 36.3% missing, accounted per record</td><td class="us">✓ four-component confidence <b>100%</b>; <b>1,537</b> censored values kept explicitly</td><td class="us">✓ <b>26</b> co-located cells (P4)</td><td class="us">✓ acquisition-priority geojson queue</td></tr>
+          <tr><td>GEOROC / DIGIS</td><td>42.7M values / 707k samples / 23,520 publications<sup>1</sup></td><td>igneous · metamorphic rocks · minerals</td><td>— (compiled as published)</td><td>dataset level</td><td>— (publication level)</td><td>✓ analysis level</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>EarthChem · PetDB · SESAR</td><td>≈50M values / &gt;1M samples; SESAR &gt;5M registered samples<sup>2</sup></td><td>solid earth (federation of six)</td><td>— (original published accounting kept)</td><td>dataset level</td><td>IGSN, sample level</td><td>✓ analysis level</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>USGS NGDB</td><td>1.524M samples / &gt;59M determinations<sup>3</sup></td><td>rock / sediment / soil / ore (USA)</td><td>— (108 methods, 25 labs coexist)</td><td>public domain (dataset level)</td><td>—</td><td>method names, no unified layer</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>GEOTRACES IDP2025</td><td>123 cruises / 4,097 stations / 2.2M values<sup>4</sup></td><td>seawater only</td><td>unified within product + cross-over</td><td>data-product level</td><td>— (cruise level)</td><td>✓ method links</td><td>value-level flags + 1σ</td><td>cross-over calibration (within product)</td><td>—</td></tr>
+          <tr><td>GEMAS (Europe)</td><td>2,211 agricultural + 2,118 grazing-land samples / 33 countries<sup>5</sup></td><td>soil only (one campaign)</td><td>unified within survey</td><td>dataset level</td><td>—</td><td>single method system</td><td>survey-level QC</td><td>—</td><td>—</td></tr>
+          <tr><td>FOREGS (Europe)</td><td>about 900 stations / 26 countries / 5 media (water · sediment · soil)<sup>5</sup></td><td>multi-medium (one continent, one campaign)</td><td>unified within survey</td><td>dataset level</td><td>—</td><td>single method system</td><td>survey-level QC</td><td>—</td><td>—</td></tr>
+          <tr><td>NGSA (Australia)</td><td>1,315 stations / 2 depths / 81% of the continent<sup>5</sup></td><td>catchment sediment (one campaign)</td><td>unified within survey</td><td>CC BY (dataset level)</td><td>—</td><td>single method system</td><td>survey-level QC</td><td>—</td><td>—</td></tr>
+          <tr><td>LUCAS · AfSIS · CGB</td><td>LUCAS 18,984–21,859 points; AfSIS 18,257 samples; China baseline network 6,617 samples<sup>5</sup></td><td>soil only (one campaign per domain)</td><td>unified within survey</td><td>dataset level</td><td>—</td><td>single method system</td><td>survey-level QC</td><td>—</td><td>—</td></tr>
+        </table>
+      </div>
+      <p class="section-sub" style="margin-top:10px;font-size:12.5px">Footnotes <sup>1–5</sup> and the source of every figure (URL + access date 2026-08-20 + original wording) are in <a href="research/database-comparison.md">research/database-comparison.md</a>; the GGA row comes from column-level statistics of the frozen snapshot <code>retest-acquisition-coverage-v12-6c221cf</code>.</p>
+      <p class="honesty" style="margin-top:22px"><b>Scientific boundary:</b> all five papers are screening-level: enrichment ≠ a pollution verdict, profile shape ≠ proof of mechanism. All five passed the seven-item a–g quality audit (data plausibility / narrative consistency / typesetting / data completeness / terminology / figure standards / table standards), and still require expert human review before formal submission; every number can be replayed deterministically from the frozen snapshot with seeded scripts. Full roadmap: <a href="research/five-paper-roadmap.md">five-paper-roadmap.md</a>; comparison sources: <a href="research/database-comparison.md">database-comparison.md</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">Watch · 3 Minutes</div>
+      <h2 class="section-title">3-minute demo: <span class="gradient">the approach and mechanisms first, then a real run</span></h2>
+      <p class="section-sub">Chinese narration with Chinese subtitles. 00:00–01:22 walks through the research question, the mechanism overview, the loop state machine, the adversarial audit and a live agent run using the final-round slides; 01:22–02:52 is a real run — hands-on use of the World / China / Europe / United States atlases, and the 1986–2024 temporal evolution atlas playing automatically.</p>
+    </div>
+    <div class="media-grid">
+      <div class="fx">
+        <div class="video-shell">
+          <video controls preload="metadata" poster="finals/assets/global-run-map-1920x1080.png">
+            <source src="finals/Global-Geochemical-Atlas-Final-Demo.mp4" type="video/mp4">
+            Your browser cannot play this video; download it to watch.
+          </video>
+        </div>
+      </div>
+      <div class="present-list fx">
+        <a class="present-item" href="finals/demo-video.html">
+          <i>10 acts</i>
+          <span><b>Screen-recorded HTML demo</b><span>The interactive script behind the video: 10 acts, real log replay, and act 6 opens the real outputs live. (Chinese)</span></span>
+        </a>
+        <a class="present-item" href="slides.html" style="--c:#9af7b0">
+          <i>14 pp</i>
+          <span><b>Main slide deck</b><span>The HTML deck used for the final presentation: task, run outputs, skill internals, discovery layer and database comparison. Scroll wheel / arrow keys to navigate. (Chinese)</span></span>
+        </a>
+        <a class="present-item" href="finals/poster.html" style="--c:var(--gold)">
+          <i>A1</i>
+          <span><b>Final poster</b><span>Web version of the landscape A1 poster; the PDF is in the downloads below. (Chinese)</span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="materials" style="padding-top:24px">
+  <div class="wrap">
+    <div class="fx">
+      <div class="eyebrow">Downloads</div>
+      <h2 class="section-title">Materials</h2>
+      <p class="section-sub">One main slide deck (the HTML version used at the final, plus a PDF), one poster, one video, two written introductions and one technical appendix. The presentation materials are in Chinese; the code, README and papers are in English.</p>
+    </div>
+    <div class="mat-grid">
+      <a class="mat fx" href="slides.html"><span class="kind">HTML · FINAL PRESENTATION</span><b>Main slide deck (HTML)</b><span>The deck presented at the final; scroll wheel / arrow keys to navigate (Chinese)</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Pitch.pdf"><span class="kind">PDF · 14 PAGES</span><b>Main slide deck (PDF)</b><span>PDF of the deck: 11 main + 3 backup pages, with speaker notes (Chinese)</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Poster.pdf" style="--c:var(--gold)"><span class="kind">PDF · A1 LANDSCAPE</span><b>Final poster</b><span>PDF version of the web poster above (Chinese)</span></a>
+      <a class="mat fx" href="finals/Global-Geochemical-Atlas-Final-Demo.mp4" style="--c:var(--red)"><span class="kind">MP4 · 1080p · 172 s · NARRATED</span><b>Demo video</b><span>Approach and mechanisms with the final slides, then the four-domain atlases and temporal evolution in a real run; Chinese narration and subtitles</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Introduction.pdf"><span class="kind">PDF · 6 PAGES</span><b>Project introduction</b><span>Approach, outputs, innovations and application scenarios (Chinese)</span></a>
+      <a class="mat fx" href="作品简介.md"><span class="kind">MARKDOWN</span><b>Project summary (text)</b><span>Full written introduction to the background, approach and run outputs (Chinese)</span></a>
+      <a class="mat fx" href="Global-Geochemical-Atlas-Demo.pptx"><span class="kind">PPTX · 7 PAGES · TECHNICAL APPENDIX</span><b>Skill architecture deck</b><span>Architecture, evidence chain, the four run outputs and the reusable document for technical reviewers, independent of the main deck (Chinese)</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="gap:12px">
+          <svg viewBox="0 0 64 64" aria-hidden="true" style="width:34px;height:34px"><circle cx="32" cy="32" r="25" fill="none" stroke="#69f5e6" stroke-width="2.4"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="rgba(105,245,230,.5)" stroke-width="1.3"/><circle cx="47.5" cy="16.5" r="4.6" fill="#f6c344"/><circle cx="13.5" cy="38" r="3.9" fill="#ff5c78"/><circle cx="40" cy="49.5" r="3.4" fill="#69f5e6"/></svg>
+          <span><b style="font:800 13px/1.3 var(--mono);letter-spacing:.12em">GLOBAL GEOCHEMICAL ATLAS</b><small style="display:block;font:600 11px/1.5 var(--mono);color:var(--muted)">Team Token Agents · <a href="https://synmatai.cn/hackathon/" target="_blank" rel="noopener" style="color:var(--gold)">Champion, SynMatAI AI4S Future ScienceSkills Hackathon 🏆</a></small></span>
+        </div>
+        <div class="foot-links">
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill" target="_blank" rel="noopener">Skill repository</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-demo" target="_blank" rel="noopener">Demo repository</a>
+          <a href="live/world-atlas.html">Interactive atlas</a>
+          <a href="#how">How it works</a>
+          <a href="#quickstart">Quick start</a>
+          <a href="https://github.com/asimfish/global-geochemical-atlas-skill#readme" target="_blank" rel="noopener">Tutorial (README)</a>
+          <a href="slides.html">Slides</a>
+          <a href="finals/demo-video.html">Screen-recorded demo</a>
+          <a href="finals/README.md">About the final materials</a>
+          <a href="https://xhslink.cn/o/7EMuFyOOsO5" target="_blank" rel="noopener">Xiaohongshu</a>
+          <a href="https://zhuanlan.zhihu.com/p/2073539526404879853" target="_blank" rel="noopener">Zhihu</a>
+          <a href="https://chembot.zgca.com/" target="_blank" rel="noopener">Team site ChemBot</a>
+          <a href="https://synmatai.cn/hackathon/" target="_blank" rel="noopener">Hackathon site</a>
+          <a href="index.html" hreflang="zh-CN" lang="zh-CN" data-lang="zh">中文版</a>
+        </div>
+      </div>
+      <div class="qr-row">
+        <div class="qr"><img src="finals/assets/demo-qr.png" alt="QR code for the online demo" loading="lazy"><span>TRY THE LIVE PRODUCT</span></div>
+        <div class="qr"><img src="finals/assets/repo-qr.png" alt="QR code for the skill repository" loading="lazy"><span>INSPECT CODE &amp; EVIDENCE</span></div>
+      </div>
+    </div>
+    <p class="foot-fine">Every point traceable, verifiable and recomputable. The Global Geochemical Atlas turns scattered public geochemical data into research infrastructure that agents can execute and researchers can audit.<br>Data come from public academic and government sources (FOREGS, GEMAS, AfSIS, PANGAEA, TPDC, GSJ, NGSA, GEOROC, GEMStat and others) and are used for method demonstration only; all anomalies are screening candidates, not conclusions about pollution, mineralization or genesis.</p>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
