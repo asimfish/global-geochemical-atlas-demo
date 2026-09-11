@@ -251,7 +251,7 @@
           <div class="term-mini">
             <div class="cmd">$ opencode run "全球 Cr·Cu·Ni·Pb·Zn 图谱与异常筛查"</div>
             <div>[agent] 读取 <b>SKILL.md</b> → 九阶段状态机</div>
-            <div>[agent] validate_outputs <span class="ok">PASS</span> · 16/16 产物 <span class="ok">✓</span></div>
+            <div>[agent] validate_outputs <span class="ok">PASS</span> · 18/18 产物 <span class="ok">✓</span></div>
           </div>
         </div>
         <div class="body">
@@ -312,8 +312,8 @@
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 指纹与结果一一对应</b></div>
-        <p class="promise">哈希打在四个地方：任务请求本身、每一个下载下来的源文件、16 个产物文件，以及最终答复里的每一个数字。</p>
-        <p class="detail">任务开始前先给请求算一次哈希，中途目标变了能看出来；源文件入库前要过登记在案的哈希校验；<code>run_summary.json</code> 里记着 16 个产物各自的哈希。最后一层是断言台账：<code>claim_ledger.py</code> 把产物里所有能写进答复的数字列出来，每一条绑定到「哪个文件、哪个 JSON 指针、什么哈希」，而且每次调用都重新算，执行者改不了。答复草稿写好后再用 <code>--check-answer</code> 对一遍台账，对不上的数字按幻数处理，不许出稿。在图谱里点任何一个点，也能一直下钻到 DOI、原始表格的行和哈希。</p>
+        <p class="promise">哈希打在四个地方：任务请求本身、每一个下载下来的源文件、18 个产物文件，以及最终答复里的每一个数字。</p>
+        <p class="detail">任务开始前先给请求算一次哈希，中途目标变了能看出来；源文件入库前要过登记在案的哈希校验；<code>run_summary.json</code> 里记着 18 个产物各自的哈希。最后一层是断言台账：<code>claim_ledger.py</code> 把产物里所有能写进答复的数字列出来，每一条绑定到「哪个文件、哪个 JSON 指针、什么哈希」，而且每次调用都重新算，执行者改不了。答复草稿写好后再用 <code>--check-answer</code> 对一遍台账，对不上的数字按幻数处理，不许出稿。在图谱里点任何一个点，也能一直下钻到 DOI、原始表格的行和哈希。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
@@ -350,7 +350,7 @@
     <div class="fx">
       <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
       <h2 class="section-title">快速上手：<span class="gradient">在你的 Agent 里跑起来</span></h2>
-      <p class="section-sub">默认 Prompt 就是比赛给出的完整任务，换三个词就是你自己的任务。运行不需要网络、API Key、GPU 或任何第三方包，有 Python 3.11+ 就够。</p>
+      <p class="section-sub">默认 Prompt 就是比赛给出的完整任务，换三个词就是你自己的任务。运行不需要网络、API Key、GPU 或任何第三方包，有 Python 3.10+ 就够。</p>
     </div>
     <div class="qs-grid">
       <div class="qs-box s1 fx">
@@ -364,8 +364,8 @@ cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/s
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
 <span class="c"># OpenCode 等兼容运行时：复制 / 挂载到其 skills 目录</span></pre></div>
         <div class="grow"></div>
-        <p style="margin-top:12px">挂载后，Agent 收到相关请求时会自动读取 <code>SKILL.md</code> 里的九阶段状态机；哪些请求会触发、哪些不会，见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> 里的 4 组正反例。</p>
-        <div class="qs-chips"><span>Python 3.11+</span><span>无网络</span><span>无 API Key</span><span>无 GPU</span><span>无第三方包</span></div>
+        <p style="margin-top:12px">挂载后，Agent 收到相关请求时会自动读取 <code>SKILL.md</code> 里的九阶段状态机；哪些请求会触发、哪些不会，见 <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> 里的 5 个应激活用例与 4 个相邻不应激活用例。</p>
+        <div class="qs-chips"><span>Python 3.10+</span><span>无网络</span><span>无 API Key</span><span>无 GPU</span><span>无第三方包</span></div>
       </div>
       <div class="qs-box s2 hot fx" style="--c:var(--gold)">
         <div class="step"><i>2</i><b>把默认 Prompt 发给 Agent，只改三个槽位</b></div>
@@ -387,7 +387,7 @@ cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/sk
       </div>
       <div class="qs-box s3 fx" style="--c:#9af7b0">
         <div class="step"><i>3</i><b>或者不经 Agent：90 秒本地复现</b></div>
-        <p>在仓库根目录用 996 条 hash 固定的 USGS 真实土壤测定跑一遍生产阈值演示，再校验 <b>16 文件产物契约</b>。两条命令应分别返回 <code>partial_success</code> 与 <code>valid</code>。</p>
+        <p>在仓库根目录用 996 条 hash 固定的 USGS 真实土壤测定跑一遍生产阈值演示，再校验 <b>18 文件产物契约</b>。两条命令应分别返回 <code>partial_success</code> 与 <code>valid</code>。</p>
         <div class="code"><button class="copy-btn" type="button">复制</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
   --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
   --demo production-usgs --analysis-profile production \
@@ -443,7 +443,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
         <h3>全新克隆环境 0.714 秒完成回归：核心产物逐字节一致</h3>
         <ul>
           <li><b>996</b> 条测定 · <b>996/996</b> 地质匹配 · <b>6</b> 个候选</li>
-          <li>15 项核心产物全部通过独立校验（该版本契约为 15 项，现为 16 项），<b>0</b> 错误 / <b>0</b> 警告</li>
+          <li>15 项核心产物全部通过独立校验（该版本契约为 15 项，现为 18 项），<b>0</b> 错误 / <b>0</b> 警告</li>
           <li>hash-bound 实源 fixture，跨环境重跑结果逐字节一致</li>
           <li>用于证明工程可执行性与科学门禁，不代表区域分布</li>
         </ul>

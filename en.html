@@ -251,7 +251,7 @@
           <div class="term-mini">
             <div class="cmd">$ opencode run "global Cr·Cu·Ni·Pb·Zn atlas with anomaly screening"</div>
             <div>[agent] reading <b>SKILL.md</b> → nine-stage state machine</div>
-            <div>[agent] validate_outputs <span class="ok">PASS</span> · 16/16 artifacts <span class="ok">✓</span></div>
+            <div>[agent] validate_outputs <span class="ok">PASS</span> · 18/18 artifacts <span class="ok">✓</span></div>
           </div>
         </div>
         <div class="body">
@@ -312,8 +312,8 @@
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 fingerprints, one per result</b></div>
-        <p class="promise">Hashes are taken in four places: the task request itself, every downloaded source file, the 16 output files, and every number in the final answer.</p>
-        <p class="detail">The request is hashed before work starts, so a goal that drifts midway shows up; source files must pass a registered hash check before ingestion; <code>run_summary.json</code> records the hash of each of the 16 outputs. The last layer is the claim ledger: <code>claim_ledger.py</code> lists every number in the outputs that could be quoted in an answer and binds each one to a file, a JSON pointer and a hash, recomputing all of it on every call so the executor cannot edit it. Once the answer is drafted, <code>--check-answer</code> compares it against the ledger; a number that does not match is treated as a phantom and may not be published. Inside the atlas, any point can likewise be followed down to its DOI, the row of the original table and the hash.</p>
+        <p class="promise">Hashes are taken in four places: the task request itself, every downloaded source file, the 18 output files, and every number in the final answer.</p>
+        <p class="detail">The request is hashed before work starts, so a goal that drifts midway shows up; source files must pass a registered hash check before ingestion; <code>run_summary.json</code> records the hash of each of the 18 outputs. The last layer is the claim ledger: <code>claim_ledger.py</code> lists every number in the outputs that could be quoted in an answer and binds each one to a file, a JSON pointer and a hash, recomputing all of it on every call so the executor cannot edit it. Once the answer is drafted, <code>--check-answer</code> compares it against the ledger; a number that does not match is treated as a phantom and may not be published. Inside the atlas, any point can likewise be followed down to its DOI, the row of the original table and the hash.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
@@ -350,7 +350,7 @@
     <div class="fx">
       <div class="eyebrow" style="color:var(--gold)">Quick Start · Use It with Your Agent</div>
       <h2 class="section-title">Quick start: <span class="gradient">run it inside your own agent</span></h2>
-      <p class="section-sub">The default prompt is the complete hackathon task; change three words and it is your task. Running it needs no network, API key, GPU or third-party package — Python 3.11+ is enough.</p>
+      <p class="section-sub">The default prompt is the complete hackathon task; change three words and it is your task. Running it needs no network, API key, GPU or third-party package — Python 3.10+ is enough.</p>
     </div>
     <div class="qs-grid">
       <div class="qs-box s1 fx">
@@ -364,8 +364,8 @@ cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.claude/s
 cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/skills/
 <span class="c"># OpenCode and other compatible runtimes: copy / mount into their skills folder</span></pre></div>
         <div class="grow"></div>
-        <p style="margin-top:12px">Once mounted, the agent reads the nine-stage state machine in <code>SKILL.md</code> whenever a matching request arrives; the 4 should-activate / should-not-activate cases in <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> show where that boundary lies.</p>
-        <div class="qs-chips"><span>Python 3.11+</span><span>no network</span><span>no API key</span><span>no GPU</span><span>no third-party packages</span></div>
+        <p style="margin-top:12px">Once mounted, the agent reads the nine-stage state machine in <code>SKILL.md</code> whenever a matching request arrives; the 5 should-activate and 4 adjacent should-not-activate cases in <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/evals/activation.json" target="_blank" rel="noopener">activation.json ↗</a> show where that boundary lies.</p>
+        <div class="qs-chips"><span>Python 3.10+</span><span>no network</span><span>no API key</span><span>no GPU</span><span>no third-party packages</span></div>
       </div>
       <div class="qs-box s2 hot fx" style="--c:var(--gold)">
         <div class="step"><i>2</i><b>Send the default prompt to your agent and change only three slots</b></div>
@@ -387,7 +387,7 @@ cp -r global-geochemical-atlas-skill/skills/global-geochemical-atlas ~/.codex/sk
       </div>
       <div class="qs-box s3 fx" style="--c:#9af7b0">
         <div class="step"><i>3</i><b>Or skip the agent: reproduce locally in 90 seconds</b></div>
-        <p>From the repository root, run the production-threshold demo on 996 hash-pinned real USGS soil measurements, then validate the <b>16-file output contract</b>. The two commands should return <code>partial_success</code> and <code>valid</code> respectively.</p>
+        <p>From the repository root, run the production-threshold demo on 996 hash-pinned real USGS soil measurements, then validate the <b>18-file output contract</b>. The two commands should return <code>partial_success</code> and <code>valid</code> respectively.</p>
         <div class="code"><button class="copy-btn" type="button">Copy</button><pre>python skills/global-geochemical-atlas/scripts/run_atlas_request.py \
   --request skills/global-geochemical-atlas/fixtures/production-usgs/request.json \
   --demo production-usgs --analysis-profile production \
@@ -443,7 +443,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
         <h3>Regression completed in 0.714 s in a fresh clone: core outputs identical byte for byte</h3>
         <ul>
           <li><b>996</b> measurements · <b>996/996</b> matched to geology · <b>6</b> candidates</li>
-          <li>All 15 core artifacts passed independent validation (that version’s contract had 15 files; it now has 16), <b>0</b> errors / <b>0</b> warnings</li>
+          <li>All 15 core artifacts passed independent validation (that version’s contract had 15 files; it now has 18), <b>0</b> errors / <b>0</b> warnings</li>
           <li>Hash-bound real-source fixture; re-runs across environments reproduce byte for byte</li>
           <li>Proves engineering executability and the scientific gates — not a regional distribution</li>
         </ul>
