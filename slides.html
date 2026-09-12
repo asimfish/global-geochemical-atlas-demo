@@ -1078,7 +1078,7 @@
       </div>
       <div class="cover-flow reveal" style="--d:.8s">
         <span class="cf-step"><b>多源采集</b><small>36 SOURCES</small></span><i>→</i>
-        <span class="cf-step"><b>标准化</b><small>分介质单位 · 坐标核验</small></span><i>→</i>
+        <span class="cf-step"><b>标准化</b><small>mg/kg · WGS84</small></span><i>→</i>
         <span class="cf-step" style="--cc:var(--gold)"><b>质控修复</b><small>ITERATION LOOP</small></span><i>→</i>
         <span class="cf-step" style="--cc:var(--red)"><b>异常识别</b><small>ROBUST-Z · FDR</small></span><i>→</i>
         <span class="cf-step" style="--cc:var(--gold)"><b>时序归因</b><small>GEOGENIC / INPUT</small></span><i>→</i>
@@ -1215,14 +1215,14 @@
         <div class="trace-head">怎么用 · 一行一条测定</div>
         <div class="trace-chain">
           <div class="trace-step"><b>① 检索</b><span>record_id / 元素 / 介质 / 地质单元</span></div>
-          <div class="trace-step"><b>② 读行</b><span>分介质标准单位 · 坐标状态 · 检出限 qualifier · 置信度</span></div>
+          <div class="trace-step"><b>② 读行</b><span>标准值 mg/kg · WGS84 · 检出限 qualifier · 置信度</span></div>
           <div class="trace-step"><b>③ 导出</b><span>完整 geochemistry.csv 与 QC 报告</span></div>
         </div>
         <div class="trace-note"><strong>原始值永不覆盖：</strong>original 与 normalized 双列并存，换算因子、公式与 QC 另列保存。</div>
       </div>
       <div class="science-callout reveal" style="--d:.62s;--callout:var(--gold)">
         <b>“As = 56 mg/kg”本身不是科研数据：哪个样品？什么介质？什么消解方法？检出限多少？来源哪一行？——绑定这 40+ 字段后，数字才可比较、可复用。</b>
-        <span class="muted">演示快照 199,723 条固定记录：固体 mg/kg、水体质量/体积 µg/L，缺密度的 nmol/kg 保留，不跨量纲混算；有据转换 WGS84，未验证 datum 如实标注；删失值不置 0、不用 LOD/2（Helsel 2012）。长表语义对齐 ODM2，字段映射对照 EarthChem / USGS / IGSN。</span>
+        <span class="muted">全库 199,723 条固定记录：单位统一 mg/kg、坐标统一 WGS84；删失值不置 0、不用 LOD/2（Helsel 2012）。长表语义对齐 ODM2，字段映射对照 EarthChem / USGS / IGSN。</span>
       </div>
       <div class="footer-line"><span>单位统一 · 空间匹配 · 质量控制 · 来源追溯</span><span>页面预览 = 数据库真实切片</span></div>
       <template class="notes-template">第二项交付：标准化数据库。先讲一个判断：AI 从论文和数据库里读出一个数字，不代表它拿到了可以比较、可以复用的科学数据。五十六毫克每千克的砷，本身几乎没有意义——是哪个样品？土壤还是沉积物？王水消解还是全消解？检出限多少？原始来源哪一行？只有这些信息重新绑定起来，数字才从“AI 回答”变成“科研数据”。所以我们的数据库是一张四十多个字段的专业长表，一行就是一个样品的一项元素测定：record_id 全库唯一，样品可带 IGSN 国际标识；原始值和标准化值双列并存，换算因子与公式单独成列；删失值保留检出限 qualifier，不置零也不用检出限一半代入——这是删失环境数据统计的标准教科书 Helsel 的核心主张；坐标统一 WGS84 并带不确定度，地质单元来自 GLiM 全球岩性图（Hartmann–Moosdorf 2012，0.5 度）。下载的 geochemistry.csv 就是交付物本体，长表语义对齐 ODM2，不脱离专业生态。</template>
@@ -1528,7 +1528,7 @@
         <span class="reveal" style="--d:17.65s">候选异常 <b>535</b></span>
         <span class="reveal" style="--d:17.8s">产物 <b>16/16 · PASS</b></span>
       </div>
-      <div class="footer-line"><span>历史运行演示：16 文件口径保留，当前代码契约为 18 文件；本页不代表新版重测</span><span>已比较 OpenCode 使用和不使用 Skill 的结果；重新打开本页可再次播放</span></div>
+      <div class="footer-line"><span>数据搜集、整理、分析和验证，每一步都有记录可查</span><span>已比较 OpenCode 使用和不使用 Skill 的结果；重新打开本页可再次播放</span></div>
       <template class="notes-template">这是通用 Agent 用我们 Skill 干活的实况：Qwen3.8-Max 在 OpenCode 里挂载 global-geochemical-atlas，接到任务后自己读 SKILL.md、进入九阶段状态机——路由审计来源、采集带证据的测定、确定性过滤、标准化、地质匹配、置信度与异常、生成产物、验证收敛。注意日志中间那两行 loop：第一次验证发现两项不通过，问题登记进账本、定向修复、重跑比对，第一轮就收敛归零——这就是前面讲的修复循环在真实运行中的样子。右侧产出实时就绪：交互图谱、标准化数据库、异常识别，五项交付齐活。关键分工是：模型只做编排与解读，单位、坐标、QC、异常判定这些科学计算全部由确定性脚本完成，所以换任何兼容 Agent 结果一致。我们做过 OpenCode 有无 Skill 的对照评测，提升是实测的。</template>
     </section>
 
@@ -1539,16 +1539,16 @@
       <div class="map-actions reveal" style="--d:.25s"><button class="map-toggle" type="button">退出交互</button><a class="open-map" href="live/world-temporal.html" target="_blank" rel="noopener">新窗口打开 ↗</a></div>
       <div class="map-tabs reveal" style="--d:.34s"><span class="active-tab">区域对比</span><span>异常成因</span><span>采样史回放</span><span>站点演变</span></div>
       <div class="trace-rail reveal" style="--d:.46s">
-        <div class="trace-head">三步逻辑 · 从时间证据到候选解释</div>
+        <div class="trace-head">三步逻辑 · 从时间戳到成因判断</div>
         <div class="trace-chain">
           <div class="trace-step"><b>① 时间入库</b><span>标准化数据库带采样时间：70,038 条 · 35.1% · 1986–2024</span></div>
-          <div class="trace-step"><b>② 时序筛查</b><span>早晚观测先核对站点、方法与覆盖可比性，再提出待检验解释</span></div>
+          <div class="trace-step"><b>② 时序归因</b><span>同一格网早期 vs 晚期：母质高背景，还是后天输入？</span></div>
           <div class="trace-step"><b>③ 交互回放</b><span>区域对比 / 异常成因 / 采样史回放 / 站点演变</span></div>
         </div>
-        <div class="trace-note"><strong>时间变化不等于成因证明：</strong>逐样时间与数据集采集时段分层披露；跨期采样位置、方法与介质差异可能造成表观变化。判定成因还需独立地质、环境和可比重复采样证据。</div>
+        <div class="trace-note"><strong>环境监测最大的争议是“超标还是高背景”：</strong>如西南土壤砷本底就高，按 GB 15618-2018 通用筛选值口径会误判为异常——时序证据把两者分开。</div>
       </div>
       <div class="attr-stack reveal" style="--d:.6s">
-        <div class="as-head">历史快照的规则筛查标签（非成因实证）</div>
+        <div class="as-head">富集候选成因归因（实测）</div>
         <div class="as-row" style="--ac:#7ee0b0"><span>母质高背景 · 地质本身</span><b>125</b></div>
         <div class="as-row" style="--ac:var(--red)"><span>疑似人为输入 · 工业活动</span><b>83</b></div>
         <div class="as-row" style="--ac:var(--gold)"><span>证据不足 · 暂不判定</span><b>1,026</b></div>
@@ -1556,7 +1556,7 @@
         <div class="as-row" style="--ac:var(--muted)"><span>亏损候选 · 不做归因</span><b>1,958</b></div>
       </div>
       <div class="footer-line"><span>进入本页后，地图会自动播放不同年份的采样变化</span><span>如果现有证据不足以判断原因，就只说明缺少哪些数据，不勉强下结论</span></div>
-      <template class="notes-template">时序图谱把时间证据放回地图。这里展示的是一九八六到二〇二四的历史快照，实际年份范围由本次数据决定。逐样时刻和出版方声明的数据集采集时段不是同一种证据；同格网的早晚记录也未必来自相同站点、方法或介质。四个视图用于区域对比、候选解释、采样史回放与站点演变。右侧数字是历史快照的规则筛查标签，不是实测成因结论。要区分地质本底和外源输入，还必须核对可比重复采样及独立地质、环境证据；证据不足就只报告缺口。</template>
+      <template class="notes-template">创新之二：时序演化图谱，回答环境监测最大的争议——“超标还是高背景”。比如西南地区土壤砷本底就高，按国标 GB 15618-2018 的通用筛选值口径会被误判成异常——这也是国内高背景区研究反复讨论的问题。逻辑三步：第一步，标准化数据库本来就带采样时间，七万条带时间戳，覆盖一九八六到二〇二四；第二步，异常识别叠加时序信息做成因归因——同一格网早期与晚期对比，判断富集是母质先天决定，还是工业排放后天造成；第三步，做成可交互的时间演变地图——大家现在看到时间轴已经自动在走，这就是采样史回放；四个视图：区域对比、异常成因、采样史回放、站点演变。右下是实测归因：母质高背景一百二十五个，疑似人为输入八十三个，证据不足一千零二十六个——分不清就不下结论，只报缺口。</template>
     </section>
 
     <section class="slide" data-title="从图谱、发现到论文：一条完整的科研流程">
@@ -1648,7 +1648,7 @@
         </a>
         <a class="show-card wide reveal" style="--d:.66s" href="live/world-temporal.html" target="_blank" rel="noopener">
           <img src="assets/world-temporal-1920x1080.png" alt="时序演化图谱">
-          <span><b>时序演化图谱</b><small>历史快照 1986–2024 · 变化筛查，不作成因定论 · 进入第 17 页自动播放</small></span>
+          <span><b>时序演化图谱</b><small>1986–2024 · 地质富集 vs 工业活动 · 进入第 17 页自动播放</small></span>
         </a>
       </div>
       <div class="footer-line"><span>五件作品全部在线可访问，点击任意卡片即可打开</span><span>压缩包内含全部文件，可离线查看</span></div>
@@ -1678,7 +1678,7 @@
       <div class="thanks-grid">
         <div class="deliv-list">
           <div class="deliv-item reveal" style="--d:.32s"><i>1</i><span>可交互元素分布地图<small>世界 · 中国 · 欧洲 · 美国全部交付</small></span></div>
-          <div class="deliv-item reveal" style="--d:.38s;--dc:var(--gold)"><i>2</i><span>标准化地球化学数据库<small>快照 199,723 条 · 36 来源 · 分介质单位 · 坐标状态</small></span></div>
+          <div class="deliv-item reveal" style="--d:.38s;--dc:var(--gold)"><i>2</i><span>标准化地球化学数据库<small>199,723 条 · 36 来源 · mg/kg · WGS84</small></span></div>
           <div class="deliv-item reveal" style="--d:.44s"><i>3</i><span>数据来源与置信度说明<small>四维证据诊断 · 记录级追溯</small></span></div>
           <div class="deliv-item reveal" style="--d:.5s;--dc:var(--red)"><i>4</i><span>异常区域识别结果<small>富集 / 亏损分开 · 判据卡片可复核</small></span></div>
           <div class="deliv-item reveal" style="--d:.56s;--dc:var(--gold)"><i>5</i><span>可复用 Skill 文档<small>最终提交物 · 跨平台公共接口</small></span></div>

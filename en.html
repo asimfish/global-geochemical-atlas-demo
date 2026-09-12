@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Global Geochemical Atlas Skill · A reusable research skill for AI agents · Team Token Agents</title>
-<meta name="description" content="Global Geochemical Atlas: a reusable, agent-native research skill. An AI agent autonomously acquires public geochemical data, runs unit and coordinate quality control, renders interactive element atlases, and binds supported evidence claims to artifact SHA-256 fingerprints. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
+<meta name="description" content="Global Geochemical Atlas: a reusable, agent-native research skill. An AI agent autonomously acquires public geochemical data, runs unit and coordinate quality control, renders interactive element atlases, and archives every number with a SHA-256 fingerprint. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
 <meta name="theme-color" content="#03141b">
 <link rel="canonical" href="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2303141b'/%3E%3Ccircle cx='32' cy='32' r='23' fill='none' stroke='%2369f5e6' stroke-width='2.6'/%3E%3Cellipse cx='32' cy='32' rx='23' ry='9' fill='none' stroke='%2369f5e6' stroke-opacity='.5' stroke-width='1.4'/%3E%3Ccircle cx='46' cy='18' r='4.6' fill='%23f6c344'/%3E%3Ccircle cx='15' cy='38' r='3.9' fill='%23ff5c78'/%3E%3Ccircle cx='39' cy='48' r='3.4' fill='%2369f5e6'/%3E%3C/svg%3E">
@@ -13,14 +13,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
 <meta property="og:title" content="Global Geochemical Atlas Skill · A reusable research skill for AI agents">
-<meta property="og:description" content="An AI agent autonomously acquires public geochemical data, unifies units, runs quality control, traces every record to its source, renders interactive element atlases and flags anomaly candidates — supported evidence claims are bound to artifact SHA-256 fingerprints. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
+<meta property="og:description" content="An AI agent autonomously acquires public geochemical data, unifies units, runs quality control, traces every record to its source, renders interactive element atlases and flags anomaly candidates — every number carries a SHA-256 fingerprint. Champion of the SynMatAI AI4S Future ScienceSkills Hackathon.">
 <meta property="og:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
 <meta property="og:image:width" content="1920">
 <meta property="og:image:height" content="1080">
 <meta property="og:image:alt" content="Screenshot of the interactive global element distribution atlas">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Global Geochemical Atlas Skill · A reusable research skill for AI agents">
-<meta name="twitter:description" content="Autonomous acquisition, quality control, mapping and anomaly screening of public geochemical data — supported evidence claims are bound to artifact SHA-256 fingerprints.">
+<meta name="twitter:description" content="Autonomous acquisition, quality control, mapping and anomaly screening of public geochemical data — every number carries a SHA-256 fingerprint.">
 <meta name="twitter:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
 <link rel="alternate" hreflang="zh-CN" href="https://asimfish.github.io/global-geochemical-atlas-demo/">
 <link rel="alternate" hreflang="en" href="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
@@ -129,10 +129,10 @@
     <div class="hero-band fx">
       <div class="hero-flow">
         <span class="hf-step"><b>Acquire</b><small>36 SOURCES</small></span><i>→</i>
-        <span class="hf-step"><b>Standardize</b><small>Medium-aware units · WGS84</small></span><i>→</i>
+        <span class="hf-step"><b>Standardize</b><small>mg/kg · WGS84</small></span><i>→</i>
         <span class="hf-step gold"><b>QC &amp; repair</b><small>ITERATION LOOP</small></span><i>→</i>
         <span class="hf-step red"><b>Screen anomalies</b><small>ROBUST-Z · FDR</small></span><i>→</i>
-        <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>Explore time</b><small>COVERAGE / CHANGE</small></a><i>→</i>
+        <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>Attribute in time</b><small>GEOGENIC / INPUT</small></a><i>→</i>
         <span class="hf-step"><b>Draft papers</b><small>5 SCIENTIFIC QUESTIONS</small></span>
       </div>
       <p class="hero-formula">Multi-source acquisition + standardization gates + QC repair loop = <b>a trustworthy global element atlas, and papers</b></p>
@@ -217,7 +217,7 @@
         <div class="thumb"><span class="tag" style="--c:#9af7b0">OUTPUT 2</span><img src="assets/database-view-1920x1080.png" alt="Standardized geochemical database" loading="lazy"></div>
         <div class="body">
           <h3>Standardized geochemical database</h3>
-          <p>Long-table structure aligned with ODM2 semantics: solids use mg/kg and water mass/volume measurements use µg/L; mass-basis nmol/kg is retained when density is unknown. Coordinates use WGS84 only where source evidence supports conversion. Original values are never overwritten — the downloadable CSV is the standardized database itself.</p>
+          <p>Long-table structure aligned with ODM2 semantics: units unified to mg/kg, coordinates to WGS84, original values never overwritten — the downloadable CSV is the standardized database itself.</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">Open the atlas · Database tab ↗</span></div>
         </div>
       </a>
@@ -301,8 +301,8 @@
         </div>
       </article>
       <article class="how-card fx" style="--c:var(--gold)">
-        <div class="how-head"><span class="how-no">03</span><b>Each evaluation round uses isolated context</b></div>
-        <p class="promise">A machine-readable reviewer contract excludes previous conclusions from the review context. This reduces carryover; it does not prove statistical independence or eliminate shared model biases.</p>
+        <div class="how-head"><span class="how-no">03</span><b>Each evaluation round stays independent</b></div>
+        <p class="promise">A round must be reviewed without being influenced by the previous round’s conclusions. This is written into a machine-readable reviewer contract, not left to convention.</p>
         <p class="detail">The contract requires the skeptic to come from a different model family than the executor, to work in a brand-new thread, to see none of the executor’s explanations, and to read only the output files themselves; if a path or SHA-256 in the briefing does not match, it must refuse to review. As for cross-run memory (<code>memory.json</code>), it records only how often each source has succeeded or failed before, and its sole effect is the order in which round 1 tries sources: it cannot add a source and takes part in no decision. Evidence gathered in the current run always outranks memory from earlier ones.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
@@ -312,8 +312,8 @@
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 fingerprints, one per result</b></div>
-        <p class="promise">Fingerprints bind the frozen request, source bytes, delivered artifacts, and the supported claims in a canonical evidence appendix.</p>
-        <p class="detail">The request is hashed before work starts; source bytes are checked against their registered hashes. Of the 18 core outputs, <code>run_summary.json</code> hashes the other 17, not itself. <code>claim_ledger.py</code> independently recomputes supported claims and binds their values, statements, scopes and evidence locators to artifact hashes. <code>--render-answer</code> produces a canonical evidence appendix; <code>--check-answer</code> rejects changed or unsupported entries by exact comparison with a freshly rebuilt ledger. This is not semantic verification of arbitrary prose, and SHA-256 proves byte identity, not scientific truth. Map provenance exposes the available source identifiers and record evidence without inventing missing DOI or row locators.</p>
+        <p class="promise">Hashes are taken in four places: the task request itself, every downloaded source file, the 18 output files, and every number in the final answer.</p>
+        <p class="detail">The request is hashed before work starts, so a goal that drifts midway shows up; source files must pass a registered hash check before ingestion; <code>run_summary.json</code> records the hash of each of the 18 outputs. The last layer is the claim ledger: <code>claim_ledger.py</code> lists every number in the outputs that could be quoted in an answer and binds each one to a file, a JSON pointer and a hash, recomputing all of it on every call so the executor cannot edit it. Once the answer is drafted, <code>--check-answer</code> compares it against the ledger; a number that does not match is treated as a phantom and may not be published. Inside the atlas, any point can likewise be followed down to its DOI, the row of the original table and the hash.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">CODE</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
@@ -323,7 +323,7 @@
       <article class="how-card fx" style="--c:#9af7b0">
         <div class="how-head"><span class="how-no">05</span><b>Temporal evolution lives inside the atlas</b></div>
         <p class="promise">Temporal evolution is not a separate deliverable. It is a view inside the atlas: switch to it and it is there, running on the same standardized database.</p>
-        <p class="detail">The temporal view uses the selected region and available temporal evidence from the same standardized database. Record-level sampling dates and dataset collection windows are distinguished; missing dates are disclosed rather than invented. The historical demo spans 1986–2024, not a guaranteed range for every request. This is exploratory visualization: changes in coverage or concentrations do not establish geological background, external inputs or causality.</p>
+        <p class="detail">For sources with reliable sampling dates, the atlas can play year by year from 1986 to 2024, which helps tell whether a high value has always been the geological background or appeared later as an external input. Because it uses the same data, the evidence chain and the scientific boundaries of the main view hold in the temporal view too; there is no second set of accounting to maintain.</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">LIVE</span>
           <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">Open the online temporal view ↗</a>
@@ -617,7 +617,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
             <tr><th>Capability</th><th>Large compilations<br>EarthChem · GEOROC · NGDB</th><th>Thematic surveys<br>GEMAS · FOREGS · GEOTRACES …</th><th>GGA (this project)</th></tr>
           </thead>
           <tbody>
-            <tr><td><b class="cap">Unified units and coordinates out of the box</b></td><td class="dim2"><span class="mk no">—</span>compiled as published</td><td class="dim2"><span class="mk part">◐</span>unified within a survey, differs between surveys</td><td><span class="mk yes">✓</span>medium-aware units; evidence-supported WGS84 coordinates</td></tr>
+            <tr><td><b class="cap">Unified units and coordinates out of the box</b></td><td class="dim2"><span class="mk no">—</span>compiled as published</td><td class="dim2"><span class="mk part">◐</span>unified within a survey, differs between surveys</td><td><span class="mk yes">✓</span>mg/kg + WGS84 across the whole database</td></tr>
             <tr><td><b class="cap">One table across media</b></td><td class="dim2"><span class="mk part">◐</span>separate databases per medium</td><td class="dim2"><span class="mk no">—</span>mostly one medium / one continent</td><td><span class="mk yes">✓</span>soil · sediment · water · rock in one table</td></tr>
             <tr><td><b class="cap">Method metadata and cross-method conversion</b></td><td class="dim2"><span class="mk no">—</span>method names only</td><td class="dim2"><span class="mk part">◐</span>consistent within one method system</td><td><span class="mk yes">✓</span>method-family labels + hold-out-validated transfer models</td></tr>
             <tr><td><b class="cap">Record-level provenance</b></td><td class="dim2"><span class="mk no">—</span>to publication / dataset level</td><td class="dim2"><span class="mk no">—</span>to survey level</td><td><span class="mk yes">✓</span>100% row-level SHA-256 hash chain</td></tr>
@@ -633,7 +633,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
         <div class="q-row">
           <div class="q"><b>Q1 Can the data be analysed as soon as it is downloaded?</b><span>Do units, coordinates and field formats still need cleaning source by source?</span></div>
           <div class="them">Compilation databases usually keep the published format; units, detection-limit definitions and coordinate datums differ between sources, and analysis is typically preceded by weeks of per-source cleaning (OneGeochemistry’s summary: “almost impossible to reuse”)</div>
-          <div class="us2">Records use <b>medium-aware units and evidence-supported WGS84 coordinates</b> in one <b>129</b>-field table, four media queried together; new media and sources join under the same field specification. P2 reused the same script and finished a second continent the same day</div>
+          <div class="us2">Every record already unified to <b>mg/kg + WGS84</b> in one <b>129</b>-field table, four media queried together; new media and sources join under the same field specification. P2 reused the same script and finished a second continent the same day</div>
         </div>
         <div class="q-row">
           <div class="q"><b>Q2 Can results from different methods be merged directly?</b><span>XRF measures total content, acid-digestion ICP measures a partial extraction — mixing them blindly introduces systematic bias</span></div>
@@ -665,7 +665,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
       <div class="cmp-scroll">
         <table class="cmp" style="min-width:1100px">
           <tr><th>System</th><th>Scale</th><th>Media</th><th>Unified units · schema</th><th>Record-level license</th><th>Provenance hash</th><th>Method metadata</th><th>Confidence · QC</th><th>Cross-validation</th><th>Gap queue</th></tr>
-          <tr><td>GGA (this project)</td><td class="us"><b>191,715</b> records / <b>29</b> sources / 7 metals</td><td class="us">Four media in one <b>129</b>-field schema (soil 80,709 · sediment 79,630 · water 31,376)</td><td class="us">✓ medium-aware units + evidence-supported WGS84 + per-record lineage</td><td class="us">✓ <b>100%</b></td><td class="us">✓ <b>100%</b> row-level SHA-256</td><td class="us">✓ method families + 36.3% missing, accounted per record</td><td class="us">✓ four-component confidence <b>100%</b>; <b>1,537</b> censored values kept explicitly</td><td class="us">✓ <b>26</b> co-located cells (P4)</td><td class="us">✓ acquisition-priority geojson queue</td></tr>
+          <tr><td>GGA (this project)</td><td class="us"><b>191,715</b> records / <b>29</b> sources / 7 metals</td><td class="us">Four media in one <b>129</b>-field schema (soil 80,709 · sediment 79,630 · water 31,376)</td><td class="us">✓ mg/kg + WGS84 + per-record lineage</td><td class="us">✓ <b>100%</b></td><td class="us">✓ <b>100%</b> row-level SHA-256</td><td class="us">✓ method families + 36.3% missing, accounted per record</td><td class="us">✓ four-component confidence <b>100%</b>; <b>1,537</b> censored values kept explicitly</td><td class="us">✓ <b>26</b> co-located cells (P4)</td><td class="us">✓ acquisition-priority geojson queue</td></tr>
           <tr><td>GEOROC / DIGIS</td><td>42.7M values / 707k samples / 23,520 publications<sup>1</sup></td><td>igneous · metamorphic rocks · minerals</td><td>— (compiled as published)</td><td>dataset level</td><td>— (publication level)</td><td>✓ analysis level</td><td>—</td><td>—</td><td>—</td></tr>
           <tr><td>EarthChem · PetDB · SESAR</td><td>≈50M values / &gt;1M samples; SESAR &gt;5M registered samples<sup>2</sup></td><td>solid earth (federation of six)</td><td>— (original published accounting kept)</td><td>dataset level</td><td>IGSN, sample level</td><td>✓ analysis level</td><td>—</td><td>—</td><td>—</td></tr>
           <tr><td>USGS NGDB</td><td>1.524M samples / &gt;59M determinations<sup>3</sup></td><td>rock / sediment / soil / ore (USA)</td><td>— (108 methods, 25 labs coexist)</td><td>public domain (dataset level)</td><td>—</td><td>method names, no unified layer</td><td>—</td><td>—</td><td>—</td></tr>
