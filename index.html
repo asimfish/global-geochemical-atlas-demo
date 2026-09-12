@@ -13,14 +13,14 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://asimfish.github.io/global-geochemical-atlas-demo/">
 <meta property="og:title" content="Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill">
-<meta property="og:description" content="面向 AI Agent 的可复用科研 Skill：自动采集公开地球化学数据，完成单位统一、质量控制与来源追溯，生成可交互元素分布图谱并识别异常区域——每个数字都带 SHA-256 指纹。AI4S Future ScienceSkills Hackathon 冠军作品。">
+<meta property="og:description" content="面向 AI Agent 的可复用科研 Skill：自动采集公开地球化学数据，完成单位统一、质量控制与来源追溯，生成可交互元素分布图谱并识别候选异常区域；规范断言绑定证据与 SHA-256。AI4S Future ScienceSkills Hackathon 冠军作品。">
 <meta property="og:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
 <meta property="og:image:width" content="1920">
 <meta property="og:image:height" content="1080">
 <meta property="og:image:alt" content="全球元素分布图谱交互界面截图">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Global Geochemical Atlas · 全球地球化学元素分布图谱 Skill">
-<meta name="twitter:description" content="面向 AI Agent 的可复用科研 Skill：自动采集、质控、制图与异常识别，每个数字都带 SHA-256 指纹。">
+<meta name="twitter:description" content="面向 AI Agent 的可复用科研 Skill：自动采集、质控、制图与候选异常识别，规范断言绑定证据与 SHA-256。">
 <meta name="twitter:image" content="https://asimfish.github.io/global-geochemical-atlas-demo/assets/global-overview-1920x1080.png">
 <link rel="alternate" hreflang="zh-CN" href="https://asimfish.github.io/global-geochemical-atlas-demo/">
 <link rel="alternate" hreflang="en" href="https://asimfish.github.io/global-geochemical-atlas-demo/en.html">
@@ -129,7 +129,7 @@
     <div class="hero-band fx">
       <div class="hero-flow">
         <span class="hf-step"><b>多源采集</b><small>36 SOURCES</small></span><i>→</i>
-        <span class="hf-step"><b>标准化</b><small>mg/kg · WGS84</small></span><i>→</i>
+        <span class="hf-step"><b>标准化</b><small>分介质单位 · 坐标核验</small></span><i>→</i>
         <span class="hf-step gold"><b>质控修复</b><small>ITERATION LOOP</small></span><i>→</i>
         <span class="hf-step red"><b>异常识别</b><small>ROBUST-Z · FDR</small></span><i>→</i>
         <a class="hf-step gold" href="live/world-temporal.html" target="_blank" rel="noopener"><b>时序归因</b><small>GEOGENIC / INPUT</small></a><i>→</i>
@@ -217,7 +217,7 @@
         <div class="thumb"><span class="tag" style="--c:#9af7b0">运行产物 2</span><img src="assets/database-view-1920x1080.png" alt="标准化地球化学数据库" loading="lazy"></div>
         <div class="body">
           <h3>标准化地球化学数据库</h3>
-          <p>长表结构对齐 ODM2 语义：单位统一 mg/kg、坐标统一 WGS84，原始值永不覆盖，下载的 CSV 即为标准化数据库本体。</p>
+          <p>长表结构对齐 ODM2 语义：固体质量比统一 mg/kg，水体质量/体积统一 µg/L；缺密度的 nmol/kg 保留原单位，不跨量纲混算。坐标仅在证据支持时转换为 WGS84，原始值与坐标永不覆盖，下载的 CSV 即为标准化数据库本体。</p>
           <div class="links"><span style="color:var(--mint);font-weight:700">进入图谱 · 数据库标签 ↗</span></div>
         </div>
       </a>
@@ -312,8 +312,8 @@
       </article>
       <article class="how-card fx">
         <div class="how-head"><span class="how-no">04</span><b>SHA-256 指纹与结果一一对应</b></div>
-        <p class="promise">哈希打在四个地方：任务请求本身、每一个下载下来的源文件、18 个产物文件，以及最终答复里的每一个数字。</p>
-        <p class="detail">任务开始前先给请求算一次哈希，中途目标变了能看出来；源文件入库前要过登记在案的哈希校验；<code>run_summary.json</code> 里记着 18 个产物各自的哈希。最后一层是断言台账：<code>claim_ledger.py</code> 把产物里所有能写进答复的数字列出来，每一条绑定到「哪个文件、哪个 JSON 指针、什么哈希」，而且每次调用都重新算，执行者改不了。答复草稿写好后再用 <code>--check-answer</code> 对一遍台账，对不上的数字按幻数处理，不许出稿。在图谱里点任何一个点，也能一直下钻到 DOI、原始表格的行和哈希。</p>
+        <p class="promise">哈希绑定冻结请求、源文件和运行产物；规范断言进一步绑定语义、精确值、适用范围与证据。</p>
+        <p class="detail"><code>run_summary.json</code> 是十八文件事务的提交标记，记录其余 17 个产物的哈希，不包含自身哈希。断言台账 <code>claim_ledger.py</code> 从当前产物重新构建支持的事实，绑定证据文件、JSON 指针与 SHA-256。使用 <code>--render-answer</code> 生成规范证据附录，再用 <code>--check-answer</code> 精确核对原样断言行；数值、指标、范围句、定位或哈希变化都不能靠“另一个数字恰好相同”通过。自由文本补充说明另行审查，不把附录通过宣称为全文已认证。哈希证明字节身份与绑定关系，不证明测量或科学结论为真；点位证据按来源实际提供的 DOI、URL、表/行定位展示，缺失如实披露。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">实现</span>
           <a href="https://github.com/asimfish/global-geochemical-atlas-skill/blob/main/skills/global-geochemical-atlas/scripts/claim_ledger.py" target="_blank" rel="noopener">claim_ledger.py</a></div>
@@ -323,7 +323,7 @@
       <article class="how-card fx" style="--c:#9af7b0">
         <div class="how-head"><span class="how-no">05</span><b>时序演化是图谱内的视图选项</b></div>
         <p class="promise">时序演化不是另外做的一份交付物，而是图谱里的一个视图：切换过去就能看，数据还是同一份标准化数据库。</p>
-        <p class="detail">对带有可靠采样时间的来源，图谱可以按 1986–2024 逐年播放，用来判断一处高值是地质本底一直如此，还是后来才出现的外源输入。因为用的是同一份数据，主视图里的证据链和科学边界在时序视图里同样成立，不需要再维护一套口径。</p>
+        <p class="detail">演示快照覆盖 1986–2024；实际时间范围取决于本次数据。逐样采样时刻与出版方记录的数据集采集时段分层展示，后者不冒充逐站重复观测。播放用于探索变化和采样覆盖，不能仅凭时序图判定地质本底或外源输入；成因解释还需要可比重复采样及独立地质、方法和环境证据。主视图和时序视图共享标准化数据库与证据边界。</p>
         <div class="how-foot">
           <div class="row"><span class="lbl">现场</span>
           <a class="site" href="live/world-temporal.html" target="_blank" rel="noopener">打开在线时序视图 ↗</a>
@@ -617,7 +617,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
             <tr><th>能力</th><th>大型汇编库<br>EarthChem · GEOROC · NGDB</th><th>专题调查库<br>GEMAS · FOREGS · GEOTRACES 等</th><th>GGA（本项目）</th></tr>
           </thead>
           <tbody>
-            <tr><td><b class="cap">开箱即用的统一单位与坐标</b></td><td class="dim2"><span class="mk no">—</span>按发表原样收录</td><td class="dim2"><span class="mk part">◐</span>库内统一，库间口径不同</td><td><span class="mk yes">✓</span>全库 mg/kg + WGS84</td></tr>
+            <tr><td><b class="cap">开箱即用的统一单位与坐标</b></td><td class="dim2"><span class="mk no">—</span>按发表原样收录</td><td class="dim2"><span class="mk part">◐</span>库内统一，库间口径不同</td><td><span class="mk yes">✓</span>按介质与量纲统一单位；有据转换 WGS84</td></tr>
             <tr><td><b class="cap">跨介质一表联查</b></td><td class="dim2"><span class="mk part">◐</span>介质分库</td><td class="dim2"><span class="mk no">—</span>多为单介质 / 单大洲</td><td><span class="mk yes">✓</span>土壤 · 沉积物 · 水 · 岩石同表</td></tr>
             <tr><td><b class="cap">方法元数据与跨方法换算</b></td><td class="dim2"><span class="mk no">—</span>只记方法名</td><td class="dim2"><span class="mk part">◐</span>单一方法体系内一致</td><td><span class="mk yes">✓</span>方法族标注 + 留出验证换算模型</td></tr>
             <tr><td><b class="cap">记录级来源追溯</b></td><td class="dim2"><span class="mk no">—</span>到文献 / 数据集级</td><td class="dim2"><span class="mk no">—</span>到调查级</td><td><span class="mk yes">✓</span>100% 行级 SHA-256 哈希链</td></tr>
@@ -633,7 +633,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
         <div class="q-row">
           <div class="q"><b>Q1 数据拿到后能直接分析吗？</b><span>单位、坐标和字段格式是否仍需逐源清洗</span></div>
           <div class="them">汇编型数据库通常按发表原样收录，不同来源的单位、检出限定义和坐标基准并不一致；实际分析前往往需要数周逐源清洗（OneGeochemistry 的概括：「几乎不可复用」）</div>
-          <div class="us2">全部记录已统一为 <b>mg/kg + WGS84</b>，纳入同一张 <b>129</b> 字段表，四种介质直接联查；新介质、新来源按同一字段规范接入。P2 复用同一脚本，当日完成第二大洲的计算</div>
+          <div class="us2">记录按介质与量纲保留标准单位，坐标按证据转换或注明 datum 未验证；纳入同一张 <b>129</b> 字段表，四种介质可联查但不可跨量纲混算；新介质、新来源按同一字段规范接入。P2 复用同一脚本，当日完成第二大洲的计算</div>
         </div>
         <div class="q-row">
           <div class="q"><b>Q2 不同方法的结果能直接合并吗？</b><span>XRF 测全量、酸溶 ICP 测部分提取，直接混用会带来系统偏差</span></div>
@@ -665,7 +665,7 @@ python skills/global-geochemical-atlas/scripts/validate_outputs.py \
       <div class="cmp-scroll">
         <table class="cmp" style="min-width:1100px">
           <tr><th>系统</th><th>规模</th><th>介质</th><th>统一单位·schema</th><th>记录级许可证</th><th>溯源哈希</th><th>方法元数据</th><th>置信度·QC</th><th>交叉验证</th><th>缺口队列</th></tr>
-          <tr><td>GGA（本项目）</td><td class="us"><b>191,715</b> 条 / <b>29</b> 源 / 7 金属</td><td class="us">四介质同一 <b>129</b> 字段 schema（土壤 80,709 · 沉积 79,630 · 水 31,376）</td><td class="us">✓ mg/kg + WGS84 + lineage 逐条</td><td class="us">✓ <b>100%</b></td><td class="us">✓ <b>100%</b> 行级 SHA-256</td><td class="us">✓ 方法族 + 缺失 36.3% 逐条记账</td><td class="us">✓ 四维置信度 <b>100%</b>；删失 <b>1,537</b> 条显式保留</td><td class="us">✓ <b>26</b> 共址单元（P4）</td><td class="us">✓ 采集优先级 geojson 队列</td></tr>
+          <tr><td>GGA（本项目）</td><td class="us"><b>191,715</b> 条 / <b>29</b> 源 / 7 金属</td><td class="us">四介质同一 <b>129</b> 字段 schema（土壤 80,709 · 沉积 79,630 · 水 31,376）</td><td class="us">✓ 分介质单位 + 坐标状态 + lineage 逐条</td><td class="us">✓ <b>100%</b></td><td class="us">✓ <b>100%</b> 行级 SHA-256</td><td class="us">✓ 方法族 + 缺失 36.3% 逐条记账</td><td class="us">✓ 四维置信度 <b>100%</b>；删失 <b>1,537</b> 条显式保留</td><td class="us">✓ <b>26</b> 共址单元（P4）</td><td class="us">✓ 采集优先级 geojson 队列</td></tr>
           <tr><td>GEOROC / DIGIS</td><td>4,270 万值 / 70.7 万样品 / 23,520 文献<sup>1</sup></td><td>火成岩·变质岩·矿物</td><td>—（按发表值汇编）</td><td>数据集级</td><td>—（文献级）</td><td>✓ 分析级</td><td>—</td><td>—</td><td>—</td></tr>
           <tr><td>EarthChem·PetDB·SESAR</td><td>≈5,000 万值 / &gt;100 万样品；SESAR &gt;500 万注册样品<sup>2</sup></td><td>固体地球（六库联邦）</td><td>—（保持原发表口径）</td><td>数据集级</td><td>IGSN 样品级</td><td>✓ 分析级</td><td>—</td><td>—</td><td>—</td></tr>
           <tr><td>USGS NGDB</td><td>152.4 万样品 / &gt;5,900 万测定<sup>3</sup></td><td>岩/沉/土/矿（美国）</td><td>—（108 方法 25 实验室并存）</td><td>公共域（数据集级）</td><td>—</td><td>记方法名，无统一层</td><td>—</td><td>—</td><td>—</td></tr>
